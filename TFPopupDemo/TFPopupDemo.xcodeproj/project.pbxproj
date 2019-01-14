@@ -15,6 +15,10 @@
 		203DD47A21EC6B23004ACC42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD47921EC6B23004ACC42 /* main.m */; };
 		203DD48421EC6BD9004ACC42 /* TFPopupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48321EC6BD9004ACC42 /* TFPopupManager.m */; };
 		203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48621EC6BFA004ACC42 /* TFPopupToast.m */; };
+		203DD48A21EC71C3004ACC42 /* TFPopupLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48921EC71C3004ACC42 /* TFPopupLoading.m */; };
+		203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48D21EC846B004ACC42 /* AlertNormal.m */; };
+		203DD49021EC847F004ACC42 /* AlertNormal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 203DD48F21EC847F004ACC42 /* AlertNormal.xib */; };
+		203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD49221EC865F004ACC42 /* UIView+TFPopup.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +37,13 @@
 		203DD48321EC6BD9004ACC42 /* TFPopupManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupManager.m; sourceTree = "<group>"; };
 		203DD48521EC6BFA004ACC42 /* TFPopupToast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupToast.h; sourceTree = "<group>"; };
 		203DD48621EC6BFA004ACC42 /* TFPopupToast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupToast.m; sourceTree = "<group>"; };
+		203DD48821EC71C3004ACC42 /* TFPopupLoading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupLoading.h; sourceTree = "<group>"; };
+		203DD48921EC71C3004ACC42 /* TFPopupLoading.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupLoading.m; sourceTree = "<group>"; };
+		203DD48C21EC846B004ACC42 /* AlertNormal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertNormal.h; sourceTree = "<group>"; };
+		203DD48D21EC846B004ACC42 /* AlertNormal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertNormal.m; sourceTree = "<group>"; };
+		203DD48F21EC847F004ACC42 /* AlertNormal.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertNormal.xib; sourceTree = "<group>"; };
+		203DD49121EC865F004ACC42 /* UIView+TFPopup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+TFPopup.h"; sourceTree = "<group>"; };
+		203DD49221EC865F004ACC42 /* UIView+TFPopup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+TFPopup.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +80,7 @@
 				203DD46B21EC6B22004ACC42 /* AppDelegate.m */,
 				203DD46D21EC6B22004ACC42 /* ViewController.h */,
 				203DD46E21EC6B22004ACC42 /* ViewController.m */,
+				203DD48B21EC8456004ACC42 /* DemoView */,
 				203DD48021EC6B78004ACC42 /* TFPopup */,
 				203DD47021EC6B22004ACC42 /* Main.storyboard */,
 				203DD47321EC6B22004ACC42 /* Assets.xcassets */,
@@ -87,9 +99,23 @@
 				203DD48321EC6BD9004ACC42 /* TFPopupManager.m */,
 				203DD48521EC6BFA004ACC42 /* TFPopupToast.h */,
 				203DD48621EC6BFA004ACC42 /* TFPopupToast.m */,
+				203DD48821EC71C3004ACC42 /* TFPopupLoading.h */,
+				203DD48921EC71C3004ACC42 /* TFPopupLoading.m */,
+				203DD49121EC865F004ACC42 /* UIView+TFPopup.h */,
+				203DD49221EC865F004ACC42 /* UIView+TFPopup.m */,
 			);
 			name = TFPopup;
 			path = ../../TFPopup;
+			sourceTree = "<group>";
+		};
+		203DD48B21EC8456004ACC42 /* DemoView */ = {
+			isa = PBXGroup;
+			children = (
+				203DD48C21EC846B004ACC42 /* AlertNormal.h */,
+				203DD48D21EC846B004ACC42 /* AlertNormal.m */,
+				203DD48F21EC847F004ACC42 /* AlertNormal.xib */,
+			);
+			path = DemoView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				203DD47721EC6B23004ACC42 /* LaunchScreen.storyboard in Resources */,
+				203DD49021EC847F004ACC42 /* AlertNormal.xib in Resources */,
 				203DD47421EC6B22004ACC42 /* Assets.xcassets in Resources */,
 				203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */,
 			);
@@ -164,7 +191,10 @@
 			files = (
 				203DD48421EC6BD9004ACC42 /* TFPopupManager.m in Sources */,
 				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
+				203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */,
 				203DD47A21EC6B23004ACC42 /* main.m in Sources */,
+				203DD48A21EC71C3004ACC42 /* TFPopupLoading.m in Sources */,
+				203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */,
 				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
 				203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */,
 			);

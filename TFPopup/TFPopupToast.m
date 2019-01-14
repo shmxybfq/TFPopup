@@ -17,51 +17,65 @@
 
 @property(nonatomic,assign)UIEdgeInsets defaultLabelEdge;
 
-@property(nonatomic,  copy)TFPopupToastPrepareBlock custemShowBlock;
-@property(nonatomic,  copy)TFPopupToastPrepareBlock custemHideBlock;
+@property(nonatomic,  copy)TFPopupToastBlock animationFinishBlock;
+@property(nonatomic,  copy)TFPopupToastBlock custemShowBlock;
+@property(nonatomic,  copy)TFPopupToastBlock custemHideBlock;
 
 @end
 
 @implementation TFPopupToast
 
-
-+(void)showToast:(UIView *)inview msg:(NSString *)msg{
-    [self showToast:inview msg:msg custemShow:^(TFPopupToast * _Nonnull toast) {
-        CGRect frame = toast.frame;
-        frame = CGRectMake(frame.origin.x, frame.origin.y * 0.667, frame.size.width, frame.size.height);
-        toast.frame = frame;
-    } custemHide:^(TFPopupToast * _Nonnull toast) {
-        CGRect frame = toast.frame;
-        frame = CGRectMake(frame.origin.x, frame.origin.y * 0.667, frame.size.width, frame.size.height);
-        toast.frame = frame;
-    }];
++(void)showToast:(UIView *)inView msg:(NSString *)msg{
+    [self showToast:inView msg:msg animationFinish:nil];
 }
 
-+(void)showToast:(UIView *)inview
++(void)showToast:(UIView *)inView
              msg:(NSString *)msg
-      custemShow:(TFPopupToastPrepareBlock)custemShowBlock
-      custemHide:(TFPopupToastPrepareBlock)custemHideBlock{
+ animationFinish:(TFPopupToastBlock)animationFinishBlock{
+    
+    [self showToast:inView msg:msg custemShow:^(TFPopupToast *toast) {
+        CGRect frame = toast.frame;
+        frame = CGRectMake(frame.origin.x, frame.origin.y * 0.618, frame.size.width, frame.size.height);
+        toast.frame = frame;
+    } custemHide:^(TFPopupToast *toast) {
+        CGRect frame = toast.frame;
+        frame = CGRectMake(frame.origin.x, frame.origin.y * 0.618, frame.size.width, frame.size.height);
+        toast.frame = frame;
+    } animationFinish:animationFinishBlock];
+}
+
++(void)showToast:(UIView *)inView
+             msg:(NSString *)msg
+      custemShow:(TFPopupToastBlock)custemShowBlock
+      custemHide:(TFPopupToastBlock)custemHideBlock
+ animationFinish:(TFPopupToastBlock)animationFinishBlock{
+    
+    if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
+    if (msg == nil) {NSLog(@"****** %@ %@ ******",[self class],@"msg 不能为空！");return;}
     
     TFPopupToast *toast = [[TFPopupToast alloc]initWithFrame:CGRectZero];
-    toast.inview = inview;
+    toast.inview = inView;
     toast.msg = msg;
+    toast.animationFinishBlock = animationFinishBlock;
     toast.custemShowBlock = custemShowBlock;
     toast.custemHideBlock = custemHideBlock;
     
     toast.manager = [TFPopupManager tf_popupManagerDataSource:toast delegate:toast];
-    [toast.manager reload];
-    [toast.manager show];
+    [toast.manager performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:YES];
+    [toast.manager performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
 }
 
 -(instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
+        
+        self.alpha = 0.0;
         
         self.layer.cornerRadius = 6;
         self.layer.masksToBounds = YES;
         self.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.7];
         self.userInteractionEnabled = NO;
         
-        self.duration = 0.3;
+        self.animtionDuration = 0.3;
         self.defaultLabelEdge = UIEdgeInsetsMake(5, 10, 5, 10);
         
         [self addSubview:self.msgLabel];
@@ -96,10 +110,23 @@
         self.custemShowBlock(self);
     }
     
-    [UIView animateWithDuration:0.3 animations:^{
-        weakself.alpha = 1;
-    }];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    if (self.animtionDuration > 0.0) {
+        [UIView animateWithDuration:self.animtionDuration animations:^{
+            weakself.alpha = 1.0;
+        }completion:^(BOOL finished) {
+            if (weakself.animationFinishBlock) {
+                weakself.animationFinishBlock(weakself);
+            }
+        }];
+    }else{
+        self.alpha = 1;
+        if (weakself.animationFinishBlock) {
+            weakself.animationFinishBlock(weakself);
+        }
+    }
+    
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.autoDissDuration * NSEC_PER_SEC));
+    dispatch_after(time, dispatch_get_main_queue(), ^{
         [weakself.manager hide];
     });
 }
@@ -112,22 +139,33 @@
         self.custemHideBlock(self);
     }
     
-    [UIView animateWithDuration:0.3 animations:^{
-        weakself.alpha = 0;
-    }completion:^(BOOL finished) {
-        [weakself removeFromSuperview];
-    }];
+    if (self.animtionDuration > 0.0) {
+        [UIView animateWithDuration:self.animtionDuration animations:^{
+            weakself.alpha = 0.0;
+        }completion:^(BOOL finished) {
+            if (weakself.animationFinishBlock) {
+                weakself.animationFinishBlock(weakself);
+            }
+            [weakself removeFromSuperview];
+        }];
+    }else{
+        self.alpha = 0;
+        if (weakself.animationFinishBlock) {
+            weakself.animationFinishBlock(weakself);
+        }
+        [self removeFromSuperview];
+    }
 }
 
 -(void)prepareShow{
     
     if ([self.msg isKindOfClass:[NSString class]] && self.msg.length > 10) {
-        self.duration = (self.msg.length - 10) / 10 + 1.5;
-        if (self.duration > 5) {
-            self.duration = 5;
+        self.autoDissDuration = (self.msg.length - 10) / 10 + 1.5;
+        if (self.autoDissDuration > 5) {
+            self.autoDissDuration = 5;
         }
     }else{
-        self.duration = 1.5;
+        self.autoDissDuration = 1.5;
     }
     
     CGRect frame = self.inview.frame;
