@@ -1,0 +1,363 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD46B21EC6B22004ACC42 /* AppDelegate.m */; };
+		203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD46E21EC6B22004ACC42 /* ViewController.m */; };
+		203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203DD47021EC6B22004ACC42 /* Main.storyboard */; };
+		203DD47421EC6B22004ACC42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 203DD47321EC6B22004ACC42 /* Assets.xcassets */; };
+		203DD47721EC6B23004ACC42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203DD47521EC6B23004ACC42 /* LaunchScreen.storyboard */; };
+		203DD47A21EC6B23004ACC42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD47921EC6B23004ACC42 /* main.m */; };
+		203DD48421EC6BD9004ACC42 /* TFPopupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48321EC6BD9004ACC42 /* TFPopupManager.m */; };
+		203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48621EC6BFA004ACC42 /* TFPopupToast.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		203DD46721EC6B22004ACC42 /* TFPopupDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFPopupDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		203DD46A21EC6B22004ACC42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		203DD46B21EC6B22004ACC42 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		203DD46D21EC6B22004ACC42 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		203DD46E21EC6B22004ACC42 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		203DD47121EC6B22004ACC42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		203DD47321EC6B22004ACC42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		203DD47621EC6B23004ACC42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		203DD47821EC6B23004ACC42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		203DD47921EC6B23004ACC42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		203DD48121EC6B92004ACC42 /* TFPopup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopup.h; sourceTree = "<group>"; };
+		203DD48221EC6BD9004ACC42 /* TFPopupManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupManager.h; sourceTree = "<group>"; };
+		203DD48321EC6BD9004ACC42 /* TFPopupManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupManager.m; sourceTree = "<group>"; };
+		203DD48521EC6BFA004ACC42 /* TFPopupToast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupToast.h; sourceTree = "<group>"; };
+		203DD48621EC6BFA004ACC42 /* TFPopupToast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupToast.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		203DD46421EC6B22004ACC42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		203DD45E21EC6B22004ACC42 = {
+			isa = PBXGroup;
+			children = (
+				203DD46921EC6B22004ACC42 /* TFPopupDemo */,
+				203DD46821EC6B22004ACC42 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		203DD46821EC6B22004ACC42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				203DD46721EC6B22004ACC42 /* TFPopupDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		203DD46921EC6B22004ACC42 /* TFPopupDemo */ = {
+			isa = PBXGroup;
+			children = (
+				203DD46A21EC6B22004ACC42 /* AppDelegate.h */,
+				203DD46B21EC6B22004ACC42 /* AppDelegate.m */,
+				203DD46D21EC6B22004ACC42 /* ViewController.h */,
+				203DD46E21EC6B22004ACC42 /* ViewController.m */,
+				203DD48021EC6B78004ACC42 /* TFPopup */,
+				203DD47021EC6B22004ACC42 /* Main.storyboard */,
+				203DD47321EC6B22004ACC42 /* Assets.xcassets */,
+				203DD47521EC6B23004ACC42 /* LaunchScreen.storyboard */,
+				203DD47821EC6B23004ACC42 /* Info.plist */,
+				203DD47921EC6B23004ACC42 /* main.m */,
+			);
+			path = TFPopupDemo;
+			sourceTree = "<group>";
+		};
+		203DD48021EC6B78004ACC42 /* TFPopup */ = {
+			isa = PBXGroup;
+			children = (
+				203DD48121EC6B92004ACC42 /* TFPopup.h */,
+				203DD48221EC6BD9004ACC42 /* TFPopupManager.h */,
+				203DD48321EC6BD9004ACC42 /* TFPopupManager.m */,
+				203DD48521EC6BFA004ACC42 /* TFPopupToast.h */,
+				203DD48621EC6BFA004ACC42 /* TFPopupToast.m */,
+			);
+			name = TFPopup;
+			path = ../../TFPopup;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		203DD46621EC6B22004ACC42 /* TFPopupDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 203DD47D21EC6B23004ACC42 /* Build configuration list for PBXNativeTarget "TFPopupDemo" */;
+			buildPhases = (
+				203DD46321EC6B22004ACC42 /* Sources */,
+				203DD46421EC6B22004ACC42 /* Frameworks */,
+				203DD46521EC6B22004ACC42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TFPopupDemo;
+			productName = TFPopupDemo;
+			productReference = 203DD46721EC6B22004ACC42 /* TFPopupDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		203DD45F21EC6B22004ACC42 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = ztf;
+				TargetAttributes = {
+					203DD46621EC6B22004ACC42 = {
+						CreatedOnToolsVersion = 10.0;
+					};
+				};
+			};
+			buildConfigurationList = 203DD46221EC6B22004ACC42 /* Build configuration list for PBXProject "TFPopupDemo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 203DD45E21EC6B22004ACC42;
+			productRefGroup = 203DD46821EC6B22004ACC42 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				203DD46621EC6B22004ACC42 /* TFPopupDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		203DD46521EC6B22004ACC42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				203DD47721EC6B23004ACC42 /* LaunchScreen.storyboard in Resources */,
+				203DD47421EC6B22004ACC42 /* Assets.xcassets in Resources */,
+				203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		203DD46321EC6B22004ACC42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				203DD48421EC6BD9004ACC42 /* TFPopupManager.m in Sources */,
+				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
+				203DD47A21EC6B23004ACC42 /* main.m in Sources */,
+				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
+				203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		203DD47021EC6B22004ACC42 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				203DD47121EC6B22004ACC42 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		203DD47521EC6B23004ACC42 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				203DD47621EC6B23004ACC42 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		203DD47B21EC6B23004ACC42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		203DD47C21EC6B23004ACC42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		203DD47E21EC6B23004ACC42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TFPopupDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ztf.TFPopupDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		203DD47F21EC6B23004ACC42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TFPopupDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ztf.TFPopupDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		203DD46221EC6B22004ACC42 /* Build configuration list for PBXProject "TFPopupDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				203DD47B21EC6B23004ACC42 /* Debug */,
+				203DD47C21EC6B23004ACC42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		203DD47D21EC6B23004ACC42 /* Build configuration list for PBXNativeTarget "TFPopupDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				203DD47E21EC6B23004ACC42 /* Debug */,
+				203DD47F21EC6B23004ACC42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 203DD45F21EC6B22004ACC42 /* Project object */;
+}
