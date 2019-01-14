@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleFold,
 };
 
+
 @interface UIView (TFPopup)<TFPopupManagerDataSource,TFPopupManagerDelegate>
 
 @property(nonatomic,strong)UIView *inView;
@@ -45,9 +46,14 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 @property(nonatomic,assign)PopupStyle style;
 @property(nonatomic,assign)PopupPosition position;
+@property(nonatomic,assign)CGRect popupAreaRect;
 @property(nonatomic,assign)CGSize popupSize;
 
-
+-(void)tf_show:(UIView *)inView
+         style:(PopupStyle)style
+      position:(PopupPosition)position
+ popupAreaRect:(CGRect)popupAreaRect
+     popupSize:(CGSize)popupSize;
 
 
 @end

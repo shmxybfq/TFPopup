@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TFPopup.h"
+#import "AlertNormal.h"
 
 @interface ViewController ()
 
@@ -22,7 +23,20 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
-    [self toast];
+    //[self toast];
+    
+    [self show];
+}
+-(void)show{
+    
+    AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal" owner:nil options:nil].firstObject;
+    
+    [alert tf_show:self.view
+             style:PopupStyleSlide
+          position:PopupPositionFromTop
+     popupAreaRect:self.view.bounds
+         popupSize:CGSizeMake(314, 170)];
+    
     
 }
 

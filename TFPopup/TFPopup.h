@@ -11,5 +11,6 @@
 
 #import "TFPopupManager.h"
 #import "TFPopupToast.h"
+#import "UIView+TFPopup.h"
 
 #endif /* TFPopup_h */
