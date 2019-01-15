@@ -39,9 +39,9 @@ tf_synthesize_category_property_retain(inView, setInView);
 
 
 #pragma mark 代理 TFPopupManagerDataSource 方法
-/* 执行顺序:0 返回【是否使用默认动画方式】 */
--(BOOL)tf_popupManager_didCustemAnimation:(TFPopupManager *)manager{
-    return NO;
+/* 执行顺序:0 返回【默认使用的动画方式,可叠加】 */
+-(TFPopupDefaultAnimation)tf_popupManager_popDefaultAnimation:(TFPopupManager *)manager{
+    return TFPopupDefaultAnimationCoverAlpha | TFPopupDefaultAnimationPopBoardSlide | TFPopupDefaultAnimationPopBoardAlpha;
 }
 
 /* 执行顺序:1 返回【弹框的父视图】 */
@@ -139,6 +139,9 @@ tf_synthesize_category_property_retain(inView, setInView);
     return position;
 }
 
+-(NSTimeInterval)tf_popupManager_popDefaultAnimationDuration:(TFPopupManager *)manager{
+    return 0.3;
+}
 
 -(void)coverClick:(UIButton *)ins{
     [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
@@ -148,9 +151,7 @@ tf_synthesize_category_property_retain(inView, setInView);
 /* 弹出框展示动画开始前回调 */
 -(void)tf_popupManager_willShow:(TFPopupManager *)manager{
     x_weakSelf;
-    [UIView animateWithDuration:0.3 animations:^{
-        weakself.manager.popForCoverView.alpha = 1.0;
-    }];
+    
 }
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
 -(void)tf_popupManager_didShow:(TFPopupManager *)manager{
@@ -159,9 +160,7 @@ tf_synthesize_category_property_retain(inView, setInView);
 /* 弹出框隐藏动画开始前回调 */
 -(void)tf_popupManager_willHide:(TFPopupManager *)manager{
     x_weakSelf;
-    [UIView animateWithDuration:0.3 animations:^{
-        weakself.manager.popForCoverView.alpha = 0.0;
-    }];
+ 
 }
 /* 弹出框隐藏动画完成后回调,自定义动画不回调 */
 -(void)tf_popupManager_didHide:(TFPopupManager *)manager{

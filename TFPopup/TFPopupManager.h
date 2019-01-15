@@ -15,21 +15,27 @@
 #define x_weakSelf __weak typeof(self) weakself = self
 #endif
 
+typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
+    TFPopupDefaultAnimationNone    = 0,
+    TFPopupDefaultAnimationCoverAlpha   = 1 << 0,
+    TFPopupDefaultAnimationPopBoardAlpha   = 1 << 1,
+    TFPopupDefaultAnimationPopBoardSlide   = 1 << 2,
+};
+
 @class TFPopupManager;
 
 @protocol TFPopupManagerDataSource<NSObject>
 
 @required;
 
+/* 执行顺序:0 返回【默认使用的动画方式,可叠加】 */
+-(TFPopupDefaultAnimation)tf_popupManager_popDefaultAnimation:(TFPopupManager *)manager;
 /* 执行顺序:1 返回【弹框的父视图】 */
 -(UIView  *)tf_popupManager_popForView:(TFPopupManager *)manager;
 /* 执行顺序:4 返回【弹出框view】 */
 -(UIView  *)tf_popupManager_popBoardView:(TFPopupManager *)manager;
 
 @optional;
-
-/* 执行顺序:0 返回【是否使用默认动画方式】 */
--(BOOL)tf_popupManager_didCustemAnimation:(TFPopupManager *)manager;
 
 /* 执行顺序:2 返回【弹出框的上层背景视图,默认动画alpha=0,弹出时动画为alpha=1,自定义动画则忽略默认动画 */
 -(UIView  *)tf_popupManager_popForCoverView:(TFPopupManager *)manager;
@@ -57,7 +63,7 @@
                                             index:(NSInteger)index;
 
 /* 执行顺序:10 返回【动画时间,默认0.3s,自定义动画则忽略默认动画】 */
--(CGFloat  )tf_popupManager_popDuration:(TFPopupManager *)manager;
+-(NSTimeInterval)tf_popupManager_popDefaultAnimationDuration:(TFPopupManager *)manager;
 
 @end
 
@@ -68,11 +74,13 @@
 /* 弹出框展示动画开始前回调 */
 -(void)tf_popupManager_willShow:(TFPopupManager *)manager;
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
--(void)tf_popupManager_didShow:(TFPopupManager *)manager;
+-(void)tf_popupManager_didShow:(TFPopupManager *)manager
+              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation;
 /* 弹出框隐藏动画开始前回调 */
 -(void)tf_popupManager_willHide:(TFPopupManager *)manager;
 /* 弹出框隐藏动画完成后回调,自定义动画不回调 */
--(void)tf_popupManager_didHide:(TFPopupManager *)manager;
+-(void)tf_popupManager_didHide:(TFPopupManager *)manager
+              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation;
 
 @end
 
@@ -89,8 +97,8 @@
 @property(nonatomic,assign)NSInteger popBoardItemCount;
 @property(nonatomic,strong)NSMutableArray *popBoardItemFrames;
 @property(nonatomic,strong)NSMutableArray *popBoardItemViews;
-@property(nonatomic,assign)BOOL didCustemAnimation;
-@property(nonatomic,assign)CGFloat duration;
+@property(nonatomic,assign)TFPopupDefaultAnimation defaultAnimation;
+@property(nonatomic,assign)NSTimeInterval defaultAnimationDuration;
 
 +(TFPopupManager *)tf_popupManagerDataSource:(id<TFPopupManagerDataSource>)dataSource
                                     delegate:(id<TFPopupManagerDelegate>)delegate;

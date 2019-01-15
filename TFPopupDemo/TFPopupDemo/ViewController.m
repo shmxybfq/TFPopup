@@ -12,13 +12,19 @@
 
 @interface ViewController ()
 
+@property(nonatomic,strong)UIView *subview;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.subview = [[UIView alloc]initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 500)];
+    self.subview.backgroundColor = [UIColor brownColor];
+    self.subview.clipsToBounds = YES;
+    [self.view addSubview:self.subview];
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -26,18 +32,18 @@
     //[self toast];
     
     [self show];
+    
 }
 -(void)show{
     
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal" owner:nil options:nil].firstObject;
     
-    [alert tf_show:self.view
+    
+    [alert tf_show:self.subview
              style:PopupStyleSlide
           position:PopupPositionFromTop
-     popupAreaRect:self.view.bounds
+     popupAreaRect:self.subview.bounds
          popupSize:CGSizeMake(314, 170)];
-    
-    
 }
 
 -(void)toast{

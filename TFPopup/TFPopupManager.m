@@ -19,6 +19,7 @@
 
 +(TFPopupManager *)tf_popupManagerDataSource:(id<TFPopupManagerDataSource>)dataSource
                                     delegate:(id<TFPopupManagerDelegate>)delegate{
+    
     TFPopupManager *ins = [[TFPopupManager alloc]init];
     ins.dataSource = dataSource;
     ins.delegate = delegate;
@@ -37,16 +38,65 @@
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willShow:)]) {
         [self.delegate tf_popupManager_willShow:self];
     }
-    if (self.didCustemAnimation == NO) {
-        [UIView animateWithDuration:self.duration animations:^{
-            if (weakself.popForCoverView)
-                weakself.popForCoverView.alpha = 1;
-            weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
-        } completion:^(BOOL finished) {
-            if ([weakself.delegate respondsToSelector:@selector(tf_popupManager_didShow:)]) {
-                [weakself.delegate tf_popupManager_didShow:weakself];
+    
+    //不需要动画
+    if (self.defaultAnimation == TFPopupDefaultAnimationNone) {
+        self.popForCoverView.alpha = 1;
+        self.popBoardView.alpha = 1;
+        self.popBoardView.frame = self.popBoardViewEndFrame;
+        [self finishShow:TFPopupDefaultAnimationNone];
+    }else{
+        //遮罩-透明度动画
+        if ((self.defaultAnimation & TFPopupDefaultAnimationCoverAlpha) == TFPopupDefaultAnimationCoverAlpha){
+            if (self.popForCoverView){
+                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                    weakself.popForCoverView.alpha = 1;
+                } completion:^(BOOL finished) {
+                    [weakself finishShow:TFPopupDefaultAnimationCoverAlpha];
+                }];
             }
-        }];
+        }else{
+            [self finishShow:TFPopupDefaultAnimationCoverAlpha];
+        }
+        
+        //弹出框-透明度动画
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
+            if (self.popBoardView) {
+                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                    weakself.popBoardView.alpha = 1;
+                } completion:^(BOOL finished) {
+                    [weakself finishShow:TFPopupDefaultAnimationPopBoardAlpha];
+                }];
+            }
+        }else{
+            self.popBoardView.alpha = 1;
+            [self finishShow:TFPopupDefaultAnimationPopBoardAlpha];
+        }
+        
+        //弹出框-位移动画
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardSlide) == TFPopupDefaultAnimationPopBoardSlide){
+            if (self.popBoardView) {
+                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                    weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
+                } completion:^(BOOL finished) {
+                    [weakself finishShow:TFPopupDefaultAnimationPopBoardSlide];
+                }];
+            }
+        }else{
+            self.popBoardView.frame = weakself.popBoardViewEndFrame;
+            [self finishShow:TFPopupDefaultAnimationPopBoardSlide];
+        }
+    }
+}
+
+-(void)finishShow:(TFPopupDefaultAnimation)animation{
+    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didShow:defaultAnimation:)]) {
+        [self.delegate tf_popupManager_didShow:self defaultAnimation:animation];
+    }
+}
+-(void)finishHide:(TFPopupDefaultAnimation)animation{
+    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didHide:defaultAnimation:)]) {
+        [self.delegate tf_popupManager_didHide:self defaultAnimation:animation];
     }
 }
 
@@ -61,27 +111,65 @@
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willHide:)]) {
         [self.delegate tf_popupManager_willHide:self];
     }
-    if (self.didCustemAnimation == NO) {
-        [UIView animateWithDuration:self.duration animations:^{
-            if (weakself.popForCoverView)
-                weakself.popForCoverView.alpha = 0;
-            weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
-        } completion:^(BOOL finished) {
-            if ([weakself.delegate respondsToSelector:@selector(tf_popupManager_didHide:)]) {
-                [weakself.delegate tf_popupManager_didHide:weakself];
+    //不需要动画
+    if (self.defaultAnimation == TFPopupDefaultAnimationNone) {
+        self.popForCoverView.alpha = 0;
+        self.popBoardView.alpha = 0;
+        self.popBoardView.frame = self.popBoardViewBeginFrame;
+        [self finishHide:TFPopupDefaultAnimationNone];
+    }else{
+        //遮罩-透明度动画
+        if ((self.defaultAnimation & TFPopupDefaultAnimationCoverAlpha) == TFPopupDefaultAnimationCoverAlpha){
+            if (self.popForCoverView){
+                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                    weakself.popForCoverView.alpha = 0;
+                } completion:^(BOOL finished) {
+                    [weakself finishHide:TFPopupDefaultAnimationCoverAlpha];
+                    [weakself.popForCoverView removeFromSuperview];
+                }];
             }
-            [weakself.popForCoverView removeFromSuperview];
-            [weakself.popBoardView removeFromSuperview];
-        }];
+        }else{
+            self.popForCoverView.alpha = 0;
+            [self finishHide:TFPopupDefaultAnimationCoverAlpha];
+            [self.popForCoverView removeFromSuperview];
+        }
+        
+        //弹出框-透明度动画
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
+            if (self.popBoardView) {
+                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                    weakself.popBoardView.alpha = 0;
+                } completion:^(BOOL finished) {
+                    [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha];
+                }];
+            }
+        }else{
+            [self finishHide:TFPopupDefaultAnimationPopBoardAlpha];
+        }
+        
+        //弹出框-位移动画
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardSlide) == TFPopupDefaultAnimationPopBoardSlide){
+            if (self.popBoardView) {
+                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                    weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
+                } completion:^(BOOL finished) {
+                    [weakself finishHide:TFPopupDefaultAnimationPopBoardSlide];
+                    [weakself.popBoardView removeFromSuperview];
+                }];
+            }
+        }else{
+            self.popBoardView.frame = self.popBoardViewBeginFrame;
+            [self finishHide:TFPopupDefaultAnimationPopBoardSlide];
+            [self.popBoardView removeFromSuperview];
+        }
     }
 }
 
 -(void)reload{
     
-    //默认非自定义动画
-    self.didCustemAnimation = NO;
-    if ([self.dataSource respondsToSelector:@selector(tf_popupManager_didCustemAnimation:)]) {
-        self.didCustemAnimation = [self.dataSource tf_popupManager_didCustemAnimation:self];
+    /* 执行顺序:0 返回【默认使用的动画方式,可叠加】 */
+    if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popDefaultAnimation:)]) {
+        self.defaultAnimation = [self.dataSource tf_popupManager_popDefaultAnimation:self];
     }
     
     self.popForView = nil;
@@ -93,7 +181,7 @@
         return;
     }
     
-    
+    //设置背景view
     if (self.popForCoverView) {
         [self.popForCoverView removeFromSuperview];
         self.popForCoverView = nil;
@@ -109,18 +197,27 @@
         self.popForCoverView.frame = self.popForCoverViewFrame;
     }
     
-    
+    //弹出框view
     if (self.popBoardView) {
         [self.popBoardView removeFromSuperview];
         self.popBoardView = nil;
     }
     if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popBoardView:)]) {
         self.popBoardView = [self.dataSource tf_popupManager_popBoardView:self];
+        //在弹框被添加到显示之前先让它隐藏起来
+        self.popBoardView.alpha = 0;
         [self.popForView addSubview:self.popBoardView];
     }
+    //弹出框view - position
     if (self.popBoardView && [self.dataSource respondsToSelector:@selector(tf_popupManager_popBoardViewBeginPosition:boardView:)]) {
         self.popBoardViewBeginFrame = [self.dataSource tf_popupManager_popBoardViewBeginPosition:self boardView:self.popBoardView];
         self.popBoardView.frame = self.popBoardViewBeginFrame;
+        //因为初始位置已经有了,如果支持alpha动画,先把alpha = 0,否则应该把弹框显示出来
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
+            self.popBoardView.alpha = 0;
+        }else{
+            self.popBoardView.alpha = 1;
+        }
     }
     if (self.popBoardView && [self.dataSource respondsToSelector:@selector(tf_popupManager_popBoardViewEndPosition:boardView:)]) {
         self.popBoardViewEndFrame = [self.dataSource tf_popupManager_popBoardViewEndPosition:self boardView:self.popBoardView];
@@ -132,7 +229,7 @@
         self.popBoardItemCount = [self.dataSource tf_popupManager_popBoardItemCount:self];
     }
     NSArray *itemViews = [NSArray arrayWithArray:self.popBoardItemViews];
-    for (UIView *view in itemViews) {[view removeFromSuperview];}
+    for (UIView *v in itemViews) {[v removeFromSuperview];}
     [self.popBoardItemViews removeAllObjects];
     [self.popBoardItemFrames removeAllObjects];
     
@@ -142,8 +239,8 @@
             if (view && [self.dataSource respondsToSelector:@selector(tf_popupManager_popBoardItemPersition:itemView:index:)]) {
                 [self.popBoardView addSubview:view];
                 CGRect frame = [self.dataSource tf_popupManager_popBoardItemPersition:self
-                                                                            itemView:view
-                                                                               index:i];
+                                                                             itemView:view
+                                                                                index:i];
                 view.frame = frame;
                 [self.popBoardItemFrames addObject:NSStringFromCGRect(frame)];
                 [self.popBoardItemViews addObject:view];
@@ -151,9 +248,9 @@
         }
     }
     
-    self.duration = 0.3;
-    if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popDuration:)]) {
-        self.duration = [self.dataSource tf_popupManager_popDuration:self];
+    self.defaultAnimationDuration = 0.3;
+    if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popDefaultAnimationDuration:)]) {
+        self.defaultAnimationDuration = [self.dataSource tf_popupManager_popDefaultAnimationDuration:self];
     }
 }
 
