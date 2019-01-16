@@ -80,6 +80,7 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
             }
         }break;
         case PopupStyleFold:{
+            ani = TFPopupDefaultAnimationPopBoardSlide;
             if (self.popupParam.noCoverAlphaAnimation == NO) {
                 ani =ani | TFPopupDefaultAnimationCoverAlpha;
             }

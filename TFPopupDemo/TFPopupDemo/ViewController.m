@@ -10,6 +10,9 @@
 #import "TFPopup.h"
 #import "AlertNormal.h"
 
+
+#define kSize [UIScreen mainScreen].bounds.size
+
 @interface ViewController ()
 
 @property(nonatomic,strong)UIView *subview;
@@ -20,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     CGRect frame = CGRectMake(0, 100, self.view.bounds.size.width, 500);
     //frame = self.view.bounds;
@@ -39,12 +44,14 @@
 -(void)show{
     TFPopupParam *param = [TFPopupParam new];
     param.popupSize = CGSizeMake(314, 170);
-    param.duration = 1;
+    param.duration = 0.3;
+    param.foldOriginFrame = CGRectMake(0, 100, 0, 1);
+    param.foldTargetFrame = CGRectMake(0, 100, kSize.width, 300);
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
                                                       owner:nil options:nil].firstObject;
     [alert tf_show:self.view
         popupParam:param
-             style:PopupStyleAlpha
+             style:PopupStyleFold
           position:PopupPositionCenter
      popupAreaRect:self.view.bounds
           willShow:^(id inView) {
