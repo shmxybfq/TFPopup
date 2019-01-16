@@ -12,6 +12,8 @@
 @property(nonatomic,  weak)id<TFPopupManagerDataSource>dataSource;
 @property(nonatomic,  weak)id<TFPopupManagerDelegate>delegate;
 
+@property(nonatomic,assign)BOOL popForViewOriginUserInteractionEnabled;
+
 @end
 
 @implementation TFPopupManager
@@ -35,8 +37,12 @@
 
 -(void)excuteShow{
     x_weakSelf;
+    BOOL animationStop = NO;
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willShow:)]) {
-        [self.delegate tf_popupManager_willShow:self];
+        animationStop = [self.delegate tf_popupManager_willShow:self];
+    }
+    if (animationStop == YES) {
+        return;
     }
     
     //不需要动画
@@ -46,6 +52,15 @@
         self.popBoardView.frame = self.popBoardViewEndFrame;
         [self finishShow:TFPopupDefaultAnimationNone];
     }else{
+        
+        //动画前禁止被弹视图用户交互
+        self.popForViewOriginUserInteractionEnabled = self.popForView.userInteractionEnabled;
+        self.popForView.userInteractionEnabled = NO;
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)((self.defaultAnimationDuration) * NSEC_PER_SEC));
+        dispatch_after(time, dispatch_get_main_queue(), ^{
+            weakself.popForView.userInteractionEnabled = weakself.popForViewOriginUserInteractionEnabled;
+        });
+        
         //遮罩-透明度动画
         if ((self.defaultAnimation & TFPopupDefaultAnimationCoverAlpha) == TFPopupDefaultAnimationCoverAlpha){
             if (self.popForCoverView){
@@ -108,9 +123,14 @@
 
 -(void)excuteHide{
     x_weakSelf;
+    BOOL animationStop = NO;
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willHide:)]) {
-        [self.delegate tf_popupManager_willHide:self];
+        animationStop = [self.delegate tf_popupManager_willHide:self];
     }
+    if (animationStop == YES) {
+        return;
+    }
+    
     //不需要动画
     if (self.defaultAnimation == TFPopupDefaultAnimationNone) {
         self.popForCoverView.alpha = 0;

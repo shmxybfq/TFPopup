@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */; };
 		203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD46B21EC6B22004ACC42 /* AppDelegate.m */; };
 		203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD46E21EC6B22004ACC42 /* ViewController.m */; };
 		203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203DD47021EC6B22004ACC42 /* Main.storyboard */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2024EEAB21EDDF6A00DEC84A /* TFPopupProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupProtocol.h; sourceTree = "<group>"; };
+		2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupProtocol.m; sourceTree = "<group>"; };
 		203DD46721EC6B22004ACC42 /* TFPopupDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFPopupDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		203DD46A21EC6B22004ACC42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		203DD46B21EC6B22004ACC42 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				203DD48121EC6B92004ACC42 /* TFPopup.h */,
 				203DD48221EC6BD9004ACC42 /* TFPopupManager.h */,
 				203DD48321EC6BD9004ACC42 /* TFPopupManager.m */,
+				2024EEAB21EDDF6A00DEC84A /* TFPopupProtocol.h */,
+				2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */,
 				203DD48521EC6BFA004ACC42 /* TFPopupToast.h */,
 				203DD48621EC6BFA004ACC42 /* TFPopupToast.m */,
 				203DD48821EC71C3004ACC42 /* TFPopupLoading.h */,
@@ -193,6 +198,7 @@
 				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
 				203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */,
 				203DD47A21EC6B23004ACC42 /* main.m in Sources */,
+				2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */,
 				203DD48A21EC71C3004ACC42 /* TFPopupLoading.m in Sources */,
 				203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */,
 				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
