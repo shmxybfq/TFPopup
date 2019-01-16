@@ -149,8 +149,8 @@
                 }];
             }
         }else{
-            self.popForCoverView.alpha = 0;
             [self finishHide:TFPopupDefaultAnimationCoverAlpha];
+            self.popForCoverView.alpha = 0;
             [self.popForCoverView removeFromSuperview];
         }
         
@@ -161,6 +161,8 @@
                     weakself.popBoardView.alpha = 0;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha];
+                    weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
+                    [weakself.popBoardView removeFromSuperview];
                 }];
             }
         }else{
@@ -174,12 +176,18 @@
                     weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardSlide];
+                    weakself.popBoardView.alpha = 0;
                     [weakself.popBoardView removeFromSuperview];
                 }];
             }
         }else{
-            self.popBoardView.frame = self.popBoardViewBeginFrame;
             [self finishHide:TFPopupDefaultAnimationPopBoardSlide];
+        }
+        
+        
+        BOOL con0 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha;
+        BOOL con1 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardSlide) == TFPopupDefaultAnimationPopBoardSlide;
+        if ((con0 || con1) == NO) {
             [self.popBoardView removeFromSuperview];
         }
     }
