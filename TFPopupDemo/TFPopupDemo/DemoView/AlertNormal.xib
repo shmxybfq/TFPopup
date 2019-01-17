@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,18 +42,17 @@
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="CsS-5V-2qz" secondAttribute="trailing" constant="15" id="5lV-O0-Fnk"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jWR-w3-ntY" secondAttribute="trailing" constant="15" id="CpZ-NY-bb2"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="jWR-w3-ntY" secondAttribute="bottom" constant="20" id="G7B-j7-fdp"/>
-                <constraint firstItem="jWR-w3-ntY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="QM8-kL-BPu"/>
-                <constraint firstItem="CsS-5V-2qz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="QbD-ZW-uho"/>
-                <constraint firstItem="APM-Jb-lLk" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="XxW-9l-hMz"/>
+                <constraint firstAttribute="trailing" secondItem="CsS-5V-2qz" secondAttribute="trailing" constant="15" id="5lV-O0-Fnk"/>
+                <constraint firstAttribute="trailing" secondItem="jWR-w3-ntY" secondAttribute="trailing" constant="15" id="CpZ-NY-bb2"/>
+                <constraint firstAttribute="bottom" secondItem="jWR-w3-ntY" secondAttribute="bottom" constant="20" id="G7B-j7-fdp"/>
+                <constraint firstItem="jWR-w3-ntY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="QM8-kL-BPu"/>
+                <constraint firstItem="CsS-5V-2qz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="QbD-ZW-uho"/>
+                <constraint firstItem="APM-Jb-lLk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="XxW-9l-hMz"/>
                 <constraint firstItem="CsS-5V-2qz" firstAttribute="top" secondItem="APM-Jb-lLk" secondAttribute="bottom" constant="20" id="hy6-GT-JVo"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="APM-Jb-lLk" secondAttribute="trailing" id="q09-qB-og7"/>
-                <constraint firstItem="APM-Jb-lLk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ttz-z8-gzv"/>
+                <constraint firstAttribute="trailing" secondItem="APM-Jb-lLk" secondAttribute="trailing" id="q09-qB-og7"/>
+                <constraint firstItem="APM-Jb-lLk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ttz-z8-gzv"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>
     </objects>
 </document>

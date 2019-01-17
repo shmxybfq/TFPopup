@@ -14,7 +14,10 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
     TFPopupDefaultAnimationCoverAlpha   = 1 << 0,
     TFPopupDefaultAnimationPopBoardAlpha   = 1 << 1,
     TFPopupDefaultAnimationPopBoardSlide   = 1 << 2,
+    TFPopupDefaultAnimationCustem      = 1 << 3,
 };
+
+
 
 @class TFPopupManager;
 
@@ -64,15 +67,22 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
 @optional;
 
 /* 弹出框展示动画开始前回调 */
--(BOOL)tf_popupManager_willShow:(TFPopupManager *)manager;
+-(BOOL)tf_popupManager_willShow:(TFPopupManager *)manager
+                  tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager;
+
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
 -(void)tf_popupManager_didShow:(TFPopupManager *)manager
-              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation;
+              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
+               isAnimationShow:(BOOL)isAnimationShow;
+
 /* 弹出框隐藏动画开始前回调 */
--(BOOL)tf_popupManager_willHide:(TFPopupManager *)manager;
+-(BOOL)tf_popupManager_willHide:(TFPopupManager *)manager
+                  tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager;;
+
 /* 弹出框隐藏动画完成后回调,自定义动画不回调 */
 -(void)tf_popupManager_didHide:(TFPopupManager *)manager
-              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation;
+              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
+               isAnimationHide:(BOOL)isAnimationHide;
 
 @end
 

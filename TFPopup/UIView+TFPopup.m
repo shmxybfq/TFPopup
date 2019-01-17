@@ -73,10 +73,13 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
         }break;
         case PopupStyleScale:{
             if (self.popupParam.noCoverAlphaAnimation == NO) {
-                ani =ani | TFPopupDefaultAnimationCoverAlpha;
+                ani = ani | TFPopupDefaultAnimationCoverAlpha;
             }
             if (self.popupParam.noPopupAlphaAnimation == NO) {
-                ani =ani | TFPopupDefaultAnimationPopBoardAlpha;
+                ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
+            }
+            if (ani == TFPopupDefaultAnimationNone) {
+                ani = TFPopupDefaultAnimationCompulsive;
             }
         }break;
         case PopupStyleFold:{
@@ -107,7 +110,7 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 -(UIView  *)tf_popupManager_popForCoverView:(TFPopupManager *)manager{
     if (self.popupParam.noCoverView == NO) {
         UIButton *cover = [UIButton buttonWithType:UIButtonTypeCustom];
-        cover.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
+        cover.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.3];
         [cover addTarget:self action:@selector(coverClick:) forControlEvents:UIControlEventTouchUpInside];
         return cover;
     }
@@ -208,24 +211,54 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 }
 
 #pragma mark 代理 TFPopupManagerDelegate 方法
+
 /* 弹出框展示动画开始前回调 */
--(BOOL)tf_popupManager_willShow:(TFPopupManager *)manager{
-    //x_weakSelf;
+-(BOOL)tf_popupManager_willShow:(TFPopupManager *)manager
+                  tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
+    //缩放
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.x"];
+    [animation setFromValue:@0.0];//设置起始值
+    [animation setToValue:@1.0];//设置目标值
+    [animation setDuration:1];//设置动画时间，单次动画时间
+    [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [animation setAutoreverses:NO];
+    [animation setFillMode:kCAFillModeBoth];
+    [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    tellToManager(NO,manager.defaultAnimationDuration);
     return NO;
 }
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
--(void)tf_popupManager_didShow:(TFPopupManager *)manager{
+/* 弹出框隐藏动画完成后回调,自定义动画不回调 */
+-(void)tf_popupManager_didShow:(TFPopupManager *)manager
+              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
+               isAnimationShow:(BOOL)isAnimationShow{
     
 }
 /* 弹出框隐藏动画开始前回调 */
--(BOOL)tf_popupManager_willHide:(TFPopupManager *)manager{
-    //x_weakSelf;
+-(BOOL)tf_popupManager_willHide:(TFPopupManager *)manager
+                  tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
+    //缩放
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
+    [animation setFromValue:@1.0];//设置起始值
+    [animation setToValue:@0.0];//设置目标值
+    [animation setDuration:1];//设置动画时间，单次动画时间
+    [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [animation setAutoreverses:NO];
+    [animation setFillMode:kCAFillModeBoth];
+    [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    tellToManager(NO,manager.defaultAnimationDuration);
     return NO;
 }
+
 /* 弹出框隐藏动画完成后回调,自定义动画不回调 */
--(void)tf_popupManager_didHide:(TFPopupManager *)manager{
+-(void)tf_popupManager_didHide:(TFPopupManager *)manager
+              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
+               isAnimationHide:(BOOL)isAnimationHide{
     
 }
+
 
 #pragma mark 属性绑定函数
 -(CGSize)popupSize{

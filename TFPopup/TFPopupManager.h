@@ -31,6 +31,7 @@
 @property(nonatomic,strong)NSMutableArray *popBoardItemViews;
 @property(nonatomic,assign)TFPopupDefaultAnimation defaultAnimation;
 @property(nonatomic,assign)NSTimeInterval defaultAnimationDuration;
+@property(nonatomic,assign)NSTimeInterval custemAnimationDuration;
 
 +(TFPopupManager *)tf_popupManagerDataSource:(id<TFPopupManagerDataSource>)dataSource
                                     delegate:(id<TFPopupManagerDelegate>)delegate;
