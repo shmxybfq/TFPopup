@@ -96,17 +96,17 @@
         }
         
         //弹出框-位移动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardSlide) == TFPopupDefaultAnimationPopBoardSlide){
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame){
             if (self.popBoardView) {
                 [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
                     weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
                 } completion:^(BOOL finished) {
-                    [weakself finishShow:TFPopupDefaultAnimationPopBoardSlide isAnimationShow:YES];
+                    [weakself finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:YES];
                 }];
             }
         }else{
             self.popBoardView.frame = weakself.popBoardViewEndFrame;
-            [self finishShow:TFPopupDefaultAnimationPopBoardSlide isAnimationShow:NO];
+            [self finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:NO];
         }
     }
 }
@@ -194,17 +194,17 @@
         }
         
         //弹出框-位移动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardSlide) == TFPopupDefaultAnimationPopBoardSlide){
+        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame){
             if (self.popBoardView) {
                 [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
                     weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
                 } completion:^(BOOL finished) {
-                    [weakself finishHide:TFPopupDefaultAnimationPopBoardSlide  isAnimationHide:YES];
+                    [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:YES];
                     [weakself.popBoardView removeFromSuperview];
                 }];
             }
         }else{
-            [self finishHide:TFPopupDefaultAnimationPopBoardSlide  isAnimationHide:NO];
+            [self finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:NO];
         }
         
         //弹出框-自定义动画
@@ -222,7 +222,7 @@
         }
         
         BOOL con0 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha;
-        BOOL con1 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardSlide) == TFPopupDefaultAnimationPopBoardSlide;
+        BOOL con1 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame;
         BOOL con2 = (self.defaultAnimation & TFPopupDefaultAnimationCustem) == TFPopupDefaultAnimationCustem;
         if ((con0 || con1 || con2) == NO) {
             [self.popBoardView removeFromSuperview];

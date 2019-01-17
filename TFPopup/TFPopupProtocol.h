@@ -13,7 +13,7 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
     TFPopupDefaultAnimationNone    = 0,
     TFPopupDefaultAnimationCoverAlpha   = 1 << 0,
     TFPopupDefaultAnimationPopBoardAlpha   = 1 << 1,
-    TFPopupDefaultAnimationPopBoardSlide   = 1 << 2,
+    TFPopupDefaultAnimationPopBoardFrame   = 1 << 2,
     TFPopupDefaultAnimationCustem      = 1 << 3,
 };
 

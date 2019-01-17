@@ -63,7 +63,7 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
             }
         }break;
         case PopupStyleSlide:{
-            ani = TFPopupDefaultAnimationPopBoardSlide;
+            ani = TFPopupDefaultAnimationPopBoardFrame;
             if (self.popupParam.noCoverAlphaAnimation == NO) {
                 ani = ani | TFPopupDefaultAnimationCoverAlpha;
             }
@@ -83,7 +83,7 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
             }
         }break;
         case PopupStyleFold:{
-            ani = TFPopupDefaultAnimationPopBoardSlide;
+            ani = TFPopupDefaultAnimationPopBoardFrame;
             if (self.popupParam.noCoverAlphaAnimation == NO) {
                 ani =ani | TFPopupDefaultAnimationCoverAlpha;
             }
