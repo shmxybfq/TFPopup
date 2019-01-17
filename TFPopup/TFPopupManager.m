@@ -60,7 +60,8 @@
         //动画前禁止被弹视图用户交互
         self.popForViewOriginUserInteractionEnabled = self.popForView.userInteractionEnabled;
         self.popForView.userInteractionEnabled = NO;
-        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)((self.defaultAnimationDuration) * NSEC_PER_SEC));
+        NSTimeInterval max = MAX(self.custemAnimationDuration, self.defaultAnimationDuration);
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(max * NSEC_PER_SEC));
         dispatch_after(time, dispatch_get_main_queue(), ^{
             weakself.popForView.userInteractionEnabled = weakself.popForViewOriginUserInteractionEnabled;
         });
@@ -209,7 +210,8 @@
         //弹出框-自定义动画
         if ((self.defaultAnimation & TFPopupDefaultAnimationCustem) == TFPopupDefaultAnimationCustem){
             if (self.popBoardView) {
-                dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)((self.custemAnimationDuration) * NSEC_PER_SEC));
+                NSTimeInterval max = MAX(self.custemAnimationDuration, self.defaultAnimationDuration);
+                dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(max * NSEC_PER_SEC));
                 dispatch_after(time, dispatch_get_main_queue(), ^{
                     [weakself finishHide:TFPopupDefaultAnimationCustem isAnimationHide:YES];
                     [weakself.popBoardView removeFromSuperview];

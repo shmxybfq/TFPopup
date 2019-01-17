@@ -44,7 +44,7 @@
     TFPopupParam *param = [TFPopupParam new];
     param.duration = 0.3;
     //param.noCoverView = YES;
-    param.noCoverAlphaAnimation = YES;
+    //param.noCoverAlphaAnimation = YES;
     param.noPopupAlphaAnimation = YES;
     param.popupSize = CGSizeMake(314, 170);
     param.foldOriginFrame = CGRectMake(0, 100, kSize.width, 1);

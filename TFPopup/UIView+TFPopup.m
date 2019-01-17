@@ -78,8 +78,8 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
             if (self.popupParam.noPopupAlphaAnimation == NO) {
                 ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
             }
-            if (ani == TFPopupDefaultAnimationNone) {
-                ani = TFPopupDefaultAnimationCompulsive;
+            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationCoverAlpha) {
+                ani = ani | TFPopupDefaultAnimationCustem;
             }
         }break;
         case PopupStyleFold:{
@@ -216,16 +216,17 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 -(BOOL)tf_popupManager_willShow:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
     //缩放
+    NSTimeInterval dur = 0.3;
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.x"];
     [animation setFromValue:@0.0];//设置起始值
     [animation setToValue:@1.0];//设置目标值
-    [animation setDuration:1];//设置动画时间，单次动画时间
+    [animation setDuration:dur];//设置动画时间，单次动画时间
     [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
     [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [animation setAutoreverses:NO];
     [animation setFillMode:kCAFillModeBoth];
     [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-    tellToManager(NO,manager.defaultAnimationDuration);
+    tellToManager(NO,dur);
     return NO;
 }
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
@@ -239,16 +240,17 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 -(BOOL)tf_popupManager_willHide:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
     //缩放
+    NSTimeInterval dur = 0.3;
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
     [animation setFromValue:@1.0];//设置起始值
     [animation setToValue:@0.0];//设置目标值
-    [animation setDuration:1];//设置动画时间，单次动画时间
+    [animation setDuration:dur];//设置动画时间，单次动画时间
     [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
     [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [animation setAutoreverses:NO];
     [animation setFillMode:kCAFillModeBoth];
     [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-    tellToManager(NO,manager.defaultAnimationDuration);
+    tellToManager(NO,dur);
     return NO;
 }
 
