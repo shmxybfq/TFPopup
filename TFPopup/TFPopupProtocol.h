@@ -67,7 +67,7 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
 @optional;
 
 /* 弹出框展示动画开始前回调 */
--(BOOL)tf_popupManager_willShow:(TFPopupManager *)manager
+-(void)tf_popupManager_willShow:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager;
 
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
@@ -76,7 +76,7 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
                isAnimationShow:(BOOL)isAnimationShow;
 
 /* 弹出框隐藏动画开始前回调 */
--(BOOL)tf_popupManager_willHide:(TFPopupManager *)manager
+-(void)tf_popupManager_willHide:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager;;
 
 /* 弹出框隐藏动画完成后回调,自定义动画不回调 */

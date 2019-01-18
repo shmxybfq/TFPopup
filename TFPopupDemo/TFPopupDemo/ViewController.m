@@ -44,22 +44,23 @@
     TFPopupParam *param = [TFPopupParam new];
     param.duration = 0.3;
     //param.noCoverView = YES;
-    //param.noCoverAlphaAnimation = YES;
+    param.noCoverAlphaAnimation = YES;
     param.noPopupAlphaAnimation = YES;
-    param.popupSize = CGSizeMake(314, 170);
-    param.foldOriginFrame = CGRectMake(0, 100, kSize.width, 1);
-    param.foldTargetFrame = CGRectMake(0, 100, kSize.width, 300);
+    param.popOriginFrame = CGRectMake(0, 100, kSize.width, 1);
+    param.popTargetFrame = CGRectMake(0, 100, kSize.width, 300);
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
                                                       owner:nil options:nil].firstObject;
-    [alert tf_show:self.view
-        popupParam:param
-             style:PopupStyleScale
-          position:PopupPositionCenter
-     popupAreaRect:self.view.bounds
-          willShow:^(id inView) {
-        
-    }];
-
+    //[alert tf_show:self.view animated:YES];
+//    [alert tf_show:self.view offset:20 animated:YES];
+//    [alert tf_show:self.view
+//        popupParam:param
+//             style:PopupStyleFrame
+//          position:PopupDirectionCenter
+//         popupSize:CGSizeZero
+//     popupAreaRect:self.view.bounds
+//          willShow:^(id inView) {
+//
+//    }];
 }
 
 

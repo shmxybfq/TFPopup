@@ -39,7 +39,7 @@
     x_weakSelf;
     __block BOOL animationStop = NO;
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willShow:tellToManager:)]) {
-        animationStop = [self.delegate tf_popupManager_willShow:self tellToManager:^(BOOL stopDefaultAnimation, NSTimeInterval duration) {
+        [self.delegate tf_popupManager_willShow:self tellToManager:^(BOOL stopDefaultAnimation, NSTimeInterval duration) {
             animationStop = stopDefaultAnimation;
             weakself.custemAnimationDuration = duration;
         }];
@@ -136,7 +136,7 @@
     x_weakSelf;
     __block BOOL animationStop = NO;
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willHide:tellToManager:)]) {
-        animationStop = [self.delegate tf_popupManager_willHide:self tellToManager:^(BOOL stopDefaultAnimation, NSTimeInterval duration) {
+        [self.delegate tf_popupManager_willHide:self tellToManager:^(BOOL stopDefaultAnimation, NSTimeInterval duration) {
             animationStop = stopDefaultAnimation;
             weakself.custemAnimationDuration = duration;
         }];

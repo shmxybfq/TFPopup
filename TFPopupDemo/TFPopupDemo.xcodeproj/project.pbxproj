@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */; };
+		2024EEBB21F18A0D00DEC84A /* TFPopupParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024EEBA21F18A0D00DEC84A /* TFPopupParam.m */; };
 		203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD46B21EC6B22004ACC42 /* AppDelegate.m */; };
 		203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD46E21EC6B22004ACC42 /* ViewController.m */; };
 		203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 203DD47021EC6B22004ACC42 /* Main.storyboard */; };
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		2024EEAB21EDDF6A00DEC84A /* TFPopupProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupProtocol.h; sourceTree = "<group>"; };
 		2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupProtocol.m; sourceTree = "<group>"; };
+		2024EEB921F18A0D00DEC84A /* TFPopupParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupParam.h; sourceTree = "<group>"; };
+		2024EEBA21F18A0D00DEC84A /* TFPopupParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupParam.m; sourceTree = "<group>"; };
 		203DD46721EC6B22004ACC42 /* TFPopupDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFPopupDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		203DD46A21EC6B22004ACC42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		203DD46B21EC6B22004ACC42 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				203DD48921EC71C3004ACC42 /* TFPopupLoading.m */,
 				203DD49121EC865F004ACC42 /* UIView+TFPopup.h */,
 				203DD49221EC865F004ACC42 /* UIView+TFPopup.m */,
+				2024EEB921F18A0D00DEC84A /* TFPopupParam.h */,
+				2024EEBA21F18A0D00DEC84A /* TFPopupParam.m */,
 			);
 			name = TFPopup;
 			path = ../../TFPopup;
@@ -202,6 +207,7 @@
 				203DD48A21EC71C3004ACC42 /* TFPopupLoading.m in Sources */,
 				203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */,
 				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
+				2024EEBB21F18A0D00DEC84A /* TFPopupParam.m in Sources */,
 				203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

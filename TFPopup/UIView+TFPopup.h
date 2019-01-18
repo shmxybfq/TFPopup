@@ -7,26 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TFPopupParam.h"
 #import "TFPopupManager.h"
 
-#ifndef tf_synthesize_category_property
-#define tf_synthesize_category_property(getter,settter,objc_AssociationPolicy,TYPE)\
-- (TYPE)getter{return objc_getAssociatedObject(self, @selector(getter));}\
-- (void)settter:(TYPE)obj{objc_setAssociatedObject(self, @selector(getter), obj, objc_AssociationPolicy);}
-#endif
 
-
-#ifndef tf_synthesize_category_property_retain
-#define tf_synthesize_category_property_retain(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_RETAIN_NONATOMIC,id)
-#endif
-
-
-typedef NS_ENUM(NSInteger,PopupPosition) {
-    PopupPositionCenter = 0,
-    PopupPositionFromLeft,
-    PopupPositionFromBottom,
-    PopupPositionFromRight,
-    PopupPositionFromTop,
+typedef NS_ENUM(NSInteger,PopupDirection) {
+    PopupDirectionCenter = 0,
+    PopupDirectionFromLeft,
+    PopupDirectionFromBottom,
+    PopupDirectionFromRight,
+    PopupDirectionFromTop,
+    PopupDirectionFrame,
 };
 
 typedef NS_ENUM(NSInteger,PopupStyle) {
@@ -34,10 +25,11 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleAlpha,
     PopupStyleScale,
     PopupStyleSlide,
-    PopupStyleFold,
+    PopupStyleFrame,
 };
 
-typedef void(^TFPopupBlock)(id inView);
+typedef void(^TFPopupActionBlock)(TFPopupManager *manager,UIView *popup);
+
 @class TFPopupParam;
 @interface UIView (TFPopup)<TFPopupManagerDataSource,TFPopupManagerDelegate>
 
@@ -46,44 +38,57 @@ typedef void(^TFPopupBlock)(id inView);
 
 @property(nonatomic,strong)TFPopupParam *popupParam;
 @property(nonatomic,assign)PopupStyle style;
-@property(nonatomic,assign)PopupPosition position;
+@property(nonatomic,assign)PopupDirection direction;
 @property(nonatomic,assign)CGRect popupAreaRect;
 @property(nonatomic,assign)CGSize popupSize;
+@property(nonatomic,  copy)TFPopupActionBlock willShowBlock;
+@property(nonatomic,  copy)TFPopupActionBlock willHideBlock;
+@property(nonatomic,  copy)TFPopupActionBlock coverTouchBlock;
 
+
+-(void)observerWillShowAction:(TFPopupActionBlock)willShow;
+-(void)observerWillHideAction:(TFPopupActionBlock)willHide;
+-(void)observerCoverTouchAction:(TFPopupActionBlock)coverTouch;
+
+
+#pragma mark -- 【无动画弹出,透明度动画弹出】方式
+-(void)tf_show:(UIView *)inView animated:(BOOL)animated;
+
+-(void)tf_show:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated;
 
 -(void)tf_show:(UIView *)inView
+        offset:(CGPoint)offset
     popupParam:(TFPopupParam *)popupParam
-         style:(PopupStyle)style
-      position:(PopupPosition)position
- popupAreaRect:(CGRect)popupAreaRect
-      willShow:(TFPopupBlock)willShow;
+      animated:(BOOL)animated;
+
+#pragma mark -- 【缩放动画弹出】方式
+-(void)tf_showScale:(UIView *)inView;
+
+-(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset;
+
+-(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
+
+
+#pragma mark -- 【滑动出来动画】方式
+-(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction;
+
+-(void)tf_showSlide:(UIView *)inView
+          direction:(PopupDirection)direction
+         popupParam:(TFPopupParam *)popupParam;
+
+#pragma mark -- 【滑动出来动画】方式
+-(void)tf_showFold:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
+
+#pragma mark -- 【自定义任何动画】方式
+-(void)tf_showCustem:(UIView *)inView
+          popupParam:(TFPopupParam *)popupParam
+               style:(PopupStyle)style
+           direction:(PopupDirection)direction
+           popupSize:(CGSize)popupSize
+       popupAreaRect:(CGRect)popupAreaRect
+            willShow:(TFPopupActionBlock)willShow
+            willHide:(TFPopupActionBlock)willHide
+          coverTouch:(TFPopupActionBlock)coverTouch;
 
 @end
 
-
-@interface TFPopupParam : NSObject
-//公有属性
-
-
-//动画时间 默认0.3
-@property(nonatomic,assign)NSTimeInterval duration;
-//是否使用 背景视图 (0.3-alpha的黑色视图)
-@property(nonatomic,assign)BOOL noCoverView;
-//背景视图 是否 alpha 动画展示出来
-@property(nonatomic,assign)BOOL noCoverAlphaAnimation;
-//弹出框 是否 alpha 动画展示出来
-@property(nonatomic,assign)BOOL noPopupAlphaAnimation;
-
-
-//必传 PopupStyleNone,PopupStyleAlpha,PopupStyleSlide,PopupStyleScale 独有属性
-//弹出框尺寸
-@property(nonatomic,assign)CGSize popupSize;
-
-
-//必传 PopupStyleFold 独有属性
-//弹出框初始尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是线弹出
-@property(nonatomic,assign)CGRect foldOriginFrame;
-//弹出框目标尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是线弹出
-@property(nonatomic,assign)CGRect foldTargetFrame;
-
-@end
