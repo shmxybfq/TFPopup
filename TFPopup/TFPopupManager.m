@@ -36,18 +36,18 @@
 }
 
 -(void)excuteShow{
+    
     x_weakSelf;
-    __block BOOL animationStop = NO;
+    __block BOOL breakOriginAnimation = NO;
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willShow:tellToManager:)]) {
         [self.delegate tf_popupManager_willShow:self tellToManager:^(BOOL stopDefaultAnimation, NSTimeInterval duration) {
-            animationStop = stopDefaultAnimation;
+            breakOriginAnimation = stopDefaultAnimation;
             weakself.custemAnimationDuration = duration;
         }];
     }
-    if (animationStop == YES) {
+    if (breakOriginAnimation == YES) {
         return;
     }
-
     
     //不需要动画
     if (self.defaultAnimation == TFPopupDefaultAnimationNone) {
@@ -134,14 +134,14 @@
 
 -(void)excuteHide{
     x_weakSelf;
-    __block BOOL animationStop = NO;
+    __block BOOL breakOriginAnimation = NO;
     if ([self.delegate respondsToSelector:@selector(tf_popupManager_willHide:tellToManager:)]) {
         [self.delegate tf_popupManager_willHide:self tellToManager:^(BOOL stopDefaultAnimation, NSTimeInterval duration) {
-            animationStop = stopDefaultAnimation;
+            breakOriginAnimation = stopDefaultAnimation;
             weakself.custemAnimationDuration = duration;
         }];
     }
-    if (animationStop == YES) {
+    if (breakOriginAnimation == YES) {
         if (self.popForCoverView) {
             dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)((self.custemAnimationDuration) * NSEC_PER_SEC));
             dispatch_after(time, dispatch_get_main_queue(), ^{
@@ -228,11 +228,6 @@
             [self.popBoardView removeFromSuperview];
         }
     }
-}
-
--(void)testxxx{
-    NSLog(@"333");
-
 }
 
 -(void)reload{

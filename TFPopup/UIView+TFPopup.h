@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleFrame,
 };
 
-typedef void(^TFPopupActionBlock)(TFPopupManager *manager,UIView *popup);
+typedef BOOL(^TFPopupActionBlock)(TFPopupManager *manager,UIView *popup);
 
 @class TFPopupParam;
 @interface UIView (TFPopup)<TFPopupManagerDataSource,TFPopupManagerDelegate>

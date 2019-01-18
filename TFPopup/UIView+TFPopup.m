@@ -80,6 +80,7 @@
                                           bf.size.width,
                                           bf.size.height);
                    manager.popBoardViewEndFrame = nf;
+                   return NO;
                } willHide:^(TFPopupManager *manager, UIView *popup) {
                    CGRect bf = manager.popBoardViewEndFrame;
                    CGRect nf = CGRectMake(bf.origin.x + offset.x,
@@ -87,6 +88,7 @@
                                           bf.size.width,
                                           bf.size.height);
                    manager.popBoardViewBeginFrame = nf;
+                   return NO;
                } coverTouch:nil];
 }
 
@@ -346,6 +348,15 @@
 /* 弹出框展示动画开始前回调 */
 -(void)tf_popupManager_willShow:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
+    
+    BOOL breakOriginAnimation = NO;
+    if (self.willShowBlock) {
+        breakOriginAnimation = self.willShowBlock(self.manager, self);
+        if (breakOriginAnimation) {
+            tellToManager(YES,self.popupParam.duration);
+            return;
+        }
+    }
     //缩放
     if (self.willShowBlock) {
         self.willShowBlock(self.manager, self);
@@ -376,10 +387,16 @@
 /* 弹出框隐藏动画开始前回调 */
 -(void)tf_popupManager_willHide:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
-    //缩放
+    
+    BOOL breakOriginAnimation = NO;
     if (self.willHideBlock) {
-        self.willHideBlock(self.manager, self);
+        breakOriginAnimation = self.willHideBlock(self.manager, self);
+        if (breakOriginAnimation) {
+            tellToManager(YES,self.popupParam.duration);
+            return;
+        }
     }
+    //缩放
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
