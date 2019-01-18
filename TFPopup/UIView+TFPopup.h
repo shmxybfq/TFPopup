@@ -50,6 +50,7 @@ typedef void(^TFPopupActionBlock)(TFPopupManager *manager,UIView *popup);
 -(void)observerWillHideAction:(TFPopupActionBlock)willHide;
 -(void)observerCoverTouchAction:(TFPopupActionBlock)coverTouch;
 
+-(void)tf_hide;
 
 #pragma mark -- 【无动画弹出,透明度动画弹出】方式
 -(void)tf_show:(UIView *)inView animated:(BOOL)animated;

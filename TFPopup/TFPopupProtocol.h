@@ -6,8 +6,8 @@
 //  Copyright © 2019年 ztf. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
     TFPopupDefaultAnimationNone    = 0,
@@ -16,8 +16,6 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
     TFPopupDefaultAnimationPopBoardFrame   = 1 << 2,
     TFPopupDefaultAnimationCustem      = 1 << 3,
 };
-
-
 
 @class TFPopupManager;
 

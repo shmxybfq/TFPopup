@@ -9,23 +9,6 @@
 #import "UIView+TFPopup.h"
 #import <objc/runtime.h>
 
-#ifndef tf_synthesize_category_property
-#define tf_synthesize_category_property(getter,settter,objc_AssociationPolicy,TYPE)\
-- (TYPE)getter{return objc_getAssociatedObject(self, @selector(getter));}\
-- (void)settter:(TYPE)obj{objc_setAssociatedObject(self, @selector(getter), obj, objc_AssociationPolicy);}
-#endif
-
-#ifndef tf_synthesize_category_property_retain
-#define tf_synthesize_category_property_retain(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_RETAIN_NONATOMIC,id)
-#endif
-
-#ifndef tf_synthesize_category_property_copy
-#define tf_synthesize_category_property_copy(getter,settter)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,id)
-#endif
-
-#ifndef tf_synthesize_category_property_block
-#define tf_synthesize_category_property_block(getter,settter,TYPE)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,TYPE)
-#endif
 
 @implementation UIView (TFPopup)
 @dynamic inView,manager,popupParam,style,direction,popupAreaRect,popupSize;
@@ -36,6 +19,11 @@
 -(void)observerWillShowAction:(TFPopupActionBlock)willShow{self.willShowBlock = willShow;}
 -(void)observerWillHideAction:(TFPopupActionBlock)willHide{self.willHideBlock = willHide;}
 -(void)observerCoverTouchAction:(TFPopupActionBlock)coverTouch{self.coverTouchBlock = coverTouch;}
+
+#pragma mark -- 【隐藏】方式
+-(void)tf_hide{
+    [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
+}
 
 #pragma mark -- 【无动画弹出,透明度动画弹出】方式
 -(void)tf_show:(UIView *)inView animated:(BOOL)animated{
@@ -418,6 +406,24 @@
 
 
 #pragma mark 属性绑定函数
+
+#ifndef tf_synthesize_category_property
+#define tf_synthesize_category_property(getter,settter,objc_AssociationPolicy,TYPE)\
+- (TYPE)getter{return objc_getAssociatedObject(self, @selector(getter));}\
+- (void)settter:(TYPE)obj{objc_setAssociatedObject(self, @selector(getter), obj, objc_AssociationPolicy);}
+#endif
+
+#ifndef tf_synthesize_category_property_retain
+#define tf_synthesize_category_property_retain(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_RETAIN_NONATOMIC,id)
+#endif
+
+#ifndef tf_synthesize_category_property_copy
+#define tf_synthesize_category_property_copy(getter,settter)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,id)
+#endif
+
+#ifndef tf_synthesize_category_property_block
+#define tf_synthesize_category_property_block(getter,settter,TYPE)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,TYPE)
+#endif
 
 tf_synthesize_category_property_retain(manager, setManager);
 tf_synthesize_category_property_retain(inView, setInView);
