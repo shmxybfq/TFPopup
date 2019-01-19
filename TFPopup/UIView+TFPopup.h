@@ -69,7 +69,6 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
 
-
 #pragma mark -- 【滑动出来动画】方式
 
 -(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction;

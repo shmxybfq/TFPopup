@@ -13,7 +13,7 @@
 
 #define kSize [UIScreen mainScreen].bounds.size
 
-@interface ViewController ()
+@interface ViewController ()<TFPopupDelegate>
 
 @property(nonatomic,strong)UIView *subview;
 
@@ -42,7 +42,7 @@
 }
 -(void)show{
     TFPopupParam *param = [TFPopupParam new];
-    //param.duration = 0.3;
+    param.duration = 3;
     //param.autoDissmissDuration = 1;
     //param.noCoverView = YES;
     //param.noCoverTouchHide = YES;
@@ -56,8 +56,8 @@
     //param.popTargetFrame = CGRectMake(0, 100, kSize.width, 300);
     
     //气泡 左上->右下
-    param.popOriginFrame = CGRectMake(30, 100, 0, 0);
-    param.popTargetFrame = CGRectMake(30, 100, 314, 170);
+    //param.popOriginFrame = CGRectMake(30, 100, 0, 0);
+    //param.popTargetFrame = CGRectMake(30, 100, 314, 170);
     
     //气泡 右上->左下
     //param.popOriginFrame = CGRectMake(30 + 314, 100, 0, 0);
@@ -84,16 +84,67 @@
 
     //[alert tf_showScale:self.view];
     //[alert tf_showScale:self.view offset:CGPointMake(100, -100)];
-    //[alert tf_showScale:self.view offset:CGPointZero popupParam:param];
     
-    [alert tf_showSlide:self.view direction:PopupDirectionFromRight];
+    alert.layer.anchorPoint = CGPointMake(0.5, 0);
+    [alert tf_showScale:self.view offset:CGPointZero popupParam:param];
+    
+    //[alert tf_showSlide:self.view direction:PopupDirectionFromRight];
 
     //[alert tf_showFrame:self.view popupParam:param];
     
+    //[alert tf_showCustemPart:self.view popupParam:param delegate:self];
  
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"anchorPoint:%@",NSStringFromCGPoint(alert.layer.anchorPoint));
+    });
 }
 
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+    
+    
 
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    [animation setFromValue:@(M_PI)];//设置起始值
+    [animation setToValue:@(M_PI * 2)];//设置目标值
+    [animation setDuration:popup.popupParam.duration];//设置动画时间，单次动画时间
+    [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [animation setAutoreverses:NO];
+    [animation setFillMode:kCAFillModeBoth];
+    //[popup.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    
+    
+    CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    [animation1 setFromValue:@0.0];//设置起始值
+    [animation1 setToValue:@(1)];//设置目标值
+    [animation1 setDuration:popup.popupParam.duration];//设置动画时间，单次动画时间
+    [animation1 setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+    [animation1 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [animation1 setAutoreverses:NO];
+    [animation1 setFillMode:kCAFillModeBoth];
+    //[popup.layer addAnimation:animation1 forKey:NSStringFromClass([self class])];
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    [group setDuration:popup.popupParam.duration];
+    [group setAnimations:@[animation,animation1]];
+    [popup.layer addAnimation:group forKey:NSStringFromClass([self class])];
+    
+    
+    return NO;
+}
+
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
+    [animation setFromValue:@1.0];//设置起始值
+    [animation setToValue:@0.0];//设置目标值
+    [animation setDuration:popup.popupParam.duration];//设置动画时间，单次动画时间
+    [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [animation setAutoreverses:NO];
+    [animation setFillMode:kCAFillModeBoth];
+    [popup.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    return NO;
+}
 
 -(void)toast{
     NSMutableString *ss = [[NSMutableString alloc]init];

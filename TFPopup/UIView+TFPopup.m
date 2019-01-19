@@ -113,7 +113,7 @@
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
              popupAreaRect:inView.bounds
-                  delegate:self];
+                  delegate:delegate];
 }
 
 -(void)tf_showCustemAll:(UIView *)inView
@@ -338,7 +338,11 @@
     //缩放
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        NSString *keyPath = @"transform.scale";
+        if ([self.popupParam.scaleShowProperty hasPrefix:@"transform.scale"]) {
+            keyPath = [self.popupParam.scaleShowProperty copy];
+        }
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
         [animation setFromValue:@0.0];//设置起始值
         [animation setToValue:@1.0];//设置目标值
         [animation setDuration:dur];//设置动画时间，单次动画时间
@@ -370,10 +374,15 @@
             return;
         }
     }
+    
     //缩放
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        NSString *keyPath = @"transform.scale";
+        if ([self.popupParam.scaleHideProperty hasPrefix:@"transform.scale"]) {
+            keyPath = [self.popupParam.scaleHideProperty copy];
+        }
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
         [animation setFromValue:@1.0];//设置起始值
         [animation setToValue:@0.0];//设置目标值
         [animation setDuration:dur];//设置动画时间，单次动画时间
@@ -381,7 +390,6 @@
         [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
         [animation setAutoreverses:NO];
         [animation setFillMode:kCAFillModeBoth];
-        
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,dur);
     }else{

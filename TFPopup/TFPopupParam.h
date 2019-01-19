@@ -26,10 +26,14 @@
 //弹出框 弹出所在区域的大小【父视图的bounds】
 @property(nonatomic,assign)CGRect popupAreaRect;
 
-//必传 PopupStyleFrame 独有属性
-//弹出框初始尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
+//只对 PopupStyleScale 有效 默认 transform.scale 更多keyPath 动画请使用自定动画方式
+@property(nonatomic,  copy)NSString *scaleShowProperty;
+//只对 PopupStyleScale 有效 默认 transform.scale 更多keyPath 动画请使用自定动画方式
+@property(nonatomic,  copy)NSString *scaleHideProperty;
+
+//只对 PopupStyleFrame 有效 弹出框初始尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
 @property(nonatomic,assign)CGRect popOriginFrame;
-//弹出框目标尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
+//只对 PopupStyleFrame 有效 弹出框目标尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
 @property(nonatomic,assign)CGRect popTargetFrame;
 
 
