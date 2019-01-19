@@ -42,7 +42,7 @@
 }
 -(void)show{
     TFPopupParam *param = [TFPopupParam new];
-    param.duration = 0.3;
+    //param.duration = 0.3;
     //param.autoDissmissDuration = 1;
     //param.noCoverView = YES;
     //param.noCoverTouchHide = YES;
@@ -85,21 +85,12 @@
     //[alert tf_showScale:self.view];
     //[alert tf_showScale:self.view offset:CGPointMake(100, -100)];
     //[alert tf_showScale:self.view offset:CGPointZero popupParam:param];
+    
+    [alert tf_showSlide:self.view direction:PopupDirectionFromRight];
 
     //[alert tf_showFrame:self.view popupParam:param];
     
-//    [alert tf_showCustem:self.view popupParam:param style:PopupStyleNone direction:PopupDirectionCenter popupSize:CGSizeZero popupAreaRect:CGRectZero willShow:^BOOL(TFPopupManager *manager, UIView *popup) {
-//     
-//        return NO;
-//    } willHide:^BOOL(TFPopupManager *manager, UIView *popup) {
-//        
-//        return NO;
-//    } coverTouch:^BOOL(TFPopupManager *manager, UIView *popup) {
-//        
-//        return NO;
-//    }];
-
-    
+ 
 }
 
 

@@ -60,6 +60,11 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
 
 @end
 
+
+
+
+
+
 @protocol TFPopupManagerDelegate<NSObject>
 
 @optional;
@@ -84,7 +89,13 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
 
 @end
 
+
+
+
+
 @interface TFPopupProtocol : NSObject
+
+
 
 @end
 

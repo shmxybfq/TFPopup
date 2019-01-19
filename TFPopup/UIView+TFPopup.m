@@ -11,16 +11,9 @@
 
 
 @implementation UIView (TFPopup)
-@dynamic inView,manager,popupParam,style,direction,popupAreaRect,popupSize;
-@dynamic willShowBlock,willHideBlock,coverTouchBlock;
+@dynamic inView,manager,popupParam,style,direction,popupAreaRect,popupSize,popupDelegate;
 
-#pragma mark -- 【监听过程的block】
-
--(void)observerWillShowAction:(TFPopupActionBlock)willShow{self.willShowBlock = willShow;}
--(void)observerWillHideAction:(TFPopupActionBlock)willHide{self.willHideBlock = willHide;}
--(void)observerCoverTouchAction:(TFPopupActionBlock)coverTouch{self.coverTouchBlock = coverTouch;}
-
-#pragma mark -- 【隐藏】方式
+#pragma mark -- 【隐藏】
 -(void)tf_hide{
     [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
 }
@@ -61,6 +54,8 @@
                    scale:(BOOL)scale
                 animated:(BOOL)animated{
     
+    self.offset = offset;
+    
     PopupStyle style = PopupStyleNone;
     if (animated == YES) {
         if (scale) style = PopupStyleScale;
@@ -73,23 +68,7 @@
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
              popupAreaRect:self.inView.bounds
-                  willShow:^(TFPopupManager *manager, UIView *popup) {
-                      CGRect bf = manager.popBoardViewBeginFrame;
-                      CGRect nf = CGRectMake(bf.origin.x + offset.x,
-                                             bf.origin.y + offset.y,
-                                             bf.size.width,
-                                             bf.size.height);
-                      manager.popBoardViewEndFrame = nf;
-                      return NO;
-                  } willHide:^(TFPopupManager *manager, UIView *popup) {
-                      CGRect bf = manager.popBoardViewEndFrame;
-                      CGRect nf = CGRectMake(bf.origin.x + offset.x,
-                                             bf.origin.y + offset.y,
-                                             bf.size.width,
-                                             bf.size.height);
-                      manager.popBoardViewBeginFrame = nf;
-                      return NO;
-                  } coverTouch:nil];
+                  delegate:self];
 }
 
 #pragma mark -- 【滑动出来动画】方式
@@ -107,9 +86,7 @@
                  direction:direction
                  popupSize:self.bounds.size
              popupAreaRect:self.inView.bounds
-                  willShow:nil
-                  willHide:nil
-                coverTouch:nil];
+                  delegate:self];
 }
 
 #pragma mark -- 【滑动出来动画】方式
@@ -121,18 +98,14 @@
                  direction:PopupDirectionFrame
                  popupSize:self.bounds.size
              popupAreaRect:self.inView.bounds
-                  willShow:nil
-                  willHide:nil
-                coverTouch:nil];
+                  delegate:self];
 }
 
 #pragma mark -- 【自定义任何动画】方式
 
--(void)tf_showCustemAll:(UIView *)inView
-             popupParam:(TFPopupParam *)popupParam
-               willShow:(TFPopupActionBlock)willShow
-               willHide:(TFPopupActionBlock)willHide
-             coverTouch:(TFPopupActionBlock)coverTouch{
+-(void)tf_showCustemPart:(UIView *)inView
+              popupParam:(TFPopupParam *)popupParam
+                delegate:(id<TFPopupDelegate>)delegate{
     
     [self tf_showCustemAll:inView
                 popupParam:popupParam
@@ -140,9 +113,7 @@
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
              popupAreaRect:inView.bounds
-                  willShow:willShow
-                  willHide:willHide
-                coverTouch:coverTouch];
+                  delegate:self];
 }
 
 -(void)tf_showCustemAll:(UIView *)inView
@@ -151,9 +122,7 @@
               direction:(PopupDirection)direction
               popupSize:(CGSize)popupSize
           popupAreaRect:(CGRect)popupAreaRect
-               willShow:(TFPopupActionBlock)willShow
-               willHide:(TFPopupActionBlock)willHide
-             coverTouch:(TFPopupActionBlock)coverTouch{
+               delegate:(id<TFPopupDelegate>)delegate{
     
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     self.inView = inView;
@@ -184,9 +153,7 @@
     if (CGRectEqualToRect(popupAreaRect, CGRectZero))self.popupAreaRect = self.inView.bounds;
     else self.popupAreaRect = popupAreaRect;
     
-    [self observerWillShowAction:willShow];
-    [self observerWillHideAction:willHide];
-    [self observerCoverTouchAction:coverTouch];
+    self.popupDelegate = delegate;
     
     [self.manager performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:YES];
     [self.manager performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
@@ -261,7 +228,9 @@
         }else{
             cover.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
         }
-        [cover addTarget:self action:@selector(coverClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cover addTarget:self
+                  action:@selector(coverClick:)
+        forControlEvents:UIControlEventTouchUpInside];
         return cover;
     }
     return nil;
@@ -352,15 +321,6 @@
     return self.popupParam.duration;
 }
 
--(void)coverClick:(UIButton *)ins{
-    if (self.coverTouchBlock) {
-        self.coverTouchBlock(self.manager, self);
-    }
-    if (self.popupParam.noCoverTouchHide == NO) {
-        [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
-    }
-}
-
 #pragma mark 代理 TFPopupManagerDelegate 方法
 
 /* 弹出框展示动画开始前回调 */
@@ -368,8 +328,8 @@
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
     
     BOOL breakOriginAnimation = NO;
-    if (self.willShowBlock) {
-        breakOriginAnimation = self.willShowBlock(self.manager, self);
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupWillShow:popup:)]) {
+        breakOriginAnimation = [self.popupDelegate tf_popupWillShow:self.manager popup:self];
         if (breakOriginAnimation) {
             tellToManager(YES,self.popupParam.duration);
             return;
@@ -403,8 +363,8 @@
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
     
     BOOL breakOriginAnimation = NO;
-    if (self.willHideBlock) {
-        breakOriginAnimation = self.willHideBlock(self.manager, self);
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupWillHide:popup:)]) {
+        breakOriginAnimation = [self.popupDelegate tf_popupWillHide:self.manager popup:self];
         if (breakOriginAnimation) {
             tellToManager(YES,self.popupParam.duration);
             return;
@@ -437,6 +397,51 @@
 }
 
 
+-(void)coverClick:(UIButton *)ins{
+    BOOL breakOpration = NO;
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupCoverTouch:popup:)]) {
+        breakOpration = [self.popupDelegate tf_popupCoverTouch:self.manager popup:self];
+        if (breakOpration) {
+            return;
+        }
+    }
+    
+    if (self.popupParam.noCoverTouchHide == NO) {
+        [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
+    }
+}
+
+
+#pragma mark -- 代理 TFPopupDelegate 方法
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+    if (self.style != PopupStyleFrame && CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
+        CGPoint offset = self.offset;
+        CGRect bf = manager.popBoardViewBeginFrame;
+        CGRect nf = CGRectMake(bf.origin.x + offset.x,
+                               bf.origin.y + offset.y,
+                               bf.size.width,
+                               bf.size.height);
+        manager.popBoardViewEndFrame = nf;
+    }
+    return NO;
+}
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+    if (self.style != PopupStyleFrame && CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
+        CGPoint offset = self.offset;
+        CGRect bf = manager.popBoardViewEndFrame;
+        CGRect nf = CGRectMake(bf.origin.x + offset.x,
+                               bf.origin.y + offset.y,
+                               bf.size.width,
+                               bf.size.height);
+        manager.popBoardViewBeginFrame = nf;
+    }
+    return NO;
+}
+-(BOOL)tf_popupCoverTouch:(TFPopupManager *)manager popup:(UIView *)popup{
+    return self.popupParam.noCoverTouchHide;
+}
+
+
 #pragma mark 属性绑定函数
 
 #ifndef tf_synthesize_category_property
@@ -453,16 +458,15 @@
 #define tf_synthesize_category_property_copy(getter,settter)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,id)
 #endif
 
-#ifndef tf_synthesize_category_property_block
-#define tf_synthesize_category_property_block(getter,settter,TYPE)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,TYPE)
+#ifndef tf_synthesize_category_property_assign
+#define tf_synthesize_category_property_assign(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_ASSIGN,id)
 #endif
 
 tf_synthesize_category_property_retain(manager, setManager);
 tf_synthesize_category_property_retain(inView, setInView);
 tf_synthesize_category_property_retain(popupParam, setPopupParam);
-tf_synthesize_category_property_block(willShowBlock, setWillShowBlock, TFPopupActionBlock);
-tf_synthesize_category_property_block(willHideBlock, setWillHideBlock, TFPopupActionBlock);
-tf_synthesize_category_property_block(coverTouchBlock, setCoverTouchBlock, TFPopupActionBlock);
+tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
+
 
 -(CGSize)popupSize{
     id value = objc_getAssociatedObject(self, @selector(popupSize));
@@ -487,6 +491,17 @@ tf_synthesize_category_property_block(coverTouchBlock, setCoverTouchBlock, TFPop
     objc_setAssociatedObject(self, @selector(popupAreaRect), NSStringFromCGRect(popupAreaRect), OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+-(CGPoint)offset{
+    id value = objc_getAssociatedObject(self, @selector(offset));
+    if (value) {
+        return CGPointFromString(value);
+    }
+    return CGPointZero;
+}
+-(void)setOffset:(CGPoint)offset{
+    objc_setAssociatedObject(self, @selector(offset), NSStringFromCGPoint(offset), OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
 -(PopupDirection)direction{
     id value = objc_getAssociatedObject(self, @selector(direction));
     if (value) {
@@ -508,6 +523,7 @@ tf_synthesize_category_property_block(coverTouchBlock, setCoverTouchBlock, TFPop
 -(void)setStyle:(PopupStyle)style{
     objc_setAssociatedObject(self, @selector(style), @(style), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 
 
 @end
