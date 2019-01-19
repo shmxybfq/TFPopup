@@ -318,6 +318,13 @@
         self.defaultAnimationDuration = [self.dataSource tf_popupManager_popDefaultAnimationDuration:self];
     }
 }
+-(void)showAnimationComplete{
+    
+}
+
+-(void)hideAnimationComplete{
+    
+}
 
 -(NSMutableArray *)popBoardItemFrames{
     if (_popBoardItemFrames == nil) {

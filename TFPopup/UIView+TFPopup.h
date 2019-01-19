@@ -78,10 +78,16 @@ typedef BOOL(^TFPopupActionBlock)(TFPopupManager *manager,UIView *popup);
          popupParam:(TFPopupParam *)popupParam;
 
 #pragma mark -- 【滑动出来动画】方式
--(void)tf_showFold:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
+-(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
 
 #pragma mark -- 【自定义任何动画】方式
--(void)tf_showCustem:(UIView *)inView
+-(void)tf_showCustemAll:(UIView *)inView
+             popupParam:(TFPopupParam *)popupParam
+               willShow:(TFPopupActionBlock)willShow
+               willHide:(TFPopupActionBlock)willHide
+             coverTouch:(TFPopupActionBlock)coverTouch;
+
+-(void)tf_showCustemAll:(UIView *)inView
           popupParam:(TFPopupParam *)popupParam
                style:(PopupStyle)style
            direction:(PopupDirection)direction

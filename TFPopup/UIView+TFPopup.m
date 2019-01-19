@@ -67,29 +67,29 @@
         else style = PopupStyleAlpha;
     }
     
-    [self tf_showCustem:inView
-             popupParam:popupParam
-                  style:style
-              direction:PopupDirectionCenter
-              popupSize:self.bounds.size
-          popupAreaRect:self.inView.bounds
-               willShow:^(TFPopupManager *manager, UIView *popup) {
-                   CGRect bf = manager.popBoardViewBeginFrame;
-                   CGRect nf = CGRectMake(bf.origin.x + offset.x,
-                                          bf.origin.y + offset.y,
-                                          bf.size.width,
-                                          bf.size.height);
-                   manager.popBoardViewEndFrame = nf;
-                   return NO;
-               } willHide:^(TFPopupManager *manager, UIView *popup) {
-                   CGRect bf = manager.popBoardViewEndFrame;
-                   CGRect nf = CGRectMake(bf.origin.x + offset.x,
-                                          bf.origin.y + offset.y,
-                                          bf.size.width,
-                                          bf.size.height);
-                   manager.popBoardViewBeginFrame = nf;
-                   return NO;
-               } coverTouch:nil];
+    [self tf_showCustemAll:inView
+                popupParam:popupParam
+                     style:style
+                 direction:PopupDirectionCenter
+                 popupSize:self.bounds.size
+             popupAreaRect:self.inView.bounds
+                  willShow:^(TFPopupManager *manager, UIView *popup) {
+                      CGRect bf = manager.popBoardViewBeginFrame;
+                      CGRect nf = CGRectMake(bf.origin.x + offset.x,
+                                             bf.origin.y + offset.y,
+                                             bf.size.width,
+                                             bf.size.height);
+                      manager.popBoardViewEndFrame = nf;
+                      return NO;
+                  } willHide:^(TFPopupManager *manager, UIView *popup) {
+                      CGRect bf = manager.popBoardViewEndFrame;
+                      CGRect nf = CGRectMake(bf.origin.x + offset.x,
+                                             bf.origin.y + offset.y,
+                                             bf.size.width,
+                                             bf.size.height);
+                      manager.popBoardViewBeginFrame = nf;
+                      return NO;
+                  } coverTouch:nil];
 }
 
 #pragma mark -- 【滑动出来动画】方式
@@ -101,41 +101,59 @@
           direction:(PopupDirection)direction
          popupParam:(TFPopupParam *)popupParam{
     
-    [self tf_showCustem:inView
-             popupParam:popupParam
-                  style:PopupStyleSlide
-              direction:direction
-              popupSize:self.bounds.size
-          popupAreaRect:self.inView.bounds
-               willShow:nil
-               willHide:nil
-             coverTouch:nil];
+    [self tf_showCustemAll:inView
+                popupParam:popupParam
+                     style:PopupStyleSlide
+                 direction:direction
+                 popupSize:self.bounds.size
+             popupAreaRect:self.inView.bounds
+                  willShow:nil
+                  willHide:nil
+                coverTouch:nil];
 }
 
 #pragma mark -- 【滑动出来动画】方式
--(void)tf_showFold:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
+-(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
     
-    [self tf_showCustem:inView
-             popupParam:popupParam
-                  style:PopupStyleFrame
-              direction:PopupDirectionFrame
-              popupSize:self.bounds.size
-          popupAreaRect:self.inView.bounds
-               willShow:nil
-               willHide:nil
-             coverTouch:nil];
+    [self tf_showCustemAll:inView
+                popupParam:popupParam
+                     style:PopupStyleFrame
+                 direction:PopupDirectionFrame
+                 popupSize:self.bounds.size
+             popupAreaRect:self.inView.bounds
+                  willShow:nil
+                  willHide:nil
+                coverTouch:nil];
 }
 
 #pragma mark -- 【自定义任何动画】方式
--(void)tf_showCustem:(UIView *)inView
-          popupParam:(TFPopupParam *)popupParam
-               style:(PopupStyle)style
-           direction:(PopupDirection)direction
-           popupSize:(CGSize)popupSize
-       popupAreaRect:(CGRect)popupAreaRect
-            willShow:(TFPopupActionBlock)willShow
-            willHide:(TFPopupActionBlock)willHide
-          coverTouch:(TFPopupActionBlock)coverTouch{
+
+-(void)tf_showCustemAll:(UIView *)inView
+             popupParam:(TFPopupParam *)popupParam
+               willShow:(TFPopupActionBlock)willShow
+               willHide:(TFPopupActionBlock)willHide
+             coverTouch:(TFPopupActionBlock)coverTouch{
+    
+    [self tf_showCustemAll:inView
+                popupParam:popupParam
+                     style:PopupStyleAlpha
+                 direction:PopupDirectionCenter
+                 popupSize:self.bounds.size
+             popupAreaRect:inView.bounds
+                  willShow:willShow
+                  willHide:willHide
+                coverTouch:coverTouch];
+}
+
+-(void)tf_showCustemAll:(UIView *)inView
+             popupParam:(TFPopupParam *)popupParam
+                  style:(PopupStyle)style
+              direction:(PopupDirection)direction
+              popupSize:(CGSize)popupSize
+          popupAreaRect:(CGRect)popupAreaRect
+               willShow:(TFPopupActionBlock)willShow
+               willHide:(TFPopupActionBlock)willHide
+             coverTouch:(TFPopupActionBlock)coverTouch{
     
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     self.inView = inView;
@@ -358,10 +376,6 @@
         }
     }
     //缩放
-    if (self.willShowBlock) {
-        self.willShowBlock(self.manager, self);
-    }
-    
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
@@ -399,7 +413,7 @@
     //缩放
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
         [animation setFromValue:@1.0];//设置起始值
         [animation setToValue:@0.0];//设置目标值
         [animation setDuration:dur];//设置动画时间，单次动画时间
@@ -407,6 +421,7 @@
         [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
         [animation setAutoreverses:NO];
         [animation setFillMode:kCAFillModeBoth];
+        
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,dur);
     }else{

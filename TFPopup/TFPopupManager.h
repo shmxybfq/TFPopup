@@ -37,7 +37,9 @@
                                     delegate:(id<TFPopupManagerDelegate>)delegate;
 -(void)reload;
 -(void)show;
+-(void)showAnimationComplete;
 -(void)hide;
+-(void)hideAnimationComplete;
 
 @end
 

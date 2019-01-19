@@ -43,24 +43,63 @@
 -(void)show{
     TFPopupParam *param = [TFPopupParam new];
     param.duration = 0.3;
+    //param.autoDissmissDuration = 1;
     //param.noCoverView = YES;
-    param.noCoverAlphaAnimation = YES;
-    param.noPopupAlphaAnimation = YES;
-    param.popOriginFrame = CGRectMake(0, 100, kSize.width, 1);
-    param.popTargetFrame = CGRectMake(0, 100, kSize.width, 300);
+    //param.noCoverTouchHide = YES;
+    //param.coverBackgroundColorClear = YES;
+    //param.noCoverAlphaAnimation = YES;
+    //param.noPopupAlphaAnimation = YES;
+    //param.popupAreaRect = CGRectZero;
+    
+    //展开
+    //param.popOriginFrame = CGRectMake(0, 100, kSize.width, 1);
+    //param.popTargetFrame = CGRectMake(0, 100, kSize.width, 300);
+    
+    //气泡 左上->右下
+    param.popOriginFrame = CGRectMake(30, 100, 0, 0);
+    param.popTargetFrame = CGRectMake(30, 100, 314, 170);
+    
+    //气泡 右上->左下
+    //param.popOriginFrame = CGRectMake(30 + 314, 100, 0, 0);
+    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+    
+    //气泡 左下->右上
+    //param.popOriginFrame = CGRectMake(30, 100 + 170, 0, 0);
+    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+    
+    //气泡 右下->左上
+    //param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
+    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+    
+    //气泡 左梯形
+    //param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
+    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+    
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
                                                       owner:nil options:nil].firstObject;
+    
     //[alert tf_show:self.view animated:YES];
-//    [alert tf_show:self.view offset:20 animated:YES];
-//    [alert tf_show:self.view
-//        popupParam:param
-//             style:PopupStyleFrame
-//          position:PopupDirectionCenter
-//         popupSize:CGSizeZero
-//     popupAreaRect:self.view.bounds
-//          willShow:^(id inView) {
-//
+    //[alert tf_show:self.view offset:CGPointMake(0, -100) animated:YES];
+    //[alert tf_show:self.view offset:CGPointZero popupParam:param animated:YES];
+
+    //[alert tf_showScale:self.view];
+    //[alert tf_showScale:self.view offset:CGPointMake(100, -100)];
+    //[alert tf_showScale:self.view offset:CGPointZero popupParam:param];
+
+    //[alert tf_showFrame:self.view popupParam:param];
+    
+//    [alert tf_showCustem:self.view popupParam:param style:PopupStyleNone direction:PopupDirectionCenter popupSize:CGSizeZero popupAreaRect:CGRectZero willShow:^BOOL(TFPopupManager *manager, UIView *popup) {
+//     
+//        return NO;
+//    } willHide:^BOOL(TFPopupManager *manager, UIView *popup) {
+//        
+//        return NO;
+//    } coverTouch:^BOOL(TFPopupManager *manager, UIView *popup) {
+//        
+//        return NO;
 //    }];
+
+    
 }
 
 
