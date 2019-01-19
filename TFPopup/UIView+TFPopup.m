@@ -414,7 +414,10 @@
 
 #pragma mark -- 代理 TFPopupDelegate 方法
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-    if (self.style != PopupStyleFrame && CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
+    if ((self.style == PopupStyleNone ||
+         self.style == PopupStyleAlpha ||
+         self.style == PopupStyleScale) &&
+        CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
         CGPoint offset = self.offset;
         CGRect bf = manager.popBoardViewBeginFrame;
         CGRect nf = CGRectMake(bf.origin.x + offset.x,
@@ -426,7 +429,10 @@
     return NO;
 }
 -(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
-    if (self.style != PopupStyleFrame && CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
+    if ((self.style == PopupStyleNone ||
+         self.style == PopupStyleAlpha ||
+         self.style == PopupStyleScale) &&
+        CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
         CGPoint offset = self.offset;
         CGRect bf = manager.popBoardViewEndFrame;
         CGRect nf = CGRectMake(bf.origin.x + offset.x,
