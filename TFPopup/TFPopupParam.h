@@ -36,6 +36,11 @@
 //只对 PopupStyleFrame 有效 弹出框目标尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
 @property(nonatomic,assign)CGRect popTargetFrame;
 
+//只对 PopupStyleMask 有效
+@property(nonatomic,strong)UIBezierPath *maskShowFromPath;
+@property(nonatomic,strong)UIBezierPath *maskShowToPath;
+@property(nonatomic,strong)UIBezierPath *maskHideFromPath;
+@property(nonatomic,strong)UIBezierPath *maskHideToPath;
 
 @end
 

@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleScale,
     PopupStyleSlide,
     PopupStyleFrame,
+    PopupStyleMask,
 };
 
 

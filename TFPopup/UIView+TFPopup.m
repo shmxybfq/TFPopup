@@ -68,7 +68,7 @@
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
              popupAreaRect:self.inView.bounds
-                  delegate:self];
+                  delegate:self.popupDelegate?:self];
 }
 
 #pragma mark -- 【滑动出来动画】方式
@@ -86,7 +86,7 @@
                  direction:direction
                  popupSize:self.bounds.size
              popupAreaRect:self.inView.bounds
-                  delegate:self];
+                  delegate:self.popupDelegate?:self];
 }
 
 #pragma mark -- 【滑动出来动画】方式
@@ -98,7 +98,7 @@
                  direction:PopupDirectionFrame
                  popupSize:self.bounds.size
              popupAreaRect:self.inView.bounds
-                  delegate:self];
+                  delegate:self.popupDelegate?:self];
 }
 
 #pragma mark -- 【自定义任何动画】方式

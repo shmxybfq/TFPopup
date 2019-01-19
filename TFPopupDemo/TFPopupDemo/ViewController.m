@@ -77,16 +77,16 @@
     
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
                                                       owner:nil options:nil].firstObject;
-    
-    //[alert tf_show:self.view animated:YES];
+    //alert.popupDelegate = self;
+    [alert tf_show:self.view animated:YES];
     //[alert tf_show:self.view offset:CGPointMake(0, -100) animated:YES];
     //[alert tf_show:self.view offset:CGPointZero popupParam:param animated:YES];
 
     //[alert tf_showScale:self.view];
     //[alert tf_showScale:self.view offset:CGPointMake(100, -100)];
     
-    alert.layer.anchorPoint = CGPointMake(0.5, 0);
-    [alert tf_showScale:self.view offset:CGPointZero popupParam:param];
+    //alert.layer.anchorPoint = CGPointMake(0.5, 0);
+    //[alert tf_showScale:self.view offset:CGPointZero popupParam:param];
     
     //[alert tf_showSlide:self.view direction:PopupDirectionFromRight];
 
@@ -100,7 +100,6 @@
 }
 
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-    
     
 
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
