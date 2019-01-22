@@ -101,6 +101,17 @@
                   delegate:self.popupDelegate?:self];
 }
 
+#pragma mark -- 【遮罩动画】方式
+-(void)tf_showMask:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
+    [self tf_showCustemAll:inView
+                popupParam:popupParam
+                     style:PopupStyleMask
+                 direction:PopupDirectionCenter
+                 popupSize:self.bounds.size
+             popupAreaRect:self.inView.bounds
+                  delegate:self.popupDelegate?:self];
+}
+
 #pragma mark -- 【自定义任何动画】方式
 
 -(void)tf_showCustemPart:(UIView *)inView
@@ -145,6 +156,12 @@
     self.direction = direction;
     if (self.style == PopupStyleAlpha) self.direction = PopupDirectionCenter;
     if (self.style == PopupStyleScale) self.direction = PopupDirectionCenter;
+    if (self.style == PopupStyleMask) {
+        self.direction = PopupDirectionCenter;
+        if (self.popupParam.maskShowFromPath == nil || self.popupParam.maskShowToPath == nil) {
+            return;
+        }
+    }
     
     self.popupSize = popupSize;
     if (CGSizeEqualToSize(popupSize, CGSizeZero))
@@ -202,6 +219,17 @@
             }
             if (self.popupParam.noPopupAlphaAnimation == NO) {
                 ani =ani | TFPopupDefaultAnimationPopBoardAlpha;
+            }
+        }break;
+        case PopupStyleMask:{
+            if (self.popupParam.noCoverAlphaAnimation == NO) {
+                ani = ani | TFPopupDefaultAnimationCoverAlpha;
+            }
+            if (self.popupParam.noPopupAlphaAnimation == NO) {
+                ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
+            }
+            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationCoverAlpha) {
+                ani = ani | TFPopupDefaultAnimationCustem;
             }
         }break;
         default:break;
@@ -342,20 +370,42 @@
         if ([self.popupParam.scaleShowProperty hasPrefix:@"transform.scale"]) {
             keyPath = [self.popupParam.scaleShowProperty copy];
         }
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
-        [animation setFromValue:@0.0];//设置起始值
-        [animation setToValue:@1.0];//设置目标值
-        [animation setDuration:dur];//设置动画时间，单次动画时间
-        [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-        [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        [animation setAutoreverses:NO];
-        [animation setFillMode:kCAFillModeBoth];
+        CAAnimation *animation = [self animation:keyPath from:@0.0 to:@1.0 dur:dur];
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+        tellToManager(NO,dur);
+        //遮罩
+    }else if (self.style == PopupStyleMask) {
+        NSTimeInterval dur = self.popupParam.duration;
+        NSString *keyPath = @"path";
+
+        CAShapeLayer *mask = [[CAShapeLayer alloc]init];
+        mask.frame = CGRectMake(0, 0, self.popupSize.width, self.popupSize.height);
+        mask.path = self.popupParam.maskShowFromPath.CGPath;
+        self.layer.mask = mask;
+        
+        id from = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
+        id to = (__bridge id)self.popupParam.maskShowToPath.CGPath;
+        CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
+        [mask addAnimation:animation forKey:NSStringFromClass([self class])];
+        
         tellToManager(NO,dur);
     }else{
         tellToManager(NO,self.popupParam.duration);
     }
 }
+
+-(CAAnimation *)animation:(NSString *)path from:(id)from to:(id)to dur:(NSTimeInterval)dur{
+    CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:path];
+    [ani setFromValue:from];//设置起始值
+    [ani setToValue:to];//设置目标值
+    [ani setDuration:dur];//设置动画时间，单次动画时间
+    [ani setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+    [ani setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [ani setAutoreverses:NO];
+    [ani setFillMode:kCAFillModeBoth];
+    return ani;
+}
+
 /* 弹出框展示动画完成后回调,自定义动画不回调 */
 -(void)tf_popupManager_didShow:(TFPopupManager *)manager
               defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
@@ -382,15 +432,25 @@
         if ([self.popupParam.scaleHideProperty hasPrefix:@"transform.scale"]) {
             keyPath = [self.popupParam.scaleHideProperty copy];
         }
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:keyPath];
-        [animation setFromValue:@1.0];//设置起始值
-        [animation setToValue:@0.0];//设置目标值
-        [animation setDuration:dur];//设置动画时间，单次动画时间
-        [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-        [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        [animation setAutoreverses:NO];
-        [animation setFillMode:kCAFillModeBoth];
+        CAAnimation *animation = [self animation:keyPath from:@1.0 to:@0.0 dur:dur];
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+        tellToManager(NO,dur);
+        //遮罩
+    }else if (self.style == PopupStyleMask) {
+        NSTimeInterval dur = self.popupParam.duration;
+        NSString *keyPath = @"path";
+        CAShapeLayer *mask = self.layer.mask;
+        [mask removeAnimationForKey:NSStringFromClass([self class])];
+        id from = (__bridge id)self.popupParam.maskHideFromPath.CGPath;
+        if (from == nil) {
+           from = (__bridge id)self.popupParam.maskShowToPath.CGPath;
+        }
+        id to = (__bridge id)self.popupParam.maskHideToPath.CGPath;
+        if (to == nil) {
+           to = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
+        }
+        CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
+        [mask addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,dur);
     }else{
         tellToManager(NO,self.popupParam.duration);
@@ -424,7 +484,8 @@
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
     if ((self.style == PopupStyleNone ||
          self.style == PopupStyleAlpha ||
-         self.style == PopupStyleScale) &&
+         self.style == PopupStyleScale ||
+         self.style == PopupStyleMask) &&
         CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
         CGPoint offset = self.offset;
         CGRect bf = manager.popBoardViewBeginFrame;
@@ -439,7 +500,8 @@
 -(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
     if ((self.style == PopupStyleNone ||
          self.style == PopupStyleAlpha ||
-         self.style == PopupStyleScale) &&
+         self.style == PopupStyleScale ||
+         self.style == PopupStyleMask) &&
         CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
         CGPoint offset = self.offset;
         CGRect bf = manager.popBoardViewEndFrame;

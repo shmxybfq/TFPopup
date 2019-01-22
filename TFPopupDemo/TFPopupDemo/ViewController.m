@@ -31,6 +31,30 @@
     self.subview.clipsToBounds = YES;
     [self.view addSubview:self.subview];
     
+    
+    if (@available(iOS 9.0, *)) {
+        CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+        //阻尼系数,阻止弹簧伸缩的系数,阻尼系数越大,停止越快,可以认为它是阻力系数
+        spring.damping = 30;
+        //刚度系数(劲度系数/弹性系数),刚度系数越大,形变产生的力就越大,运动越快
+        spring.stiffness = 50;
+        //质量,振幅和质量成反比
+        spring.mass = 10;
+        //初始速率,动画视图的初始速度大小速率为正数时,速度方向与运动方向一致,速率为负数时,速度方向与运动方向相反.
+        spring.initialVelocity = 0;
+        //结算时间,只读.返回弹簧动画到停止时的估算时间，根据当前的动画参数估算通常弹簧动画的时间使用结算时间比较准确
+        //spring.duration = spring.settlingDuration;
+        spring.duration = 0.5;
+        spring.fromValue = @(self.subview.center.y);
+        spring.toValue = @(self.subview.center.y + 100);
+        spring.fillMode = kCAFillModeBoth;
+        spring.removedOnCompletion = NO;
+        [self.subview.layer addAnimation:spring forKey:nil];
+    } else {
+        // Fallback on earlier versions
+    }
+    
+    
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -42,7 +66,8 @@
 }
 -(void)show{
     TFPopupParam *param = [TFPopupParam new];
-    param.duration = 3;
+    param.duration = 0.5;
+    //param.noPopupAlphaAnimation = YES;
     //param.autoDissmissDuration = 1;
     //param.noCoverView = YES;
     //param.noCoverTouchHide = YES;
@@ -75,10 +100,42 @@
     //param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
     //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
     
+    //param.maskShowFromPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 0)];
+    //param.maskShowToPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 170)];
+    
+//    param.maskShowFromPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(314 * 0.5,
+//                                                                               170 * 0.5,
+//                                                                               2, 2)];
+//    param.maskShowToPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-314 * 0.5,
+//                                                                             -170 * 0.5,
+//                                                                             314 * 2,
+//                                                                             170 * 2)];
+    
+    UIBezierPath *p0 = [UIBezierPath bezierPath];
+    [p0 moveToPoint:CGPointMake(-200, 0)];
+    [p0 addLineToPoint:CGPointMake(-100, 0)];
+    [p0 addLineToPoint:CGPointMake(0, 170 * 0.5)];
+    [p0 addLineToPoint:CGPointMake(-100, 170)];
+    [p0 addLineToPoint:CGPointMake(-200, 170)];
+    [p0 closePath];
+    
+    
+    UIBezierPath *p1 = [UIBezierPath bezierPath];
+    [p1 moveToPoint:CGPointMake(-200, 0)];
+    [p1 addLineToPoint:CGPointMake(314, 0)];
+    [p1 addLineToPoint:CGPointMake(314 + 100, 170 * 0.5)];
+    [p1 addLineToPoint:CGPointMake(314, 170)];
+    [p1 addLineToPoint:CGPointMake(-200, 170)];
+    [p1 closePath];
+    
+    param.maskShowFromPath = p0;
+    param.maskShowToPath = p1;
+    
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
                                                       owner:nil options:nil].firstObject;
     //alert.popupDelegate = self;
-    [alert tf_show:self.view animated:YES];
+    
+    //[alert tf_show:self.view animated:YES];
     //[alert tf_show:self.view offset:CGPointMake(0, -100) animated:YES];
     //[alert tf_show:self.view offset:CGPointZero popupParam:param animated:YES];
 
@@ -93,7 +150,9 @@
     //[alert tf_showFrame:self.view popupParam:param];
     
     //[alert tf_showCustemPart:self.view popupParam:param delegate:self];
- 
+
+    [alert tf_showMask:self.view popupParam:param];
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"anchorPoint:%@",NSStringFromCGPoint(alert.layer.anchorPoint));
     });

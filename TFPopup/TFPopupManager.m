@@ -190,7 +190,7 @@
                 }];
             }
         }else{
-            [self finishHide:TFPopupDefaultAnimationPopBoardAlpha  isAnimationHide:NO];
+            [self finishHide:TFPopupDefaultAnimationPopBoardAlpha isAnimationHide:NO];
         }
         
         //弹出框-位移动画
