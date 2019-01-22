@@ -24,8 +24,11 @@
 @property(nonatomic,assign)BOOL noCoverAlphaAnimation;
 //弹出框 是否 alpha 动画展示出来
 @property(nonatomic,assign)BOOL noPopupAlphaAnimation;
+//保持弹框原来的frame不重新计算
+@property(nonatomic,assign)BOOL keepPopupOriginFrame;
 //弹出框 弹出所在区域的大小【父视图的bounds】
 @property(nonatomic,assign)CGRect popupAreaRect;
+
 
 //只对 PopupStyleScale 有效 默认 transform.scale 更多keyPath 动画请使用自定动画方式
 @property(nonatomic,  copy)NSString *scaleShowProperty;

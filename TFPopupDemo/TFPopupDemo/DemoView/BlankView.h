@@ -11,6 +11,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BlankView : UIView
+@property (weak, nonatomic) IBOutlet UIButton *button0;
+@property (weak, nonatomic) IBOutlet UIButton *button1;
+@property (weak, nonatomic) IBOutlet UIButton *button2;
+@property (weak, nonatomic) IBOutlet UIButton *button3;
+@property (weak, nonatomic) IBOutlet UIButton *button4;
+@property (weak, nonatomic) IBOutlet UIButton *button5;
+@property (weak, nonatomic) IBOutlet UIButton *button6;
+@property (weak, nonatomic) IBOutlet UIButton *button7;
+
+-(NSArray *)buttons;
 
 @end
 

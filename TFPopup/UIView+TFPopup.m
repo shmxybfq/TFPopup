@@ -283,6 +283,9 @@
 /* 执行顺序:5 返回【弹出框view,动画开始时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */
 -(CGRect   )tf_popupManager_popBoardViewBeginPosition:(TFPopupManager *)manager
                                             boardView:(UIView *)boardView{
+    
+    if (self.popupParam.keepPopupOriginFrame)return self.frame;
+    
     CGRect fo = self.popupParam.popOriginFrame;
     CGRect ar = self.popupAreaRect;
     CGSize s = self.popupSize;
@@ -320,6 +323,9 @@
 /* 执行顺序:6 返回【弹出框view,动画结束时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */
 -(CGRect   )tf_popupManager_popBoardViewEndPosition:(TFPopupManager *)manager
                                           boardView:(UIView *)boardView{
+    
+    if (self.popupParam.keepPopupOriginFrame)return self.frame;
+    
     CGRect ft = self.popupParam.popTargetFrame;
     CGRect ar = self.popupAreaRect;
     CGSize s = self.popupSize;

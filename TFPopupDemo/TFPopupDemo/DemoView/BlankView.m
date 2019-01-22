@@ -10,12 +10,14 @@
 
 @implementation BlankView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(NSArray *)buttons{
+    return @[self.button0,
+             self.button1,
+             self.button2,
+             self.button3,
+             self.button4,
+             self.button5,
+             self.button6,
+             self.button7];
 }
-*/
-
 @end
