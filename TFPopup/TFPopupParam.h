@@ -16,6 +16,7 @@
 //自动消失时间 默认0.3
 @property(nonatomic,assign)NSTimeInterval autoDissmissDuration;
 //是否使用 背景视图 (0.3-alpha的黑色视图)
+@property(nonatomic,strong)UIView *coverView;
 @property(nonatomic,assign)BOOL noCoverView;
 @property(nonatomic,assign)BOOL noCoverTouchHide;
 @property(nonatomic,assign)BOOL coverBackgroundColorClear;

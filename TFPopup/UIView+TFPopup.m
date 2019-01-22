@@ -251,14 +251,24 @@
 -(UIView  *)tf_popupManager_popForCoverView:(TFPopupManager *)manager{
     if (self.popupParam.noCoverView == NO) {
         UIButton *cover = [UIButton buttonWithType:UIButtonTypeCustom];
+        if ([self.popupParam.coverView isKindOfClass:[UIView class]]) {
+            return self.popupParam.coverView;
+        }
         if (self.popupParam.coverBackgroundColorClear) {
             cover.backgroundColor = [UIColor clearColor];
         }else{
             cover.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
         }
-        [cover addTarget:self
-                  action:@selector(coverClick:)
-        forControlEvents:UIControlEventTouchUpInside];
+        
+        if ([cover respondsToSelector:@selector(addTarget:action:forControlEvents:)]) {
+            [cover addTarget:self
+                      action:@selector(coverClick:)
+            forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]init];
+            [tapGes addTarget:self action:@selector(coverTap:)];
+            [cover addGestureRecognizer:tapGes];
+        }
         return cover;
     }
     return nil;
@@ -466,6 +476,14 @@
 
 
 -(void)coverClick:(UIButton *)ins{
+    [self coverAction];
+}
+
+-(void)coverTap:(UITapGestureRecognizer *)ins{
+    [self coverAction];
+}
+
+-(void)coverAction{
     BOOL breakOpration = NO;
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupCoverTouch:popup:)]) {
         breakOpration = [self.popupDelegate tf_popupCoverTouch:self.manager popup:self];
@@ -473,12 +491,10 @@
             return;
         }
     }
-    
     if (self.popupParam.noCoverTouchHide == NO) {
         [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
     }
 }
-
 
 #pragma mark -- 代理 TFPopupDelegate 方法
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{

@@ -32,9 +32,9 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 @protocol TFPopupDelegate<NSObject>
 @optional;
--(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
--(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
--(BOOL)tf_popupCoverTouch:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL    )tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL    )tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL    )tf_popupCoverTouch:(TFPopupManager *)manager popup:(UIView *)popup;
 @end
 
 @interface UIView (TFPopup)<TFPopupDelegate,TFPopupManagerDataSource,TFPopupManagerDelegate>
