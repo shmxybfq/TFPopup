@@ -163,8 +163,10 @@
     }
     
     self.popupSize = popupSize;
-    if (CGSizeEqualToSize(popupSize, CGSizeZero))
+    if (CGSizeEqualToSize(self.popupSize, CGSizeZero))
         self.popupSize = self.bounds.size;
+    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero) == NO)
+        self.popupSize = self.popupParam.popupSize;
     
     if (CGRectEqualToRect(popupAreaRect, CGRectZero))self.popupAreaRect = self.inView.bounds;
     else self.popupAreaRect = popupAreaRect;
@@ -285,17 +287,12 @@
     
     if (self.popupParam.keepPopupOriginFrame)return self.frame;
     
-    CGRect fo = self.popupParam.popOriginFrame;
-    CGRect ar = self.popupAreaRect;
-    CGSize s = self.popupSize;
-    //此位置为中心位置
-    CGFloat x = (ar.size.width - s.width) * 0.5;
-    CGFloat y = (ar.size.height - s.height) * 0.5;
-    CGFloat w = s.width;
-    CGFloat h = s.height;
     if (self.style == PopupStyleFrame) {
-        return fo;
+        return self.popupParam.popOriginFrame;;
     }else if(self.style == PopupStyleSlide){
+        CGFloat x = 0,y = 0,w = 0,h = 0;
+        CGRect ar = self.popupAreaRect;
+        CGSize s = self.popupSize;
         switch (self.direction) {
             case PopupDirectionCenter:{}break;
             case PopupDirectionFromTop:{
@@ -315,6 +312,13 @@
         CGRect position = CGRectMake(x, y, w, h);
         return position;
     }else{
+        //此位置为中心位置
+        CGRect ar = self.popupAreaRect;
+        CGSize s = self.popupSize;
+        CGFloat x = (ar.size.width - s.width) * 0.5;
+        CGFloat y = (ar.size.height - s.height) * 0.5;
+        CGFloat w = s.width;
+        CGFloat h = s.height;
         return CGRectMake(x, y, w, h);
     }
 }
@@ -325,18 +329,14 @@
     
     if (self.popupParam.keepPopupOriginFrame)return self.frame;
     
-    CGRect ft = self.popupParam.popTargetFrame;
-    CGRect ar = self.popupAreaRect;
-    CGSize s = self.popupSize;
-    //此位置为中心位置
-    CGFloat x = (ar.size.width - s.width) * 0.5;
-    CGFloat y = (ar.size.height - s.height) * 0.5;
-    CGFloat w = s.width;
-    CGFloat h = s.height;
+    
+    
     if (self.style == PopupStyleFrame) {
-        return ft;
+        return self.popupParam.popTargetFrame;
     }else if(self.style == PopupStyleSlide){
-        
+        CGRect ar = self.popupAreaRect;
+        CGSize s = self.popupSize;
+        CGFloat x = 0,y = 0,w = 0,h = 0;
         switch (self.direction) {
             case PopupDirectionCenter:{}break;
             case PopupDirectionFromTop:{
@@ -356,6 +356,13 @@
         CGRect position = CGRectMake(x, y, w, h);
         return position;
     }else{
+        //此位置为中心位置
+        CGRect ar = self.popupAreaRect;
+        CGSize s = self.popupSize;
+        CGFloat x = (ar.size.width - s.width) * 0.5;
+        CGFloat y = (ar.size.height - s.height) * 0.5;
+        CGFloat w = s.width;
+        CGFloat h = s.height;
         return CGRectMake(x, y, w, h);
     }
 }

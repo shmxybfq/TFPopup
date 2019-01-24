@@ -15,6 +15,25 @@
 
 @interface ViewController ()<TFPopupDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *topButton0;
+@property (weak, nonatomic) IBOutlet UIButton *topButton1;
+@property (weak, nonatomic) IBOutlet UIButton *topButton2;
+@property (weak, nonatomic) IBOutlet UIButton *topButton3;
+@property (weak, nonatomic) IBOutlet UIButton *topButton4;
+@property (weak, nonatomic) IBOutlet UIButton *topButton5;
+
+@property (weak, nonatomic) IBOutlet UIButton *midButton0;
+@property (weak, nonatomic) IBOutlet UIButton *midButton1;
+@property (weak, nonatomic) IBOutlet UIButton *midButton2;
+@property (weak, nonatomic) IBOutlet UIButton *midButton3;
+@property (weak, nonatomic) IBOutlet UIButton *midButton4;
+@property (weak, nonatomic) IBOutlet UIButton *midButton5;
+@property (weak, nonatomic) IBOutlet UIButton *midButton6;
+@property (weak, nonatomic) IBOutlet UIButton *midButton7;
+@property (weak, nonatomic) IBOutlet UIButton *midButton8;
+
+@property(nonatomic,strong)NSArray *topButtons;
+@property(nonatomic,strong)NSArray *midButtons;
 
 @end
 
@@ -22,8 +41,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self config];
+}
+
+-(void)config{
+    
+    for (UIButton *bt in self.topButtons) {
+        bt.backgroundColor = [UIColor clearColor];
+        bt.layer.cornerRadius = 17;
+        bt.layer.masksToBounds = YES;
+        [bt setBackgroundImage:colorToImage(color(240, 240, 240)) forState:UIControlStateNormal];
+        [bt setBackgroundImage:colorToImage(color(255, 142, 2)) forState:UIControlStateSelected];
+        [bt setTitleColor:color(45, 45, 45) forState:UIControlStateNormal];
+        [bt setTitleColor:color(255, 255, 255) forState:UIControlStateSelected];
+        [bt addTarget:self action:@selector(topClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
     
     
+    for (UIButton *bt in self.midButtons) {
+        bt.backgroundColor = [UIColor clearColor];
+        bt.layer.cornerRadius = 17;
+        bt.layer.masksToBounds = YES;
+        [bt setBackgroundImage:colorToImage(color(240, 240, 240)) forState:UIControlStateNormal];
+        [bt setBackgroundImage:colorToImage(color(255, 142, 2)) forState:UIControlStateSelected];
+        [bt setTitleColor:color(45, 45, 45) forState:UIControlStateNormal];
+        [bt setTitleColor:color(255, 255, 255) forState:UIControlStateSelected];
+        [bt addTarget:self action:@selector(midClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+}
+
+-(void)topClick:(UIButton *)ins{
+    NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
+                    self.topButton3,self.topButton4,self.topButton5];
+    for (UIButton *bt in tp) {
+        bt.selected = bt == ins;
+    }
+}
+-(void)midClick:(UIButton *)ins{
+    ins.selected = !ins.selected;
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -280,5 +338,33 @@
 //    }];
 //}
 
+
+
+static inline UIImage *colorToImage(UIColor *color){
+    CGRect rect = CGRectMake(0.0f,0.0f,1.0f,1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+
+static inline UIColor *color(float r,float g,float b){
+    return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1];
+}
+
+
+-(NSArray *)topButtons{
+    NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
+                    self.topButton3,self.topButton4,self.topButton5];
+    return tp;
+}
+-(NSArray *)midButtons{
+    NSArray *mp = @[self.midButton0,self.midButton1,self.midButton2,self.midButton3,self.midButton4,
+                    self.midButton5,self.midButton6,self.midButton7,self.midButton8];
+    return mp;
+}
 
 @end

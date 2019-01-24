@@ -27,6 +27,8 @@
 @property(nonatomic,assign)BOOL disusePopupAlphaAnimation;
 //保持弹框原来的frame不重新计算
 @property(nonatomic,assign)BOOL keepPopupOriginFrame;
+@property(nonatomic,assign)CGSize popupSize;
+@property(nonatomic,assign)CGRect popupFrame;
 //弹出框 弹出所在区域的大小【父视图的bounds】
 @property(nonatomic,assign)CGRect popupAreaRect;
 
