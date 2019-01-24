@@ -27,10 +27,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *midButton2;
 @property (weak, nonatomic) IBOutlet UIButton *midButton3;
 @property (weak, nonatomic) IBOutlet UIButton *midButton4;
-@property (weak, nonatomic) IBOutlet UIButton *midButton5;
-@property (weak, nonatomic) IBOutlet UIButton *midButton6;
-@property (weak, nonatomic) IBOutlet UIButton *midButton7;
-@property (weak, nonatomic) IBOutlet UIButton *midButton8;
+
+@property (weak, nonatomic) IBOutlet UIButton *botButton0;
+@property (weak, nonatomic) IBOutlet UIButton *botButton1;
+@property (weak, nonatomic) IBOutlet UIButton *botButton2;
+@property (weak, nonatomic) IBOutlet UIButton *botButton3;
+@property (weak, nonatomic) IBOutlet UIButton *botButton4;
+@property (weak, nonatomic) IBOutlet UIButton *botButton5;
 
 @property(nonatomic,strong)NSArray *topButtons;
 @property(nonatomic,strong)NSArray *midButtons;
@@ -362,8 +365,7 @@ static inline UIColor *color(float r,float g,float b){
     return tp;
 }
 -(NSArray *)midButtons{
-    NSArray *mp = @[self.midButton0,self.midButton1,self.midButton2,self.midButton3,self.midButton4,
-                    self.midButton5,self.midButton6,self.midButton7,self.midButton8];
+    NSArray *mp = @[self.midButton0,self.midButton1,self.midButton2,self.midButton3,self.midButton4];
     return mp;
 }
 
