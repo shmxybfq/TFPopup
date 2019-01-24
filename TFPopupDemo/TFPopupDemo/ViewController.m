@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+
 #import "TFPopup.h"
-#import "AlertNormal.h"
+#import "ListView.h"
 #import "BlankView.h"
+#import "AlertNormal.h"
 
 #define kSize [UIScreen mainScreen].bounds.size
 
@@ -27,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *midButton2;
 @property (weak, nonatomic) IBOutlet UIButton *midButton3;
 @property (weak, nonatomic) IBOutlet UIButton *midButton4;
+@property (weak, nonatomic) IBOutlet UIButton *midButton5;
 
 @property (weak, nonatomic) IBOutlet UIButton *botButton0;
 @property (weak, nonatomic) IBOutlet UIButton *botButton1;
@@ -35,8 +38,28 @@
 @property (weak, nonatomic) IBOutlet UIButton *botButton4;
 @property (weak, nonatomic) IBOutlet UIButton *botButton5;
 
+@property (weak, nonatomic) IBOutlet UIButton *cusButton0;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton1;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton2;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton3;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton4;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton5;
+
+@property (weak, nonatomic) IBOutlet UITextField *textField0;
+@property (weak, nonatomic) IBOutlet UITextField *textField1;
+
+@property (weak, nonatomic) IBOutlet UIButton *showButton;
+
 @property(nonatomic,strong)NSArray *topButtons;
 @property(nonatomic,strong)NSArray *midButtons;
+@property(nonatomic,strong)NSArray *botButtons;
+@property(nonatomic,strong)NSArray *cusButtons;
+
+@property(nonatomic,strong)TFPopupParam *param;
+@property(nonatomic,  copy)NSString *animationType;
+@property(nonatomic,assign)PopupDirection popupDirection;
+@property(nonatomic,assign)NSInteger custemIndex;
+@property(nonatomic,assign)CGPoint custemPoint;
 
 @end
 
@@ -47,54 +70,93 @@
     [self config];
 }
 
--(void)config{
+
+
+-(void)showClick:(UIButton *)ins{
     
-    for (UIButton *bt in self.topButtons) {
-        bt.backgroundColor = [UIColor clearColor];
-        bt.layer.cornerRadius = 17;
-        bt.layer.masksToBounds = YES;
-        [bt setBackgroundImage:colorToImage(color(240, 240, 240)) forState:UIControlStateNormal];
-        [bt setBackgroundImage:colorToImage(color(255, 142, 2)) forState:UIControlStateSelected];
-        [bt setTitleColor:color(45, 45, 45) forState:UIControlStateNormal];
-        [bt setTitleColor:color(255, 255, 255) forState:UIControlStateSelected];
-        [bt addTarget:self action:@selector(topClick:)
-     forControlEvents:UIControlEventTouchUpInside];
+    if ([self.animationType isEqualToString:@"渐隐"] ||
+        [self.animationType isEqualToString:@"直接弹"]) {
+        
+        UIView *popup = [self getAlertView];
+        BOOL isAni = [self.animationType isEqualToString:@"渐隐"];
+        //[alert tf_show:self.view animated:YES];
+        //[alert tf_show:self.view offset:CGPointZero animated:YES];
+        [popup tf_show:self.view offset:self.custemPoint popupParam:self.param animated:isAni];
+        
+    }else if ([self.animationType isEqualToString:@"缩放"]) {
+        
+        UIView *popup = [self getAlertView];
+        //[alert tf_showScale:self.view];
+        //[alert tf_showScale:self.view offset:self.custemPoint];
+        [popup tf_showScale:self.view offset:self.custemPoint popupParam:self.param];
+        
+    }else if ([self.animationType isEqualToString:@"滑动"]) {
+        
+        UIView *popup = [self getAlertView];
+        //[popup tf_showSlide:self.view direction:self.popupDirection];
+        [popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
+        
+    }else if ([self.animationType isEqualToString:@"形变"]) {
+        
+    }else if ([self.animationType isEqualToString:@"遮罩"]) {
+        
     }
-    
-    
-    for (UIButton *bt in self.midButtons) {
-        bt.backgroundColor = [UIColor clearColor];
-        bt.layer.cornerRadius = 17;
-        bt.layer.masksToBounds = YES;
-        [bt setBackgroundImage:colorToImage(color(240, 240, 240)) forState:UIControlStateNormal];
-        [bt setBackgroundImage:colorToImage(color(255, 142, 2)) forState:UIControlStateSelected];
-        [bt setTitleColor:color(45, 45, 45) forState:UIControlStateNormal];
-        [bt setTitleColor:color(255, 255, 255) forState:UIControlStateSelected];
-        [bt addTarget:self action:@selector(midClick:)
-     forControlEvents:UIControlEventTouchUpInside];
-    }
-    
 }
 
 -(void)topClick:(UIButton *)ins{
-    NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
-                    self.topButton3,self.topButton4,self.topButton5];
-    for (UIButton *bt in tp) {
+    for (UIButton *bt in self.topButtons) {
         bt.selected = bt == ins;
     }
+    self.animationType = title(ins);
 }
 -(void)midClick:(UIButton *)ins{
     ins.selected = !ins.selected;
+    if ([title(ins) isEqualToString:@"不使用背景"]) {
+        self.param.disuseBackground = ins.selected;
+    }
+    if ([title(ins) isEqualToString:@"点击背景不消失"]) {
+        self.param.disuseBackgroundTouchHide = ins.selected;
+    }
+    if ([title(ins) isEqualToString:@"背景色透明"]) {
+        self.param.backgroundColorClear = ins.selected;
+    }
+    if ([title(ins) isEqualToString:@"不使用背景渐隐动画"]) {
+        self.param.disuseBackgroundAlphaAnimation = ins.selected;
+    }
+    if ([title(ins) isEqualToString:@"不使用弹出渐隐动画"]) {
+        self.param.disusePopupAlphaAnimation = ins.selected;
+    }
+    if ([title(ins) isEqualToString:@"自定义位置"]) {
+        self.custemPoint = CGPointMake(0, -200);
+    }
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    
-    //[self toast];
-    
-//    [self showAlert];
-    
-    [self showAction];
+-(void)botClick:(UIButton *)ins{
+    for (UIButton *bt in self.botButtons) {
+        bt.selected = bt == ins;
+    }
+    if ([title(ins) isEqualToString:@"上"]) self.popupDirection = PopupDirectionFromTop;
+    if ([title(ins) isEqualToString:@"下"]) self.popupDirection = PopupDirectionFromBottom;
+    if ([title(ins) isEqualToString:@"左"]) self.popupDirection = PopupDirectionFromLeft;
+    if ([title(ins) isEqualToString:@"右"]) self.popupDirection = PopupDirectionFromRight;
+    if ([title(ins) isEqualToString:@"中"]) self.popupDirection = PopupDirectionCenter;
+    if ([title(ins) isEqualToString:@"随意"]) self.popupDirection = PopupDirectionFrame;
 }
+
+-(void)cusClick:(UIButton *)ins{
+    for (UIButton *bt in self.botButtons) {
+        bt.selected = bt == ins;
+    }
+    if ([title(ins) isEqualToString:@"自定义1"]) self.custemIndex = 1;
+    if ([title(ins) isEqualToString:@"自定义2"]) self.custemIndex = 2;
+    if ([title(ins) isEqualToString:@"自定义3"]) self.custemIndex = 3;
+    if ([title(ins) isEqualToString:@"自定义4"]) self.custemIndex = 4;
+    if ([title(ins) isEqualToString:@"自定义5"]) self.custemIndex = 5;
+    if ([title(ins) isEqualToString:@"自定义6"]) self.custemIndex = 6;
+}
+
+
+
 
 -(void)showAction{
     TFPopupParam *param = [TFPopupParam new];
@@ -105,6 +167,14 @@
     [alert tf_showSlide:self.view direction:PopupDirectionFromBottom];
 }
 
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//
+//    //[self toast];
+//
+////    [self showAlert];
+//
+//    [self showAction];
+//}
 
 -(void)showAlert{
     TFPopupParam *param = [TFPopupParam new];
@@ -343,6 +413,103 @@
 
 
 
+-(UIView *)getAlertView{
+    AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
+                                                      owner:nil
+                                                    options:nil].firstObject;
+    [alert observerSure:^{
+        [alert tf_hide];
+    }];
+    return alert;
+}
+
+
+-(UIView *)getListView{
+    ListView *list = [[NSBundle mainBundle]loadNibNamed:@"ListView"
+                                                  owner:nil
+                                                options:nil].firstObject;
+    [list observerSelected:^(NSString *data) {
+        [list tf_hide];
+    }];
+    return list;
+}
+
+
+
+-(void)config{
+    
+    NSMutableArray *all = [[NSMutableArray alloc]init];
+    [all addObjectsFromArray:self.topButtons];
+    [all addObjectsFromArray:self.midButtons];
+    [all addObjectsFromArray:self.botButtons];
+    [all addObjectsFromArray:self.cusButtons];
+    for (UIButton *bt in all) {
+        bt.backgroundColor = [UIColor clearColor];
+        bt.layer.cornerRadius = 17;
+        bt.layer.masksToBounds = YES;
+        [bt setBackgroundImage:colorToImage(color(240, 240, 240)) forState:UIControlStateNormal];
+        [bt setBackgroundImage:colorToImage(color(255, 142, 2)) forState:UIControlStateSelected];
+        [bt setBackgroundImage:colorToImage(color(230, 230, 230)) forState:UIControlStateDisabled];
+        [bt setTitleColor:color(45, 45, 45) forState:UIControlStateNormal];
+        [bt setTitleColor:color(255, 255, 255) forState:UIControlStateSelected];
+        [bt setTitleColor:color(60, 60, 60) forState:UIControlStateDisabled];
+    }
+    
+    for (UIButton *bt in self.topButtons) {
+        [bt addTarget:self action:@selector(topClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
+    for (UIButton *bt in self.midButtons) {
+        [bt addTarget:self action:@selector(midClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
+    for (UIButton *bt in self.botButtons) {
+        [bt addTarget:self action:@selector(botClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
+    for (UIButton *bt in self.cusButtons) {
+        [bt addTarget:self action:@selector(cusClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    [self topClick:self.topButton5];
+    [self botClick:self.botButton4];
+    
+    self.showButton.layer.cornerRadius = 20;
+    [self.showButton addTarget:self action:@selector(showClick:)
+ forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(NSArray *)topButtons{
+    NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
+                    self.topButton3,self.topButton4,self.topButton5];
+    return tp;
+}
+-(NSArray *)midButtons{
+    NSArray *mp = @[self.midButton0,self.midButton1,self.midButton2,
+                    self.midButton3,self.midButton4,self.midButton5];
+    return mp;
+}
+
+-(NSArray *)botButtons{
+    NSArray *bp = @[self.botButton0,self.botButton1,self.botButton2,
+                    self.botButton3,self.botButton4,self.botButton5];
+    return bp;
+}
+
+-(NSArray *)cusButtons{
+    NSArray *cp = @[self.cusButton0,self.cusButton1,self.cusButton2,
+                    self.cusButton3,self.cusButton4,self.cusButton5];
+    return cp;
+}
+
+-(TFPopupParam *)param{
+    if (_param == nil) {
+        _param = [TFPopupParam new];
+    }
+    return _param;
+}
+
 static inline UIImage *colorToImage(UIColor *color){
     CGRect rect = CGRectMake(0.0f,0.0f,1.0f,1.0f);
     UIGraphicsBeginImageContext(rect.size);
@@ -358,15 +525,8 @@ static inline UIColor *color(float r,float g,float b){
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1];
 }
 
-
--(NSArray *)topButtons{
-    NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
-                    self.topButton3,self.topButton4,self.topButton5];
-    return tp;
-}
--(NSArray *)midButtons{
-    NSArray *mp = @[self.midButton0,self.midButton1,self.midButton2,self.midButton3,self.midButton4];
-    return mp;
+static inline NSString *title(UIButton *bt){
+    return [bt titleForState:UIControlStateNormal];
 }
 
 @end

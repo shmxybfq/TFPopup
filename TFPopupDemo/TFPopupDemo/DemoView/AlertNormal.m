@@ -10,11 +10,21 @@
 
 @implementation AlertNormal
 
+-(void)observerSure:(ActionBlock)block{
+    self.block = block;
+}
+
 -(void)awakeFromNib{
     [super awakeFromNib];
     self.layer.cornerRadius = 6;
     self.layer.masksToBounds = YES;
     
+    
+}
+- (IBAction)sure:(id)sender {
+    if (self.block) {
+        self.block();
+    }
 }
 
 @end

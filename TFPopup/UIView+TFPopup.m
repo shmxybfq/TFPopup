@@ -290,9 +290,12 @@
     if (self.style == PopupStyleFrame) {
         return self.popupParam.popOriginFrame;;
     }else if(self.style == PopupStyleSlide){
-        CGFloat x = 0,y = 0,w = 0,h = 0;
         CGRect ar = self.popupAreaRect;
         CGSize s = self.popupSize;
+        CGFloat x = (ar.size.width - s.width) * 0.5;
+        CGFloat y = (ar.size.height - s.height) * 0.5;
+        CGFloat w = s.width;
+        CGFloat h = s.height;
         switch (self.direction) {
             case PopupDirectionCenter:{}break;
             case PopupDirectionFromTop:{
@@ -336,7 +339,10 @@
     }else if(self.style == PopupStyleSlide){
         CGRect ar = self.popupAreaRect;
         CGSize s = self.popupSize;
-        CGFloat x = 0,y = 0,w = 0,h = 0;
+        CGFloat x = (ar.size.width - s.width) * 0.5;
+        CGFloat y = (ar.size.height - s.height) * 0.5;
+        CGFloat w = s.width;
+        CGFloat h = s.height;
         switch (self.direction) {
             case PopupDirectionCenter:{}break;
             case PopupDirectionFromTop:{

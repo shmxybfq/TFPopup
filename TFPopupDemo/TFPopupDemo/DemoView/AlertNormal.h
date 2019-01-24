@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ActionBlock)(void);
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AlertNormal : UIView
+
+@property(nonatomic,  copy)ActionBlock block;
+
+-(void)observerSure:(ActionBlock)block;
 
 @end
 

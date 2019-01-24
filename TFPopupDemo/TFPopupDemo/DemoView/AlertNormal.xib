@@ -38,6 +38,9 @@
                     <state key="normal" title="确定">
                         <color key="titleColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="ohn-VN-ltB"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
