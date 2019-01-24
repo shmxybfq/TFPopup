@@ -9,7 +9,6 @@
 #import "UIView+TFPopup.h"
 #import <objc/runtime.h>
 
-
 @implementation UIView (TFPopup)
 @dynamic inView,manager,popupParam,style,direction,popupAreaRect,popupSize,popupDelegate;
 
@@ -185,50 +184,50 @@
             ani = TFPopupDefaultAnimationNone;
         }break;
         case PopupStyleAlpha:{
-            if (self.popupParam.noCoverAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationCoverAlpha;
+            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
+                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
             }
-            if (self.popupParam.noPopupAlphaAnimation == NO) {
+            if (self.popupParam.disusePopupAlphaAnimation == NO) {
                 ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
             }
         }break;
         case PopupStyleSlide:{
             ani = TFPopupDefaultAnimationPopBoardFrame;
-            if (self.popupParam.noCoverAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationCoverAlpha;
+            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
+                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
             }
-            if (self.popupParam.noPopupAlphaAnimation == NO) {
+            if (self.popupParam.disusePopupAlphaAnimation == NO) {
                 ani =ani | TFPopupDefaultAnimationPopBoardAlpha;
             }
         }break;
         case PopupStyleScale:{
-            if (self.popupParam.noCoverAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationCoverAlpha;
+            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
+                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
             }
-            if (self.popupParam.noPopupAlphaAnimation == NO) {
+            if (self.popupParam.disusePopupAlphaAnimation == NO) {
                 ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
             }
-            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationCoverAlpha) {
+            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationBackgroundAlpha) {
                 ani = ani | TFPopupDefaultAnimationCustem;
             }
         }break;
         case PopupStyleFrame:{
             ani = TFPopupDefaultAnimationPopBoardFrame;
-            if (self.popupParam.noCoverAlphaAnimation == NO) {
-                ani =ani | TFPopupDefaultAnimationCoverAlpha;
+            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
+                ani =ani | TFPopupDefaultAnimationBackgroundAlpha;
             }
-            if (self.popupParam.noPopupAlphaAnimation == NO) {
+            if (self.popupParam.disusePopupAlphaAnimation == NO) {
                 ani =ani | TFPopupDefaultAnimationPopBoardAlpha;
             }
         }break;
         case PopupStyleMask:{
-            if (self.popupParam.noCoverAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationCoverAlpha;
+            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
+                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
             }
-            if (self.popupParam.noPopupAlphaAnimation == NO) {
+            if (self.popupParam.disusePopupAlphaAnimation == NO) {
                 ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
             }
-            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationCoverAlpha) {
+            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationBackgroundAlpha) {
                 ani = ani | TFPopupDefaultAnimationCustem;
             }
         }break;
@@ -248,13 +247,13 @@
 }
 
 /* 执行顺序:2 返回【弹出框的上层背景视图,默认动画alpha=0,弹出时动画为alpha=1,自定义动画则忽略默认动画 */
--(UIView  *)tf_popupManager_popForCoverView:(TFPopupManager *)manager{
-    if (self.popupParam.noCoverView == NO) {
+-(UIView  *)tf_popupManager_popForBackgroundView:(TFPopupManager *)manager{
+    if (self.popupParam.disuseBackground == NO) {
         UIButton *cover = [UIButton buttonWithType:UIButtonTypeCustom];
-        if ([self.popupParam.coverView isKindOfClass:[UIView class]]) {
-            return self.popupParam.coverView;
+        if ([self.popupParam.backgroundView isKindOfClass:[UIView class]]) {
+            return self.popupParam.backgroundView;
         }
-        if (self.popupParam.coverBackgroundColorClear) {
+        if (self.popupParam.backgroundColorClear) {
             cover.backgroundColor = [UIColor clearColor];
         }else{
             cover.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
@@ -275,8 +274,8 @@
 }
 
 /* 执行顺序:3 返回【弹出框的上层背景视图的位置,frame或者 约束,如设置了约束则frame无效 */
--(CGRect   )tf_popupManager_popForCoverViewPosition:(TFPopupManager *)manager
-                                          coverView:(UIView *)coverView{
+-(CGRect   )tf_popupManager_popForBackgroundViewPosition:(TFPopupManager *)manager
+                                          backgroundView:(UIView *)backgroundView{
     return self.popupAreaRect;
 }
 
@@ -383,8 +382,8 @@
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"transform.scale";
-        if ([self.popupParam.scaleShowProperty hasPrefix:@"transform.scale"]) {
-            keyPath = [self.popupParam.scaleShowProperty copy];
+        if ([self.popupParam.scaleShowKeyPath hasPrefix:@"transform.scale"]) {
+            keyPath = [self.popupParam.scaleShowKeyPath copy];
         }
         CAAnimation *animation = [self animation:keyPath from:@0.0 to:@1.0 dur:dur];
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
@@ -445,8 +444,8 @@
     if (self.style == PopupStyleScale) {
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"transform.scale";
-        if ([self.popupParam.scaleHideProperty hasPrefix:@"transform.scale"]) {
-            keyPath = [self.popupParam.scaleHideProperty copy];
+        if ([self.popupParam.scaleHideKeyPath hasPrefix:@"transform.scale"]) {
+            keyPath = [self.popupParam.scaleHideKeyPath copy];
         }
         CAAnimation *animation = [self animation:keyPath from:@1.0 to:@0.0 dur:dur];
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
@@ -491,13 +490,13 @@
 
 -(void)coverAction{
     BOOL breakOpration = NO;
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupCoverTouch:popup:)]) {
-        breakOpration = [self.popupDelegate tf_popupCoverTouch:self.manager popup:self];
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupBackgroundTouch:popup:)]) {
+        breakOpration = [self.popupDelegate tf_popupBackgroundTouch:self.manager popup:self];
         if (breakOpration) {
             return;
         }
     }
-    if (self.popupParam.noCoverTouchHide == NO) {
+    if (self.popupParam.disuseBackgroundTouchHide == NO) {
         [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
     }
 }
@@ -535,8 +534,8 @@
     }
     return NO;
 }
--(BOOL)tf_popupCoverTouch:(TFPopupManager *)manager popup:(UIView *)popup{
-    return self.popupParam.noCoverTouchHide;
+-(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup{
+    return self.popupParam.disuseBackgroundTouchHide;
 }
 
 

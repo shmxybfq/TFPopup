@@ -50,7 +50,7 @@
     param.duration = 0.3;
     //param.noPopupAlphaAnimation = YES;
     //param.autoDissmissDuration = 1;
-    //param.noCoverView = YES;
+    //param.disuseBackground = YES;
     //param.noCoverTouchHide = YES;
     //param.coverBackgroundColorClear = YES;
     //param.noCoverAlphaAnimation = YES;
@@ -152,13 +152,13 @@
 
 //            TFPopupParam *p = [TFPopupParam new];
 //            p.keepPopupOriginFrame = YES;
-//            p.noCoverView = YES;
+//            p.disuseBackground = YES;
 //            [view tf_showScale:popup offset:CGPointZero popupParam:p];
 
             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
             [animation setFromValue:@(view.frame.origin.y)];//设置起始值
             [animation setToValue:@(view.frame.origin.y - 300)];//设置目标值
-            [animation setDuration:0.6];//设置动画时间，单次动画时间
+            [animation setDuration:0.25];//设置动画时间，单次动画时间
             [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
             [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
             [animation setAutoreverses:NO];
@@ -170,10 +170,33 @@
     return NO;
 }
 
-//缩放动画
--(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
 
-    return NO;
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+  
+    
+    NSArray *bts = [((BlankView *)popup) buttons];
+    for (NSInteger i = bts.count - 1; i >=0 ; i--) {
+
+        UIView *view = [bts objectAtIndex:i];
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(((7-i) * 0.05) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
+            [animation setFromValue:@(view.frame.origin.y)];//设置起始值
+            [animation setToValue:@(view.frame.origin.y + 300)];//设置目标值
+            [animation setDuration:3];//设置动画时间，单次动画时间
+            [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
+            [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+            [animation setAutoreverses:NO];
+            [animation setFillMode:kCAFillModeBoth];
+            [view.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+        });
+        if (i == 7 ) {
+            break;
+        }
+
+    }
+    return YES;
 }
 
 

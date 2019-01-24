@@ -11,7 +11,7 @@
 
 typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
     TFPopupDefaultAnimationNone    = 0,
-    TFPopupDefaultAnimationCoverAlpha   = 1 << 0,
+    TFPopupDefaultAnimationBackgroundAlpha   = 1 << 0,
     TFPopupDefaultAnimationPopBoardAlpha   = 1 << 1,
     TFPopupDefaultAnimationPopBoardFrame   = 1 << 2,
     TFPopupDefaultAnimationCustem      = 1 << 3,
@@ -31,10 +31,10 @@ typedef NS_OPTIONS(NSUInteger, TFPopupDefaultAnimation) {
 
 @optional;
 /* 执行顺序:2 返回【弹出框的上层背景视图,默认动画alpha=0,弹出时动画为alpha=1,自定义动画则忽略默认动画 */
--(UIView  *)tf_popupManager_popForCoverView:(TFPopupManager *)manager;
+-(UIView  *)tf_popupManager_popForBackgroundView:(TFPopupManager *)manager;
 /* 执行顺序:3 返回【弹出框的上层背景视图的位置,frame或者 约束,如设置了约束则frame无效 */
--(CGRect   )tf_popupManager_popForCoverViewPosition:(TFPopupManager *)manager
-                                          coverView:(UIView *)coverView;
+-(CGRect   )tf_popupManager_popForBackgroundViewPosition:(TFPopupManager *)manager
+                                          backgroundView:(UIView *)backgroundView;
 
 
 /* 执行顺序:5 返回【弹出框view,动画开始时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */

@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 @optional;
 -(BOOL    )tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
 -(BOOL    )tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
--(BOOL    )tf_popupCoverTouch:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL    )tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
 @end
 
 @interface UIView (TFPopup)<TFPopupDelegate,TFPopupManagerDataSource,TFPopupManagerDelegate>
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
           direction:(PopupDirection)direction
          popupParam:(TFPopupParam *)popupParam;
 
-#pragma mark -- 【滑动出来动画】方式
+#pragma mark -- 【形变出来动画】方式
 -(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
 
 #pragma mark -- 【遮罩动画】方式

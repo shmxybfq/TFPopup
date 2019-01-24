@@ -21,14 +21,14 @@
 
 //从代理获取的属性
 @property(nonatomic,strong)UIView *popForView;
-@property(nonatomic,strong)UIView *popForCoverView;
-@property(nonatomic,assign)CGRect  popForCoverViewFrame;
+@property(nonatomic,strong)UIView *popForBackgroundView;
+@property(nonatomic,assign)CGRect  popForBackgroundViewFrame;
 @property(nonatomic,strong)UIView *popBoardView;
 @property(nonatomic,assign)CGRect  popBoardViewBeginFrame;
 @property(nonatomic,assign)CGRect  popBoardViewEndFrame;
 @property(nonatomic,assign)NSInteger popBoardItemCount;
-@property(nonatomic,strong)NSMutableArray *popBoardItemFrames;
 @property(nonatomic,strong)NSMutableArray *popBoardItemViews;
+@property(nonatomic,strong)NSMutableArray *popBoardItemFrames;
 @property(nonatomic,assign)TFPopupDefaultAnimation defaultAnimation;
 @property(nonatomic,assign)NSTimeInterval defaultAnimationDuration;
 @property(nonatomic,assign)NSTimeInterval custemAnimationDuration;
@@ -38,6 +38,7 @@
 -(void)reload;
 -(void)show;
 -(void)hide;
+-(void)remove;
 
 @end
 

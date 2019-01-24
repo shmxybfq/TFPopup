@@ -7,6 +7,7 @@
 //
 
 #import "TFPopupManager.h"
+
 @interface TFPopupManager()
 
 @property(nonatomic,  weak)id<TFPopupManagerDataSource>dataSource;
@@ -27,6 +28,12 @@
     ins.delegate = delegate;
     
     return ins;
+}
+
+-(void)remove{
+    [self.popForBackgroundView removeFromSuperview];
+    [self.popBoardItemViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.popBoardView removeFromSuperview];
 }
 
 -(void)show{
@@ -51,7 +58,7 @@
     
     //不需要动画
     if (self.defaultAnimation == TFPopupDefaultAnimationNone) {
-        self.popForCoverView.alpha = 1;
+        self.popForBackgroundView.alpha = 1;
         self.popBoardView.alpha = 1;
         self.popBoardView.frame = self.popBoardViewEndFrame;
         [self finishShow:TFPopupDefaultAnimationNone isAnimationShow:NO];
@@ -67,16 +74,18 @@
         });
         
         //遮罩-透明度动画
-        if (self.popForCoverView){
-            if ((self.defaultAnimation & TFPopupDefaultAnimationCoverAlpha) == TFPopupDefaultAnimationCoverAlpha){
-                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
-                    weakself.popForCoverView.alpha = 1;
+        if (self.popForBackgroundView){
+            if ((self.defaultAnimation & TFPopupDefaultAnimationBackgroundAlpha) == TFPopupDefaultAnimationBackgroundAlpha){
+                [UIView animateWithDuration:self.defaultAnimationDuration
+                                      delay:0
+                                    options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    weakself.popForBackgroundView.alpha = 1;
                 } completion:^(BOOL finished) {
-                    [weakself finishShow:TFPopupDefaultAnimationCoverAlpha isAnimationShow:YES];
+                    [weakself finishShow:TFPopupDefaultAnimationBackgroundAlpha isAnimationShow:YES];
                 }];
             }else{
-                self.popForCoverView.alpha = 1;
-                [self finishShow:TFPopupDefaultAnimationCoverAlpha isAnimationShow:NO];
+                self.popForBackgroundView.alpha = 1;
+                [self finishShow:TFPopupDefaultAnimationBackgroundAlpha isAnimationShow:NO];
             }
         }
         
@@ -84,7 +93,9 @@
         //弹出框-透明度动画
         if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
             if (self.popBoardView) {
-                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                [UIView animateWithDuration:self.defaultAnimationDuration
+                                      delay:0
+                                    options:UIViewAnimationOptionCurveEaseOut animations:^{
                     weakself.popBoardView.alpha = 1;
                 } completion:^(BOOL finished) {
                     [weakself finishShow:TFPopupDefaultAnimationPopBoardAlpha isAnimationShow:YES];
@@ -98,7 +109,9 @@
         //弹出框-位移动画
         if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame){
             if (self.popBoardView) {
-                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                [UIView animateWithDuration:self.defaultAnimationDuration
+                                      delay:0
+                                    options:UIViewAnimationOptionCurveEaseOut animations:^{
                     weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
                 } completion:^(BOOL finished) {
                     [weakself finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:YES];
@@ -108,21 +121,6 @@
             self.popBoardView.frame = weakself.popBoardViewEndFrame;
             [self finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:NO];
         }
-    }
-}
-
--(void)finishShow:(TFPopupDefaultAnimation)animation isAnimationShow:(BOOL)isAnimationShow{
-    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didShow:defaultAnimation:isAnimationShow:)]) {
-        [self.delegate tf_popupManager_didShow:self
-                              defaultAnimation:animation
-                               isAnimationShow:isAnimationShow];
-    }
-}
--(void)finishHide:(TFPopupDefaultAnimation)animation isAnimationHide:(BOOL)isAnimationHide{
-    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didHide:defaultAnimation:isAnimationHide:)]) {
-        [self.delegate tf_popupManager_didHide:self
-                              defaultAnimation:animation
-                               isAnimationHide:isAnimationHide];
     }
 }
 
@@ -142,47 +140,39 @@
         }];
     }
     if (breakOriginAnimation == YES) {
-        if (self.popForCoverView) {
-            dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)((self.custemAnimationDuration) * NSEC_PER_SEC));
-            dispatch_after(time, dispatch_get_main_queue(), ^{
-                [weakself.popForCoverView removeFromSuperview];
-            });
-        }
-        if (self.popBoardView) {
-            dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)((self.custemAnimationDuration) * NSEC_PER_SEC));
-            dispatch_after(time, dispatch_get_main_queue(), ^{
-                [weakself.popBoardView removeFromSuperview];
-            });
-        }
         return;
     }
     
     //不需要动画
     if (self.defaultAnimation == TFPopupDefaultAnimationNone) {
-        self.popForCoverView.alpha = 0;
+        self.popForBackgroundView.alpha = 0;
         self.popBoardView.alpha = 0;
         self.popBoardView.frame = self.popBoardViewBeginFrame;
         [self finishHide:TFPopupDefaultAnimationNone isAnimationHide:NO];
     }else{
         //遮罩-透明度动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationCoverAlpha) == TFPopupDefaultAnimationCoverAlpha){
-            if (self.popForCoverView){
-                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
-                    weakself.popForCoverView.alpha = 0;
+        if ((self.defaultAnimation & TFPopupDefaultAnimationBackgroundAlpha) == TFPopupDefaultAnimationBackgroundAlpha){
+            if (self.popForBackgroundView){
+                [UIView animateWithDuration:self.defaultAnimationDuration
+                                      delay:0
+                                    options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    weakself.popForBackgroundView.alpha = 0;
                 } completion:^(BOOL finished) {
-                    [weakself finishHide:TFPopupDefaultAnimationCoverAlpha isAnimationHide:YES];
-                    [weakself.popForCoverView removeFromSuperview];
+                    [weakself finishHide:TFPopupDefaultAnimationBackgroundAlpha isAnimationHide:YES];
+                    [weakself.popForBackgroundView removeFromSuperview];
                 }];
             }
         }else{
-            [self finishHide:TFPopupDefaultAnimationCoverAlpha isAnimationHide:NO];
-            [self.popForCoverView removeFromSuperview];
+            [self finishHide:TFPopupDefaultAnimationBackgroundAlpha isAnimationHide:NO];
+            [self.popForBackgroundView removeFromSuperview];
         }
         
         //弹出框-透明度动画
         if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
             if (self.popBoardView) {
-                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                [UIView animateWithDuration:self.defaultAnimationDuration
+                                      delay:0
+                                    options:UIViewAnimationOptionCurveEaseOut animations:^{
                     weakself.popBoardView.alpha = 0;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha isAnimationHide:YES];
@@ -196,7 +186,9 @@
         //弹出框-位移动画
         if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame){
             if (self.popBoardView) {
-                [UIView animateWithDuration:self.defaultAnimationDuration animations:^{
+                [UIView animateWithDuration:self.defaultAnimationDuration
+                                      delay:0
+                                    options:UIViewAnimationOptionCurveEaseOut animations:^{
                     weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:YES];
@@ -230,7 +222,26 @@
     }
 }
 
+
+-(void)finishShow:(TFPopupDefaultAnimation)animation isAnimationShow:(BOOL)isAnimationShow{
+    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didShow:defaultAnimation:isAnimationShow:)]) {
+        [self.delegate tf_popupManager_didShow:self
+                              defaultAnimation:animation
+                               isAnimationShow:isAnimationShow];
+    }
+}
+-(void)finishHide:(TFPopupDefaultAnimation)animation isAnimationHide:(BOOL)isAnimationHide{
+    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didHide:defaultAnimation:isAnimationHide:)]) {
+        [self.delegate tf_popupManager_didHide:self
+                              defaultAnimation:animation
+                               isAnimationHide:isAnimationHide];
+    }
+}
+
+
 -(void)reload{
+    
+    [self clear];
     
     /* 执行顺序:0 返回【默认使用的动画方式,可叠加】 */
     if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popDefaultAnimation:)]) {
@@ -247,19 +258,19 @@
     }
     
     //设置背景view
-    if (self.popForCoverView) {
-        [self.popForCoverView removeFromSuperview];
-        self.popForCoverView = nil;
+    if (self.popForBackgroundView) {
+        [self.popForBackgroundView removeFromSuperview];
+        self.popForBackgroundView = nil;
     }
-    if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popForCoverView:)]) {
-        self.popForCoverView = [self.dataSource tf_popupManager_popForCoverView:self];
-        self.popForCoverView.alpha = 0;
-        [self.popForView addSubview:self.popForCoverView];
+    if ([self.dataSource respondsToSelector:@selector(tf_popupManager_popForBackgroundView:)]) {
+        self.popForBackgroundView = [self.dataSource tf_popupManager_popForBackgroundView:self];
+        self.popForBackgroundView.alpha = 0;
+        [self.popForView addSubview:self.popForBackgroundView];
     }
-    self.popForCoverViewFrame = CGRectZero;
-    if (self.popForCoverView && [self.dataSource respondsToSelector:@selector(tf_popupManager_popForCoverViewPosition:coverView:)]) {
-        self.popForCoverViewFrame = [self.dataSource tf_popupManager_popForCoverViewPosition:self coverView:self.popForCoverView];
-        self.popForCoverView.frame = self.popForCoverViewFrame;
+    self.popForBackgroundViewFrame = CGRectZero;
+    if (self.popForBackgroundView && [self.dataSource respondsToSelector:@selector(tf_popupManager_popForBackgroundViewPosition:backgroundView:)]) {
+        self.popForBackgroundViewFrame = [self.dataSource tf_popupManager_popForBackgroundViewPosition:self backgroundView:self.popForBackgroundView];
+        self.popForBackgroundView.frame = self.popForBackgroundViewFrame;
     }
     
     //弹出框view
@@ -318,13 +329,22 @@
         self.defaultAnimationDuration = [self.dataSource tf_popupManager_popDefaultAnimationDuration:self];
     }
 }
--(void)showAnimationComplete{
-    
+
+-(void)clear{
+    self.popForView = nil;
+    self.popForBackgroundView = nil;
+    self.popForBackgroundViewFrame = CGRectZero;
+    self.popBoardView = nil;
+    self.popBoardViewBeginFrame = CGRectZero;
+    self.popBoardViewEndFrame = CGRectZero;
+    self.popBoardItemCount = 0;
+    [self.popBoardItemFrames removeAllObjects];
+    [self.popBoardItemViews removeAllObjects];
+    self.defaultAnimation = TFPopupDefaultAnimationNone;
+    self.defaultAnimationDuration = 0.0;
+    self.custemAnimationDuration = 0.0;
 }
 
--(void)hideAnimationComplete{
-    
-}
 
 -(NSMutableArray *)popBoardItemFrames{
     if (_popBoardItemFrames == nil) {
