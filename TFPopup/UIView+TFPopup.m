@@ -10,8 +10,8 @@
 #import <objc/runtime.h>
 
 @implementation UIView (TFPopup)
-@dynamic inView,manager,popupParam,style,direction,popupAreaRect;
-@dynamic popupSize,popupDelegate,backgroundView;
+@dynamic inView,manager,popupParam,style,direction;
+@dynamic popupDelegate,backgroundView;
 
 #pragma mark -- 【隐藏】
 -(void)tf_hide{
@@ -54,7 +54,7 @@
                    scale:(BOOL)scale
                 animated:(BOOL)animated{
     
-    self.offset = offset;
+    self.popupParam.offset = offset;
     
     PopupStyle style = PopupStyleNone;
     if (animated == YES) {
@@ -76,7 +76,6 @@
                      style:style
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
-             popupAreaRect:self.inView.bounds
                   delegate:self.popupDelegate?:self];
 }
 
@@ -94,11 +93,10 @@
                      style:PopupStyleSlide
                  direction:direction
                  popupSize:self.bounds.size
-             popupAreaRect:self.inView.bounds
                   delegate:self.popupDelegate?:self];
 }
 
-#pragma mark -- 【滑动出来动画】方式
+#pragma mark -- 【形变出来动画】方式
 -(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
     
     [self tf_showCustemAll:inView
@@ -106,7 +104,6 @@
                      style:PopupStyleFrame
                  direction:PopupDirectionFrame
                  popupSize:self.bounds.size
-             popupAreaRect:self.inView.bounds
                   delegate:self.popupDelegate?:self];
 }
 
@@ -117,7 +114,6 @@
                      style:PopupStyleMask
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
-             popupAreaRect:self.inView.bounds
                   delegate:self.popupDelegate?:self];
 }
 
@@ -126,16 +122,11 @@
                        offset:(CGPoint)offset
                    popupParam:(TFPopupParam *)popupParam{
     
-    if (popupParam.showKeyPath) {
-        
-    }
-    
     [self tf_showCustemAll:inView
                 popupParam:popupParam
                      style:PopupStyleAlpha
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
-             popupAreaRect:inView.bounds
                   delegate:self.popupDelegate?:self];
 }
 
@@ -144,7 +135,6 @@
                   style:(PopupStyle)style
               direction:(PopupDirection)direction
               popupSize:(CGSize)popupSize
-          popupAreaRect:(CGRect)popupAreaRect
                delegate:(id<TFPopupDelegate>)delegate{
     
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
@@ -175,20 +165,12 @@
         }
     }
     
-    self.popupSize = popupSize;
-    if (CGSizeEqualToSize(self.popupSize, CGSizeZero))
-        self.popupSize = self.bounds.size;
-    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero) == NO)
-        self.popupSize = self.popupParam.popupSize;
+    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero))
+        self.popupParam.popupSize = self.bounds.size;
     
-    
-    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero) == NO) {
-        if (CGRectEqualToRect(popupAreaRect, CGRectZero))
-            self.popupAreaRect = self.inView.bounds;
-        else
-            self.popupAreaRect = popupAreaRect;
+    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero)) {
+        self.popupParam.popupAreaRect = self.inView.bounds;
     }
-    self.popupAreaRect = self.popupParam.popupAreaRect;
     
     self.popupDelegate = delegate;
     
@@ -290,6 +272,9 @@
             [tapGes addTarget:self action:@selector(coverTap:)];
             [cover addGestureRecognizer:tapGes];
         }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSLog(@"cover:%@",cover);
+        });
         return cover;
     }
     return nil;
@@ -298,7 +283,7 @@
 /* 执行顺序:3 返回【弹出框的上层背景视图的位置,frame或者 约束,如设置了约束则frame无效 */
 -(CGRect   )tf_popupManager_popForBackgroundViewPosition:(TFPopupManager *)manager
                                           backgroundView:(UIView *)backgroundView{
-    return self.popupAreaRect;
+    return self.popupParam.popupAreaRect;
 }
 
 /* 执行顺序:5 返回【弹出框view,动画开始时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */
@@ -308,10 +293,10 @@
     if (self.popupParam.keepPopupOriginFrame)return self.frame;
     
     if (self.style == PopupStyleFrame) {
-        return self.popupParam.popOriginFrame;;
+        return self.popupParam.popOriginFrame;
     }else if(self.style == PopupStyleSlide){
-        CGRect ar = self.popupAreaRect;
-        CGSize s = self.popupSize;
+        CGRect ar = self.popupParam.popupAreaRect;
+        CGSize s = self.popupParam.popupSize;
         CGFloat x = (ar.size.width - s.width) * 0.5;
         CGFloat y = (ar.size.height - s.height) * 0.5;
         CGFloat w = s.width;
@@ -336,8 +321,8 @@
         return position;
     }else{
         //此位置为中心位置
-        CGRect ar = self.popupAreaRect;
-        CGSize s = self.popupSize;
+        CGRect ar = self.popupParam.popupAreaRect;
+        CGSize s = self.popupParam.popupSize;
         CGFloat x = (ar.size.width - s.width) * 0.5;
         CGFloat y = (ar.size.height - s.height) * 0.5;
         CGFloat w = s.width;
@@ -357,8 +342,8 @@
     if (self.style == PopupStyleFrame) {
         return self.popupParam.popTargetFrame;
     }else if(self.style == PopupStyleSlide){
-        CGRect ar = self.popupAreaRect;
-        CGSize s = self.popupSize;
+        CGRect ar = self.popupParam.popupAreaRect;
+        CGSize s = self.popupParam.popupSize;
         CGFloat x = (ar.size.width - s.width) * 0.5;
         CGFloat y = (ar.size.height - s.height) * 0.5;
         CGFloat w = s.width;
@@ -383,8 +368,8 @@
         return position;
     }else{
         //此位置为中心位置
-        CGRect ar = self.popupAreaRect;
-        CGSize s = self.popupSize;
+        CGRect ar = self.popupParam.popupAreaRect;
+        CGSize s = self.popupParam.popupSize;
         CGFloat x = (ar.size.width - s.width) * 0.5;
         CGFloat y = (ar.size.height - s.height) * 0.5;
         CGFloat w = s.width;
@@ -426,7 +411,7 @@
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
         CAShapeLayer *mask = [[CAShapeLayer alloc]init];
-        mask.frame = CGRectMake(0, 0, self.popupSize.width, self.popupSize.height);
+        mask.frame = CGRectMake(0, 0, self.popupParam.popupSize.width, self.popupParam.popupSize.height);
         mask.path = self.popupParam.maskShowFromPath.CGPath;
         self.layer.mask = mask;
         
@@ -542,8 +527,8 @@
          self.style == PopupStyleAlpha ||
          self.style == PopupStyleScale ||
          self.style == PopupStyleMask) &&
-        CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
-        CGPoint offset = self.offset;
+        CGPointEqualToPoint(self.popupParam.offset, CGPointZero) == NO) {
+        CGPoint offset = self.popupParam.offset;
         CGRect bf = manager.popBoardViewBeginFrame;
         CGRect nf = CGRectMake(bf.origin.x + offset.x,
                                bf.origin.y + offset.y,
@@ -558,8 +543,8 @@
          self.style == PopupStyleAlpha ||
          self.style == PopupStyleScale ||
          self.style == PopupStyleMask) &&
-        CGPointEqualToPoint(self.offset, CGPointZero) == NO) {
-        CGPoint offset = self.offset;
+        CGPointEqualToPoint(self.popupParam.offset, CGPointZero) == NO) {
+        CGPoint offset = self.popupParam.offset;
         CGRect bf = manager.popBoardViewEndFrame;
         CGRect nf = CGRectMake(bf.origin.x + offset.x,
                                bf.origin.y + offset.y,
@@ -600,39 +585,39 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
 tf_synthesize_category_property_retain(backgroundView, setBackgroundView);
 
--(CGSize)popupSize{
-    id value = objc_getAssociatedObject(self, @selector(popupSize));
-    if (value) {
-        return CGSizeFromString(value);
-    }
-    return CGSizeZero;
-}
+//-(CGSize)popupSize{
+//    id value = objc_getAssociatedObject(self, @selector(popupSize));
+//    if (value) {
+//        return CGSizeFromString(value);
+//    }
+//    return CGSizeZero;
+//}
+//
+//-(void)setPopupSize:(CGSize)popupSize{
+//    objc_setAssociatedObject(self, @selector(popupSize), NSStringFromCGSize(popupSize), OBJC_ASSOCIATION_COPY_NONATOMIC);
+//}
 
--(void)setPopupSize:(CGSize)popupSize{
-    objc_setAssociatedObject(self, @selector(popupSize), NSStringFromCGSize(popupSize), OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
+//-(CGRect)popupAreaRect{
+//    id value = objc_getAssociatedObject(self, @selector(popupAreaRect));
+//    if (value) {
+//        return CGRectFromString(value);
+//    }
+//    return CGRectZero;
+//}
+//-(void)setPopupAreaRect:(CGRect)popupAreaRect{
+//    objc_setAssociatedObject(self, @selector(popupAreaRect), NSStringFromCGRect(popupAreaRect), OBJC_ASSOCIATION_COPY_NONATOMIC);
+//}
 
--(CGRect)popupAreaRect{
-    id value = objc_getAssociatedObject(self, @selector(popupAreaRect));
-    if (value) {
-        return CGRectFromString(value);
-    }
-    return CGRectZero;
-}
--(void)setPopupAreaRect:(CGRect)popupAreaRect{
-    objc_setAssociatedObject(self, @selector(popupAreaRect), NSStringFromCGRect(popupAreaRect), OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
--(CGPoint)offset{
-    id value = objc_getAssociatedObject(self, @selector(offset));
-    if (value) {
-        return CGPointFromString(value);
-    }
-    return CGPointZero;
-}
--(void)setOffset:(CGPoint)offset{
-    objc_setAssociatedObject(self, @selector(offset), NSStringFromCGPoint(offset), OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
+//-(CGPoint)offset{
+//    id value = objc_getAssociatedObject(self, @selector(offset));
+//    if (value) {
+//        return CGPointFromString(value);
+//    }
+//    return CGPointZero;
+//}
+//-(void)setOffset:(CGPoint)offset{
+//    objc_setAssociatedObject(self, @selector(offset), NSStringFromCGPoint(offset), OBJC_ASSOCIATION_COPY_NONATOMIC);
+//}
 
 -(PopupDirection)direction{
     id value = objc_getAssociatedObject(self, @selector(direction));

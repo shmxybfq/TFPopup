@@ -106,6 +106,7 @@
         
     }else if ([self.animationType isEqualToString:@"形变"]) {
         
+        self.param.duration = 5;
         CGPoint c = CGPointMake(self.view.frame.size.width * 0.5, 200);
         self.param.popOriginFrame = CGRectMake(c.x, c.y, 0, 0);
         self.param.popTargetFrame = CGRectMake(c.x - 157, c.y, 314, 170);
@@ -123,7 +124,7 @@
         //self.param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
         //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
         
-        UIView *popup = [self getAlertView];
+        UIView *popup = [self getListView];
         [popup tf_showFrame:self.view popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {

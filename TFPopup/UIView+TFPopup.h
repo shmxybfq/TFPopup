@@ -48,10 +48,6 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 @property(nonatomic,strong)UIView *backgroundView;
 @property(nonatomic,assign)PopupStyle style;
 @property(nonatomic,assign)PopupDirection direction;
-@property(nonatomic,assign)CGRect popupAreaRect;
-@property(nonatomic,assign)CGSize popupSize;
-@property(nonatomic,assign)CGPoint offset;
-
 
 -(void)tf_hide;
 
@@ -100,7 +96,6 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
                   style:(PopupStyle)style
               direction:(PopupDirection)direction
               popupSize:(CGSize)popupSize
-          popupAreaRect:(CGRect)popupAreaRect
                delegate:(id<TFPopupDelegate>)delegate;
 
 @end
