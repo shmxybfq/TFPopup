@@ -126,6 +126,10 @@
                        offset:(CGPoint)offset
                    popupParam:(TFPopupParam *)popupParam{
     
+    if (popupParam.showKeyPath) {
+        
+    }
+    
     [self tf_showCustemAll:inView
                 popupParam:popupParam
                      style:PopupStyleAlpha
@@ -177,8 +181,14 @@
     if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero) == NO)
         self.popupSize = self.popupParam.popupSize;
     
-    if (CGRectEqualToRect(popupAreaRect, CGRectZero))self.popupAreaRect = self.inView.bounds;
-    else self.popupAreaRect = popupAreaRect;
+    
+    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero) == NO) {
+        if (CGRectEqualToRect(popupAreaRect, CGRectZero))
+            self.popupAreaRect = self.inView.bounds;
+        else
+            self.popupAreaRect = popupAreaRect;
+    }
+    self.popupAreaRect = self.popupParam.popupAreaRect;
     
     self.popupDelegate = delegate;
     
@@ -402,18 +412,19 @@
         }
     }
     //缩放
-    if (self.style == PopupStyleScale) {
+    if (self.style == PopupStyleScale ||
+        self.style == PopupStyleAlpha) {
         CAAnimation *animation = [self animation:self.popupParam.showKeyPath
                                             from:self.popupParam.showFromValue
                                               to:self.popupParam.showToValue
                                              dur:self.popupParam.duration];
+        if (animation)
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,self.popupParam.duration);
         //遮罩
     }else if (self.style == PopupStyleMask) {
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
-        
         CAShapeLayer *mask = [[CAShapeLayer alloc]init];
         mask.frame = CGRectMake(0, 0, self.popupSize.width, self.popupSize.height);
         mask.path = self.popupParam.maskShowFromPath.CGPath;
@@ -421,9 +432,10 @@
         
         id from = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
         id to = (__bridge id)self.popupParam.maskShowToPath.CGPath;
-        CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
-        [mask addAnimation:animation forKey:NSStringFromClass([self class])];
         
+        CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
+        if (animation)
+        [mask addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,dur);
     }else{
         tellToManager(NO,self.popupParam.duration);
@@ -431,6 +443,7 @@
 }
 
 -(CAAnimation *)animation:(NSString *)path from:(id)from to:(id)to dur:(NSTimeInterval)dur{
+    if (path == nil || from == nil || to == nil || dur == 0.0) return nil;
     CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:path];
     [ani setFromValue:from];//设置起始值
     [ani setToValue:to];//设置目标值
@@ -462,11 +475,13 @@
     }
     
     //缩放
-    if (self.style == PopupStyleScale) {
+    if (self.style == PopupStyleScale ||
+        self.style == PopupStyleAlpha) {
         CAAnimation *animation = [self animation:self.popupParam.hideKeyPath
                                             from:self.popupParam.hideFromValue
                                               to:self.popupParam.hideToValue
                                              dur:self.popupParam.duration];
+        if (animation)
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,self.popupParam.duration);
         //遮罩
@@ -484,6 +499,7 @@
             to = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
         }
         CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
+        if (animation)
         [mask addAnimation:animation forKey:NSStringFromClass([self class])];
         tellToManager(NO,dur);
     }else{
