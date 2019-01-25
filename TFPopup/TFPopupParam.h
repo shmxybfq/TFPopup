@@ -11,39 +11,74 @@
 
 @interface TFPopupParam : NSObject
 
-//动画时间 默认0.3
+/* 时间
+ duration,动画时间default=0.3
+ autoDissmissDuration,自动消失时间,default=0
+ */
 @property(nonatomic,assign)NSTimeInterval duration;
-//自动消失时间 默认0.3
 @property(nonatomic,assign)NSTimeInterval autoDissmissDuration;
-//是否使用 背景视图 (0.3-alpha的黑色视图)
-@property(nonatomic,assign)BOOL disuseBackground;
 
-@property(nonatomic,assign)BOOL disuseBackgroundTouchHide;
+
+/* 背景
+ backgroundColorClear,背景色透明
+ disuseBackground,不使用背景视图,default=0.3alpha的黑色视图
+ disuseBackgroundTouchHide,禁止点击背景消失弹框
+ disuseBackgroundAlphaAnimation,背景视图是否叠加使用渐隐动画
+ */
 @property(nonatomic,assign)BOOL backgroundColorClear;
-//背景视图 是否 alpha 动画展示出来
+@property(nonatomic,assign)BOOL disuseBackground;
+@property(nonatomic,assign)BOOL disuseBackgroundTouchHide;
 @property(nonatomic,assign)BOOL disuseBackgroundAlphaAnimation;
-@property(nonatomic,strong)UIView *backgroundView;
-//弹出框 是否 alpha 动画展示出来
+
+
+/* 弹框动画
+ disusePopupAlphaAnimation,弹出框是否叠加使用隐动画
+ */
 @property(nonatomic,assign)BOOL disusePopupAlphaAnimation;
-//保持弹框原来的frame不重新计算
-@property(nonatomic,assign)BOOL keepPopupOriginFrame;
+
+
+/* 弹框尺寸和区域
+ popupAreaRect,弹框所在区域尺寸,default=父视图的bounds,不设置弹框尺寸是参与计算弹框的位置和大小
+ popupSize,弹框尺寸,default=弹框的frame.size,优先级popupSize<popupFrame
+ popupFrame,弹框的frame,设置后popupSize失效
+ keepPopupOriginFrame,是否保持弹框原有的位置不变,优先级>popupFrame
+ */
+@property(nonatomic,assign)CGRect popupAreaRect;
 @property(nonatomic,assign)CGSize popupSize;
 @property(nonatomic,assign)CGRect popupFrame;
-//弹出框 弹出所在区域的大小【父视图的bounds】
-@property(nonatomic,assign)CGRect popupAreaRect;
+@property(nonatomic,assign)BOOL keepPopupOriginFrame;
 
 
-//只对 PopupStyleScale 有效 默认 transform.scale 更多keyPath 动画请使用自定动画方式
-@property(nonatomic,  copy)NSString *scaleShowKeyPath;
-//只对 PopupStyleScale 有效 默认 transform.scale 更多keyPath 动画请使用自定动画方式
-@property(nonatomic,  copy)NSString *scaleHideKeyPath;
+/* 属性动画
+ showKeyPath,显示时的属性动画keyPath
+ showFromValue,显示动画初始值
+ showToValue,,显示动画结束值
+ hideKeyPath,隐藏时的属性动画keyPath
+ hideFromValue,隐藏动画初始值
+ hideToValue,,隐藏动画结束值
+ */
+@property(nonatomic,  copy)NSString *showKeyPath;
+@property(nonatomic,strong)id showFromValue;
+@property(nonatomic,strong)id showToValue;
+@property(nonatomic,  copy)NSString *hideKeyPath;
+@property(nonatomic,strong)id hideFromValue;
+@property(nonatomic,strong)id hideToValue;
 
-//只对 PopupStyleFrame 有效 弹出框初始尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
+
+/* 属性动画
+ popOriginFrame,弹出初始frame
+ popTargetFrame,弹出目标frame
+ */
 @property(nonatomic,assign)CGRect popOriginFrame;
-//只对 PopupStyleFrame 有效 弹出框目标尺寸,宽高为一起为 0 是点弹出,宽高单个为 0 是折叠展开弹出
 @property(nonatomic,assign)CGRect popTargetFrame;
 
-//只对 PopupStyleMask 有效
+
+/* 遮罩
+ maskShowFromPath,
+ maskShowToPath,
+ maskHideFromPath,
+ maskHideToPath,
+ */
 @property(nonatomic,strong)UIBezierPath *maskShowFromPath;
 @property(nonatomic,strong)UIBezierPath *maskShowToPath;
 @property(nonatomic,strong)UIBezierPath *maskHideFromPath;

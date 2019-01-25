@@ -10,7 +10,8 @@
 #import <objc/runtime.h>
 
 @implementation UIView (TFPopup)
-@dynamic inView,manager,popupParam,style,direction,popupAreaRect,popupSize,popupDelegate;
+@dynamic inView,manager,popupParam,style,direction,popupAreaRect;
+@dynamic popupSize,popupDelegate,backgroundView;
 
 #pragma mark -- 【隐藏】
 -(void)tf_hide{
@@ -57,8 +58,17 @@
     
     PopupStyle style = PopupStyleNone;
     if (animated == YES) {
-        if (scale) style = PopupStyleScale;
-        else style = PopupStyleAlpha;
+        if(scale){
+            style = PopupStyleScale;
+            popupParam.showKeyPath = @"transform.scale";
+            popupParam.showFromValue = @(0.0);
+            popupParam.showToValue = @(1.0);
+            popupParam.hideKeyPath = @"transform.scale";
+            popupParam.hideFromValue = @(1.0);
+            popupParam.hideToValue = @(0.0);
+        }else{
+            style = PopupStyleAlpha;
+        }
     }
     
     [self tf_showCustemAll:inView
@@ -111,11 +121,10 @@
                   delegate:self.popupDelegate?:self];
 }
 
-#pragma mark -- 【自定义任何动画】方式
-
--(void)tf_showCustemPart:(UIView *)inView
-              popupParam:(TFPopupParam *)popupParam
-                delegate:(id<TFPopupDelegate>)delegate{
+#pragma mark -- 【自定义动画】方式
+-(void)tf_showCustemAnimation:(UIView *)inView
+                       offset:(CGPoint)offset
+                   popupParam:(TFPopupParam *)popupParam{
     
     [self tf_showCustemAll:inView
                 popupParam:popupParam
@@ -123,7 +132,7 @@
                  direction:PopupDirectionCenter
                  popupSize:self.bounds.size
              popupAreaRect:inView.bounds
-                  delegate:delegate];
+                  delegate:self.popupDelegate?:self];
 }
 
 -(void)tf_showCustemAll:(UIView *)inView
@@ -252,8 +261,9 @@
 -(UIView  *)tf_popupManager_popForBackgroundView:(TFPopupManager *)manager{
     if (self.popupParam.disuseBackground == NO) {
         UIButton *cover = [UIButton buttonWithType:UIButtonTypeCustom];
-        if ([self.popupParam.backgroundView isKindOfClass:[UIView class]]) {
-            return self.popupParam.backgroundView;
+        if ([self.popupDelegate respondsToSelector:@selector(tf_popupCustemBackgroundView:popup:)]) {
+            self.backgroundView = [self.popupDelegate tf_popupCustemBackgroundView:self.manager popup:self];
+            cover = (UIButton *)self.backgroundView;
         }
         if (self.popupParam.backgroundColorClear) {
             cover.backgroundColor = [UIColor clearColor];
@@ -393,19 +403,17 @@
     }
     //缩放
     if (self.style == PopupStyleScale) {
-        NSTimeInterval dur = self.popupParam.duration;
-        NSString *keyPath = @"transform.scale";
-        if ([self.popupParam.scaleShowKeyPath hasPrefix:@"transform.scale"]) {
-            keyPath = [self.popupParam.scaleShowKeyPath copy];
-        }
-        CAAnimation *animation = [self animation:keyPath from:@0.0 to:@1.0 dur:dur];
+        CAAnimation *animation = [self animation:self.popupParam.showKeyPath
+                                            from:self.popupParam.showFromValue
+                                              to:self.popupParam.showToValue
+                                             dur:self.popupParam.duration];
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-        tellToManager(NO,dur);
+        tellToManager(NO,self.popupParam.duration);
         //遮罩
     }else if (self.style == PopupStyleMask) {
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
-
+        
         CAShapeLayer *mask = [[CAShapeLayer alloc]init];
         mask.frame = CGRectMake(0, 0, self.popupSize.width, self.popupSize.height);
         mask.path = self.popupParam.maskShowFromPath.CGPath;
@@ -455,14 +463,12 @@
     
     //缩放
     if (self.style == PopupStyleScale) {
-        NSTimeInterval dur = self.popupParam.duration;
-        NSString *keyPath = @"transform.scale";
-        if ([self.popupParam.scaleHideKeyPath hasPrefix:@"transform.scale"]) {
-            keyPath = [self.popupParam.scaleHideKeyPath copy];
-        }
-        CAAnimation *animation = [self animation:keyPath from:@1.0 to:@0.0 dur:dur];
+        CAAnimation *animation = [self animation:self.popupParam.hideKeyPath
+                                            from:self.popupParam.hideFromValue
+                                              to:self.popupParam.hideToValue
+                                             dur:self.popupParam.duration];
         [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-        tellToManager(NO,dur);
+        tellToManager(NO,self.popupParam.duration);
         //遮罩
     }else if (self.style == PopupStyleMask) {
         NSTimeInterval dur = self.popupParam.duration;
@@ -471,11 +477,11 @@
         [mask removeAnimationForKey:NSStringFromClass([self class])];
         id from = (__bridge id)self.popupParam.maskHideFromPath.CGPath;
         if (from == nil) {
-           from = (__bridge id)self.popupParam.maskShowToPath.CGPath;
+            from = (__bridge id)self.popupParam.maskShowToPath.CGPath;
         }
         id to = (__bridge id)self.popupParam.maskHideToPath.CGPath;
         if (to == nil) {
-           to = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
+            to = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
         }
         CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
         [mask addAnimation:animation forKey:NSStringFromClass([self class])];
@@ -576,7 +582,7 @@ tf_synthesize_category_property_retain(manager, setManager);
 tf_synthesize_category_property_retain(inView, setInView);
 tf_synthesize_category_property_retain(popupParam, setPopupParam);
 tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
-
+tf_synthesize_category_property_retain(backgroundView, setBackgroundView);
 
 -(CGSize)popupSize{
     id value = objc_getAssociatedObject(self, @selector(popupSize));

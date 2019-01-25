@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 @protocol TFPopupDelegate<NSObject>
 @optional;
+-(UIView *)tf_popupCustemBackgroundView:(TFPopupManager *)manager popup:(UIView *)popup;
 -(BOOL    )tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
 -(BOOL    )tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
 -(BOOL    )tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
@@ -44,6 +45,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 @property(nonatomic,assign)id<TFPopupDelegate>popupDelegate;
 
 @property(nonatomic,strong)TFPopupParam *popupParam;
+@property(nonatomic,strong)UIView *backgroundView;
 @property(nonatomic,assign)PopupStyle style;
 @property(nonatomic,assign)PopupDirection direction;
 @property(nonatomic,assign)CGRect popupAreaRect;
@@ -70,6 +72,9 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
 
+//#pragma mark -- 【缩放动画弹出】方式
+//-(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
+
 #pragma mark -- 【滑动出来动画】方式
 
 -(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction;
@@ -85,10 +90,10 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 -(void)tf_showMask:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
 
 
-#pragma mark -- 【自定义任何动画】方式
--(void)tf_showCustemPart:(UIView *)inView
-              popupParam:(TFPopupParam *)popupParam
-                delegate:(id<TFPopupDelegate>)delegate;
+#pragma mark -- 【自定义动画】方式
+-(void)tf_showCustemAnimation:(UIView *)inView
+                  offset:(CGPoint)offset
+              popupParam:(TFPopupParam *)popupParam;
 
 -(void)tf_showCustemAll:(UIView *)inView
              popupParam:(TFPopupParam *)popupParam

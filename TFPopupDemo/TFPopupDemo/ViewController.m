@@ -92,11 +92,39 @@
         
     }else if ([self.animationType isEqualToString:@"滑动"]) {
         
-        UIView *popup = [self getAlertView];
+        if (self.popupDirection == PopupDirectionFromLeft ||
+            self.popupDirection == PopupDirectionFromRight) {
+            self.param.popupSize = CGSizeMake(200, self.view.frame.size.height);
+        }
+        if (self.popupDirection == PopupDirectionFromBottom ||
+            self.popupDirection == PopupDirectionFromTop) {
+            self.param.popupSize = CGSizeMake(self.view.frame.size.width, 300);
+        }
+        UIView *popup = [self getListView];
         //[popup tf_showSlide:self.view direction:self.popupDirection];
         [popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"形变"]) {
+        
+        CGPoint c = CGPointMake(self.view.frame.size.width * 0.5, 200);
+        self.param.popOriginFrame = CGRectMake(c.x, c.y, 0, 0);
+        self.param.popTargetFrame = CGRectMake(c.x - 157, c.y, 314, 170);
+        
+        //气泡 左上->右下
+        //self.param.popOriginFrame = CGRectMake(30, 100, 0, 0);
+        //self.param.popTargetFrame = CGRectMake(30, 100, 314, 170);
+        //气泡 右上->左下
+        //self.param.popOriginFrame = CGRectMake(30 + 314, 100, 0, 0);
+        //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+        //气泡 左下->右上
+        //self.param.popOriginFrame = CGRectMake(30, 100 + 170, 0, 0);
+        //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+        //气泡 右下->左上
+        //self.param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
+        //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+        
+        UIView *popup = [self getAlertView];
+        [popup tf_showFrame:self.view popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
         
