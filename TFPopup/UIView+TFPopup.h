@@ -82,6 +82,11 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 #pragma mark -- 【形变出来动画】方式
 -(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
 
+-(void)tf_showFrame:(UIView *)inView
+          basePoint:(CGPoint)basePoint
+    bubbleDirection:(PopupBubbleDirection)bubbleDirection
+         popupParam:(TFPopupParam *)popupParam;
+
 #pragma mark -- 【遮罩动画】方式
 -(void)tf_showMask:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
 

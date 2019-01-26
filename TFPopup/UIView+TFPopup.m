@@ -107,6 +107,22 @@
                   delegate:self.popupDelegate?:self];
 }
 
+-(void)tf_showFrame:(UIView *)inView
+          basePoint:(CGPoint)basePoint
+    bubbleDirection:(PopupBubbleDirection)bubbleDirection
+         popupParam:(TFPopupParam *)popupParam{
+    
+    popupParam.basePoint = basePoint;
+    popupParam.bubbleDirection = bubbleDirection;
+    
+    [self tf_showCustemAll:inView
+                popupParam:popupParam
+                     style:PopupStyleFrame
+                 direction:PopupDirectionFrame
+                 popupSize:self.bounds.size
+                  delegate:self.popupDelegate?:self];
+}
+
 #pragma mark -- 【遮罩动画】方式
 -(void)tf_showMask:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
     [self tf_showCustemAll:inView
@@ -293,7 +309,30 @@
     if (self.popupParam.keepPopupOriginFrame)return self.frame;
     
     if (self.style == PopupStyleFrame) {
+        //frame优先
+        if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO)
         return self.popupParam.popOriginFrame;
+        
+        CGPoint os = self.popupParam.offset;
+        CGPoint bp = self.popupParam.basePoint;
+        CGSize  ps = self.popupParam.popupSize;
+        CGFloat x = 0,y = 0,w = ps.width,h = ps.height;
+        switch (self.popupParam.bubbleDirection) {
+            case PopupBubbleDirectionTop:
+            case PopupBubbleDirectionTopRight:
+            case PopupBubbleDirectionRight:
+            case PopupBubbleDirectionRightBottom:
+            case PopupBubbleDirectionBottom:
+            case PopupBubbleDirectionBottomLeft:
+            case PopupBubbleDirectionLeft:
+            case PopupBubbleDirectionLeftTop:{
+                x = bp.x + os.x;
+                y = bp.y + os.y;
+            }break;
+            default:break;
+        }
+        return CGRectMake(x, y, w, h);
+        
     }else if(self.style == PopupStyleSlide){
         CGRect ar = self.popupParam.popupAreaRect;
         CGSize s = self.popupParam.popupSize;
@@ -340,7 +379,52 @@
     
     
     if (self.style == PopupStyleFrame) {
-        return self.popupParam.popTargetFrame;
+        //frame优先
+        if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero) == NO)
+            return self.popupParam.popTargetFrame;
+        
+        CGPoint os = self.popupParam.offset;
+        CGPoint bp = self.popupParam.basePoint;
+        CGSize  ps = self.popupParam.popupSize;
+        CGFloat x = 0,y = 0,w = ps.width,h = ps.height;
+        CGFloat halfw = ps.width * 0.5,halfh = ps.height * 0.5;
+        switch (self.popupParam.bubbleDirection) {
+            case PopupBubbleDirectionTop:{
+                x = (bp.x - halfw) + os.x;
+                y = (bp.y - h) + os.y;
+            }break;
+            case PopupBubbleDirectionTopRight:{
+                x = bp.x + os.x;
+                y = (bp.y - h) + os.y;
+            }break;
+            case PopupBubbleDirectionRight:{
+                x = bp.x + os.x;
+                y = (bp.y - halfh) + os.y;
+            }break;
+            case PopupBubbleDirectionRightBottom:{
+                x = bp.x + os.x;
+                y = bp.y + os.y;
+            }break;
+            case PopupBubbleDirectionBottom:{
+                x = (bp.x - halfw) + os.x;
+                y = bp.y + os.y;
+            }break;
+            case PopupBubbleDirectionBottomLeft:{
+                x = (bp.x - w) + os.x;
+                y = bp.y + os.y;
+            }break;
+            case PopupBubbleDirectionLeft:{
+                x = (bp.x - w) + os.x;
+                y = (bp.y - halfh) + os.y;
+            }break;
+            case PopupBubbleDirectionLeftTop:{
+                x = (bp.x - w) + os.x;
+                y = (bp.y - h) + os.y;
+            }break;
+            default:break;
+        }
+        return CGRectMake(x, y, w, h);
+        
     }else if(self.style == PopupStyleSlide){
         CGRect ar = self.popupParam.popupAreaRect;
         CGSize s = self.popupParam.popupSize;

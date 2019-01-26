@@ -106,26 +106,19 @@
         
     }else if ([self.animationType isEqualToString:@"形变"]) {
         
-        self.param.duration = 5;
+        self.param.duration = 0.3;
+        self.param.popupSize = CGSizeMake(314, 200);
         CGPoint c = CGPointMake(self.view.frame.size.width * 0.5, 200);
-        self.param.popOriginFrame = CGRectMake(c.x, c.y, 0, 0);
-        self.param.popTargetFrame = CGRectMake(c.x - 157, c.y, 314, 170);
-        
-        //气泡 左上->右下
-        //self.param.popOriginFrame = CGRectMake(30, 100, 0, 0);
-        //self.param.popTargetFrame = CGRectMake(30, 100, 314, 170);
-        //气泡 右上->左下
-        //self.param.popOriginFrame = CGRectMake(30 + 314, 100, 0, 0);
-        //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
-        //气泡 左下->右上
-        //self.param.popOriginFrame = CGRectMake(30, 100 + 170, 0, 0);
-        //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
-        //气泡 右下->左上
-        //self.param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
-        //self.param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
+        //self.param.popOriginFrame = CGRectMake(c.x, c.y, 0, 0);
+        //self.param.popTargetFrame = CGRectMake(c.x - 157, c.y, 314, 170);
         
         UIView *popup = [self getListView];
-        [popup tf_showFrame:self.view popupParam:self.param];
+        popup.clipsToBounds = YES;
+        //[popup tf_showFrame:self.view popupParam:self.param];
+        [popup tf_showFrame:self.view
+                  basePoint:c
+            bubbleDirection:PopupBubbleDirectionTop
+                 popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
         

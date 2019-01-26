@@ -77,10 +77,14 @@ typedef NS_ENUM(NSInteger,PopupBubbleDirection) {
 @property(nonatomic,strong)id hideToValue;
 
 
-/* 【tf_showFrame】形变动画,泡泡,位移动画
+/* 【tf_showFrame】形变动画,泡泡,位移动画,优先级popOriginFrame&popTargetFrame>bubbleDirection
+ basePoint,弹出泡泡基于哪个点
+ bubbleDirection,弹出泡泡的方向
  popOriginFrame,弹出初始frame
  popTargetFrame,弹出目标frame
  */
+@property(nonatomic,assign)CGPoint basePoint;
+@property(nonatomic,assign)PopupBubbleDirection bubbleDirection;
 @property(nonatomic,assign)CGRect popOriginFrame;
 @property(nonatomic,assign)CGRect popTargetFrame;
 
@@ -95,6 +99,9 @@ typedef NS_ENUM(NSInteger,PopupBubbleDirection) {
 @property(nonatomic,strong)UIBezierPath *maskShowToPath;
 @property(nonatomic,strong)UIBezierPath *maskHideFromPath;
 @property(nonatomic,strong)UIBezierPath *maskHideToPath;
+
+
+
 
 @end
 
