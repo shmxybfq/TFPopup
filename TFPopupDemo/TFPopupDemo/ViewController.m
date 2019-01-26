@@ -107,7 +107,7 @@
     }else if ([self.animationType isEqualToString:@"形变"]) {
         
         self.param.duration = 0.3;
-        self.param.popupSize = CGSizeMake(314, 200);
+        self.param.popupSize = CGSizeMake(200, 100);
         CGPoint c = CGPointMake(self.view.frame.size.width * 0.5, 200);
         //self.param.popOriginFrame = CGRectMake(c.x, c.y, 0, 0);
         //self.param.popTargetFrame = CGRectMake(c.x - 157, c.y, 314, 170);

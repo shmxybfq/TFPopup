@@ -315,8 +315,7 @@
         
         CGPoint os = self.popupParam.offset;
         CGPoint bp = self.popupParam.basePoint;
-        CGSize  ps = self.popupParam.popupSize;
-        CGFloat x = 0,y = 0,w = ps.width,h = ps.height;
+        CGFloat x = 0,y = 0;
         switch (self.popupParam.bubbleDirection) {
             case PopupBubbleDirectionTop:
             case PopupBubbleDirectionTopRight:
@@ -331,7 +330,7 @@
             }break;
             default:break;
         }
-        return CGRectMake(x, y, w, h);
+        return CGRectMake(x, y, 0, 0);
         
     }else if(self.style == PopupStyleSlide){
         CGRect ar = self.popupParam.popupAreaRect;
@@ -424,6 +423,7 @@
             default:break;
         }
         return CGRectMake(x, y, w, h);
+        
         
     }else if(self.style == PopupStyleSlide){
         CGRect ar = self.popupParam.popupAreaRect;
