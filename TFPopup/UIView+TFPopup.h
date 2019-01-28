@@ -10,26 +10,6 @@
 #import "TFPopupParam.h"
 #import "TFPopupManager.h"
 
-
-typedef NS_ENUM(NSInteger,PopupDirection) {
-    PopupDirectionCenter = 0,
-    PopupDirectionFromLeft,
-    PopupDirectionFromBottom,
-    PopupDirectionFromRight,
-    PopupDirectionFromTop,
-    PopupDirectionFrame,
-};
-
-typedef NS_ENUM(NSInteger,PopupStyle) {
-    PopupStyleNone = 0,
-    PopupStyleAlpha,
-    PopupStyleScale,
-    PopupStyleSlide,
-    PopupStyleFrame,
-    PopupStyleMask,
-};
-
-
 @protocol TFPopupDelegate<NSObject>
 @optional;
 -(UIView *)tf_popupCustemBackgroundView:(TFPopupManager *)manager popup:(UIView *)popup;
@@ -84,7 +64,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 -(void)tf_showFrame:(UIView *)inView
           basePoint:(CGPoint)basePoint
-    bubbleDirection:(PopupBubbleDirection)bubbleDirection
+    bubbleDirection:(PopupDirection)bubbleDirection
          popupParam:(TFPopupParam *)popupParam;
 
 #pragma mark -- 【遮罩动画】方式

@@ -74,7 +74,7 @@
     [self tf_showCustemAll:inView
                 popupParam:popupParam
                      style:style
-                 direction:PopupDirectionCenter
+                 direction:PopupDirectionContainerCenter
                  popupSize:self.bounds.size
                   delegate:self.popupDelegate?:self];
 }
@@ -109,7 +109,7 @@
 
 -(void)tf_showFrame:(UIView *)inView
           basePoint:(CGPoint)basePoint
-    bubbleDirection:(PopupBubbleDirection)bubbleDirection
+    bubbleDirection:(PopupDirection)bubbleDirection
          popupParam:(TFPopupParam *)popupParam{
     
     popupParam.basePoint = basePoint;
@@ -128,7 +128,7 @@
     [self tf_showCustemAll:inView
                 popupParam:popupParam
                      style:PopupStyleMask
-                 direction:PopupDirectionCenter
+                 direction:PopupDirectionContainerCenter
                  popupSize:self.bounds.size
                   delegate:self.popupDelegate?:self];
 }
@@ -141,7 +141,7 @@
     [self tf_showCustemAll:inView
                 popupParam:popupParam
                      style:PopupStyleAlpha
-                 direction:PopupDirectionCenter
+                 direction:PopupDirectionContainerCenter
                  popupSize:self.bounds.size
                   delegate:self.popupDelegate?:self];
 }
@@ -172,10 +172,10 @@
     
     self.style = style;
     self.direction = direction;
-    if (self.style == PopupStyleAlpha) self.direction = PopupDirectionCenter;
-    if (self.style == PopupStyleScale) self.direction = PopupDirectionCenter;
+    if (self.style == PopupStyleAlpha) self.direction = PopupDirectionContainerCenter;
+    if (self.style == PopupStyleScale) self.direction = PopupDirectionContainerCenter;
     if (self.style == PopupStyleMask) {
-        self.direction = PopupDirectionCenter;
+        self.direction = PopupDirectionContainerCenter;
         if (self.popupParam.maskShowFromPath == nil || self.popupParam.maskShowToPath == nil) {
             return;
         }
@@ -288,9 +288,6 @@
             [tapGes addTarget:self action:@selector(coverTap:)];
             [cover addGestureRecognizer:tapGes];
         }
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"cover:%@",cover);
-        });
         return cover;
     }
     return nil;
@@ -317,14 +314,14 @@
         CGPoint bp = self.popupParam.basePoint;
         CGFloat x = 0,y = 0;
         switch (self.popupParam.bubbleDirection) {
-            case PopupBubbleDirectionTop:
-            case PopupBubbleDirectionTopRight:
-            case PopupBubbleDirectionRight:
-            case PopupBubbleDirectionRightBottom:
-            case PopupBubbleDirectionBottom:
-            case PopupBubbleDirectionBottomLeft:
-            case PopupBubbleDirectionLeft:
-            case PopupBubbleDirectionLeftTop:{
+            case PopupDirectionTop:
+            case PopupDirectionTopRight:
+            case PopupDirectionRight:
+            case PopupDirectionRightBottom:
+            case PopupDirectionBottom:
+            case PopupDirectionBottomLeft:
+            case PopupDirectionLeft:
+            case PopupDirectionLeftTop:{
                 x = bp.x + os.x;
                 y = bp.y + os.y;
             }break;
@@ -340,19 +337,11 @@
         CGFloat w = s.width;
         CGFloat h = s.height;
         switch (self.direction) {
-            case PopupDirectionCenter:{}break;
-            case PopupDirectionFromTop:{
-                y = - s.height;
-            }break;
-            case PopupDirectionFromLeft:{
-                x = - s.width;
-            }break;
-            case PopupDirectionFromBottom:{
-                y = ar.size.height;
-            }break;
-            case PopupDirectionFromRight:{
-                x = ar.size.width;
-            }break;
+            case PopupDirectionContainerCenter:{}break;
+            case PopupDirectionTop:{y = - s.height;}break;
+            case PopupDirectionLeft:{x = - s.width;}break;
+            case PopupDirectionBottom:{y = ar.size.height;}break;
+            case PopupDirectionRight:{x = ar.size.width;}break;
             default:break;
         }
         CGRect position = CGRectMake(x, y, w, h);
@@ -388,35 +377,35 @@
         CGFloat x = 0,y = 0,w = ps.width,h = ps.height;
         CGFloat halfw = ps.width * 0.5,halfh = ps.height * 0.5;
         switch (self.popupParam.bubbleDirection) {
-            case PopupBubbleDirectionTop:{
+            case PopupDirectionTop:{
                 x = (bp.x - halfw) + os.x;
                 y = (bp.y - h) + os.y;
             }break;
-            case PopupBubbleDirectionTopRight:{
+            case PopupDirectionTopRight:{
                 x = bp.x + os.x;
                 y = (bp.y - h) + os.y;
             }break;
-            case PopupBubbleDirectionRight:{
+            case PopupDirectionRight:{
                 x = bp.x + os.x;
                 y = (bp.y - halfh) + os.y;
             }break;
-            case PopupBubbleDirectionRightBottom:{
+            case PopupDirectionRightBottom:{
                 x = bp.x + os.x;
                 y = bp.y + os.y;
             }break;
-            case PopupBubbleDirectionBottom:{
+            case PopupDirectionBottom:{
                 x = (bp.x - halfw) + os.x;
                 y = bp.y + os.y;
             }break;
-            case PopupBubbleDirectionBottomLeft:{
+            case PopupDirectionBottomLeft:{
                 x = (bp.x - w) + os.x;
                 y = bp.y + os.y;
             }break;
-            case PopupBubbleDirectionLeft:{
+            case PopupDirectionLeft:{
                 x = (bp.x - w) + os.x;
                 y = (bp.y - halfh) + os.y;
             }break;
-            case PopupBubbleDirectionLeftTop:{
+            case PopupDirectionLeftTop:{
                 x = (bp.x - w) + os.x;
                 y = (bp.y - h) + os.y;
             }break;
@@ -433,17 +422,17 @@
         CGFloat w = s.width;
         CGFloat h = s.height;
         switch (self.direction) {
-            case PopupDirectionCenter:{}break;
-            case PopupDirectionFromTop:{
+            case PopupDirectionContainerCenter:{}break;
+            case PopupDirectionTop:{
                 y = 0;
             }break;
-            case PopupDirectionFromLeft:{
+            case PopupDirectionLeft:{
                 x = 0;
             }break;
-            case PopupDirectionFromBottom:{
+            case PopupDirectionBottom:{
                 y = ar.size.height - s.height;
             }break;
-            case PopupDirectionFromRight:{
+            case PopupDirectionRight:{
                 x = ar.size.width - s.width;
             }break;
             default:break;
@@ -668,40 +657,6 @@ tf_synthesize_category_property_retain(inView, setInView);
 tf_synthesize_category_property_retain(popupParam, setPopupParam);
 tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
 tf_synthesize_category_property_retain(backgroundView, setBackgroundView);
-
-//-(CGSize)popupSize{
-//    id value = objc_getAssociatedObject(self, @selector(popupSize));
-//    if (value) {
-//        return CGSizeFromString(value);
-//    }
-//    return CGSizeZero;
-//}
-//
-//-(void)setPopupSize:(CGSize)popupSize{
-//    objc_setAssociatedObject(self, @selector(popupSize), NSStringFromCGSize(popupSize), OBJC_ASSOCIATION_COPY_NONATOMIC);
-//}
-
-//-(CGRect)popupAreaRect{
-//    id value = objc_getAssociatedObject(self, @selector(popupAreaRect));
-//    if (value) {
-//        return CGRectFromString(value);
-//    }
-//    return CGRectZero;
-//}
-//-(void)setPopupAreaRect:(CGRect)popupAreaRect{
-//    objc_setAssociatedObject(self, @selector(popupAreaRect), NSStringFromCGRect(popupAreaRect), OBJC_ASSOCIATION_COPY_NONATOMIC);
-//}
-
-//-(CGPoint)offset{
-//    id value = objc_getAssociatedObject(self, @selector(offset));
-//    if (value) {
-//        return CGPointFromString(value);
-//    }
-//    return CGPointZero;
-//}
-//-(void)setOffset:(CGPoint)offset{
-//    objc_setAssociatedObject(self, @selector(offset), NSStringFromCGPoint(offset), OBJC_ASSOCIATION_COPY_NONATOMIC);
-//}
 
 -(PopupDirection)direction{
     id value = objc_getAssociatedObject(self, @selector(direction));

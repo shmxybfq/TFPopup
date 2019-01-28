@@ -9,16 +9,30 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger,PopupBubbleDirection) {
-    PopupBubbleDirectionTop = 0,
-    PopupBubbleDirectionTopRight,
-    PopupBubbleDirectionRight,
-    PopupBubbleDirectionRightBottom,
-    PopupBubbleDirectionBottom,
-    PopupBubbleDirectionBottomLeft,
-    PopupBubbleDirectionLeft,
-    PopupBubbleDirectionLeftTop,
+typedef NS_ENUM(NSInteger,PopupDirection) {
+    PopupDirectionContainerCenter = 0,
+    PopupDirectionTop,
+    PopupDirectionTopRight,
+    PopupDirectionRight,
+    PopupDirectionRightBottom,
+    PopupDirectionBottom,
+    PopupDirectionBottomLeft,
+    PopupDirectionLeft,
+    PopupDirectionLeftTop,
+    PopupDirectionFrame,
 };
+
+
+typedef NS_ENUM(NSInteger,PopupStyle) {
+    PopupStyleNone = 0,
+    PopupStyleAlpha,
+    PopupStyleScale,
+    PopupStyleSlide,
+    PopupStyleFrame,
+    PopupStyleMask,
+};
+
+
 
 @interface TFPopupParam : NSObject
 
@@ -84,7 +98,7 @@ typedef NS_ENUM(NSInteger,PopupBubbleDirection) {
  popTargetFrame,弹出目标frame
  */
 @property(nonatomic,assign)CGPoint basePoint;
-@property(nonatomic,assign)PopupBubbleDirection bubbleDirection;
+@property(nonatomic,assign)PopupDirection bubbleDirection;
 @property(nonatomic,assign)CGRect popOriginFrame;
 @property(nonatomic,assign)CGRect popTargetFrame;
 
@@ -99,8 +113,6 @@ typedef NS_ENUM(NSInteger,PopupBubbleDirection) {
 @property(nonatomic,strong)UIBezierPath *maskShowToPath;
 @property(nonatomic,strong)UIBezierPath *maskHideFromPath;
 @property(nonatomic,strong)UIBezierPath *maskHideToPath;
-
-
 
 
 @end

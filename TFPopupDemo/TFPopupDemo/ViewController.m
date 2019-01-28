@@ -92,12 +92,12 @@
         
     }else if ([self.animationType isEqualToString:@"滑动"]) {
         
-        if (self.popupDirection == PopupDirectionFromLeft ||
-            self.popupDirection == PopupDirectionFromRight) {
+        if (self.popupDirection == PopupDirectionLeft ||
+            self.popupDirection == PopupDirectionRight) {
             self.param.popupSize = CGSizeMake(200, self.view.frame.size.height);
         }
-        if (self.popupDirection == PopupDirectionFromBottom ||
-            self.popupDirection == PopupDirectionFromTop) {
+        if (self.popupDirection == PopupDirectionBottom ||
+            self.popupDirection == PopupDirectionTop) {
             self.param.popupSize = CGSizeMake(self.view.frame.size.width, 300);
         }
         UIView *popup = [self getListView];
@@ -117,7 +117,7 @@
         //[popup tf_showFrame:self.view popupParam:self.param];
         [popup tf_showFrame:self.view
                   basePoint:c
-            bubbleDirection:PopupBubbleDirectionTop
+            bubbleDirection:PopupDirectionLeftTop
                  popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
@@ -157,11 +157,11 @@
     for (UIButton *bt in self.botButtons) {
         bt.selected = bt == ins;
     }
-    if ([title(ins) isEqualToString:@"上"]) self.popupDirection = PopupDirectionFromTop;
-    if ([title(ins) isEqualToString:@"下"]) self.popupDirection = PopupDirectionFromBottom;
-    if ([title(ins) isEqualToString:@"左"]) self.popupDirection = PopupDirectionFromLeft;
-    if ([title(ins) isEqualToString:@"右"]) self.popupDirection = PopupDirectionFromRight;
-    if ([title(ins) isEqualToString:@"中"]) self.popupDirection = PopupDirectionCenter;
+    if ([title(ins) isEqualToString:@"上"]) self.popupDirection = PopupDirectionTop;
+    if ([title(ins) isEqualToString:@"下"]) self.popupDirection = PopupDirectionBottom;
+    if ([title(ins) isEqualToString:@"左"]) self.popupDirection = PopupDirectionLeft;
+    if ([title(ins) isEqualToString:@"右"]) self.popupDirection = PopupDirectionRight;
+    if ([title(ins) isEqualToString:@"中"]) self.popupDirection = PopupDirectionContainerCenter;
     if ([title(ins) isEqualToString:@"随意"]) self.popupDirection = PopupDirectionFrame;
 }
 
@@ -186,7 +186,7 @@
     BlankView *alert = [[NSBundle mainBundle]loadNibNamed:@"BlankView"
                                                       owner:nil options:nil].firstObject;
     alert.popupDelegate = self;
-    [alert tf_showSlide:self.view direction:PopupDirectionFromBottom];
+    [alert tf_showSlide:self.view direction:PopupDirectionBottom];
 }
 
 //-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -279,7 +279,7 @@
     //alert.layer.anchorPoint = CGPointMake(0.5, 0);
     //[alert tf_showScale:self.view offset:CGPointZero popupParam:param];
     
-    //[alert tf_showSlide:self.view direction:PopupDirectionFromRight];
+    //[alert tf_showSlide:self.view direction:PopupDirectionRight];
 
     //[alert tf_showFrame:self.view popupParam:param];
     
