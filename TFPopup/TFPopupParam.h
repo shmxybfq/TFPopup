@@ -11,6 +11,7 @@
 
 typedef NS_ENUM(NSInteger,PopupDirection) {
     PopupDirectionContainerCenter = 0,
+    PopupDirectionBaseponitCenter,
     PopupDirectionTop,
     PopupDirectionTopRight,
     PopupDirectionRight,
@@ -25,13 +26,11 @@ typedef NS_ENUM(NSInteger,PopupDirection) {
 
 typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleNone = 0,
-    PopupStyleAlpha,
-    PopupStyleScale,
-    PopupStyleSlide,
-    PopupStyleFrame,
-    PopupStyleMask,
+    PopupStyleAlpha = 1 << 0,
+    PopupStyleAniamtion = 1 << 1,
+    PopupStyleFrame = 1 << 2,
+    PopupStyleMask = 1 << 3,
 };
-
 
 
 @interface TFPopupParam : NSObject
@@ -70,8 +69,9 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
  */
 @property(nonatomic,assign)CGRect popupAreaRect;
 @property(nonatomic,assign)CGSize popupSize;
-@property(nonatomic,assign)CGRect popupFrame;
 @property(nonatomic,assign)CGPoint offset;
+@property(nonatomic,assign)CGRect popOriginFrame;
+@property(nonatomic,assign)CGRect popTargetFrame;
 @property(nonatomic,assign)BOOL keepPopupOriginFrame;
 
 
@@ -99,8 +99,6 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
  */
 @property(nonatomic,assign)CGPoint basePoint;
 @property(nonatomic,assign)PopupDirection bubbleDirection;
-@property(nonatomic,assign)CGRect popOriginFrame;
-@property(nonatomic,assign)CGRect popTargetFrame;
 
 
 /* 【tf_showMask】遮罩

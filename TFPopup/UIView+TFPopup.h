@@ -31,57 +31,12 @@
 
 -(void)tf_hide;
 
-#pragma mark -- 【无动画弹出,透明度动画弹出】方式
 -(void)tf_show:(UIView *)inView animated:(BOOL)animated;
-
 -(void)tf_show:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated;
-
 -(void)tf_show:(UIView *)inView
         offset:(CGPoint)offset
     popupParam:(TFPopupParam *)popupParam
       animated:(BOOL)animated;
-
-#pragma mark -- 【缩放动画弹出】方式
--(void)tf_showScale:(UIView *)inView;
-
--(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset;
-
--(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
-
-//#pragma mark -- 【缩放动画弹出】方式
-//-(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
-
-#pragma mark -- 【滑动出来动画】方式
-
--(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction;
-
--(void)tf_showSlide:(UIView *)inView
-          direction:(PopupDirection)direction
-         popupParam:(TFPopupParam *)popupParam;
-
-#pragma mark -- 【形变出来动画】方式
--(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
-
--(void)tf_showFrame:(UIView *)inView
-          basePoint:(CGPoint)basePoint
-    bubbleDirection:(PopupDirection)bubbleDirection
-         popupParam:(TFPopupParam *)popupParam;
-
-#pragma mark -- 【遮罩动画】方式
--(void)tf_showMask:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
-
-
-#pragma mark -- 【自定义动画】方式
--(void)tf_showCustemAnimation:(UIView *)inView
-                  offset:(CGPoint)offset
-              popupParam:(TFPopupParam *)popupParam;
-
--(void)tf_showCustemAll:(UIView *)inView
-             popupParam:(TFPopupParam *)popupParam
-                  style:(PopupStyle)style
-              direction:(PopupDirection)direction
-              popupSize:(CGSize)popupSize
-               delegate:(id<TFPopupDelegate>)delegate;
 
 @end
 

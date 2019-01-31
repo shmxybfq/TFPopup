@@ -79,16 +79,18 @@
         
         UIView *popup = [self getAlertView];
         BOOL isAni = [self.animationType isEqualToString:@"渐隐"];
-        //[alert tf_show:self.view animated:YES];
+        
+        //[popup tf_show:self.view animated:isAni];
+        [popup tf_show:self.view offset:CGPointMake(0, -100) animated:isAni];
         //[alert tf_show:self.view offset:CGPointZero animated:YES];
-        [popup tf_show:self.view offset:self.custemPoint popupParam:self.param animated:isAni];
+        //[popup tf_show:self.view offset:self.custemPoint popupParam:self.param animated:isAni];
         
     }else if ([self.animationType isEqualToString:@"缩放"]) {
         
         UIView *popup = [self getAlertView];
         //[alert tf_showScale:self.view];
         //[alert tf_showScale:self.view offset:self.custemPoint];
-        [popup tf_showScale:self.view offset:self.custemPoint popupParam:self.param];
+        //[popup tf_showScale:self.view offset:self.custemPoint popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"滑动"]) {
         
@@ -102,7 +104,7 @@
         }
         UIView *popup = [self getListView];
         //[popup tf_showSlide:self.view direction:self.popupDirection];
-        [popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
+        //[popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"形变"]) {
         
@@ -115,10 +117,10 @@
         UIView *popup = [self getListView];
         popup.clipsToBounds = YES;
         //[popup tf_showFrame:self.view popupParam:self.param];
-        [popup tf_showFrame:self.view
-                  basePoint:c
-            bubbleDirection:PopupDirectionLeftTop
-                 popupParam:self.param];
+//        [popup tf_showFrame:self.view
+//                  basePoint:c
+//            bubbleDirection:PopupDirectionLeftTop
+//                 popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
         
@@ -186,7 +188,7 @@
     BlankView *alert = [[NSBundle mainBundle]loadNibNamed:@"BlankView"
                                                       owner:nil options:nil].firstObject;
     alert.popupDelegate = self;
-    [alert tf_showSlide:self.view direction:PopupDirectionBottom];
+    //[alert tf_showSlide:self.view direction:PopupDirectionBottom];
 }
 
 //-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

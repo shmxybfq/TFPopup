@@ -20,237 +20,196 @@
 
 #pragma mark -- 【无动画弹出,透明度动画弹出】方式
 -(void)tf_show:(UIView *)inView animated:(BOOL)animated{
-    [self tf_showAtPosition:inView offset:CGPointZero popupParam:nil scale:NO animated:animated];
+    [self tf_show:inView offset:CGPointZero animated:animated];
 }
 
 -(void)tf_show:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated{
-    [self tf_showAtPosition:inView offset:offset popupParam:nil scale:NO animated:animated];
+    [self tf_show:inView offset:offset popupParam:[TFPopupParam new] animated:animated];
 }
 
 -(void)tf_show:(UIView *)inView
         offset:(CGPoint)offset
     popupParam:(TFPopupParam *)popupParam
       animated:(BOOL)animated{
-    [self tf_showAtPosition:inView offset:offset popupParam:popupParam scale:NO animated:animated];
+    
+    popupParam.offset = offset;
+    popupParam.disusePopupAlphaAnimation = !animated;
+    popupParam.disuseBackgroundAlphaAnimation = !animated;
+    [self tf_showCustemAll:inView popupParam:popupParam delegate:self];
 }
 
 #pragma mark -- 【缩放动画弹出】方式
 -(void)tf_showScale:(UIView *)inView{
-    [self tf_showAtPosition:inView offset:CGPointZero popupParam:nil scale:YES animated:YES];
+    [self tf_showScale:inView offset:CGPointZero];
 }
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset{
-    [self tf_showAtPosition:inView offset:offset popupParam:nil scale:YES animated:YES];
+    [self tf_showScale:inView offset:offset popupParam:[TFPopupParam new]];
 }
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam{
-    [self tf_showAtPosition:inView offset:offset popupParam:popupParam scale:YES animated:YES];
-}
-
-#pragma mark -- 【固定位置动画弹出:无动画,透明度动画,缩放动画】方式
--(void)tf_showAtPosition:(UIView *)inView
-                  offset:(CGPoint)offset
-              popupParam:(TFPopupParam *)popupParam
-                   scale:(BOOL)scale
-                animated:(BOOL)animated{
     
-    self.popupParam.offset = offset;
-    
-    PopupStyle style = PopupStyleNone;
-    if (animated == YES) {
-        if(scale){
-            style = PopupStyleScale;
-            popupParam.showKeyPath = @"transform.scale";
-            popupParam.showFromValue = @(0.0);
-            popupParam.showToValue = @(1.0);
-            popupParam.hideKeyPath = @"transform.scale";
-            popupParam.hideFromValue = @(1.0);
-            popupParam.hideToValue = @(0.0);
-        }else{
-            style = PopupStyleAlpha;
-        }
-    }
-    
-    [self tf_showCustemAll:inView
-                popupParam:popupParam
-                     style:style
-                 direction:PopupDirectionContainerCenter
-                 popupSize:self.bounds.size
-                  delegate:self.popupDelegate?:self];
+    popupParam.offset = offset;
+    popupParam.showKeyPath = @"transform.scale";
+    popupParam.showFromValue = @(0.0);
+    popupParam.showToValue = @(1.0);
+    popupParam.hideKeyPath = @"transform.scale";
+    popupParam.hideFromValue = @(1.0);
+    popupParam.hideToValue = @(0.0);
+    [self tf_showCustemAll:inView popupParam:popupParam delegate:self];
 }
 
 #pragma mark -- 【滑动出来动画】方式
 -(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction{
-    [self tf_showSlide:inView direction:direction popupParam:nil];
+    [self tf_showSlide:inView direction:direction popupParam:[TFPopupParam new]];
 }
 
 -(void)tf_showSlide:(UIView *)inView
           direction:(PopupDirection)direction
          popupParam:(TFPopupParam *)popupParam{
     
-    [self tf_showCustemAll:inView
-                popupParam:popupParam
-                     style:PopupStyleSlide
-                 direction:direction
-                 popupSize:self.bounds.size
-                  delegate:self.popupDelegate?:self];
-}
-
-#pragma mark -- 【形变出来动画】方式
--(void)tf_showFrame:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
+    if ((direction == PopupDirectionTop || direction == PopupDirectionRight ||
+         direction == PopupDirectionBottom || direction == PopupDirectionLeft) == NO)
+        return;
     
-    [self tf_showCustemAll:inView
-                popupParam:popupParam
-                     style:PopupStyleFrame
-                 direction:PopupDirectionFrame
-                 popupSize:self.bounds.size
-                  delegate:self.popupDelegate?:self];
+    if (CGRectEqualToRect(popupParam.popOriginFrame, CGRectZero) == NO)
+        popupParam.popOriginFrame = slideOriginFrame(popupParam, direction);
+    
+    if (CGRectEqualToRect(popupParam.popTargetFrame, CGRectZero) == NO)
+        popupParam.popTargetFrame = slideTargetFrame(popupParam, direction);
+    
+    [self tf_showCustemAll:inView popupParam:popupParam delegate:self];
 }
 
--(void)tf_showFrame:(UIView *)inView
-          basePoint:(CGPoint)basePoint
-    bubbleDirection:(PopupDirection)bubbleDirection
-         popupParam:(TFPopupParam *)popupParam{
+
+//#pragma mark -- 【形变出来动画】方式
+-(void)tf_showBubble:(UIView *)inView
+           basePoint:(CGPoint)basePoint
+     bubbleDirection:(PopupDirection)bubbleDirection
+          popupParam:(TFPopupParam *)popupParam{
     
     popupParam.basePoint = basePoint;
     popupParam.bubbleDirection = bubbleDirection;
     
-    [self tf_showCustemAll:inView
-                popupParam:popupParam
-                     style:PopupStyleFrame
-                 direction:PopupDirectionFrame
-                 popupSize:self.bounds.size
-                  delegate:self.popupDelegate?:self];
-}
-
-#pragma mark -- 【遮罩动画】方式
--(void)tf_showMask:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
-    [self tf_showCustemAll:inView
-                popupParam:popupParam
-                     style:PopupStyleMask
-                 direction:PopupDirectionContainerCenter
-                 popupSize:self.bounds.size
-                  delegate:self.popupDelegate?:self];
-}
-
-#pragma mark -- 【自定义动画】方式
--(void)tf_showCustemAnimation:(UIView *)inView
-                       offset:(CGPoint)offset
-                   popupParam:(TFPopupParam *)popupParam{
+    if (popupParam.bubbleDirection != PopupDirectionFrame &&
+        CGPointEqualToPoint(popupParam.basePoint, CGPointZero))
+        return;
     
-    [self tf_showCustemAll:inView
-                popupParam:popupParam
-                     style:PopupStyleAlpha
-                 direction:PopupDirectionContainerCenter
-                 popupSize:self.bounds.size
-                  delegate:self.popupDelegate?:self];
+    [self setDefault];
+    
+    popupParam.popOriginFrame = bubbleOrigin(popupParam.basePoint,
+                                             popupParam.bubbleDirection,
+                                             popupParam.offset);
+    
+    popupParam.popTargetFrame = bubbleTarget(popupParam.basePoint,
+                                             popupParam.popupSize,
+                                             popupParam.bubbleDirection,
+                                             popupParam.offset);
+    
+    [self tf_showCustemAll:inView popupParam:popupParam delegate:self];
 }
+
+
 
 -(void)tf_showCustemAll:(UIView *)inView
              popupParam:(TFPopupParam *)popupParam
-                  style:(PopupStyle)style
-              direction:(PopupDirection)direction
-              popupSize:(CGSize)popupSize
                delegate:(id<TFPopupDelegate>)delegate{
     
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     self.inView = inView;
     
+    //初始化弹框管理
     if (self.manager == nil) {
         self.manager = [TFPopupManager tf_popupManagerDataSource:self delegate:self];
     }
     
     self.popupParam = popupParam;
-    if (self.popupParam == nil) self.popupParam = [[TFPopupParam alloc]init];
-    if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
-    if (self.popupParam.autoDissmissDuration != 0) {
-        [self.manager performSelector:@selector(hide)
-                           withObject:nil
-                           afterDelay:self.popupParam.autoDissmissDuration];
-    }
+    if (self.popupParam == nil)
+        self.popupParam = [[TFPopupParam alloc]init];
+    [self setDefault];
     
-    
-    self.style = style;
-    self.direction = direction;
-    if (self.style == PopupStyleAlpha) self.direction = PopupDirectionContainerCenter;
-    if (self.style == PopupStyleScale) self.direction = PopupDirectionContainerCenter;
-    if (self.style == PopupStyleMask) {
-        self.direction = PopupDirectionContainerCenter;
-        if (self.popupParam.maskShowFromPath == nil || self.popupParam.maskShowToPath == nil) {
-            return;
-        }
-    }
-    
-    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero))
-        self.popupParam.popupSize = self.bounds.size;
-    
-    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero)) {
-        self.popupParam.popupAreaRect = self.inView.bounds;
-    }
-    
+    //代理
     self.popupDelegate = delegate;
     
     [self.manager performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:YES];
     [self.manager performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
 }
 
+-(void)setDefault{
+    //时间
+    if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
+    //自动消失时间
+    if (self.popupParam.autoDissmissDuration != 0) {
+        [self.manager performSelector:@selector(hide)
+                           withObject:nil
+                           afterDelay:self.popupParam.autoDissmissDuration];
+    }
+    
+    //弹框尺寸
+    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero))
+        self.popupParam.popupSize = self.bounds.size;
+    
+    //弹框区域
+    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero))
+        self.popupParam.popupAreaRect = self.inView.bounds;
+    
+    //参数值检测
+    PopupStyle style = PopupStyleNone;
+    if (self.popupParam.disuseBackgroundAlphaAnimation == NO ||
+        self.popupParam.disusePopupAlphaAnimation == NO)
+        style = style | PopupStyleAlpha;
+    
+    if (self.popupParam.showKeyPath != nil &&
+        self.popupParam.showFromValue != nil &&
+        self.popupParam.showToValue != nil){
+        
+        style = style | PopupStyleAniamtion;
+        
+        if (self.popupParam.hideKeyPath == nil)
+            self.popupParam.hideKeyPath = self.popupParam.showKeyPath;
+        if (self.popupParam.hideFromValue == nil)
+            self.popupParam.hideFromValue = self.popupParam.showToValue;
+        if (self.popupParam.hideToValue == nil)
+            self.popupParam.hideToValue = self.popupParam.showFromValue;
+    }
+    
+    if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO &&
+        CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO) {
+        style = style | PopupStyleFrame;
+    }
+    
+    if (self.popupParam.maskShowFromPath != nil &&
+        self.popupParam.maskShowToPath != nil ) {
+        style = style | PopupStyleMask;
+        
+        if (self.popupParam.maskHideFromPath == nil)
+            self.popupParam.maskHideFromPath = self.popupParam.maskShowToPath;
+        if (self.popupParam.maskHideToPath == nil)
+            self.popupParam.maskHideToPath = self.popupParam.maskShowFromPath;
+    }
+}
+
 #pragma mark 代理 TFPopupManagerDataSource 方法
 /* 执行顺序:0 返回【默认使用的动画方式,可叠加】 */
 -(TFPopupDefaultAnimation)tf_popupManager_popDefaultAnimation:(TFPopupManager *)manager{
+    
     TFPopupDefaultAnimation ani = TFPopupDefaultAnimationNone;
-    switch (self.style) {
-        case PopupStyleNone:{
-            ani = TFPopupDefaultAnimationNone;
-        }break;
-        case PopupStyleAlpha:{
-            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
-            }
-            if (self.popupParam.disusePopupAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
-            }
-        }break;
-        case PopupStyleSlide:{
-            ani = TFPopupDefaultAnimationPopBoardFrame;
-            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
-            }
-            if (self.popupParam.disusePopupAlphaAnimation == NO) {
-                ani =ani | TFPopupDefaultAnimationPopBoardAlpha;
-            }
-        }break;
-        case PopupStyleScale:{
-            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
-            }
-            if (self.popupParam.disusePopupAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
-            }
-            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationBackgroundAlpha) {
-                ani = ani | TFPopupDefaultAnimationCustem;
-            }
-        }break;
-        case PopupStyleFrame:{
-            ani = TFPopupDefaultAnimationPopBoardFrame;
-            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
-                ani =ani | TFPopupDefaultAnimationBackgroundAlpha;
-            }
-            if (self.popupParam.disusePopupAlphaAnimation == NO) {
-                ani =ani | TFPopupDefaultAnimationPopBoardAlpha;
-            }
-        }break;
-        case PopupStyleMask:{
-            if (self.popupParam.disuseBackgroundAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
-            }
-            if (self.popupParam.disusePopupAlphaAnimation == NO) {
-                ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
-            }
-            if (ani == TFPopupDefaultAnimationNone || ani == TFPopupDefaultAnimationBackgroundAlpha) {
-                ani = ani | TFPopupDefaultAnimationCustem;
-            }
-        }break;
-        default:break;
+    if (styleInclude(self.style, PopupStyleAlpha) ||
+        styleInclude(self.style, PopupStyleAniamtion) ||
+        styleInclude(self.style, PopupStyleFrame) ||
+        styleInclude(self.style, PopupStyleMask)) {
+        
+        if (self.popupParam.keepPopupOriginFrame == NO)
+            ani = ani | TFPopupDefaultAnimationPopBoardFrame;
+        
+        if (self.popupParam.disuseBackgroundAlphaAnimation == NO)
+            ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
+        
+        if (self.popupParam.disusePopupAlphaAnimation == NO)
+            ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
+        
+        if (ani == TFPopupDefaultAnimationNone)
+            ani = ani | TFPopupDefaultAnimationCustem;
     }
     return ani;
 }
@@ -270,7 +229,8 @@
     if (self.popupParam.disuseBackground == NO) {
         UIButton *cover = [UIButton buttonWithType:UIButtonTypeCustom];
         if ([self.popupDelegate respondsToSelector:@selector(tf_popupCustemBackgroundView:popup:)]) {
-            self.backgroundView = [self.popupDelegate tf_popupCustemBackgroundView:self.manager popup:self];
+            self.backgroundView = [self.popupDelegate tf_popupCustemBackgroundView:self.manager
+                                                                             popup:self];
             cover = (UIButton *)self.backgroundView;
         }
         if (self.popupParam.backgroundColorClear) {
@@ -278,7 +238,6 @@
         }else{
             cover.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
         }
-        
         if ([cover respondsToSelector:@selector(addTarget:action:forControlEvents:)]) {
             [cover addTarget:self
                       action:@selector(coverClick:)
@@ -303,59 +262,18 @@
 -(CGRect   )tf_popupManager_popBoardViewBeginPosition:(TFPopupManager *)manager
                                             boardView:(UIView *)boardView{
     
+    //不改变
     if (self.popupParam.keepPopupOriginFrame)return self.frame;
-    
-    if (self.style == PopupStyleFrame) {
-        //frame优先
-        if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO)
+    //优先级popOriginFrame > 默认计算
+    if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO)
         return self.popupParam.popOriginFrame;
-        
-        CGPoint os = self.popupParam.offset;
-        CGPoint bp = self.popupParam.basePoint;
-        CGFloat x = 0,y = 0;
-        switch (self.popupParam.bubbleDirection) {
-            case PopupDirectionTop:
-            case PopupDirectionTopRight:
-            case PopupDirectionRight:
-            case PopupDirectionRightBottom:
-            case PopupDirectionBottom:
-            case PopupDirectionBottomLeft:
-            case PopupDirectionLeft:
-            case PopupDirectionLeftTop:{
-                x = bp.x + os.x;
-                y = bp.y + os.y;
-            }break;
-            default:break;
-        }
-        return CGRectMake(x, y, 0, 0);
-        
-    }else if(self.style == PopupStyleSlide){
-        CGRect ar = self.popupParam.popupAreaRect;
-        CGSize s = self.popupParam.popupSize;
-        CGFloat x = (ar.size.width - s.width) * 0.5;
-        CGFloat y = (ar.size.height - s.height) * 0.5;
-        CGFloat w = s.width;
-        CGFloat h = s.height;
-        switch (self.direction) {
-            case PopupDirectionContainerCenter:{}break;
-            case PopupDirectionTop:{y = - s.height;}break;
-            case PopupDirectionLeft:{x = - s.width;}break;
-            case PopupDirectionBottom:{y = ar.size.height;}break;
-            case PopupDirectionRight:{x = ar.size.width;}break;
-            default:break;
-        }
-        CGRect position = CGRectMake(x, y, w, h);
-        return position;
-    }else{
-        //此位置为中心位置
-        CGRect ar = self.popupParam.popupAreaRect;
-        CGSize s = self.popupParam.popupSize;
-        CGFloat x = (ar.size.width - s.width) * 0.5;
-        CGFloat y = (ar.size.height - s.height) * 0.5;
-        CGFloat w = s.width;
-        CGFloat h = s.height;
-        return CGRectMake(x, y, w, h);
-    }
+    //默认计算
+    CGRect ar = self.popupParam.popupAreaRect;
+    CGSize s = self.popupParam.popupSize;
+    CGPoint st = self.popupParam.offset;
+    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
+    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    return CGRectMake(x, y, s.width, s.height);
 }
 
 /* 执行顺序:6 返回【弹出框view,动画结束时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */
@@ -363,92 +281,16 @@
                                           boardView:(UIView *)boardView{
     
     if (self.popupParam.keepPopupOriginFrame)return self.frame;
-    
-    
-    
-    if (self.style == PopupStyleFrame) {
-        //frame优先
-        if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero) == NO)
-            return self.popupParam.popTargetFrame;
-        
-        CGPoint os = self.popupParam.offset;
-        CGPoint bp = self.popupParam.basePoint;
-        CGSize  ps = self.popupParam.popupSize;
-        CGFloat x = 0,y = 0,w = ps.width,h = ps.height;
-        CGFloat halfw = ps.width * 0.5,halfh = ps.height * 0.5;
-        switch (self.popupParam.bubbleDirection) {
-            case PopupDirectionTop:{
-                x = (bp.x - halfw) + os.x;
-                y = (bp.y - h) + os.y;
-            }break;
-            case PopupDirectionTopRight:{
-                x = bp.x + os.x;
-                y = (bp.y - h) + os.y;
-            }break;
-            case PopupDirectionRight:{
-                x = bp.x + os.x;
-                y = (bp.y - halfh) + os.y;
-            }break;
-            case PopupDirectionRightBottom:{
-                x = bp.x + os.x;
-                y = bp.y + os.y;
-            }break;
-            case PopupDirectionBottom:{
-                x = (bp.x - halfw) + os.x;
-                y = bp.y + os.y;
-            }break;
-            case PopupDirectionBottomLeft:{
-                x = (bp.x - w) + os.x;
-                y = bp.y + os.y;
-            }break;
-            case PopupDirectionLeft:{
-                x = (bp.x - w) + os.x;
-                y = (bp.y - halfh) + os.y;
-            }break;
-            case PopupDirectionLeftTop:{
-                x = (bp.x - w) + os.x;
-                y = (bp.y - h) + os.y;
-            }break;
-            default:break;
-        }
-        return CGRectMake(x, y, w, h);
-        
-        
-    }else if(self.style == PopupStyleSlide){
-        CGRect ar = self.popupParam.popupAreaRect;
-        CGSize s = self.popupParam.popupSize;
-        CGFloat x = (ar.size.width - s.width) * 0.5;
-        CGFloat y = (ar.size.height - s.height) * 0.5;
-        CGFloat w = s.width;
-        CGFloat h = s.height;
-        switch (self.direction) {
-            case PopupDirectionContainerCenter:{}break;
-            case PopupDirectionTop:{
-                y = 0;
-            }break;
-            case PopupDirectionLeft:{
-                x = 0;
-            }break;
-            case PopupDirectionBottom:{
-                y = ar.size.height - s.height;
-            }break;
-            case PopupDirectionRight:{
-                x = ar.size.width - s.width;
-            }break;
-            default:break;
-        }
-        CGRect position = CGRectMake(x, y, w, h);
-        return position;
-    }else{
-        //此位置为中心位置
-        CGRect ar = self.popupParam.popupAreaRect;
-        CGSize s = self.popupParam.popupSize;
-        CGFloat x = (ar.size.width - s.width) * 0.5;
-        CGFloat y = (ar.size.height - s.height) * 0.5;
-        CGFloat w = s.width;
-        CGFloat h = s.height;
-        return CGRectMake(x, y, w, h);
-    }
+    //优先级popTargetFrame > 默认计算
+    if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero) == NO)
+        return self.popupParam.popTargetFrame;
+    //默认计算
+    CGRect ar = self.popupParam.popupAreaRect;
+    CGSize s = self.popupParam.popupSize;
+    CGPoint st = self.popupParam.offset;
+    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
+    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    return CGRectMake(x, y, s.width, s.height);
 }
 
 -(NSTimeInterval)tf_popupManager_popDefaultAnimationDuration:(TFPopupManager *)manager{
@@ -469,18 +311,20 @@
             return;
         }
     }
-    //缩放
-    if (self.style == PopupStyleScale ||
-        self.style == PopupStyleAlpha) {
+    
+    //动画
+    if (styleInclude(self.style, PopupStyleAniamtion)) {
         CAAnimation *animation = [self animation:self.popupParam.showKeyPath
                                             from:self.popupParam.showFromValue
                                               to:self.popupParam.showToValue
                                              dur:self.popupParam.duration];
         if (animation)
-        [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-        tellToManager(NO,self.popupParam.duration);
-        //遮罩
-    }else if (self.style == PopupStyleMask) {
+            [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    }
+    
+    //遮罩
+    if (styleInclude(self.style, PopupStyleMask)) {
+        
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
         CAShapeLayer *mask = [[CAShapeLayer alloc]init];
@@ -493,14 +337,13 @@
         
         CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
         if (animation)
-        [mask addAnimation:animation forKey:NSStringFromClass([self class])];
-        tellToManager(NO,dur);
-    }else{
-        tellToManager(NO,self.popupParam.duration);
+            [mask addAnimation:animation forKey:NSStringFromClass([self class])];
     }
+    tellToManager(NO,self.popupParam.duration);
 }
 
 -(CAAnimation *)animation:(NSString *)path from:(id)from to:(id)to dur:(NSTimeInterval)dur{
+    
     if (path == nil || from == nil || to == nil || dur == 0.0) return nil;
     CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:path];
     [ani setFromValue:from];//设置起始值
@@ -510,6 +353,7 @@
     [ani setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [ani setAutoreverses:NO];
     [ani setFillMode:kCAFillModeBoth];
+    
     return ani;
 }
 
@@ -532,18 +376,18 @@
         }
     }
     
-    //缩放
-    if (self.style == PopupStyleScale ||
-        self.style == PopupStyleAlpha) {
+    //动画
+    if (styleInclude(self.style, PopupStyleAniamtion)) {
         CAAnimation *animation = [self animation:self.popupParam.hideKeyPath
                                             from:self.popupParam.hideFromValue
                                               to:self.popupParam.hideToValue
                                              dur:self.popupParam.duration];
         if (animation)
-        [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-        tellToManager(NO,self.popupParam.duration);
-        //遮罩
-    }else if (self.style == PopupStyleMask) {
+            [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    }
+    
+    //遮罩
+    if (styleInclude(self.style, PopupStyleMask)) {
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
         CAShapeLayer *mask = self.layer.mask;
@@ -558,11 +402,9 @@
         }
         CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
         if (animation)
-        [mask addAnimation:animation forKey:NSStringFromClass([self class])];
-        tellToManager(NO,dur);
-    }else{
-        tellToManager(NO,self.popupParam.duration);
+            [mask addAnimation:animation forKey:NSStringFromClass([self class])];
     }
+    tellToManager(NO,self.popupParam.duration);
 }
 
 /* 弹出框隐藏动画完成后回调,自定义动画不回调 */
@@ -596,35 +438,9 @@
 
 #pragma mark -- 代理 TFPopupDelegate 方法
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-    if ((self.style == PopupStyleNone ||
-         self.style == PopupStyleAlpha ||
-         self.style == PopupStyleScale ||
-         self.style == PopupStyleMask) &&
-        CGPointEqualToPoint(self.popupParam.offset, CGPointZero) == NO) {
-        CGPoint offset = self.popupParam.offset;
-        CGRect bf = manager.popBoardViewBeginFrame;
-        CGRect nf = CGRectMake(bf.origin.x + offset.x,
-                               bf.origin.y + offset.y,
-                               bf.size.width,
-                               bf.size.height);
-        manager.popBoardViewEndFrame = nf;
-    }
     return NO;
 }
 -(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
-    if ((self.style == PopupStyleNone ||
-         self.style == PopupStyleAlpha ||
-         self.style == PopupStyleScale ||
-         self.style == PopupStyleMask) &&
-        CGPointEqualToPoint(self.popupParam.offset, CGPointZero) == NO) {
-        CGPoint offset = self.popupParam.offset;
-        CGRect bf = manager.popBoardViewEndFrame;
-        CGRect nf = CGRectMake(bf.origin.x + offset.x,
-                               bf.origin.y + offset.y,
-                               bf.size.width,
-                               bf.size.height);
-        manager.popBoardViewBeginFrame = nf;
-    }
     return NO;
 }
 -(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup{
@@ -632,7 +448,119 @@
 }
 
 
-#pragma mark 属性绑定函数
+#pragma mark -- styleInclude
+static inline BOOL styleInclude(PopupStyle total,PopupStyle inc){
+    return ((total & inc) == inc);
+}
+
+#pragma mark -- bubble-frame
+static inline CGRect bubbleOrigin(CGPoint basePoint,PopupDirection direction,CGPoint offset){
+    
+    CGFloat x = 0,y = 0;
+    switch (direction) {
+        case PopupDirectionTop:
+        case PopupDirectionTopRight:
+        case PopupDirectionRight:
+        case PopupDirectionRightBottom:
+        case PopupDirectionBottom:
+        case PopupDirectionBottomLeft:
+        case PopupDirectionLeft:
+        case PopupDirectionLeftTop:{
+            x = basePoint.x + offset.x;
+            y = basePoint.y + offset.y;
+        }break;
+        default:break;
+    }
+    return CGRectMake(x, y, 0, 0);
+}
+
+static inline CGRect bubbleTarget(CGPoint basePoint,
+                                  CGSize popupSize,
+                                  PopupDirection direction,
+                                  CGPoint offset){
+    
+    CGFloat x = 0,y = 0,w = popupSize.width,h = popupSize.height;
+    CGFloat halfw = popupSize.width * 0.5,halfh = popupSize.height * 0.5;
+    switch (direction) {
+        case PopupDirectionTop:{
+            x = (basePoint.x - halfw) + offset.x;
+            y = (basePoint.y - h) + offset.y;
+        }break;
+        case PopupDirectionTopRight:{
+            x = basePoint.x + offset.x;
+            y = (basePoint.y - h) + offset.y;
+        }break;
+        case PopupDirectionRight:{
+            x = basePoint.x + offset.x;
+            y = (basePoint.y - halfh) + offset.y;
+        }break;
+        case PopupDirectionRightBottom:{
+            x = basePoint.x + offset.x;
+            y = basePoint.y + offset.y;
+        }break;
+        case PopupDirectionBottom:{
+            x = (basePoint.x - halfw) + offset.x;
+            y = basePoint.y + offset.y;
+        }break;
+        case PopupDirectionBottomLeft:{
+            x = (basePoint.x - w) + offset.x;
+            y = basePoint.y + offset.y;
+        }break;
+        case PopupDirectionLeft:{
+            x = (basePoint.x - w) + offset.x;
+            y = (basePoint.y - halfh) + offset.y;
+        }break;
+        case PopupDirectionLeftTop:{
+            x = (basePoint.x - w) + offset.x;
+            y = (basePoint.y - h) + offset.y;
+        }break;
+        default:break;
+    }
+    return CGRectMake(x, y, w, h);
+}
+
+#pragma mark -- slide-frame
+static inline CGRect slideOriginFrame(TFPopupParam *param,PopupDirection direction){
+    CGRect ar = param.popupAreaRect;
+    CGSize s = param.popupSize;
+    CGPoint st = param.offset;
+    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
+    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    CGFloat w = s.width;
+    CGFloat h = s.height;
+    switch (direction) {
+        case PopupDirectionTop:{y = - s.height;}break;
+        case PopupDirectionLeft:{x = - s.width;}break;
+        case PopupDirectionBottom:{y = ar.size.height;}break;
+        case PopupDirectionRight:{x = ar.size.width;}break;
+        default:break;
+    }
+    CGRect position = CGRectMake(x, y, w, h);
+    return position;
+}
+
+static inline CGRect slideTargetFrame(TFPopupParam *param,PopupDirection direction){
+    CGRect ar = param.popupAreaRect;
+    CGSize s = param.popupSize;
+    CGPoint st = param.offset;
+    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
+    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    CGFloat w = s.width;
+    CGFloat h = s.height;
+    switch (direction) {
+        case PopupDirectionTop:{y = 0;}break;
+        case PopupDirectionLeft:{x = 0;}break;
+        case PopupDirectionBottom:{y = ar.size.height - s.height;}break;
+        case PopupDirectionRight:{x = ar.size.width - s.width;}break;
+        default:break;
+    }
+    CGRect position = CGRectMake(x, y, w, h);
+    return position;
+}
+
+
+
+#pragma mark -- 属性绑定
 
 #ifndef tf_synthesize_category_property
 #define tf_synthesize_category_property(getter,settter,objc_AssociationPolicy,TYPE)\
