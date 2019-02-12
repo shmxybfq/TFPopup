@@ -112,17 +112,12 @@
         
         self.param.duration = 0.3;
         self.param.popupSize = CGSizeMake(200, 100);
-        CGPoint c = CGPointMake(self.view.frame.size.width * 0.5, 200);
-        //self.param.popOriginFrame = CGRectMake(c.x, c.y, 0, 0);
-        //self.param.popTargetFrame = CGRectMake(c.x - 157, c.y, 314, 170);
-        
+     
         UIView *popup = [self getListView];
-        popup.clipsToBounds = YES;
-        //[popup tf_showFrame:self.view popupParam:self.param];
-//        [popup tf_showFrame:self.view
-//                  basePoint:c
-//            bubbleDirection:PopupDirectionLeftTop
-//                 popupParam:self.param];
+        [popup tf_showBubble:self.view
+                   basePoint:CGPointMake(100, 100)
+             bubbleDirection:PopupDirectionRightBottom
+                  popupParam:nil];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
         

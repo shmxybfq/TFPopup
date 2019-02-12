@@ -47,5 +47,11 @@
           direction:(PopupDirection)direction
          popupParam:(TFPopupParam *)popupParam;
 
+
+-(void)tf_showBubble:(UIView *)inView
+           basePoint:(CGPoint)basePoint
+     bubbleDirection:(PopupDirection)bubbleDirection
+          popupParam:(TFPopupParam *)popupParam;
+
 @end
 
