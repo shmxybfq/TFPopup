@@ -81,16 +81,17 @@
         BOOL isAni = [self.animationType isEqualToString:@"渐隐"];
         
         //[popup tf_show:self.view animated:isAni];
-        [popup tf_show:self.view offset:CGPointMake(0, -100) animated:isAni];
-        //[alert tf_show:self.view offset:CGPointZero animated:YES];
-        //[popup tf_show:self.view offset:self.custemPoint popupParam:self.param animated:isAni];
+        //[popup tf_show:self.view offset:CGPointMake(0, -100) animated:isAni];
+        //[popup tf_show:self.view offset:CGPointZero popupParam:self.param animated:isAni];
         
     }else if ([self.animationType isEqualToString:@"缩放"]) {
         
         UIView *popup = [self getAlertView];
-        //[alert tf_showScale:self.view];
-        //[alert tf_showScale:self.view offset:self.custemPoint];
-        //[popup tf_showScale:self.view offset:self.custemPoint popupParam:self.param];
+        
+        self.param.duration = 0.3;
+        //[popup tf_showScale:self.view];
+        //[popup tf_showScale:self.view offset:CGPointMake(0, -100)];
+        [popup tf_showScale:self.view offset:CGPointZero popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"滑动"]) {
         
@@ -103,8 +104,9 @@
             self.param.popupSize = CGSizeMake(self.view.frame.size.width, 300);
         }
         UIView *popup = [self getListView];
-        //[popup tf_showSlide:self.view direction:self.popupDirection];
-        //[popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
+        //self.param.offset = CGPointMake(-50, -100);
+        //[popup tf_showSlide:self.view direction:PopupDirectionRight];
+        [popup tf_showSlide:self.view direction:PopupDirectionRight popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"形变"]) {
         

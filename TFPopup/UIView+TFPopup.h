@@ -38,5 +38,14 @@
     popupParam:(TFPopupParam *)popupParam
       animated:(BOOL)animated;
 
+-(void)tf_showScale:(UIView *)inView;
+-(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset;
+-(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam;
+
+-(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction;
+-(void)tf_showSlide:(UIView *)inView
+          direction:(PopupDirection)direction
+         popupParam:(TFPopupParam *)popupParam;
+
 @end
 

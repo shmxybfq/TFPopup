@@ -159,7 +159,8 @@
                     weakself.popForBackgroundView.alpha = 0;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationBackgroundAlpha isAnimationHide:YES];
-                    [weakself.popForBackgroundView removeFromSuperview];
+                    //[weakself.popForBackgroundView removeFromSuperview];
+                    NSLog(@"111");
                 }];
             }
         }else{
@@ -176,7 +177,8 @@
                     weakself.popBoardView.alpha = 0;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha isAnimationHide:YES];
-                    [weakself.popBoardView removeFromSuperview];
+                    //[weakself.popBoardView removeFromSuperview];
+                    NSLog(@"222");
                 }];
             }
         }else{
@@ -192,7 +194,8 @@
                     weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:YES];
-                    [weakself.popBoardView removeFromSuperview];
+                    //[weakself.popBoardView removeFromSuperview];
+                    NSLog(@"333");
                 }];
             }
         }else{
@@ -206,7 +209,8 @@
                 dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(max * NSEC_PER_SEC));
                 dispatch_after(time, dispatch_get_main_queue(), ^{
                     [weakself finishHide:TFPopupDefaultAnimationCustem isAnimationHide:YES];
-                    [weakself.popBoardView removeFromSuperview];
+                    //[weakself.popBoardView removeFromSuperview];
+                    NSLog(@"444");
                 });
             }
         }else{
@@ -217,7 +221,8 @@
         BOOL con1 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame;
         BOOL con2 = (self.defaultAnimation & TFPopupDefaultAnimationCustem) == TFPopupDefaultAnimationCustem;
         if ((con0 || con1 || con2) == NO) {
-            [self.popBoardView removeFromSuperview];
+            //[self.popBoardView removeFromSuperview];
+            NSLog(@"555");
         }
     }
 }

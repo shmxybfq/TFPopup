@@ -32,6 +32,8 @@
     popupParam:(TFPopupParam *)popupParam
       animated:(BOOL)animated{
     
+    self.popupParam = popupParam;
+    
     popupParam.offset = offset;
     popupParam.disusePopupAlphaAnimation = !animated;
     popupParam.disuseBackgroundAlphaAnimation = !animated;
@@ -48,6 +50,8 @@
 }
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam{
+    
+    self.popupParam = popupParam;
     
     popupParam.offset = offset;
     popupParam.showKeyPath = @"transform.scale";
@@ -68,16 +72,22 @@
           direction:(PopupDirection)direction
          popupParam:(TFPopupParam *)popupParam{
     
+    self.inView = inView;
+    self.popupParam = popupParam;
+    
     if ((direction == PopupDirectionTop || direction == PopupDirectionRight ||
          direction == PopupDirectionBottom || direction == PopupDirectionLeft) == NO)
         return;
     
-    if (CGRectEqualToRect(popupParam.popOriginFrame, CGRectZero) == NO)
+    [self setDefault];
+    
+    if (CGRectEqualToRect(popupParam.popOriginFrame, CGRectZero))
         popupParam.popOriginFrame = slideOriginFrame(popupParam, direction);
     
-    if (CGRectEqualToRect(popupParam.popTargetFrame, CGRectZero) == NO)
+    if (CGRectEqualToRect(popupParam.popTargetFrame, CGRectZero))
         popupParam.popTargetFrame = slideTargetFrame(popupParam, direction);
     
+    NSLog(@">>>>>>>:%@:%@",NSStringFromCGRect(popupParam.popOriginFrame),NSStringFromCGRect(popupParam.popTargetFrame));
     [self tf_showCustemAll:inView popupParam:popupParam delegate:self];
 }
 
@@ -87,6 +97,9 @@
            basePoint:(CGPoint)basePoint
      bubbleDirection:(PopupDirection)bubbleDirection
           popupParam:(TFPopupParam *)popupParam{
+    
+    self.inView = inView;
+    self.popupParam = popupParam;
     
     popupParam.basePoint = basePoint;
     popupParam.bubbleDirection = bubbleDirection;
@@ -126,6 +139,7 @@
     self.popupParam = popupParam;
     if (self.popupParam == nil)
         self.popupParam = [[TFPopupParam alloc]init];
+    
     [self setDefault];
     
     //代理
@@ -136,6 +150,7 @@
 }
 
 -(void)setDefault{
+    
     //时间
     if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
     //自动消失时间
@@ -173,8 +188,7 @@
             self.popupParam.hideToValue = self.popupParam.showFromValue;
     }
     
-    if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO &&
-        CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO) {
+    if (CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO) {
         style = style | PopupStyleFrame;
     }
     
@@ -187,6 +201,14 @@
         if (self.popupParam.maskHideToPath == nil)
             self.popupParam.maskHideToPath = self.popupParam.maskShowFromPath;
     }
+    self.style = style;
+    
+    NSLog(@">>>>>>>>>>param:%@:%@:%@:%@:%@",
+          @(self.popupParam.duration),
+          @(self.popupParam.autoDissmissDuration),
+          NSStringFromCGSize(self.popupParam.popupSize),
+          NSStringFromCGRect(self.popupParam.popupAreaRect),
+          @(style));
 }
 
 #pragma mark 代理 TFPopupManagerDataSource 方法
@@ -524,15 +546,15 @@ static inline CGRect slideOriginFrame(TFPopupParam *param,PopupDirection directi
     CGRect ar = param.popupAreaRect;
     CGSize s = param.popupSize;
     CGPoint st = param.offset;
-    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
-    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    CGFloat x = (ar.size.width - s.width) * 0.5;
+    CGFloat y = (ar.size.height - s.height) * 0.5;
     CGFloat w = s.width;
     CGFloat h = s.height;
     switch (direction) {
-        case PopupDirectionTop:{y = - s.height;}break;
-        case PopupDirectionLeft:{x = - s.width;}break;
-        case PopupDirectionBottom:{y = ar.size.height;}break;
-        case PopupDirectionRight:{x = ar.size.width;}break;
+        case PopupDirectionTop:{y = - s.height;x = x + st.x;}break;
+        case PopupDirectionLeft:{x = - s.width;y = y + st.y;}break;
+        case PopupDirectionBottom:{y = ar.size.height;x = x + st.x;}break;
+        case PopupDirectionRight:{x = ar.size.width;y = y + st.y;}break;
         default:break;
     }
     CGRect position = CGRectMake(x, y, w, h);
@@ -543,15 +565,15 @@ static inline CGRect slideTargetFrame(TFPopupParam *param,PopupDirection directi
     CGRect ar = param.popupAreaRect;
     CGSize s = param.popupSize;
     CGPoint st = param.offset;
-    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
-    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    CGFloat x = (ar.size.width - s.width) * 0.5;
+    CGFloat y = (ar.size.height - s.height) * 0.5;
     CGFloat w = s.width;
     CGFloat h = s.height;
     switch (direction) {
-        case PopupDirectionTop:{y = 0;}break;
-        case PopupDirectionLeft:{x = 0;}break;
-        case PopupDirectionBottom:{y = ar.size.height - s.height;}break;
-        case PopupDirectionRight:{x = ar.size.width - s.width;}break;
+        case PopupDirectionTop:{y = 0 + st.y;x = x + st.x;}break;
+        case PopupDirectionLeft:{x = 0 + st.x;y = y + st.y;}break;
+        case PopupDirectionBottom:{y = ar.size.height - s.height + st.y;x = x + st.x;}break;
+        case PopupDirectionRight:{x = ar.size.width - s.width + st.x;y = y + st.y;}break;
         default:break;
     }
     CGRect position = CGRectMake(x, y, w, h);
