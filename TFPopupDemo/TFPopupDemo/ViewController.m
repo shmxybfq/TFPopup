@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *topButton3;
 @property (weak, nonatomic) IBOutlet UIButton *topButton4;
 @property (weak, nonatomic) IBOutlet UIButton *topButton5;
+@property (weak, nonatomic) IBOutlet UIButton *topButton6;
 
 @property (weak, nonatomic) IBOutlet UIButton *midButton0;
 @property (weak, nonatomic) IBOutlet UIButton *midButton1;
@@ -59,7 +60,6 @@
 @property(nonatomic,  copy)NSString *animationType;
 @property(nonatomic,assign)PopupDirection popupDirection;
 @property(nonatomic,assign)NSInteger custemIndex;
-@property(nonatomic,assign)CGPoint custemPoint;
 
 @end
 
@@ -74,21 +74,22 @@
 
 -(void)showClick:(UIButton *)ins{
     
+    self.param.duration = 0.3;
+    
     if ([self.animationType isEqualToString:@"渐隐"] ||
         [self.animationType isEqualToString:@"直接弹"]) {
         
         UIView *popup = [self getAlertView];
         BOOL isAni = [self.animationType isEqualToString:@"渐隐"];
         
-        [popup tf_show:self.view animated:isAni];
-        //[popup tf_show:self.view offset:CGPointMake(0, -100) animated:isAni];
-        //[popup tf_show:self.view offset:CGPointZero popupParam:self.param animated:isAni];
+        //[popup tf_showNormal:self.view animated:isAni];
+        [popup tf_showNormal:self.view offset:CGPointMake(0, -100) animated:isAni];
+        //[popup tf_showNormal:self.view popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"缩放"]) {
         
         UIView *popup = [self getAlertView];
         
-        self.param.duration = 0.3;
         //[popup tf_showScale:self.view];
         //[popup tf_showScale:self.view offset:CGPointMake(0, -100)];
         [popup tf_showScale:self.view offset:CGPointZero popupParam:self.param];
@@ -108,36 +109,21 @@
         //[popup tf_showSlide:self.view direction:PopupDirectionRight];
         [popup tf_showSlide:self.view direction:PopupDirectionRight popupParam:self.param];
         
-    }else if ([self.animationType isEqualToString:@"形变"]) {
+    }else if ([self.animationType isEqualToString:@"泡泡"]) {
         
         self.param.popupSize = CGSizeMake(200, 100);
-        self.param.popOriginFrame = CGRectMake(0, 110, kSize.width, 0);
-        self.param.popTargetFrame = CGRectMake(0, 110, kSize.width, 200);
         
         UIView *popup = [self getListView];
         
-//        [popup tf_showBubble:self.view
-//                   basePoint:self.view.center
-//             bubbleDirection:PopupDirectionFrame
-//                  popupParam:self.param];
-        
-        [popup tf_showFrame:self.view
-                       from:self.param.popOriginFrame
-                         to:self.param.popTargetFrame
-                 popupParam:self.param];
+        [popup tf_showBubble:self.view
+                   basePoint:self.view.center
+             bubbleDirection:PopupDirectionFrame
+                  popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
        
         self.param.duration = 0.3;
-        
-        //下拉展开
-        //self.param.maskShowFromPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 0)];
-        //self.param.maskShowToPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 170)];
-        
-        //mask 展开
-        //self.param.maskShowFromPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(314 * 0.5,170 * 0.5,2, 2)];
-        //self.param.maskShowToPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-314 * 0.5,-170 * 0.5,314 * 2,170 * 2)];
-        
+       
         //三角出来
         UIBezierPath *p0 = [UIBezierPath bezierPath];
         [p0 moveToPoint:CGPointMake(-200, 0)];
@@ -159,6 +145,18 @@
         
         UIView *popup = [self getAlertView];
         [popup tf_showMask:self.view popupParam:self.param];
+        
+    }else if ([self.animationType isEqualToString:@"形变"]) {
+        
+        self.param.popOriginFrame = CGRectMake(0, 110, kSize.width, 0);
+        self.param.popTargetFrame = CGRectMake(0, 110, kSize.width, 200);
+        
+        UIView *popup = [self getListView];
+
+        [popup tf_showFrame:self.view
+                       from:self.param.popOriginFrame
+                         to:self.param.popTargetFrame
+                 popupParam:self.param];
     }
 }
 
@@ -190,8 +188,8 @@
     if ([title(ins) isEqualToString:@"不使用弹出渐隐动画"]) {
         self.param.disusePopupAlphaAnimation = ins.selected;
     }
-    if ([title(ins) isEqualToString:@"自定义位置"]) {
-        self.custemPoint = CGPointMake(0, -200);
+    if ([title(ins) isEqualToString:@"弹框偏移"]) {
+        self.param.offset = ins.selected?CGPointMake(0, -150):CGPointZero;
     }
 }
 
@@ -219,152 +217,6 @@
     if ([title(ins) isEqualToString:@"自定义6"]) self.custemIndex = 6;
 }
 
-
-
-
-
-////挨个弹出动画
--(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-
-    NSArray *bts = [((BlankView *)popup) buttons];
-    for (NSInteger i = 0; i < bts.count; i++) {
-
-        UIView *view = [bts objectAtIndex:i];
-//        [view removeFromSuperview];
-        view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + 300, 40, 40);
-
-
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((0.25 + i * 0.05) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-//            TFPopupParam *p = [TFPopupParam new];
-//            p.keepPopupOriginFrame = YES;
-//            p.disuseBackground = YES;
-//            [view tf_showScale:popup offset:CGPointZero popupParam:p];
-
-            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
-            [animation setFromValue:@(view.frame.origin.y)];//设置起始值
-            [animation setToValue:@(view.frame.origin.y - 300)];//设置目标值
-            [animation setDuration:0.25];//设置动画时间，单次动画时间
-            [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-            [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-            [animation setAutoreverses:NO];
-            [animation setFillMode:kCAFillModeBoth];
-            [view.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-        });
-
-    }
-    return NO;
-}
-
-
--(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
-  
-    
-    NSArray *bts = [((BlankView *)popup) buttons];
-    for (NSInteger i = bts.count - 1; i >=0 ; i--) {
-
-        UIView *view = [bts objectAtIndex:i];
-
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(((7-i) * 0.05) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
-            [animation setFromValue:@(view.frame.origin.y)];//设置起始值
-            [animation setToValue:@(view.frame.origin.y + 300)];//设置目标值
-            [animation setDuration:3];//设置动画时间，单次动画时间
-            [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-            [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-            [animation setAutoreverses:NO];
-            [animation setFillMode:kCAFillModeBoth];
-            [view.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-        });
-        if (i == 7 ) {
-            break;
-        }
-
-    }
-    return YES;
-}
-
-
-////旋转加缩放动画
-//-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-//
-//    //旋转加缩放动画
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-//    [animation setFromValue:@(M_PI)];//设置起始值
-//    [animation setToValue:@(M_PI * 2)];//设置目标值
-//    [animation setDuration:popup.popupParam.duration];//设置动画时间，单次动画时间
-//    [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-//    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//    [animation setAutoreverses:NO];
-//    [animation setFillMode:kCAFillModeBoth];
-//
-//    CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-//    [animation1 setFromValue:@0.0];//设置起始值
-//    [animation1 setToValue:@(1)];//设置目标值
-//    [animation1 setDuration:popup.popupParam.duration];//设置动画时间，单次动画时间
-//    [animation1 setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-//    [animation1 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//    [animation1 setAutoreverses:NO];
-//    [animation1 setFillMode:kCAFillModeBoth];
-//
-//    CAAnimationGroup *group = [CAAnimationGroup animation];
-//    [group setDuration:popup.popupParam.duration];
-//    [group setAnimations:@[animation,animation1]];
-//    [popup.layer addAnimation:group forKey:NSStringFromClass([self class])];
-//
-//    return NO;
-//}
-//
-////缩放动画
-//-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
-//    [animation setFromValue:@1.0];//设置起始值
-//    [animation setToValue:@0.0];//设置目标值
-//    [animation setDuration:popup.popupParam.duration];//设置动画时间，单次动画时间
-//    [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-//    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//    [animation setAutoreverses:NO];
-//    [animation setFillMode:kCAFillModeBoth];
-//    [popup.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-//    return NO;
-//}
-
-//-(void)toast{
-//    NSMutableString *ss = [[NSMutableString alloc]init];
-//    NSInteger count = arc4random_uniform(200);
-//    for (NSInteger i = 0; i < count; i++) {
-//        [ss appendFormat:@"好"];
-//    }
-//
-//    [TFPopupToast showToast:self.view msg:ss custemShow:^(TFPopupToast *toast) {
-//        //缩放
-//        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-//        [animation setFromValue:@0.1];//设置起始值
-//        [animation setToValue:@1.0];//设置目标值
-//        [animation setDuration:0.3];//设置动画时间，单次动画时间
-//        [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-//        [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//        [animation setAutoreverses:NO];
-//        [animation setFillMode:kCAFillModeBoth];
-//        [toast.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-//
-//    } custemHide:^(TFPopupToast *toast) {
-//        //缩放
-//        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-//        [animation setFromValue:@1.0];//设置起始值
-//        [animation setToValue:@0.1];//设置目标值
-//        [animation setDuration:0.3];//设置动画时间，单次动画时间
-//        [animation setRemovedOnCompletion:NO];//默认为YES,设置为NO时setFillMode有效
-//        [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//        [animation setAutoreverses:NO];
-//        [animation setFillMode:kCAFillModeBoth];
-//        [toast.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-//
-//    } animationFinish:^(TFPopupToast *toast) {
-//
-//    }];
-//}
 
 
 
@@ -438,7 +290,8 @@
 
 -(NSArray *)topButtons{
     NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
-                    self.topButton3,self.topButton4,self.topButton5];
+                    self.topButton3,self.topButton4,self.topButton5,
+                    self.topButton6];
     return tp;
 }
 -(NSArray *)midButtons{

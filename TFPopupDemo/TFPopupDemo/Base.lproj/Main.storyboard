@@ -99,18 +99,18 @@
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTG-bD-Gqo">
-                                                <rect key="frame" x="20" y="54" width="91.5" height="34"/>
+                                                <rect key="frame" x="20" y="54" width="61.5" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="Xx1-LE-7Hl"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <state key="normal" title="形变">
+                                                <state key="normal" title="泡泡">
                                                     <color key="titleColor" red="0.92941176469999998" green="0.0" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hdf-dF-iSK">
-                                                <rect key="frame" x="141.5" y="54" width="92" height="34"/>
+                                                <rect key="frame" x="111.5" y="54" width="61" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="JVw-Vq-4Vt"/>
@@ -121,7 +121,7 @@
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nC-FJ-c0d">
-                                                <rect key="frame" x="263.5" y="54" width="91.5" height="34"/>
+                                                <rect key="frame" x="202.5" y="54" width="61.5" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="MVh-8a-JNB"/>
@@ -131,6 +131,15 @@
                                                     <color key="titleColor" red="0.92941176469999998" green="0.0" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNC-HZ-ypt">
+                                                <rect key="frame" x="294" y="54" width="61" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="Qek-I7-sHs"/>
+                                                </constraints>
+                                                <state key="normal" title="形变">
+                                                    <color key="titleColor" red="0.92941176470588238" green="0.0" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -138,18 +147,21 @@
                                             <constraint firstItem="lb8-az-0mZ" firstAttribute="width" secondItem="6cb-2C-8SR" secondAttribute="width" id="40d-WI-ZUK"/>
                                             <constraint firstItem="Hdf-dF-iSK" firstAttribute="leading" secondItem="RTG-bD-Gqo" secondAttribute="trailing" constant="30" id="7aO-Hb-0NG"/>
                                             <constraint firstItem="0nC-FJ-c0d" firstAttribute="top" secondItem="8ZR-sn-Urb" secondAttribute="bottom" constant="10" id="CRD-Vz-Wio"/>
-                                            <constraint firstAttribute="trailing" secondItem="0nC-FJ-c0d" secondAttribute="trailing" constant="20" id="DHU-Wa-cZS"/>
                                             <constraint firstItem="RTG-bD-Gqo" firstAttribute="leading" secondItem="hbG-dR-HvA" secondAttribute="leading" constant="20" id="EPN-q6-eGh"/>
                                             <constraint firstItem="0nC-FJ-c0d" firstAttribute="leading" secondItem="Hdf-dF-iSK" secondAttribute="trailing" constant="30" id="GCf-MG-a4Z"/>
                                             <constraint firstItem="8ZR-sn-Urb" firstAttribute="top" secondItem="hbG-dR-HvA" secondAttribute="top" constant="10" id="IiJ-Wd-REX"/>
                                             <constraint firstItem="8ZR-sn-Urb" firstAttribute="width" secondItem="6cb-2C-8SR" secondAttribute="width" id="J0r-1a-00c"/>
                                             <constraint firstItem="lb8-az-0mZ" firstAttribute="leading" secondItem="6cb-2C-8SR" secondAttribute="trailing" constant="30" id="Pmu-wG-Kxu"/>
+                                            <constraint firstAttribute="trailing" secondItem="xNC-HZ-ypt" secondAttribute="trailing" constant="20" id="SQ0-6f-nxu"/>
                                             <constraint firstItem="6cb-2C-8SR" firstAttribute="top" secondItem="hbG-dR-HvA" secondAttribute="top" constant="10" id="YKf-Ws-uha"/>
+                                            <constraint firstItem="xNC-HZ-ypt" firstAttribute="leading" secondItem="0nC-FJ-c0d" secondAttribute="trailing" constant="30" id="YTN-c8-DfF"/>
                                             <constraint firstItem="Hdf-dF-iSK" firstAttribute="top" secondItem="lb8-az-0mZ" secondAttribute="bottom" constant="10" id="Zu0-dJ-2T9"/>
                                             <constraint firstItem="lb8-az-0mZ" firstAttribute="top" secondItem="hbG-dR-HvA" secondAttribute="top" constant="10" id="dQi-M2-rIw"/>
                                             <constraint firstItem="Hdf-dF-iSK" firstAttribute="width" secondItem="RTG-bD-Gqo" secondAttribute="width" id="e5S-L1-TCU"/>
                                             <constraint firstAttribute="bottom" secondItem="RTG-bD-Gqo" secondAttribute="bottom" constant="10" id="jis-vM-VlC"/>
                                             <constraint firstItem="RTG-bD-Gqo" firstAttribute="top" secondItem="6cb-2C-8SR" secondAttribute="bottom" constant="10" id="mOo-5t-fpU"/>
+                                            <constraint firstItem="xNC-HZ-ypt" firstAttribute="width" secondItem="0nC-FJ-c0d" secondAttribute="width" id="nQU-0t-lam"/>
+                                            <constraint firstItem="xNC-HZ-ypt" firstAttribute="top" secondItem="8ZR-sn-Urb" secondAttribute="bottom" constant="10" id="pNw-6G-CIc"/>
                                             <constraint firstItem="0nC-FJ-c0d" firstAttribute="width" secondItem="RTG-bD-Gqo" secondAttribute="width" id="rMP-iQ-HET"/>
                                             <constraint firstItem="8ZR-sn-Urb" firstAttribute="leading" secondItem="lb8-az-0mZ" secondAttribute="trailing" constant="30" id="snr-eL-UfZ"/>
                                             <constraint firstAttribute="trailing" secondItem="8ZR-sn-Urb" secondAttribute="trailing" constant="20" id="teK-Cl-YQP"/>
@@ -241,7 +253,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="qeX-b1-9jj"/>
                                         </constraints>
-                                        <state key="normal" title="自定义位置"/>
+                                        <state key="normal" title="弹框偏移"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -546,6 +558,7 @@
                         <outlet property="topButton3" destination="RTG-bD-Gqo" id="mdo-ZO-ELc"/>
                         <outlet property="topButton4" destination="Hdf-dF-iSK" id="bpf-Lh-Mj4"/>
                         <outlet property="topButton5" destination="0nC-FJ-c0d" id="asb-hS-DxZ"/>
+                        <outlet property="topButton6" destination="xNC-HZ-ypt" id="mVo-5t-UDP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

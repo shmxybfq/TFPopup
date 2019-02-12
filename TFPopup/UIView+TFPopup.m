@@ -19,27 +19,26 @@
 }
 
 #pragma mark -- 【无动画弹出,透明度动画弹出】方式
--(void)tf_show:(UIView *)inView animated:(BOOL)animated{
-    [self tf_show:inView offset:CGPointZero animated:animated];
+-(void)tf_showNormal:(UIView *)inView animated:(BOOL)animated{
+    [self tf_showNormal:inView offset:CGPointZero animated:animated];
 }
 
--(void)tf_show:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated{
-    [self tf_show:inView offset:offset popupParam:[TFPopupParam new] animated:animated];
-}
-
--(void)tf_show:(UIView *)inView
-        offset:(CGPoint)offset
-    popupParam:(TFPopupParam *)popupParam
-      animated:(BOOL)animated{
-    
-    self.popupParam = popupParam;
-    self.inView = inView;
-    [self setDefault];
+-(void)tf_showNormal:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated{
     
     self.popupParam.offset = offset;
     self.popupParam.disusePopupAlphaAnimation = !animated;
     self.popupParam.disuseBackgroundAlphaAnimation = !animated;
     
+    [self tf_showNormal:inView popupParam:[TFPopupParam new]];
+}
+
+-(void)tf_showNormal:(UIView *)inView
+          popupParam:(TFPopupParam *)popupParam{
+    
+    self.popupParam = popupParam;
+    self.inView = inView;
+    [self setDefault];
+
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
 
@@ -80,11 +79,10 @@
     
     self.popupParam = popupParam;
     self.inView = inView;
-    [self setDefault];
-    
     if ((direction == PopupDirectionTop || direction == PopupDirectionRight ||
          direction == PopupDirectionBottom || direction == PopupDirectionLeft) == NO)
         return;
+    [self setDefault];
     
     if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero))
         self.popupParam.popOriginFrame = slideOriginFrame(self.popupParam, direction);
@@ -143,12 +141,12 @@
 
 
 -(void)tf_showMask:(UIView *)inView
-         popupParam:(TFPopupParam *)popupParam{
+        popupParam:(TFPopupParam *)popupParam{
     
     self.popupParam = popupParam;
     self.inView = inView;
     [self setDefault];
-   
+    
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
 

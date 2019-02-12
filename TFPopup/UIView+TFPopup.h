@@ -31,12 +31,10 @@
 
 -(void)tf_hide;
 
--(void)tf_show:(UIView *)inView animated:(BOOL)animated;
--(void)tf_show:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated;
--(void)tf_show:(UIView *)inView
-        offset:(CGPoint)offset
-    popupParam:(TFPopupParam *)popupParam
-      animated:(BOOL)animated;
+-(void)tf_showNormal:(UIView *)inView animated:(BOOL)animated;
+-(void)tf_showNormal:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated;
+-(void)tf_showNormal:(UIView *)inView
+          popupParam:(TFPopupParam *)popupParam;
 
 -(void)tf_showScale:(UIView *)inView;
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset;
