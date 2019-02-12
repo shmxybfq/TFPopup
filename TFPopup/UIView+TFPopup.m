@@ -33,11 +33,13 @@
       animated:(BOOL)animated{
     
     self.popupParam = popupParam;
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
-
+    self.inView = inView;
+    [self setDefault];
+    
     self.popupParam.offset = offset;
     self.popupParam.disusePopupAlphaAnimation = !animated;
     self.popupParam.disuseBackgroundAlphaAnimation = !animated;
+    
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
 
@@ -53,8 +55,9 @@
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam{
     
     self.popupParam = popupParam;
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
-
+    self.inView = inView;
+    [self setDefault];
+    
     self.popupParam.offset = offset;
     self.popupParam.showKeyPath = @"transform.scale";
     self.popupParam.showFromValue = @(0.0);
@@ -62,6 +65,7 @@
     self.popupParam.hideKeyPath = @"transform.scale";
     self.popupParam.hideFromValue = @(1.0);
     self.popupParam.hideToValue = @(0.0);
+    
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
 
@@ -75,14 +79,12 @@
          popupParam:(TFPopupParam *)popupParam{
     
     self.popupParam = popupParam;
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     self.inView = inView;
+    [self setDefault];
     
     if ((direction == PopupDirectionTop || direction == PopupDirectionRight ||
          direction == PopupDirectionBottom || direction == PopupDirectionLeft) == NO)
         return;
-    
-    [self setDefault];
     
     if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero))
         self.popupParam.popOriginFrame = slideOriginFrame(self.popupParam, direction);
@@ -101,8 +103,8 @@
           popupParam:(TFPopupParam *)popupParam{
     
     self.popupParam = popupParam;
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     self.inView = inView;
+    [self setDefault];
     
     self.popupParam.basePoint = basePoint;
     self.popupParam.bubbleDirection = bubbleDirection;
@@ -111,20 +113,44 @@
         CGPointEqualToPoint(self.popupParam.basePoint, CGPointZero))
         return;
     
-    [self setDefault];
-    
     self.popupParam.popOriginFrame = bubbleOrigin(self.popupParam.basePoint,
-                                             self.popupParam.bubbleDirection,
-                                             self.popupParam.offset);
+                                                  self.popupParam.bubbleDirection,
+                                                  self.popupParam.offset);
     
     self.popupParam.popTargetFrame = bubbleTarget(self.popupParam.basePoint,
-                                             self.popupParam.popupSize,
-                                             self.popupParam.bubbleDirection,
-                                             self.popupParam.offset);
+                                                  self.popupParam.popupSize,
+                                                  self.popupParam.bubbleDirection,
+                                                  self.popupParam.offset);
     
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
 
+#pragma mark -- 【形变出来动画】方式
+-(void)tf_showFrame:(UIView *)inView
+               from:(CGRect)from
+                 to:(CGRect)to
+         popupParam:(TFPopupParam *)popupParam{
+    
+    self.popupParam = popupParam;
+    self.inView = inView;
+    [self setDefault];
+    
+    self.popupParam.popOriginFrame = CGRectEqualToRect(CGRectZero, from)?self.popupParam.popOriginFrame:from;
+    self.popupParam.popTargetFrame = CGRectEqualToRect(CGRectZero, to)?self.popupParam.popOriginFrame:to;
+    
+    [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
+}
+
+
+-(void)tf_showMask:(UIView *)inView
+         popupParam:(TFPopupParam *)popupParam{
+    
+    self.popupParam = popupParam;
+    self.inView = inView;
+    [self setDefault];
+   
+    [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
+}
 
 
 -(void)tf_showCustemAll:(UIView *)inView
@@ -133,11 +159,9 @@
     
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     self.popupParam = popupParam;
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     self.inView = inView;
-    
     [self setDefault];
-    
+    [self checkStyle];
     //代理
     self.popupDelegate = delegate;
     
@@ -170,13 +194,17 @@
     //弹框区域
     if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero))
         self.popupParam.popupAreaRect = self.inView.bounds;
-    
+}
+
+-(void)checkStyle{
     //参数值检测
+    //alpha
     PopupStyle style = PopupStyleNone;
     if (self.popupParam.disuseBackgroundAlphaAnimation == NO ||
         self.popupParam.disusePopupAlphaAnimation == NO)
         style = style | PopupStyleAlpha;
     
+    //animation
     if (self.popupParam.showKeyPath != nil &&
         self.popupParam.showFromValue != nil &&
         self.popupParam.showToValue != nil){
@@ -191,10 +219,12 @@
             self.popupParam.hideToValue = self.popupParam.showFromValue;
     }
     
+    //frame
     if (CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO) {
         style = style | PopupStyleFrame;
     }
     
+    //mask
     if (self.popupParam.maskShowFromPath != nil &&
         self.popupParam.maskShowToPath != nil ) {
         style = style | PopupStyleMask;
@@ -205,13 +235,6 @@
             self.popupParam.maskHideToPath = self.popupParam.maskShowFromPath;
     }
     self.style = style;
-    
-    NSLog(@">>>>>>>>>>param:%@:%@:%@:%@:%@",
-          @(self.popupParam.duration),
-          @(self.popupParam.autoDissmissDuration),
-          NSStringFromCGSize(self.popupParam.popupSize),
-          NSStringFromCGRect(self.popupParam.popupAreaRect),
-          @(style));
 }
 
 #pragma mark 代理 TFPopupManagerDataSource 方法

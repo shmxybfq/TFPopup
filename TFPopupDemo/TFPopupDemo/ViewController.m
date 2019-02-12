@@ -80,7 +80,7 @@
         UIView *popup = [self getAlertView];
         BOOL isAni = [self.animationType isEqualToString:@"渐隐"];
         
-        //[popup tf_show:self.view animated:isAni];
+        [popup tf_show:self.view animated:isAni];
         //[popup tf_show:self.view offset:CGPointMake(0, -100) animated:isAni];
         //[popup tf_show:self.view offset:CGPointZero popupParam:self.param animated:isAni];
         
@@ -110,19 +110,59 @@
         
     }else if ([self.animationType isEqualToString:@"形变"]) {
         
-        self.param.duration = 0.3;
         self.param.popupSize = CGSizeMake(200, 100);
-     
+        self.param.popOriginFrame = CGRectMake(0, 110, kSize.width, 0);
+        self.param.popTargetFrame = CGRectMake(0, 110, kSize.width, 200);
+        
         UIView *popup = [self getListView];
-        [popup tf_showBubble:self.view
-                   basePoint:CGPointMake(100, 100)
-             bubbleDirection:PopupDirectionRightBottom
-                  popupParam:nil];
+        
+//        [popup tf_showBubble:self.view
+//                   basePoint:self.view.center
+//             bubbleDirection:PopupDirectionFrame
+//                  popupParam:self.param];
+        
+        [popup tf_showFrame:self.view
+                       from:self.param.popOriginFrame
+                         to:self.param.popTargetFrame
+                 popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
+       
+        self.param.duration = 0.3;
         
+        //下拉展开
+        //self.param.maskShowFromPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 0)];
+        //self.param.maskShowToPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 170)];
+        
+        //mask 展开
+        //self.param.maskShowFromPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(314 * 0.5,170 * 0.5,2, 2)];
+        //self.param.maskShowToPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-314 * 0.5,-170 * 0.5,314 * 2,170 * 2)];
+        
+        //三角出来
+        UIBezierPath *p0 = [UIBezierPath bezierPath];
+        [p0 moveToPoint:CGPointMake(-200, 0)];
+        [p0 addLineToPoint:CGPointMake(-100, 0)];
+        [p0 addLineToPoint:CGPointMake(0, 170 * 0.5)];
+        [p0 addLineToPoint:CGPointMake(-100, 170)];
+        [p0 addLineToPoint:CGPointMake(-200, 170)];
+        [p0 closePath];
+        UIBezierPath *p1 = [UIBezierPath bezierPath];
+        [p1 moveToPoint:CGPointMake(-200, 0)];
+        [p1 addLineToPoint:CGPointMake(314, 0)];
+        [p1 addLineToPoint:CGPointMake(314 + 100, 170 * 0.5)];
+        [p1 addLineToPoint:CGPointMake(314, 170)];
+        [p1 addLineToPoint:CGPointMake(-200, 170)];
+        [p1 closePath];
+        
+        self.param.maskShowFromPath = p0;
+        self.param.maskShowToPath = p1;
+        
+        UIView *popup = [self getAlertView];
+        [popup tf_showMask:self.view popupParam:self.param];
     }
 }
+
+
 
 -(void)topClick:(UIButton *)ins{
     for (UIButton *bt in self.topButtons) {
@@ -130,6 +170,9 @@
     }
     self.animationType = title(ins);
 }
+
+
+
 -(void)midClick:(UIButton *)ins{
     ins.selected = !ins.selected;
     if ([title(ins) isEqualToString:@"不使用背景"]) {
@@ -178,115 +221,6 @@
 
 
 
-
--(void)showAction{
-    TFPopupParam *param = [TFPopupParam new];
-    param.duration = 0.5;
-    BlankView *alert = [[NSBundle mainBundle]loadNibNamed:@"BlankView"
-                                                      owner:nil options:nil].firstObject;
-    alert.popupDelegate = self;
-    //[alert tf_showSlide:self.view direction:PopupDirectionBottom];
-}
-
-//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//
-//    //[self toast];
-//
-////    [self showAlert];
-//
-//    [self showAction];
-//}
-
--(void)showAlert{
-    TFPopupParam *param = [TFPopupParam new];
-    param.duration = 0.3;
-    //param.noPopupAlphaAnimation = YES;
-    //param.autoDissmissDuration = 1;
-    //param.disuseBackground = YES;
-    //param.noCoverTouchHide = YES;
-    //param.coverBackgroundColorClear = YES;
-    //param.noCoverAlphaAnimation = YES;
-    //param.noPopupAlphaAnimation = YES;
-    //param.popupAreaRect = CGRectZero;
-    
-    //展开
-//    param.popOriginFrame = CGRectMake(0, 100, kSize.width, 1);
-//    param.popTargetFrame = CGRectMake(0, 100, kSize.width, 300);
-    
-    //气泡 左上->右下
-//    param.popOriginFrame = CGRectMake(30, 100, 0, 0);
-//    param.popTargetFrame = CGRectMake(30, 100, 314, 170);
-    
-    //气泡 右上->左下
-    //param.popOriginFrame = CGRectMake(30 + 314, 100, 0, 0);
-    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
-    
-    //气泡 左下->右上
-    //param.popOriginFrame = CGRectMake(30, 100 + 170, 0, 0);
-    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
-    
-    //气泡 右下->左上
-    //param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
-    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
-    
-    //气泡 左梯形
-    //param.popOriginFrame = CGRectMake(30 + 314, 100 + 170, 0, 0);
-    //param.popTargetFrame = CGRectMake(30 , 100, 314, 170);
-    
-    //param.maskShowFromPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 0)];
-    //param.maskShowToPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 340, 170)];
-    
-    //mask 展开
-//    param.maskShowFromPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(314 * 0.5,
-//                                                                               170 * 0.5,
-//                                                                               2, 2)];
-//    param.maskShowToPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-314 * 0.5,
-//                                                                             -170 * 0.5,
-//                                                                             314 * 2,
-//                                                                             170 * 2)];
-    
-//    三角出来
-//    UIBezierPath *p0 = [UIBezierPath bezierPath];
-//    [p0 moveToPoint:CGPointMake(-200, 0)];
-//    [p0 addLineToPoint:CGPointMake(-100, 0)];
-//    [p0 addLineToPoint:CGPointMake(0, 170 * 0.5)];
-//    [p0 addLineToPoint:CGPointMake(-100, 170)];
-//    [p0 addLineToPoint:CGPointMake(-200, 170)];
-//    [p0 closePath];
-//    UIBezierPath *p1 = [UIBezierPath bezierPath];
-//    [p1 moveToPoint:CGPointMake(-200, 0)];
-//    [p1 addLineToPoint:CGPointMake(314, 0)];
-//    [p1 addLineToPoint:CGPointMake(314 + 100, 170 * 0.5)];
-//    [p1 addLineToPoint:CGPointMake(314, 170)];
-//    [p1 addLineToPoint:CGPointMake(-200, 170)];
-//    [p1 closePath];
-//    param.maskShowFromPath = p0;
-//    param.maskShowToPath = p1;
-    
-//    AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
-//                                                      owner:nil options:nil].firstObject;
-    //alert.backgroundColor = [UIColor clearColor];
-    //alert.popupDelegate = self;
-    
-    //[alert tf_show:self.view animated:NO];
-    //[alert tf_show:self.view offset:CGPointMake(0, -100) animated:YES];
-    //[alert tf_show:self.view offset:CGPointZero popupParam:param animated:YES];
-
-    //[alert tf_showScale:self.view];
-    //[alert tf_showScale:self.view offset:CGPointMake(0, -100)];
-    
-    //alert.layer.anchorPoint = CGPointMake(0.5, 0);
-    //[alert tf_showScale:self.view offset:CGPointZero popupParam:param];
-    
-    //[alert tf_showSlide:self.view direction:PopupDirectionRight];
-
-    //[alert tf_showFrame:self.view popupParam:param];
-    
-//    [alert tf_showCustemPart:self.view popupParam:param delegate:self];
-
-    //[alert tf_showMask:self.view popupParam:param];
-
-}
 
 
 ////挨个弹出动画
@@ -497,8 +431,9 @@
     [self botClick:self.botButton4];
     
     self.showButton.layer.cornerRadius = 20;
-    [self.showButton addTarget:self action:@selector(showClick:)
- forControlEvents:UIControlEventTouchUpInside];
+    [self.showButton addTarget:self
+                        action:@selector(showClick:)
+              forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(NSArray *)topButtons{
