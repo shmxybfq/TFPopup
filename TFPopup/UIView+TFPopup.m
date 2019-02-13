@@ -245,7 +245,7 @@
         styleInclude(self.style, PopupStyleFrame) ||
         styleInclude(self.style, PopupStyleMask)) {
         
-        if (self.popupParam.keepPopupOriginFrame == NO)
+        if (CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO)
             ani = ani | TFPopupDefaultAnimationPopBoardFrame;
         
         if (self.popupParam.disuseBackgroundAlphaAnimation == NO)

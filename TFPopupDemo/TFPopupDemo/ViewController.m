@@ -68,6 +68,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self config];
+    [self topClick:self.topButton5];
+    [self botClick:self.botButton4];
 }
 
 
@@ -80,11 +82,10 @@
         [self.animationType isEqualToString:@"直接弹"]) {
         
         UIView *popup = [self getAlertView];
-        BOOL isAni = [self.animationType isEqualToString:@"渐隐"];
         
         //[popup tf_showNormal:self.view animated:isAni];
-        [popup tf_showNormal:self.view offset:CGPointMake(0, -100) animated:isAni];
-        //[popup tf_showNormal:self.view popupParam:self.param];
+        //[popup tf_showNormal:self.view offset:CGPointMake(0, -100) animated:[self.animationType isEqualToString:@"渐隐"]];
+        [popup tf_showNormal:self.view popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"缩放"]) {
         
@@ -117,7 +118,7 @@
         
         [popup tf_showBubble:self.view
                    basePoint:self.view.center
-             bubbleDirection:PopupDirectionFrame
+             bubbleDirection:PopupDirectionRightBottom
                   popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
@@ -163,6 +164,10 @@
 
 
 -(void)topClick:(UIButton *)ins{
+    
+    [self config];
+    [self botClick:self.botButton4];
+    
     for (UIButton *bt in self.topButtons) {
         bt.selected = bt == ins;
     }
@@ -172,6 +177,7 @@
 
 
 -(void)midClick:(UIButton *)ins{
+    
     ins.selected = !ins.selected;
     if ([title(ins) isEqualToString:@"不使用背景"]) {
         self.param.disuseBackground = ins.selected;
@@ -245,6 +251,8 @@
 
 -(void)config{
     
+    self.param = [TFPopupParam new];
+    
     NSMutableArray *all = [[NSMutableArray alloc]init];
     [all addObjectsFromArray:self.topButtons];
     [all addObjectsFromArray:self.midButtons];
@@ -278,10 +286,6 @@
         [bt addTarget:self action:@selector(cusClick:)
      forControlEvents:UIControlEventTouchUpInside];
     }
-    
-    [self topClick:self.topButton5];
-    [self botClick:self.botButton4];
-    
     self.showButton.layer.cornerRadius = 20;
     [self.showButton addTarget:self
                         action:@selector(showClick:)

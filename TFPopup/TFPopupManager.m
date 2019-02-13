@@ -75,7 +75,7 @@
         
         //遮罩-透明度动画
         if (self.popForBackgroundView){
-            if ((self.defaultAnimation & TFPopupDefaultAnimationBackgroundAlpha) == TFPopupDefaultAnimationBackgroundAlpha){
+            if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationBackgroundAlpha)){
                 [UIView animateWithDuration:self.defaultAnimationDuration
                                       delay:0
                                     options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -91,7 +91,7 @@
         
         
         //弹出框-透明度动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
+        if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationPopBoardAlpha)){
             if (self.popBoardView) {
                 [UIView animateWithDuration:self.defaultAnimationDuration
                                       delay:0
@@ -107,7 +107,7 @@
         }
         
         //弹出框-位移动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame){
+        if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationPopBoardFrame)){
             if (self.popBoardView) {
                 [UIView animateWithDuration:self.defaultAnimationDuration
                                       delay:0
@@ -151,7 +151,7 @@
         [self finishHide:TFPopupDefaultAnimationNone isAnimationHide:NO];
     }else{
         //遮罩-透明度动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationBackgroundAlpha) == TFPopupDefaultAnimationBackgroundAlpha){
+        if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationBackgroundAlpha)){
             if (self.popForBackgroundView){
                 [UIView animateWithDuration:self.defaultAnimationDuration
                                       delay:0
@@ -159,8 +159,7 @@
                     weakself.popForBackgroundView.alpha = 0;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationBackgroundAlpha isAnimationHide:YES];
-                    //[weakself.popForBackgroundView removeFromSuperview];
-                    NSLog(@"111");
+                    [weakself.popForBackgroundView removeFromSuperview];
                 }];
             }
         }else{
@@ -169,7 +168,7 @@
         }
         
         //弹出框-透明度动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha){
+        if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationPopBoardAlpha)){
             if (self.popBoardView) {
                 [UIView animateWithDuration:self.defaultAnimationDuration
                                       delay:0
@@ -177,8 +176,7 @@
                     weakself.popBoardView.alpha = 0;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha isAnimationHide:YES];
-                    //[weakself.popBoardView removeFromSuperview];
-                    NSLog(@"222");
+                    [weakself.popBoardView removeFromSuperview];
                 }];
             }
         }else{
@@ -186,7 +184,8 @@
         }
         
         //弹出框-位移动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame){
+        
+        if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationPopBoardFrame)){
             if (self.popBoardView) {
                 [UIView animateWithDuration:self.defaultAnimationDuration
                                       delay:0
@@ -194,8 +193,7 @@
                     weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
                 } completion:^(BOOL finished) {
                     [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:YES];
-                    //[weakself.popBoardView removeFromSuperview];
-                    NSLog(@"333");
+                    [weakself.popBoardView removeFromSuperview];
                 }];
             }
         }else{
@@ -203,28 +201,36 @@
         }
         
         //弹出框-自定义动画
-        if ((self.defaultAnimation & TFPopupDefaultAnimationCustem) == TFPopupDefaultAnimationCustem){
+        
+        if (animationContain(self.defaultAnimation,TFPopupDefaultAnimationCustem)){
             if (self.popBoardView) {
                 NSTimeInterval max = MAX(self.custemAnimationDuration, self.defaultAnimationDuration);
                 dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(max * NSEC_PER_SEC));
                 dispatch_after(time, dispatch_get_main_queue(), ^{
                     [weakself finishHide:TFPopupDefaultAnimationCustem isAnimationHide:YES];
-                    //[weakself.popBoardView removeFromSuperview];
-                    NSLog(@"444");
+                    [weakself.popBoardView removeFromSuperview];
                 });
             }
         }else{
             [self finishHide:TFPopupDefaultAnimationCustem isAnimationHide:NO];
         }
         
-        BOOL con0 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardAlpha) == TFPopupDefaultAnimationPopBoardAlpha;
-        BOOL con1 = (self.defaultAnimation & TFPopupDefaultAnimationPopBoardFrame) == TFPopupDefaultAnimationPopBoardFrame;
-        BOOL con2 = (self.defaultAnimation & TFPopupDefaultAnimationCustem) == TFPopupDefaultAnimationCustem;
+        
+        
+        BOOL con0 = animationContain(self.defaultAnimation,TFPopupDefaultAnimationPopBoardAlpha);
+        BOOL con1 = animationContain(self.defaultAnimation,TFPopupDefaultAnimationPopBoardFrame);
+        BOOL con2 = animationContain(self.defaultAnimation,TFPopupDefaultAnimationCustem);
         if ((con0 || con1 || con2) == NO) {
-            //[self.popBoardView removeFromSuperview];
-            NSLog(@"555");
+            [self.popBoardView removeFromSuperview];
         }
     }
+}
+
+static inline BOOL animationContain(TFPopupDefaultAnimation total,TFPopupDefaultAnimation sub){
+    if ((total & sub) == sub){
+        return YES;
+    }
+    return NO;
 }
 
 
