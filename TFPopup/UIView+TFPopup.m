@@ -57,7 +57,7 @@
     self.inView = inView;
     [self setDefault];
     
-    self.popupParam.offset = offset;
+    self.popupParam.offset = CGPointEqualToPoint(offset, CGPointZero)?self.popupParam.offset:offset;
     self.popupParam.showKeyPath = @"transform.scale";
     self.popupParam.showFromValue = @(0.0);
     self.popupParam.showToValue = @(1.0);
@@ -240,23 +240,25 @@
 -(TFPopupDefaultAnimation)tf_popupManager_popDefaultAnimation:(TFPopupManager *)manager{
     
     TFPopupDefaultAnimation ani = TFPopupDefaultAnimationNone;
-    if (styleInclude(self.style, PopupStyleAlpha) ||
-        styleInclude(self.style, PopupStyleAniamtion) ||
-        styleInclude(self.style, PopupStyleFrame) ||
-        styleInclude(self.style, PopupStyleMask)) {
-        
-        if (CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO)
-            ani = ani | TFPopupDefaultAnimationPopBoardFrame;
-        
+    if (styleInclude(self.style, PopupStyleAlpha)){
         if (self.popupParam.disuseBackgroundAlphaAnimation == NO)
             ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
-        
         if (self.popupParam.disusePopupAlphaAnimation == NO)
             ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
-        
-        if (ani == TFPopupDefaultAnimationNone)
-            ani = ani | TFPopupDefaultAnimationCustem;
     }
+    
+    if (styleInclude(self.style, PopupStyleAniamtion)||
+        styleInclude(self.style, PopupStyleMask)){
+        ani = ani | TFPopupDefaultAnimationCustem;
+    }
+    
+    if (styleInclude(self.style, PopupStyleFrame)){
+        ani = ani | TFPopupDefaultAnimationPopBoardFrame;
+    }
+    
+    if (ani == TFPopupDefaultAnimationNone)
+        ani = ani | TFPopupDefaultAnimationCustem;
+
     return ani;
 }
 

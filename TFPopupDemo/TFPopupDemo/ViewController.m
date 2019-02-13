@@ -107,8 +107,8 @@
         }
         UIView *popup = [self getListView];
         //self.param.offset = CGPointMake(-50, -100);
-        //[popup tf_showSlide:self.view direction:PopupDirectionRight];
-        [popup tf_showSlide:self.view direction:PopupDirectionRight popupParam:self.param];
+        //[popup tf_showSlide:self.view direction:self.popupDirection];
+        [popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"泡泡"]) {
         
