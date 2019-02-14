@@ -24,12 +24,12 @@
 }
 
 -(void)tf_showNormal:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated{
-    
-    self.popupParam.offset = offset;
-    self.popupParam.disusePopupAlphaAnimation = !animated;
-    self.popupParam.disuseBackgroundAlphaAnimation = !animated;
-    
-    [self tf_showNormal:inView popupParam:[TFPopupParam new]];
+    TFPopupParam *param = [TFPopupParam new];
+    param.offset = offset;
+    param.disusePopupAlphaAnimation = !animated;
+    param.disuseBackgroundAlphaAnimation = !animated;
+     NSLog(@">>>>>>>>%@:%d:%d",self.popupParam,self.popupParam.disuseBackgroundAlphaAnimation,self.popupParam.disusePopupAlphaAnimation);
+    [self tf_showNormal:inView popupParam:param];
 }
 
 -(void)tf_showNormal:(UIView *)inView
@@ -38,7 +38,7 @@
     self.popupParam = popupParam;
     self.inView = inView;
     [self setDefault];
-
+    
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
 
@@ -79,16 +79,25 @@
     
     self.popupParam = popupParam;
     self.inView = inView;
-    if ((direction == PopupDirectionTop || direction == PopupDirectionRight ||
-         direction == PopupDirectionBottom || direction == PopupDirectionLeft) == NO)
-        return;
     [self setDefault];
     
-    if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero))
-        self.popupParam.popOriginFrame = slideOriginFrame(self.popupParam, direction);
-    
-    if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero))
-        self.popupParam.popTargetFrame = slideTargetFrame(self.popupParam, direction);
+    if (direction == PopupDirectionTop ||
+        direction == PopupDirectionRight ||
+        direction == PopupDirectionBottom ||
+        direction == PopupDirectionLeft){
+        
+        if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero))
+            self.popupParam.popOriginFrame = slideOriginFrame(self.popupParam, direction);
+        
+        if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero))
+            self.popupParam.popTargetFrame = slideTargetFrame(self.popupParam, direction);
+        
+    }else if(direction == PopupDirectionFrame){
+        if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero)||
+            CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero)) {
+            return;
+        }
+    }
     
     [self tf_showCustemAll:inView popupParam:self.popupParam delegate:self];
 }
@@ -102,10 +111,21 @@
     
     self.popupParam = popupParam;
     self.inView = inView;
-    [self setDefault];
-    
     self.popupParam.basePoint = basePoint;
     self.popupParam.bubbleDirection = bubbleDirection;
+    [self setDefault];
+    
+    if ((self.popupParam.bubbleDirection == PopupDirectionTop ||
+         self.popupParam.bubbleDirection == PopupDirectionTopRight ||
+         self.popupParam.bubbleDirection == PopupDirectionRight ||
+         self.popupParam.bubbleDirection == PopupDirectionRightBottom ||
+         self.popupParam.bubbleDirection == PopupDirectionBottom ||
+         self.popupParam.bubbleDirection == PopupDirectionBottomLeft ||
+         self.popupParam.bubbleDirection == PopupDirectionLeft ||
+         self.popupParam.bubbleDirection == PopupDirectionLeftTop) == NO) {
+        return;
+    }
+    
     
     if (self.popupParam.bubbleDirection != PopupDirectionFrame &&
         CGPointEqualToPoint(self.popupParam.basePoint, CGPointZero))
@@ -154,7 +174,7 @@
 -(void)tf_showCustemAll:(UIView *)inView
              popupParam:(TFPopupParam *)popupParam
                delegate:(id<TFPopupDelegate>)delegate{
-    
+     NSLog(@">>>>>>>>%@:%d:%d",self.popupParam,self.popupParam.disuseBackgroundAlphaAnimation,self.popupParam.disusePopupAlphaAnimation);
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     self.popupParam = popupParam;
     self.inView = inView;
@@ -198,8 +218,9 @@
     //参数值检测
     //alpha
     PopupStyle style = PopupStyleNone;
+    NSLog(@">>>>>>>>%@:%d:%d",self.popupParam,self.popupParam.disuseBackgroundAlphaAnimation,self.popupParam.disusePopupAlphaAnimation);
     if (self.popupParam.disuseBackgroundAlphaAnimation == NO ||
-        self.popupParam.disusePopupAlphaAnimation == NO)
+         self.popupParam.disusePopupAlphaAnimation == NO)
         style = style | PopupStyleAlpha;
     
     //animation
@@ -256,9 +277,9 @@
         ani = ani | TFPopupDefaultAnimationPopBoardFrame;
     }
     
-    if (ani == TFPopupDefaultAnimationNone)
-        ani = ani | TFPopupDefaultAnimationCustem;
-
+    //if (ani == TFPopupDefaultAnimationNone)
+       // ani = ani | TFPopupDefaultAnimationCustem;
+    
     return ani;
 }
 

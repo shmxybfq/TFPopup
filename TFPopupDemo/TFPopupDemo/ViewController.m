@@ -38,6 +38,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *botButton3;
 @property (weak, nonatomic) IBOutlet UIButton *botButton4;
 @property (weak, nonatomic) IBOutlet UIButton *botButton5;
+@property (weak, nonatomic) IBOutlet UIButton *botButton6;
+@property (weak, nonatomic) IBOutlet UIButton *botButton7;
+@property (weak, nonatomic) IBOutlet UIButton *botButton8;
+@property (weak, nonatomic) IBOutlet UIButton *botButton9;
 
 @property (weak, nonatomic) IBOutlet UIButton *cusButton0;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton1;
@@ -60,6 +64,7 @@
 @property(nonatomic,  copy)NSString *animationType;
 @property(nonatomic,assign)PopupDirection popupDirection;
 @property(nonatomic,assign)NSInteger custemIndex;
+@property (weak, nonatomic) IBOutlet UIView *redPoint;
 
 @end
 
@@ -78,13 +83,23 @@
     
     self.param.duration = 0.3;
     
-    if ([self.animationType isEqualToString:@"渐隐"] ||
-        [self.animationType isEqualToString:@"直接弹"]) {
+    if ([self.animationType isEqualToString:@"直接弹"]) {
         
         UIView *popup = [self getAlertView];
         
-        //[popup tf_showNormal:self.view animated:isAni];
-        //[popup tf_showNormal:self.view offset:CGPointMake(0, -100) animated:[self.animationType isEqualToString:@"渐隐"]];
+        [popup tf_showNormal:self.view animated:NO];
+//        [popup tf_showNormal:self.view
+//                      offset:CGPointMake(0, -100)
+//                    animated:NO];
+        
+    }if ([self.animationType isEqualToString:@"渐隐"]) {
+        
+        UIView *popup = [self getAlertView];
+        
+//        [popup tf_showNormal:self.view animated:YES];
+//        [popup tf_showNormal:self.view
+//                      offset:CGPointMake(0, -100)
+//                    animated:YES];
         [popup tf_showNormal:self.view popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"缩放"]) {
@@ -112,13 +127,14 @@
         
     }else if ([self.animationType isEqualToString:@"泡泡"]) {
         
-        self.param.popupSize = CGSizeMake(200, 100);
+        self.param.popupSize = CGSizeMake(150, 250);
         
         UIView *popup = [self getListView];
         
+        
         [popup tf_showBubble:self.view
-                   basePoint:self.view.center
-             bubbleDirection:PopupDirectionRightBottom
+                   basePoint:self.redPoint.center
+             bubbleDirection:self.popupDirection
                   popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
@@ -203,12 +219,23 @@
     for (UIButton *bt in self.botButtons) {
         bt.selected = bt == ins;
     }
+    
+    self.param.popOriginFrame = CGRectZero;
+    self.param.popTargetFrame = CGRectZero;
     if ([title(ins) isEqualToString:@"上"]) self.popupDirection = PopupDirectionTop;
-    if ([title(ins) isEqualToString:@"下"]) self.popupDirection = PopupDirectionBottom;
-    if ([title(ins) isEqualToString:@"左"]) self.popupDirection = PopupDirectionLeft;
+    if ([title(ins) isEqualToString:@"上右"]) self.popupDirection = PopupDirectionTopRight;
     if ([title(ins) isEqualToString:@"右"]) self.popupDirection = PopupDirectionRight;
+    if ([title(ins) isEqualToString:@"右下"]) self.popupDirection = PopupDirectionRightBottom;
+    if ([title(ins) isEqualToString:@"下"]) self.popupDirection = PopupDirectionBottom;
+    if ([title(ins) isEqualToString:@"下左"]) self.popupDirection = PopupDirectionBottomLeft;
+    if ([title(ins) isEqualToString:@"左"]) self.popupDirection = PopupDirectionLeft;
+    if ([title(ins) isEqualToString:@"左上"]) self.popupDirection = PopupDirectionLeftTop;
     if ([title(ins) isEqualToString:@"中"]) self.popupDirection = PopupDirectionContainerCenter;
-    if ([title(ins) isEqualToString:@"随意"]) self.popupDirection = PopupDirectionFrame;
+    if ([title(ins) isEqualToString:@"随意"]) {
+        self.popupDirection = PopupDirectionFrame;
+        self.param.popOriginFrame = CGRectMake(-200, 32, 200, self.view.frame.size.height - 32);
+        self.param.popTargetFrame = CGRectMake(0, 32, 200, self.view.frame.size.height - 32);
+    }
 }
 
 -(void)cusClick:(UIButton *)ins{
@@ -260,7 +287,7 @@
     [all addObjectsFromArray:self.cusButtons];
     for (UIButton *bt in all) {
         bt.backgroundColor = [UIColor clearColor];
-        bt.layer.cornerRadius = 17;
+        bt.layer.cornerRadius = 10;
         bt.layer.masksToBounds = YES;
         [bt setBackgroundImage:colorToImage(color(240, 240, 240)) forState:UIControlStateNormal];
         [bt setBackgroundImage:colorToImage(color(255, 142, 2)) forState:UIControlStateSelected];
@@ -290,6 +317,9 @@
     [self.showButton addTarget:self
                         action:@selector(showClick:)
               forControlEvents:UIControlEventTouchUpInside];
+    
+    self.redPoint.layer.cornerRadius = 5;
+    
 }
 
 -(NSArray *)topButtons{
@@ -306,7 +336,8 @@
 
 -(NSArray *)botButtons{
     NSArray *bp = @[self.botButton0,self.botButton1,self.botButton2,
-                    self.botButton3,self.botButton4,self.botButton5];
+                    self.botButton3,self.botButton4,self.botButton5,
+                    self.botButton6,self.botButton7,self.botButton8,self.botButton9];
     return bp;
 }
 

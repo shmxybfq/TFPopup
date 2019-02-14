@@ -13,6 +13,9 @@
 -(void)awakeFromNib{
     [super awakeFromNib];
     
+    self.layer.cornerRadius = 6;
+    self.layer.masksToBounds = YES;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self reload:@[@"我只是一个普通的列表",
@@ -51,12 +54,15 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault
                                      reuseIdentifier:@"UITableViewCell"];
     }
+    cell.textLabel.textColor = [UIColor darkGrayColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.text = [self.dataSource objectAtIndex:indexPath.row];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 35;
+    return 50;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

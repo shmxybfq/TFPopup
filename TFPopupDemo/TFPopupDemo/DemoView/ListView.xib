@@ -15,13 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cD5-Tq-wdp">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cD5-Tq-wdp">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="cD5-Tq-wdp" secondAttribute="trailing" id="Afs-7c-iQ4"/>
+                <constraint firstItem="cD5-Tq-wdp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UQI-fi-TXd"/>
+                <constraint firstItem="cD5-Tq-wdp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="afR-8K-TGe"/>
+                <constraint firstAttribute="bottom" secondItem="cD5-Tq-wdp" secondAttribute="bottom" id="eEt-1r-X0y"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="tableView" destination="cD5-Tq-wdp" id="KAK-wE-0Bf"/>
