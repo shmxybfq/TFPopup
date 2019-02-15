@@ -131,7 +131,6 @@
         
         UIView *popup = [self getListView];
         
-        
         [popup tf_showBubble:self.view
                    basePoint:self.redPoint.center
              bubbleDirection:self.popupDirection
@@ -156,6 +155,7 @@
         [p1 addLineToPoint:CGPointMake(314, 170)];
         [p1 addLineToPoint:CGPointMake(-200, 170)];
         [p1 closePath];
+        
         
         self.param.maskShowFromPath = p0;
         self.param.maskShowToPath = p1;
@@ -248,8 +248,135 @@
     if ([title(ins) isEqualToString:@"自定义4"]) self.custemIndex = 4;
     if ([title(ins) isEqualToString:@"自定义5"]) self.custemIndex = 5;
     if ([title(ins) isEqualToString:@"自定义6"]) self.custemIndex = 6;
+    
+
+    if (self.custemIndex == 1) {
+        
+        UIView *blank = [self getAlertView];
+        blank.popupDelegate = self;
+        [blank tf_showScale:self.view offset:CGPointZero popupParam:self.param];
+        
+    }else if(self.custemIndex == 2){
+        
+        UIView *blank = [self getBlankView];
+        blank.popupDelegate = self;
+        self.param.popupSize = CGSizeMake(kSize.width, 300);
+        [blank tf_showSlide:self.view direction:PopupDirectionBottom popupParam:self.param];
+        
+    }else if(self.custemIndex == 3){
+        
+    }else if(self.custemIndex == 4){
+        
+    }else if(self.custemIndex == 5){
+        
+    }else if(self.custemIndex == 6){
+        
+    }
+    
+   
+    
 }
 
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+    if (self.custemIndex == 1) {
+        [self topClick:self.topButton1];
+        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        [ani setFromValue:@(-M_PI)];
+        [ani setToValue:@(0)];
+        [ani setDuration:0.3];
+        [ani setRemovedOnCompletion:NO];
+        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
+        [ani setAutoreverses:NO];
+        [ani setFillMode:kCAFillModeBoth];
+        [popup.layer addAnimation:ani forKey:@"rotation"];
+        return NO;
+    }else if(self.custemIndex == 2){
+        [self topClick:self.topButton2];
+        NSArray *bts = [((BlankView *)popup) buttons];
+        CGFloat x = 30;
+        CGFloat y = 300;
+        NSMutableArray *fs = [NSMutableArray array];
+        for (int i = 0; i < bts.count; i++) {
+            UIView *bt = [bts objectAtIndex:i];
+            bt.frame = CGRectMake(x , y, 40, 40);
+            [fs addObject:NSStringFromCGRect(CGRectMake(x, y - 300 + 40, 40, 40))];
+            x = x + 40 + (kSize.width - 40 * 4 - 30 * 2) / 3.0;
+            if (i == 3) {
+                x = 30;
+                y = y + 40 + 30;
+            }
+        }
+        for (int i = 0; i < bts.count; i++) {
+            UIView *bt = [bts objectAtIndex:i];
+            CGRect frame = CGRectFromString([fs objectAtIndex:i]);
+            [UIView animateWithDuration:0.25 delay:(0.1+i*0.05) options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                bt.frame = frame;
+            } completion:^(BOOL finished) {}];
+        }
+        return NO;
+        
+    }else if(self.custemIndex == 3){
+        
+    }else if(self.custemIndex == 4){
+        
+    }else if(self.custemIndex == 5){
+        
+    }else if(self.custemIndex == 6){
+        
+    }
+    return NO;
+}
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+    if(self.custemIndex == 1){
+        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        [ani setFromValue:@(0)];
+        [ani setToValue:@(-M_PI)];
+        [ani setDuration:0.3];
+        [ani setRemovedOnCompletion:NO];
+        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
+        [ani setAutoreverses:NO];
+        [ani setFillMode:kCAFillModeBoth];
+        [popup.layer addAnimation:ani forKey:@"rotation"];
+        return NO;
+    }else if(self.custemIndex == 2){
+        NSArray *bts = [((BlankView *)popup) buttons];
+        for (int i = 0; i < bts.count; i++) {
+            UIView *bt = [bts objectAtIndex:i];
+            CGRect f = bt.frame;
+            [UIView animateWithDuration:0.25 delay:(0.1+i*0.05) options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                bt.frame = CGRectMake(f.origin.x, 300, 40, 40);
+            } completion:^(BOOL finished) {}];
+        }
+        CGRect of = popup.frame;
+        [UIView animateWithDuration:0.25
+                              delay:(0.1+8*0.05)
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             
+                             popup.frame = CGRectMake(of.origin.x, kSize.height, of.size.width, of.size.height);
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+        [UIView animateWithDuration:0.25
+                              delay:(0.1+8*0.05)
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             popup.backgroundView.alpha = 0;
+                         } completion:^(BOOL finished) {
+                             [popup.backgroundView removeFromSuperview];
+                         }];
+        return YES;
+    }else if(self.custemIndex == 3){
+        
+    }else if(self.custemIndex == 4){
+        
+    }else if(self.custemIndex == 5){
+        
+    }else if(self.custemIndex == 6){
+        
+    }
+    return NO;
+}
 
 
 
@@ -272,6 +399,13 @@
         [list tf_hide];
     }];
     return list;
+}
+
+-(UIView *)getBlankView{
+    BlankView *blank = [[NSBundle mainBundle]loadNibNamed:@"BlankView"
+                                                  owner:nil
+                                                options:nil].firstObject;
+    return blank;
 }
 
 

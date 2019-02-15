@@ -13,9 +13,9 @@
 @protocol TFPopupDelegate<NSObject>
 @optional;
 -(UIView *)tf_popupCustemBackgroundView:(TFPopupManager *)manager popup:(UIView *)popup;
--(BOOL    )tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
--(BOOL    )tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
--(BOOL    )tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
+-(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
 @end
 
 @interface UIView (TFPopup)<TFPopupDelegate,TFPopupManagerDataSource,TFPopupManagerDelegate>
@@ -60,5 +60,8 @@
 -(void)tf_showMask:(UIView *)inView
         popupParam:(TFPopupParam *)popupParam;
 
+-(void)tf_showCustem:(UIView *)inView
+          popupParam:(TFPopupParam *)popupParam
+            delegate:(id<TFPopupDelegate>)delegate;
 @end
 
