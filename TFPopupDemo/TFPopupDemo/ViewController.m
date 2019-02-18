@@ -14,6 +14,7 @@
 #import "AlertNormal.h"
 
 #define kSize [UIScreen mainScreen].bounds.size
+#define kAlertSize CGSizeMake(314, 170)
 
 @interface ViewController ()<TFPopupDelegate>
 
@@ -75,6 +76,7 @@
     [self config];
     [self topClick:self.topButton5];
     [self botClick:self.botButton4];
+    
 }
 
 
@@ -265,19 +267,26 @@
         
     }else if(self.custemIndex == 3){
         
+        UIView *blank = [self getAlertView];
+        blank.popupDelegate = self;
+        [blank tf_showNormal:self.view popupParam:self.param];
+        
     }else if(self.custemIndex == 4){
         
+        self.param.duration = 5;
+        UIView *blank = [self getAlertView];
+        blank.popupDelegate = self;
+        [blank tf_showNormal:self.view popupParam:self.param];
+
     }else if(self.custemIndex == 5){
         
     }else if(self.custemIndex == 6){
         
     }
-    
-   
-    
 }
 
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+    
     if (self.custemIndex == 1) {
         [self topClick:self.topButton1];
         CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -316,9 +325,75 @@
         return NO;
         
     }else if(self.custemIndex == 3){
-        
+        if (@available(iOS 9.0, *)) {
+            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+            spring.damping = 15;
+            spring.stiffness = 100;
+            spring.mass = 1.5;
+            spring.initialVelocity = 0;
+            spring.duration = spring.settlingDuration;
+            spring.fromValue = @(-200);
+            spring.toValue = @(self.view.center.y);
+            spring.fillMode = kCAFillModeForwards;
+            [popup.layer addAnimation:spring forKey:nil];
+            __weak typeof(popup) weakPopup = popup;
+            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+                if (finished) {
+                    weakPopup.center = CGPointMake(kSize.width * 0.5, kSize.height * 0.5);
+                }
+            }];
+        } else {
+            
+        }
+        return NO;
     }else if(self.custemIndex == 4){
         
+        popup.layer.masksToBounds = NO;
+        popup.clipsToBounds = NO;
+        
+        CGSize ss = kAlertSize;
+        UIBezierPath *path0 = [UIBezierPath bezierPath];
+        [path0 moveToPoint:CGPointMake(ss.width * 0.5 - 5, ss.height * 0.5 - 5)];
+        [path0 addLineToPoint:CGPointMake(ss.width * 0.5 + 5, ss.height * 0.5 - 5)];
+        [path0 addLineToPoint:CGPointMake(ss.width * 0.5 - 5, ss.height * 0.5 + 5)];
+        [path0 addLineToPoint:CGPointMake(ss.width * 0.5 + 5, ss.height * 0.5 + 5)];
+        [path0 closePath];
+        
+        UIBezierPath *path1 = [UIBezierPath bezierPath];
+        [path1 moveToPoint:CGPointMake(0, 0)];
+        [path1 addLineToPoint:CGPointMake(ss.width, 0)];
+        [path1 addLineToPoint:CGPointMake(ss.width, ss.height)];
+        [path1 addLineToPoint:CGPointMake(0, ss.height)];
+        [path1 closePath];
+        
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        
+        layer.path = path1.CGPath;
+        popup.layer.mask = layer;
+        
+        [layer setAnchorPoint:CGPointMake(1, 1)];
+        
+        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"path"];
+        [ani setFromValue:(__bridge id)path1.CGPath];
+        [ani setToValue:(__bridge id)path1.CGPath];
+        [ani setDuration:5];
+        [ani setRemovedOnCompletion:NO];
+        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
+        [ani setAutoreverses:NO];
+        [ani setFillMode:kCAFillModeBoth];
+        //[layer addAnimation:ani forKey:@"path"];
+        
+        CABasicAnimation *aniR = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        [aniR setFromValue:@(-M_PI * 4)];
+        [aniR setToValue:@(0)];
+        [aniR setDuration:5];
+        [aniR setRemovedOnCompletion:NO];
+        [aniR setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
+        [aniR setAutoreverses:NO];
+        [aniR setFillMode:kCAFillModeBoth];
+        [layer addAnimation:aniR forKey:@"transform.rotation.z"];
+        
+
     }else if(self.custemIndex == 5){
         
     }else if(self.custemIndex == 6){
@@ -348,6 +423,7 @@
             } completion:^(BOOL finished) {}];
         }
         CGRect of = popup.frame;
+        
         [UIView animateWithDuration:0.25
                               delay:(0.1+8*0.05)
                             options:UIViewAnimationOptionCurveEaseInOut
@@ -367,7 +443,28 @@
                          }];
         return YES;
     }else if(self.custemIndex == 3){
-        
+        if (@available(iOS 9.0, *)) {
+            popup.center = CGPointMake(kSize.width * 0.5, -500);
+            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+            spring.damping = 15;
+            spring.stiffness = 100;
+            spring.mass = 1.5;
+            spring.initialVelocity = 0;
+            spring.duration = spring.settlingDuration;
+            spring.fromValue = @(self.view.center.y);
+            spring.toValue = @(-200);
+            spring.fillMode = kCAFillModeForwards;
+            [popup.layer addAnimation:spring forKey:nil];
+            __weak typeof(popup) weakPopup = popup;
+            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+                if (finished) {
+                    weakPopup.center = CGPointMake(kSize.width * 0.5, -200);
+                }
+            }];
+        } else {
+            
+        }
+        return NO;
     }else if(self.custemIndex == 4){
         
     }else if(self.custemIndex == 5){

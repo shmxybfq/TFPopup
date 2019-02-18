@@ -689,3 +689,51 @@ tf_synthesize_category_property_retain(backgroundView, setBackgroundView);
 
 
 @end
+
+
+@implementation CAAnimation (TFPopup)
+@dynamic startBlock,stopBlock;
+-(AnimationStartBlock)startBlock{
+    id value = objc_getAssociatedObject(self, @selector(startBlock));
+    if (value)return value;
+    return nil;
+}
+-(void)setStartBlock:(AnimationStartBlock)startBlock{
+    objc_setAssociatedObject(self, @selector(startBlock), startBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+-(AnimationStopBlock)stopBlock{
+    id value = objc_getAssociatedObject(self, @selector(stopBlock));
+    if (value)return value;
+    return nil;
+}
+
+-(void)setStopBlock:(AnimationStopBlock)stopBlock{
+    objc_setAssociatedObject(self, @selector(stopBlock), stopBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+
+-(void)observerAnimationDidStart:(AnimationStartBlock)start{
+    if (self.delegate == nil) {
+        self.delegate = self;
+        self.startBlock = start;
+    }
+}
+-(void)observerAnimationDidStop:(AnimationStopBlock)stop{
+    if (self.delegate == nil) {
+        self.delegate = self;
+        self.stopBlock = stop;
+    }
+}
+
+-(void)animationDidStart:(CAAnimation *)anim{
+    if (self.startBlock) {
+        self.startBlock(anim);
+    }
+}
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
+    if (self.stopBlock) {
+        self.stopBlock(anim, flag);
+    }
+}
+
+@end

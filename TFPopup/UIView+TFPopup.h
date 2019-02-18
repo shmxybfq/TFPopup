@@ -65,3 +65,19 @@
             delegate:(id<TFPopupDelegate>)delegate;
 @end
 
+
+
+
+
+typedef void(^AnimationStartBlock)(CAAnimation *anima);
+typedef void(^AnimationStopBlock)(CAAnimation *anima,BOOL finished);
+
+@interface CAAnimation (TFPopup)<CAAnimationDelegate>
+
+@property(nonatomic,  copy)AnimationStartBlock startBlock;
+@property(nonatomic,  copy)AnimationStopBlock stopBlock;
+
+-(void)observerAnimationDidStart:(AnimationStartBlock)start;
+-(void)observerAnimationDidStop:(AnimationStopBlock)stop;
+
+@end
