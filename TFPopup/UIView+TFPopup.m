@@ -285,10 +285,6 @@
     if (styleInclude(self.style, PopupStyleFrame)){
         ani = ani | TFPopupDefaultAnimationPopBoardFrame;
     }
-    
-    //if (ani == TFPopupDefaultAnimationNone)
-    // ani = ani | TFPopupDefaultAnimationCustem;
-    
     return ani;
 }
 
@@ -382,15 +378,14 @@
 -(void)tf_popupManager_willShow:(TFPopupManager *)manager
                   tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
     
-    BOOL breakOriginAnimation = NO;
+    BOOL breakAnimation = NO;
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupWillShow:popup:)]) {
-        breakOriginAnimation = [self.popupDelegate tf_popupWillShow:self.manager popup:self];
-        if (breakOriginAnimation) {
+        breakAnimation = [self.popupDelegate tf_popupWillShow:self.manager popup:self];
+        if (breakAnimation) {
             tellToManager(YES,self.popupParam.duration);
             return;
         }
     }
-    
     //动画
     if (styleInclude(self.style, PopupStyleAniamtion)) {
         CAAnimation *animation = [self animation:self.popupParam.showKeyPath

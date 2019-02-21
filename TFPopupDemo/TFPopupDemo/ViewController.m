@@ -17,60 +17,60 @@
 #define kAlertSize CGSizeMake(314, 170)
 
 @interface ViewController ()<TFPopupDelegate>
-
-@property (weak, nonatomic) IBOutlet UIButton *topButton0;
-@property (weak, nonatomic) IBOutlet UIButton *topButton1;
-@property (weak, nonatomic) IBOutlet UIButton *topButton2;
-@property (weak, nonatomic) IBOutlet UIButton *topButton3;
-@property (weak, nonatomic) IBOutlet UIButton *topButton4;
-@property (weak, nonatomic) IBOutlet UIButton *topButton5;
-@property (weak, nonatomic) IBOutlet UIButton *topButton6;
-
-@property (weak, nonatomic) IBOutlet UIButton *midButton0;
-@property (weak, nonatomic) IBOutlet UIButton *midButton1;
-@property (weak, nonatomic) IBOutlet UIButton *midButton2;
-@property (weak, nonatomic) IBOutlet UIButton *midButton3;
-@property (weak, nonatomic) IBOutlet UIButton *midButton4;
-@property (weak, nonatomic) IBOutlet UIButton *midButton5;
-
-@property (weak, nonatomic) IBOutlet UIButton *botButton0;
-@property (weak, nonatomic) IBOutlet UIButton *botButton1;
-@property (weak, nonatomic) IBOutlet UIButton *botButton2;
-@property (weak, nonatomic) IBOutlet UIButton *botButton3;
-@property (weak, nonatomic) IBOutlet UIButton *botButton4;
-@property (weak, nonatomic) IBOutlet UIButton *botButton5;
-@property (weak, nonatomic) IBOutlet UIButton *botButton6;
-@property (weak, nonatomic) IBOutlet UIButton *botButton7;
-@property (weak, nonatomic) IBOutlet UIButton *botButton8;
-@property (weak, nonatomic) IBOutlet UIButton *botButton9;
-
-@property (weak, nonatomic) IBOutlet UIButton *cusButton0;
-@property (weak, nonatomic) IBOutlet UIButton *cusButton1;
-@property (weak, nonatomic) IBOutlet UIButton *cusButton2;
-@property (weak, nonatomic) IBOutlet UIButton *cusButton3;
-@property (weak, nonatomic) IBOutlet UIButton *cusButton4;
-@property (weak, nonatomic) IBOutlet UIButton *cusButton5;
-
-@property (weak, nonatomic) IBOutlet UITextField *textField0;
-@property (weak, nonatomic) IBOutlet UITextField *textField1;
-
-@property (weak, nonatomic) IBOutlet UIButton *showButton;
-
-@property(nonatomic,strong)NSArray *topButtons;
-@property(nonatomic,strong)NSArray *midButtons;
-@property(nonatomic,strong)NSArray *botButtons;
-@property(nonatomic,strong)NSArray *cusButtons;
-
-@property(nonatomic,strong)TFPopupParam *param;
-@property(nonatomic,  copy)NSString *animationType;
-@property(nonatomic,assign)PopupDirection popupDirection;
-@property(nonatomic,assign)NSInteger custemIndex;
-@property (weak, nonatomic) IBOutlet UIView *redPoint;
-
-@end
+    
+    @property (weak, nonatomic) IBOutlet UIButton *topButton0;
+    @property (weak, nonatomic) IBOutlet UIButton *topButton1;
+    @property (weak, nonatomic) IBOutlet UIButton *topButton2;
+    @property (weak, nonatomic) IBOutlet UIButton *topButton3;
+    @property (weak, nonatomic) IBOutlet UIButton *topButton4;
+    @property (weak, nonatomic) IBOutlet UIButton *topButton5;
+    @property (weak, nonatomic) IBOutlet UIButton *topButton6;
+    
+    @property (weak, nonatomic) IBOutlet UIButton *midButton0;
+    @property (weak, nonatomic) IBOutlet UIButton *midButton1;
+    @property (weak, nonatomic) IBOutlet UIButton *midButton2;
+    @property (weak, nonatomic) IBOutlet UIButton *midButton3;
+    @property (weak, nonatomic) IBOutlet UIButton *midButton4;
+    @property (weak, nonatomic) IBOutlet UIButton *midButton5;
+    
+    @property (weak, nonatomic) IBOutlet UIButton *botButton0;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton1;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton2;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton3;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton4;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton5;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton6;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton7;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton8;
+    @property (weak, nonatomic) IBOutlet UIButton *botButton9;
+    
+    @property (weak, nonatomic) IBOutlet UIButton *cusButton0;
+    @property (weak, nonatomic) IBOutlet UIButton *cusButton1;
+    @property (weak, nonatomic) IBOutlet UIButton *cusButton2;
+    @property (weak, nonatomic) IBOutlet UIButton *cusButton3;
+    @property (weak, nonatomic) IBOutlet UIButton *cusButton4;
+    @property (weak, nonatomic) IBOutlet UIButton *cusButton5;
+    
+    @property (weak, nonatomic) IBOutlet UITextField *textField0;
+    @property (weak, nonatomic) IBOutlet UITextField *textField1;
+    
+    @property (weak, nonatomic) IBOutlet UIButton *showButton;
+    
+    @property(nonatomic,strong)NSArray *topButtons;
+    @property(nonatomic,strong)NSArray *midButtons;
+    @property(nonatomic,strong)NSArray *botButtons;
+    @property(nonatomic,strong)NSArray *cusButtons;
+    
+    @property(nonatomic,strong)TFPopupParam *param;
+    @property(nonatomic,  copy)NSString *animationType;
+    @property(nonatomic,assign)PopupDirection popupDirection;
+    @property(nonatomic,assign)NSInteger custemIndex;
+    @property (weak, nonatomic) IBOutlet UIView *redPoint;
+    
+    @end
 
 @implementation ViewController
-
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self config];
@@ -78,9 +78,9 @@
     [self botClick:self.botButton4];
     
 }
-
-
-
+    
+    
+    
 -(void)showClick:(UIButton *)ins{
     
     self.param.duration = 0.3;
@@ -90,18 +90,18 @@
         UIView *popup = [self getAlertView];
         
         [popup tf_showNormal:self.view animated:NO];
-//        [popup tf_showNormal:self.view
-//                      offset:CGPointMake(0, -100)
-//                    animated:NO];
+        //        [popup tf_showNormal:self.view
+        //                      offset:CGPointMake(0, -100)
+        //                    animated:NO];
         
     }if ([self.animationType isEqualToString:@"渐隐"]) {
         
         UIView *popup = [self getAlertView];
         
-//        [popup tf_showNormal:self.view animated:YES];
-//        [popup tf_showNormal:self.view
-//                      offset:CGPointMake(0, -100)
-//                    animated:YES];
+        //        [popup tf_showNormal:self.view animated:YES];
+        //        [popup tf_showNormal:self.view
+        //                      offset:CGPointMake(0, -100)
+        //                    animated:YES];
         [popup tf_showNormal:self.view popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"缩放"]) {
@@ -139,9 +139,9 @@
                   popupParam:self.param];
         
     }else if ([self.animationType isEqualToString:@"遮罩"]) {
-       
+        
         self.param.duration = 0.3;
-       
+        
         //三角出来
         UIBezierPath *p0 = [UIBezierPath bezierPath];
         [p0 moveToPoint:CGPointMake(-200, 0)];
@@ -171,16 +171,16 @@
         self.param.popTargetFrame = CGRectMake(0, 110, kSize.width, 200);
         
         UIView *popup = [self getListView];
-
+        
         [popup tf_showFrame:self.view
                        from:self.param.popOriginFrame
                          to:self.param.popTargetFrame
                  popupParam:self.param];
     }
 }
-
-
-
+    
+    
+    
 -(void)topClick:(UIButton *)ins{
     
     [self config];
@@ -191,9 +191,9 @@
     }
     self.animationType = title(ins);
 }
-
-
-
+    
+    
+    
 -(void)midClick:(UIButton *)ins{
     
     ins.selected = !ins.selected;
@@ -216,7 +216,7 @@
         self.param.offset = ins.selected?CGPointMake(0, -150):CGPointZero;
     }
 }
-
+    
 -(void)botClick:(UIButton *)ins{
     for (UIButton *bt in self.botButtons) {
         bt.selected = bt == ins;
@@ -239,7 +239,7 @@
         self.param.popTargetFrame = CGRectMake(0, 32, 200, self.view.frame.size.height - 32);
     }
 }
-
+    
 -(void)cusClick:(UIButton *)ins{
     for (UIButton *bt in self.botButtons) {
         bt.selected = bt == ins;
@@ -251,7 +251,7 @@
     if ([title(ins) isEqualToString:@"自定义5"]) self.custemIndex = 5;
     if ([title(ins) isEqualToString:@"自定义6"]) self.custemIndex = 6;
     
-
+    
     if (self.custemIndex == 1) {
         
         UIView *blank = [self getAlertView];
@@ -273,18 +273,20 @@
         
     }else if(self.custemIndex == 4){
         
-        self.param.duration = 5;
+        self.param.duration = 1;
+        self.param.disuseBackgroundAlphaAnimation = YES;
+        self.param.disusePopupAlphaAnimation = YES;
         UIView *blank = [self getAlertView];
         blank.popupDelegate = self;
         [blank tf_showNormal:self.view popupParam:self.param];
-
+        
     }else if(self.custemIndex == 5){
         
     }else if(self.custemIndex == 6){
         
     }
 }
-
+    
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
     
     if (self.custemIndex == 1) {
@@ -300,6 +302,7 @@
         [popup.layer addAnimation:ani forKey:@"rotation"];
         return NO;
     }else if(self.custemIndex == 2){
+        
         [self topClick:self.topButton2];
         NSArray *bts = [((BlankView *)popup) buttons];
         CGFloat x = 30;
@@ -325,6 +328,7 @@
         return NO;
         
     }else if(self.custemIndex == 3){
+        
         if (@available(iOS 9.0, *)) {
             CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
             spring.damping = 15;
@@ -346,54 +350,59 @@
             
         }
         return NO;
+        
     }else if(self.custemIndex == 4){
         
         popup.layer.masksToBounds = NO;
         popup.clipsToBounds = NO;
         
-        CGSize ss = kAlertSize;
-        UIBezierPath *path0 = [UIBezierPath bezierPath];
-        [path0 moveToPoint:CGPointMake(ss.width * 0.5 - 5, ss.height * 0.5 - 5)];
-        [path0 addLineToPoint:CGPointMake(ss.width * 0.5 + 5, ss.height * 0.5 - 5)];
-        [path0 addLineToPoint:CGPointMake(ss.width * 0.5 - 5, ss.height * 0.5 + 5)];
-        [path0 addLineToPoint:CGPointMake(ss.width * 0.5 + 5, ss.height * 0.5 + 5)];
-        [path0 closePath];
-        
-        UIBezierPath *path1 = [UIBezierPath bezierPath];
-        [path1 moveToPoint:CGPointMake(0, 0)];
-        [path1 addLineToPoint:CGPointMake(ss.width, 0)];
-        [path1 addLineToPoint:CGPointMake(ss.width, ss.height)];
-        [path1 addLineToPoint:CGPointMake(0, ss.height)];
-        [path1 closePath];
-        
+        CGFloat dur = self.param.duration;
         CAShapeLayer *layer = [CAShapeLayer layer];
-        
-        layer.path = path1.CGPath;
-        popup.layer.mask = layer;
-        
-        [layer setAnchorPoint:CGPointMake(1, 1)];
-        
-        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"path"];
-        [ani setFromValue:(__bridge id)path1.CGPath];
-        [ani setToValue:(__bridge id)path1.CGPath];
-        [ani setDuration:5];
-        [ani setRemovedOnCompletion:NO];
-        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
-        [ani setAutoreverses:NO];
-        [ani setFillMode:kCAFillModeBoth];
-        //[layer addAnimation:ani forKey:@"path"];
-        
-        CABasicAnimation *aniR = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-        [aniR setFromValue:@(-M_PI * 4)];
-        [aniR setToValue:@(0)];
-        [aniR setDuration:5];
-        [aniR setRemovedOnCompletion:NO];
-        [aniR setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
-        [aniR setAutoreverses:NO];
-        [aniR setFillMode:kCAFillModeBoth];
-        [layer addAnimation:aniR forKey:@"transform.rotation.z"];
-        
+        CGSize ss = kAlertSize;
+        UIBezierPath *prepp = nil;
+        UIBezierPath *sufpp = nil;
+        CAAnimationGroup *group = [CAAnimationGroup animation];
+        NSMutableArray *ans = [NSMutableArray array];
+        for (NSInteger i = 1; i <= 7; i++) {
+            UIBezierPath *pp = [UIBezierPath bezierPath];
+            [pp moveToPoint:CGPointMake(0, ss.height)];
+            [pp addLineToPoint:CGPointMake(0, ss.height - ss.height * 0.2 * i)];
+            CGPoint p0 = CGPointMake(ss.width * 0.33, ss.height - ss.height * 0.2 * i - 34);
+            CGPoint p1 = CGPointMake(ss.width * 0.66, ss.height - ss.height * 0.2 * i + 34);
+            [pp addCurveToPoint:CGPointMake(ss.width, ss.height - ss.height * 0.2 * i)
+                  controlPoint1:(i % 2 == 0)?p0:p1
+                  controlPoint2:(i % 2 == 0)?p1:p0];
+            [pp addLineToPoint:CGPointMake(ss.width, ss.height)];
+            [pp addLineToPoint:CGPointMake(0, ss.height)];
+            [pp closePath];
+            
+            if (i == 1) {
+                layer.path = pp.CGPath;
+                popup.layer.mask = layer;
+            }else if(i == 7){
+                sufpp = pp;
+            }else{
+                CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+                animation.duration = dur / 7.0;
+                animation.beginTime = dur / 7.0 * (i - 2);
+                animation.fromValue = (__bridge id)prepp.CGPath;
+                animation.toValue = (__bridge id)pp.CGPath;
+                [ans addObject:animation];
+            }
+            prepp = pp;
+        }
+        layer.path = sufpp.CGPath;
 
+        group.animations = ans;
+        group.removedOnCompletion = NO;
+        group.duration = ans.count * dur / 7.0;
+        group.fillMode = kCAFillModeBoth;
+        [group observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+            NSLog(@">>>>>>>:%@",sufpp);
+            layer.path = sufpp.CGPath;
+        }];
+        [layer addAnimation:group forKey:nil];
+        
     }else if(self.custemIndex == 5){
         
     }else if(self.custemIndex == 6){
@@ -401,6 +410,7 @@
     }
     return NO;
 }
+    
 -(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
     if(self.custemIndex == 1){
         CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -474,9 +484,9 @@
     }
     return NO;
 }
-
-
-
+    
+    
+    
 -(UIView *)getAlertView{
     AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
                                                       owner:nil
@@ -486,8 +496,8 @@
     }];
     return alert;
 }
-
-
+    
+    
 -(UIView *)getListView{
     ListView *list = [[NSBundle mainBundle]loadNibNamed:@"ListView"
                                                   owner:nil
@@ -497,16 +507,16 @@
     }];
     return list;
 }
-
+    
 -(UIView *)getBlankView{
     BlankView *blank = [[NSBundle mainBundle]loadNibNamed:@"BlankView"
-                                                  owner:nil
-                                                options:nil].firstObject;
+                                                    owner:nil
+                                                  options:nil].firstObject;
     return blank;
 }
-
-
-
+    
+    
+    
 -(void)config{
     
     self.param = [TFPopupParam new];
@@ -552,56 +562,56 @@
     self.redPoint.layer.cornerRadius = 5;
     
 }
-
+    
 -(NSArray *)topButtons{
     NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
-                    self.topButton3,self.topButton4,self.topButton5,
-                    self.topButton6];
+                        self.topButton3,self.topButton4,self.topButton5,
+                        self.topButton6];
     return tp;
 }
 -(NSArray *)midButtons{
     NSArray *mp = @[self.midButton0,self.midButton1,self.midButton2,
-                    self.midButton3,self.midButton4,self.midButton5];
+                        self.midButton3,self.midButton4,self.midButton5];
     return mp;
 }
-
+    
 -(NSArray *)botButtons{
     NSArray *bp = @[self.botButton0,self.botButton1,self.botButton2,
-                    self.botButton3,self.botButton4,self.botButton5,
-                    self.botButton6,self.botButton7,self.botButton8,self.botButton9];
+                        self.botButton3,self.botButton4,self.botButton5,
+                        self.botButton6,self.botButton7,self.botButton8,self.botButton9];
     return bp;
 }
-
+    
 -(NSArray *)cusButtons{
     NSArray *cp = @[self.cusButton0,self.cusButton1,self.cusButton2,
-                    self.cusButton3,self.cusButton4,self.cusButton5];
+                        self.cusButton3,self.cusButton4,self.cusButton5];
     return cp;
 }
-
+    
 -(TFPopupParam *)param{
     if (_param == nil) {
         _param = [TFPopupParam new];
     }
     return _param;
 }
-
-static inline UIImage *colorToImage(UIColor *color){
-    CGRect rect = CGRectMake(0.0f,0.0f,1.0f,1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    UIImage *theImage=UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return theImage;
-}
-
-static inline UIColor *color(float r,float g,float b){
-    return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1];
-}
-
-static inline NSString *title(UIButton *bt){
-    return [bt titleForState:UIControlStateNormal];
-}
-
-@end
+    
+    static inline UIImage *colorToImage(UIColor *color){
+        CGRect rect = CGRectMake(0.0f,0.0f,1.0f,1.0f);
+        UIGraphicsBeginImageContext(rect.size);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetFillColorWithColor(context, [color CGColor]);
+        CGContextFillRect(context, rect);
+        UIImage *theImage=UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return theImage;
+    }
+    
+    static inline UIColor *color(float r,float g,float b){
+        return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1];
+    }
+    
+    static inline NSString *title(UIButton *bt){
+        return [bt titleForState:UIControlStateNormal];
+    }
+    
+    @end

@@ -103,7 +103,8 @@
         if (bgAlpha){
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
                                     weakself.popForBackgroundView.alpha = 1;
                                 } completion:^(BOOL finished) {
                                     [weakself finishShow:TFPopupDefaultAnimationBackgroundAlpha isAnimationShow:YES];
@@ -116,7 +117,8 @@
         if (popAlpha){
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
                                     weakself.popBoardView.alpha = 1;
                                 } completion:^(BOOL finished) {
                                     [weakself finishShow:TFPopupDefaultAnimationPopBoardAlpha isAnimationShow:YES];
@@ -130,7 +132,8 @@
         if (popFrame){
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
                                     weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
                                 } completion:^(BOOL finished) {
                                     [weakself finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:YES];
@@ -203,7 +206,8 @@
         if (bgAlpha){
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
                                     weakself.popForBackgroundView.alpha = 0;
                                 } completion:^(BOOL finished) {
                                     [weakself finishHide:TFPopupDefaultAnimationBackgroundAlpha
@@ -219,7 +223,8 @@
         if (popAlpha){
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
                                     weakself.popBoardView.alpha = 0;
                                 } completion:^(BOOL finished) {
                                     [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha
@@ -234,7 +239,8 @@
         if (popFrame){
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
-                                options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
                                     weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
                                 } completion:^(BOOL finished) {
                                     [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:YES];
@@ -279,14 +285,16 @@ static inline BOOL animationContain(TFPopupDefaultAnimation total,TFPopupDefault
     
 
 -(void)finishShow:(TFPopupDefaultAnimation)animation isAnimationShow:(BOOL)isAnimationShow{
-    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didShow:defaultAnimation:isAnimationShow:)]) {
+    SEL sel = @selector(tf_popupManager_didShow:defaultAnimation:isAnimationShow:);
+    if ([self.delegate respondsToSelector:sel]) {
         [self.delegate tf_popupManager_didShow:self
                               defaultAnimation:animation
                                isAnimationShow:isAnimationShow];
     }
 }
 -(void)finishHide:(TFPopupDefaultAnimation)animation isAnimationHide:(BOOL)isAnimationHide{
-    if ([self.delegate respondsToSelector:@selector(tf_popupManager_didHide:defaultAnimation:isAnimationHide:)]) {
+    SEL sel = @selector(tf_popupManager_didHide:defaultAnimation:isAnimationHide:);
+    if ([self.delegate respondsToSelector:sel]) {
         [self.delegate tf_popupManager_didHide:self
                               defaultAnimation:animation
                                isAnimationHide:isAnimationHide];
