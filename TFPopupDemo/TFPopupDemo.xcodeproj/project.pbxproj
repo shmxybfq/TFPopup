@@ -24,6 +24,22 @@
 		203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD48D21EC846B004ACC42 /* AlertNormal.m */; };
 		203DD49021EC847F004ACC42 /* AlertNormal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 203DD48F21EC847F004ACC42 /* AlertNormal.xib */; };
 		203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD49221EC865F004ACC42 /* UIView+TFPopup.m */; };
+		209D0747221EA0EA007570EB /* ExcempleAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D0746221EA0EA007570EB /* ExcempleAlert.m */; };
+		209D074A221EA106007570EB /* ExcempleAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D0749221EA106007570EB /* ExcempleAction.m */; };
+		209D074D221EA127007570EB /* ExcempleNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D074C221EA127007570EB /* ExcempleNotification.m */; };
+		209D0750221EA140007570EB /* ExcempleSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D074F221EA140007570EB /* ExcempleSign.m */; };
+		209D0753221EA15A007570EB /* ExcempleUnfold.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D0752221EA15A007570EB /* ExcempleUnfold.m */; };
+		209D0756221EA17C007570EB /* ExcempleBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D0755221EA17C007570EB /* ExcempleBubble.m */; };
+		209D0759221EA197007570EB /* ExcempleSliderBig.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D0758221EA197007570EB /* ExcempleSliderBig.m */; };
+		209D075C221EA1A6007570EB /* ExcempleSliderSmall.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D075B221EA1A6007570EB /* ExcempleSliderSmall.m */; };
+		209D075E221EA1B7007570EB /* ExcempleAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D075D221EA1B7007570EB /* ExcempleAlert.xib */; };
+		209D0760221EA2F6007570EB /* ExcempleAction.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D075F221EA2F6007570EB /* ExcempleAction.xib */; };
+		209D0762221EA36D007570EB /* ExcempleNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0761221EA36D007570EB /* ExcempleNotification.xib */; };
+		209D0764221EA3E1007570EB /* ExcempleSign.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0763221EA3E1007570EB /* ExcempleSign.xib */; };
+		209D0766221EA45F007570EB /* ExcempleUnfold.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0765221EA45F007570EB /* ExcempleUnfold.xib */; };
+		209D0768221EA4D2007570EB /* ExcempleBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0767221EA4D2007570EB /* ExcempleBubble.xib */; };
+		209D076A221EA560007570EB /* ExcempleSliderBig.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0769221EA560007570EB /* ExcempleSliderBig.xib */; };
+		209D076C221EA5D9007570EB /* ExcempleSliderSmall.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +73,30 @@
 		203DD48F21EC847F004ACC42 /* AlertNormal.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertNormal.xib; sourceTree = "<group>"; };
 		203DD49121EC865F004ACC42 /* UIView+TFPopup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+TFPopup.h"; sourceTree = "<group>"; };
 		203DD49221EC865F004ACC42 /* UIView+TFPopup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+TFPopup.m"; sourceTree = "<group>"; };
+		209D0745221EA0EA007570EB /* ExcempleAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleAlert.h; sourceTree = "<group>"; };
+		209D0746221EA0EA007570EB /* ExcempleAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleAlert.m; sourceTree = "<group>"; };
+		209D0748221EA106007570EB /* ExcempleAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleAction.h; sourceTree = "<group>"; };
+		209D0749221EA106007570EB /* ExcempleAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleAction.m; sourceTree = "<group>"; };
+		209D074B221EA127007570EB /* ExcempleNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleNotification.h; sourceTree = "<group>"; };
+		209D074C221EA127007570EB /* ExcempleNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleNotification.m; sourceTree = "<group>"; };
+		209D074E221EA140007570EB /* ExcempleSign.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleSign.h; sourceTree = "<group>"; };
+		209D074F221EA140007570EB /* ExcempleSign.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleSign.m; sourceTree = "<group>"; };
+		209D0751221EA15A007570EB /* ExcempleUnfold.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleUnfold.h; sourceTree = "<group>"; };
+		209D0752221EA15A007570EB /* ExcempleUnfold.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleUnfold.m; sourceTree = "<group>"; };
+		209D0754221EA17C007570EB /* ExcempleBubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleBubble.h; sourceTree = "<group>"; };
+		209D0755221EA17C007570EB /* ExcempleBubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleBubble.m; sourceTree = "<group>"; };
+		209D0757221EA197007570EB /* ExcempleSliderBig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleSliderBig.h; sourceTree = "<group>"; };
+		209D0758221EA197007570EB /* ExcempleSliderBig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleSliderBig.m; sourceTree = "<group>"; };
+		209D075A221EA1A6007570EB /* ExcempleSliderSmall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleSliderSmall.h; sourceTree = "<group>"; };
+		209D075B221EA1A6007570EB /* ExcempleSliderSmall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleSliderSmall.m; sourceTree = "<group>"; };
+		209D075D221EA1B7007570EB /* ExcempleAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleAlert.xib; sourceTree = "<group>"; };
+		209D075F221EA2F6007570EB /* ExcempleAction.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleAction.xib; sourceTree = "<group>"; };
+		209D0761221EA36D007570EB /* ExcempleNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleNotification.xib; sourceTree = "<group>"; };
+		209D0763221EA3E1007570EB /* ExcempleSign.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSign.xib; sourceTree = "<group>"; };
+		209D0765221EA45F007570EB /* ExcempleUnfold.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleUnfold.xib; sourceTree = "<group>"; };
+		209D0767221EA4D2007570EB /* ExcempleBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleBubble.xib; sourceTree = "<group>"; };
+		209D0769221EA560007570EB /* ExcempleSliderBig.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSliderBig.xib; sourceTree = "<group>"; };
+		209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSliderSmall.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +133,7 @@
 				203DD46B21EC6B22004ACC42 /* AppDelegate.m */,
 				203DD46D21EC6B22004ACC42 /* ViewController.h */,
 				203DD46E21EC6B22004ACC42 /* ViewController.m */,
+				209D0744221EA0B5007570EB /* Excemple */,
 				203DD48B21EC8456004ACC42 /* DemoView */,
 				203DD48021EC6B78004ACC42 /* TFPopup */,
 				203DD47021EC6B22004ACC42 /* Main.storyboard */,
@@ -137,6 +178,37 @@
 				2024EEEF21F892A700DEC84A /* ListView.xib */,
 			);
 			path = DemoView;
+			sourceTree = "<group>";
+		};
+		209D0744221EA0B5007570EB /* Excemple */ = {
+			isa = PBXGroup;
+			children = (
+				209D0745221EA0EA007570EB /* ExcempleAlert.h */,
+				209D0746221EA0EA007570EB /* ExcempleAlert.m */,
+				209D075D221EA1B7007570EB /* ExcempleAlert.xib */,
+				209D0748221EA106007570EB /* ExcempleAction.h */,
+				209D0749221EA106007570EB /* ExcempleAction.m */,
+				209D075F221EA2F6007570EB /* ExcempleAction.xib */,
+				209D074B221EA127007570EB /* ExcempleNotification.h */,
+				209D074C221EA127007570EB /* ExcempleNotification.m */,
+				209D0761221EA36D007570EB /* ExcempleNotification.xib */,
+				209D074E221EA140007570EB /* ExcempleSign.h */,
+				209D074F221EA140007570EB /* ExcempleSign.m */,
+				209D0763221EA3E1007570EB /* ExcempleSign.xib */,
+				209D0751221EA15A007570EB /* ExcempleUnfold.h */,
+				209D0752221EA15A007570EB /* ExcempleUnfold.m */,
+				209D0765221EA45F007570EB /* ExcempleUnfold.xib */,
+				209D0754221EA17C007570EB /* ExcempleBubble.h */,
+				209D0755221EA17C007570EB /* ExcempleBubble.m */,
+				209D0767221EA4D2007570EB /* ExcempleBubble.xib */,
+				209D0757221EA197007570EB /* ExcempleSliderBig.h */,
+				209D0758221EA197007570EB /* ExcempleSliderBig.m */,
+				209D0769221EA560007570EB /* ExcempleSliderBig.xib */,
+				209D075A221EA1A6007570EB /* ExcempleSliderSmall.h */,
+				209D075B221EA1A6007570EB /* ExcempleSliderSmall.m */,
+				209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */,
+			);
+			path = Excemple;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,11 +269,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				2024EEC421F71BAF00DEC84A /* BlankView.xib in Resources */,
+				209D076A221EA560007570EB /* ExcempleSliderBig.xib in Resources */,
 				203DD47721EC6B23004ACC42 /* LaunchScreen.storyboard in Resources */,
+				209D0762221EA36D007570EB /* ExcempleNotification.xib in Resources */,
 				2024EEF021F892A700DEC84A /* ListView.xib in Resources */,
 				203DD49021EC847F004ACC42 /* AlertNormal.xib in Resources */,
+				209D0760221EA2F6007570EB /* ExcempleAction.xib in Resources */,
 				203DD47421EC6B22004ACC42 /* Assets.xcassets in Resources */,
+				209D0766221EA45F007570EB /* ExcempleUnfold.xib in Resources */,
+				209D0764221EA3E1007570EB /* ExcempleSign.xib in Resources */,
 				203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */,
+				209D076C221EA5D9007570EB /* ExcempleSliderSmall.xib in Resources */,
+				209D0768221EA4D2007570EB /* ExcempleBubble.xib in Resources */,
+				209D075E221EA1B7007570EB /* ExcempleAlert.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,13 +296,21 @@
 				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
 				203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */,
 				203DD47A21EC6B23004ACC42 /* main.m in Sources */,
+				209D074A221EA106007570EB /* ExcempleAction.m in Sources */,
 				2024EEEE21F8929C00DEC84A /* ListView.m in Sources */,
+				209D0756221EA17C007570EB /* ExcempleBubble.m in Sources */,
+				209D0753221EA15A007570EB /* ExcempleUnfold.m in Sources */,
+				209D0747221EA0EA007570EB /* ExcempleAlert.m in Sources */,
 				2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */,
 				2024EEC221F71B9900DEC84A /* BlankView.m in Sources */,
+				209D074D221EA127007570EB /* ExcempleNotification.m in Sources */,
+				209D0759221EA197007570EB /* ExcempleSliderBig.m in Sources */,
 				203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */,
 				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
 				2024EEBB21F18A0D00DEC84A /* TFPopupParam.m in Sources */,
+				209D075C221EA1A6007570EB /* ExcempleSliderSmall.m in Sources */,
 				203DD46C21EC6B22004ACC42 /* AppDelegate.m in Sources */,
+				209D0750221EA140007570EB /* ExcempleSign.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
