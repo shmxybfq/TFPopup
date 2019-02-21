@@ -18,55 +18,58 @@
 
 @interface ViewController ()<TFPopupDelegate>
     
-    @property (weak, nonatomic) IBOutlet UIButton *topButton0;
-    @property (weak, nonatomic) IBOutlet UIButton *topButton1;
-    @property (weak, nonatomic) IBOutlet UIButton *topButton2;
-    @property (weak, nonatomic) IBOutlet UIButton *topButton3;
-    @property (weak, nonatomic) IBOutlet UIButton *topButton4;
-    @property (weak, nonatomic) IBOutlet UIButton *topButton5;
-    @property (weak, nonatomic) IBOutlet UIButton *topButton6;
-    
-    @property (weak, nonatomic) IBOutlet UIButton *midButton0;
-    @property (weak, nonatomic) IBOutlet UIButton *midButton1;
-    @property (weak, nonatomic) IBOutlet UIButton *midButton2;
-    @property (weak, nonatomic) IBOutlet UIButton *midButton3;
-    @property (weak, nonatomic) IBOutlet UIButton *midButton4;
-    @property (weak, nonatomic) IBOutlet UIButton *midButton5;
-    
-    @property (weak, nonatomic) IBOutlet UIButton *botButton0;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton1;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton2;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton3;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton4;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton5;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton6;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton7;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton8;
-    @property (weak, nonatomic) IBOutlet UIButton *botButton9;
-    
-    @property (weak, nonatomic) IBOutlet UIButton *cusButton0;
-    @property (weak, nonatomic) IBOutlet UIButton *cusButton1;
-    @property (weak, nonatomic) IBOutlet UIButton *cusButton2;
-    @property (weak, nonatomic) IBOutlet UIButton *cusButton3;
-    @property (weak, nonatomic) IBOutlet UIButton *cusButton4;
-    @property (weak, nonatomic) IBOutlet UIButton *cusButton5;
-    
-    @property (weak, nonatomic) IBOutlet UITextField *textField0;
-    @property (weak, nonatomic) IBOutlet UITextField *textField1;
-    
-    @property (weak, nonatomic) IBOutlet UIButton *showButton;
-    
-    @property(nonatomic,strong)NSArray *topButtons;
-    @property(nonatomic,strong)NSArray *midButtons;
-    @property(nonatomic,strong)NSArray *botButtons;
-    @property(nonatomic,strong)NSArray *cusButtons;
-    
-    @property(nonatomic,strong)TFPopupParam *param;
-    @property(nonatomic,  copy)NSString *animationType;
-    @property(nonatomic,assign)PopupDirection popupDirection;
-    @property(nonatomic,assign)NSInteger custemIndex;
-    @property (weak, nonatomic) IBOutlet UIView *redPoint;
-    
+@property (weak, nonatomic) IBOutlet UIButton *topButton0;
+@property (weak, nonatomic) IBOutlet UIButton *topButton1;
+@property (weak, nonatomic) IBOutlet UIButton *topButton2;
+@property (weak, nonatomic) IBOutlet UIButton *topButton3;
+@property (weak, nonatomic) IBOutlet UIButton *topButton4;
+@property (weak, nonatomic) IBOutlet UIButton *topButton5;
+@property (weak, nonatomic) IBOutlet UIButton *topButton6;
+
+@property (weak, nonatomic) IBOutlet UIButton *midButton0;
+@property (weak, nonatomic) IBOutlet UIButton *midButton1;
+@property (weak, nonatomic) IBOutlet UIButton *midButton2;
+@property (weak, nonatomic) IBOutlet UIButton *midButton3;
+@property (weak, nonatomic) IBOutlet UIButton *midButton4;
+@property (weak, nonatomic) IBOutlet UIButton *midButton5;
+
+@property (weak, nonatomic) IBOutlet UIButton *botButton0;
+@property (weak, nonatomic) IBOutlet UIButton *botButton1;
+@property (weak, nonatomic) IBOutlet UIButton *botButton2;
+@property (weak, nonatomic) IBOutlet UIButton *botButton3;
+@property (weak, nonatomic) IBOutlet UIButton *botButton4;
+@property (weak, nonatomic) IBOutlet UIButton *botButton5;
+@property (weak, nonatomic) IBOutlet UIButton *botButton6;
+@property (weak, nonatomic) IBOutlet UIButton *botButton7;
+@property (weak, nonatomic) IBOutlet UIButton *botButton8;
+@property (weak, nonatomic) IBOutlet UIButton *botButton9;
+
+@property (weak, nonatomic) IBOutlet UIButton *cusButton0;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton1;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton2;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton3;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton4;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton5;
+
+@property (weak, nonatomic) IBOutlet UITextField *textField0;
+@property (weak, nonatomic) IBOutlet UITextField *textField1;
+
+@property (weak, nonatomic) IBOutlet UIButton *showButton;
+
+@property(nonatomic,strong)NSArray *topButtons;
+@property(nonatomic,strong)NSArray *midButtons;
+@property(nonatomic,strong)NSArray *botButtons;
+@property(nonatomic,strong)NSArray *cusButtons;
+
+@property(nonatomic,strong)TFPopupParam *param;
+@property(nonatomic,  copy)NSString *animationType;
+@property(nonatomic,assign)PopupDirection popupDirection;
+@property(nonatomic,assign)NSInteger custemIndex;
+@property (weak, nonatomic) IBOutlet UIView *redPoint;
+
+//默认alpha = 0
+@property (weak, nonatomic) IBOutlet UIButton *excempleCoverButton;
+
     @end
 
 @implementation ViewController
