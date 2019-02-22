@@ -517,10 +517,10 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pxf-Fk-Y0K">
-                                                        <rect key="frame" x="95" y="5" width="46" height="30"/>
+                                                        <rect key="frame" x="95" y="0.0" width="40" height="40"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="30" id="Roy-SJ-sfW"/>
-                                                            <constraint firstAttribute="width" constant="46" id="rjK-Y2-5zj"/>
+                                                            <constraint firstAttribute="height" constant="40" id="Roy-SJ-sfW"/>
+                                                            <constraint firstAttribute="width" constant="40" id="rjK-Y2-5zj"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <state key="normal" title="2">
@@ -528,7 +528,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="twa-aX-ukt">
-                                                        <rect key="frame" x="146" y="0.0" width="40" height="40"/>
+                                                        <rect key="frame" x="140" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Bvc-mo-JBS"/>
                                                             <constraint firstAttribute="width" constant="40" id="yPD-j3-Z9b"/>
@@ -539,7 +539,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmC-DJ-4aq">
-                                                        <rect key="frame" x="191" y="0.0" width="40" height="40"/>
+                                                        <rect key="frame" x="185" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="rE2-LZ-ciX"/>
                                                             <constraint firstAttribute="height" constant="40" id="u64-1V-JEL"/>
@@ -550,7 +550,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HS2-cp-Xjt">
-                                                        <rect key="frame" x="236" y="0.0" width="40" height="40"/>
+                                                        <rect key="frame" x="230" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="LVs-Oe-FXx"/>
                                                             <constraint firstAttribute="width" constant="40" id="RsM-8H-UyJ"/>
@@ -561,7 +561,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m2R-rQ-c2b">
-                                                        <rect key="frame" x="281" y="0.0" width="40" height="40"/>
+                                                        <rect key="frame" x="275" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="WVb-20-gRg"/>
                                                             <constraint firstAttribute="height" constant="40" id="gBl-8z-IKe"/>
@@ -572,7 +572,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bOY-HS-q9o">
-                                                        <rect key="frame" x="326" y="0.0" width="40" height="40"/>
+                                                        <rect key="frame" x="320" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="5de-Hc-ovZ"/>
                                                             <constraint firstAttribute="width" constant="40" id="auh-Hz-Iah"/>
@@ -587,7 +587,7 @@
                                                 <constraints>
                                                     <constraint firstItem="gbc-Q0-VW8" firstAttribute="top" secondItem="PsQ-fb-zG7" secondAttribute="top" id="4BV-Um-i2o"/>
                                                     <constraint firstItem="bOY-HS-q9o" firstAttribute="top" secondItem="PsQ-fb-zG7" secondAttribute="top" id="Q21-YH-pDg"/>
-                                                    <constraint firstItem="Pxf-Fk-Y0K" firstAttribute="top" secondItem="PsQ-fb-zG7" secondAttribute="top" constant="5" id="Sg2-C1-J1X"/>
+                                                    <constraint firstItem="Pxf-Fk-Y0K" firstAttribute="top" secondItem="PsQ-fb-zG7" secondAttribute="top" id="Sg2-C1-J1X"/>
                                                     <constraint firstItem="bOY-HS-q9o" firstAttribute="leading" secondItem="m2R-rQ-c2b" secondAttribute="trailing" constant="5" id="TUn-FR-Kdy"/>
                                                     <constraint firstItem="3dy-Md-vuq" firstAttribute="top" secondItem="PsQ-fb-zG7" secondAttribute="top" id="Vko-aT-vZI"/>
                                                     <constraint firstItem="gbc-Q0-VW8" firstAttribute="leading" secondItem="PsQ-fb-zG7" secondAttribute="leading" constant="5" id="WjU-vu-qoV"/>
@@ -749,6 +749,14 @@
                         <outlet property="cusButton3" destination="syh-yV-ZLO" id="8BC-oM-mgA"/>
                         <outlet property="cusButton4" destination="bfC-DI-wth" id="0LT-pe-7s9"/>
                         <outlet property="cusButton5" destination="dLw-d1-lrd" id="Qla-Pk-Pug"/>
+                        <outlet property="excButton0" destination="gbc-Q0-VW8" id="Rx7-12-0ub"/>
+                        <outlet property="excButton1" destination="3dy-Md-vuq" id="r4t-Ne-Prv"/>
+                        <outlet property="excButton2" destination="Pxf-Fk-Y0K" id="nTi-CI-csD"/>
+                        <outlet property="excButton3" destination="twa-aX-ukt" id="Nn5-Fa-eGG"/>
+                        <outlet property="excButton4" destination="MmC-DJ-4aq" id="wBm-Rj-mKu"/>
+                        <outlet property="excButton5" destination="HS2-cp-Xjt" id="aks-Dq-SOD"/>
+                        <outlet property="excButton6" destination="m2R-rQ-c2b" id="5gy-17-9q5"/>
+                        <outlet property="excButton7" destination="bOY-HS-q9o" id="3ae-dD-RS4"/>
                         <outlet property="excempleCoverButton" destination="SPv-5h-UTH" id="BII-6b-hpU"/>
                         <outlet property="midButton0" destination="iaP-2A-7IY" id="jeQ-ap-OiK"/>
                         <outlet property="midButton1" destination="WTj-gp-cxe" id="kCb-8k-qW3"/>

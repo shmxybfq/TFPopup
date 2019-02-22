@@ -13,6 +13,15 @@
 #import "BlankView.h"
 #import "AlertNormal.h"
 
+#import "ExcempleAlert.h"
+#import "ExcempleAction.h"
+#import "ExcempleNotification.h"
+#import "ExcempleSign.h"
+#import "ExcempleUnfold.h"
+#import "ExcempleBubble.h"
+#import "ExcempleSliderBig.h"
+#import "ExcempleSliderSmall.h"
+
 #define kSize [UIScreen mainScreen].bounds.size
 #define kAlertSize CGSizeMake(314, 170)
 
@@ -51,6 +60,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *cusButton4;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton5;
 
+@property (weak, nonatomic) IBOutlet UIButton *excButton0;
+@property (weak, nonatomic) IBOutlet UIButton *excButton1;
+@property (weak, nonatomic) IBOutlet UIButton *excButton2;
+@property (weak, nonatomic) IBOutlet UIButton *excButton3;
+@property (weak, nonatomic) IBOutlet UIButton *excButton4;
+@property (weak, nonatomic) IBOutlet UIButton *excButton5;
+@property (weak, nonatomic) IBOutlet UIButton *excButton6;
+@property (weak, nonatomic) IBOutlet UIButton *excButton7;
+
 @property (weak, nonatomic) IBOutlet UITextField *textField0;
 @property (weak, nonatomic) IBOutlet UITextField *textField1;
 
@@ -60,6 +78,7 @@
 @property(nonatomic,strong)NSArray *midButtons;
 @property(nonatomic,strong)NSArray *botButtons;
 @property(nonatomic,strong)NSArray *cusButtons;
+@property(nonatomic,strong)NSArray *excempleButtons;
 
 @property(nonatomic,strong)TFPopupParam *param;
 @property(nonatomic,  copy)NSString *animationType;
@@ -289,6 +308,8 @@
         
     }
 }
+
+
     
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
     
@@ -487,13 +508,50 @@
     }
     return NO;
 }
+
+
+-(void)excClick:(UIButton *)ins{
+    if ([title(ins) isEqualToString:@"0"]) {
+        UIView *view = [self getViewName:@"ExcempleAlert"];
+        [view tf_showNormal:self.view animated:NO];
+    }
+    if ([title(ins) isEqualToString:@"1"]) {
+        UIView *view = [self getViewName:@"ExcempleAction"];
+        
+        TFPopupParam *param = [TFPopupParam new];
+        param.offset = CGPointMake(0, -60);
+        param.popupSize = CGSizeMake(360, 226);
+        [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
+    }
     
+    if ([title(ins) isEqualToString:@"2"]) {
+        UIView *view = [self getViewName:@"ExcempleNotification"];
+        TFPopupParam *param = [TFPopupParam new];
+        param.offset = CGPointMake(0, +30);
+        param.popupSize = CGSizeMake(396, 78);
+        param.autoDissmissDuration = 1;
+        param.disusePopupAlphaAnimation = YES;
+        [view tf_showSlide:self.view direction:PopupDirectionTop popupParam:param];
+    }
+    if ([title(ins) isEqualToString:@"3"]) {
+        UIView *view = [self getViewName:@"ExcempleSign"];
+        TFPopupParam *param = [TFPopupParam new];
+        [view tf_showScale:self.view offset:CGPointMake(0, -100) popupParam:param];
+    }
+    
+    if ([title(ins) isEqualToString:@"4"]) {
+        UIView *view = [self getViewName:@"ExcempleUnfold"];
+        TFPopupParam *param = [TFPopupParam new];
+        CGRect from = CGRectMake(0, 100, kSize.width, 0);
+        CGRect to = CGRectMake(0, 100, kSize.width, 320);
+        [view tf_showFrame:self.view from:from to:to popupParam:param];
+    }
+    
+}
     
     
 -(UIView *)getAlertView{
-    AlertNormal *alert = [[NSBundle mainBundle]loadNibNamed:@"AlertNormal"
-                                                      owner:nil
-                                                    options:nil].firstObject;
+    AlertNormal *alert = (AlertNormal *)[self getViewName:@"AlertNormal"];
     [alert observerSure:^{
         [alert tf_hide];
     }];
@@ -502,9 +560,7 @@
     
     
 -(UIView *)getListView{
-    ListView *list = [[NSBundle mainBundle]loadNibNamed:@"ListView"
-                                                  owner:nil
-                                                options:nil].firstObject;
+    ListView *list = (ListView *)[self getViewName:@"ListView"];
     [list observerSelected:^(NSString *data) {
         [list tf_hide];
     }];
@@ -512,12 +568,17 @@
 }
     
 -(UIView *)getBlankView{
-    BlankView *blank = [[NSBundle mainBundle]loadNibNamed:@"BlankView"
-                                                    owner:nil
-                                                  options:nil].firstObject;
+    BlankView *blank = (BlankView *)[self getViewName:@"BlankView"];
     return blank;
 }
-    
+
+
+-(UIView *)getViewName:(NSString *)name{
+    UIView *view = [[NSBundle mainBundle]loadNibNamed:name
+                                                    owner:nil
+                                                  options:nil].firstObject;
+    return view;
+}
     
     
 -(void)config{
@@ -529,6 +590,7 @@
     [all addObjectsFromArray:self.midButtons];
     [all addObjectsFromArray:self.botButtons];
     [all addObjectsFromArray:self.cusButtons];
+    [all addObjectsFromArray:self.excempleButtons];
     for (UIButton *bt in all) {
         bt.backgroundColor = [UIColor clearColor];
         bt.layer.cornerRadius = 10;
@@ -555,6 +617,10 @@
     }
     for (UIButton *bt in self.cusButtons) {
         [bt addTarget:self action:@selector(cusClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    }
+    for (UIButton *bt in self.excempleButtons) {
+        [bt addTarget:self action:@selector(excClick:)
      forControlEvents:UIControlEventTouchUpInside];
     }
     self.showButton.layer.cornerRadius = 20;
@@ -590,6 +656,13 @@
                         self.cusButton3,self.cusButton4,self.cusButton5];
     return cp;
 }
+
+-(NSArray *)excempleButtons{
+    NSArray *cp = @[self.excButton0,self.excButton1,self.excButton2,
+                    self.excButton3,self.excButton4,self.excButton5,
+                    self.excButton6,self.excButton7];
+    return cp;
+}
     
 -(TFPopupParam *)param{
     if (_param == nil) {
@@ -598,23 +671,23 @@
     return _param;
 }
     
-    static inline UIImage *colorToImage(UIColor *color){
-        CGRect rect = CGRectMake(0.0f,0.0f,1.0f,1.0f);
-        UIGraphicsBeginImageContext(rect.size);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetFillColorWithColor(context, [color CGColor]);
-        CGContextFillRect(context, rect);
-        UIImage *theImage=UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        return theImage;
-    }
-    
-    static inline UIColor *color(float r,float g,float b){
-        return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1];
-    }
-    
-    static inline NSString *title(UIButton *bt){
-        return [bt titleForState:UIControlStateNormal];
-    }
-    
-    @end
+static inline UIImage *colorToImage(UIColor *color){
+    CGRect rect = CGRectMake(0.0f,0.0f,1.0f,1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+
+static inline UIColor *color(float r,float g,float b){
+    return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1];
+}
+
+static inline NSString *title(UIButton *bt){
+    return [bt titleForState:UIControlStateNormal];
+}
+
+@end

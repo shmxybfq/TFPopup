@@ -45,7 +45,6 @@
           direction:(PopupDirection)direction
          popupParam:(TFPopupParam *)popupParam;
 
-
 -(void)tf_showBubble:(UIView *)inView
            basePoint:(CGPoint)basePoint
      bubbleDirection:(PopupDirection)bubbleDirection
@@ -55,7 +54,6 @@
                from:(CGRect)from
                  to:(CGRect)to
          popupParam:(TFPopupParam *)popupParam;
-
 
 -(void)tf_showMask:(UIView *)inView
         popupParam:(TFPopupParam *)popupParam;
