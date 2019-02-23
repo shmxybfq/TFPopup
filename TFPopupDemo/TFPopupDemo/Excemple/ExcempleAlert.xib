@@ -19,6 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="300" height="310"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" image="popup-1"/>
+                    <state key="highlighted" image="popup-1"/>
                     <connections>
                         <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="EUk-SO-Nku"/>
                     </connections>

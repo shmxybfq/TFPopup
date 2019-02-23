@@ -289,18 +289,20 @@
         
     }else if(self.custemIndex == 3){
         
-        UIView *blank = [self getAlertView];
-        blank.popupDelegate = self;
-        [blank tf_showNormal:self.view popupParam:self.param];
+        UIView *view = [self getViewName:@"ExcempleAlert"];
+        view.popupDelegate = self;
+        [view tf_showNormal:self.view popupParam:self.param];
         
     }else if(self.custemIndex == 4){
         
         self.param.duration = 1;
         self.param.disuseBackgroundAlphaAnimation = YES;
         self.param.disusePopupAlphaAnimation = YES;
-        UIView *blank = [self getAlertView];
-        blank.popupDelegate = self;
-        [blank tf_showNormal:self.view popupParam:self.param];
+        self.param.popupSize = kAlertSize;
+        UIView *view = [self getViewName:@"ExcempleAction"];
+
+        view.popupDelegate = self;
+        [view tf_showNormal:self.view popupParam:self.param];
         
     }else if(self.custemIndex == 5){
         
@@ -541,7 +543,6 @@
     
     if ([title(ins) isEqualToString:@"4"]) {
         UIView *view = [self getViewName:@"ExcempleUnfold"];
-        //UIView *view = [self getViewName:@"ListView"];
         TFPopupParam *param = [TFPopupParam new];
         param.popOriginFrame = CGRectMake(0, 100, kSize.width, 1);
         param.popTargetFrame = CGRectMake(0, 100, kSize.width, 320);
@@ -549,6 +550,36 @@
                       from:param.popOriginFrame
                         to:param.popTargetFrame
                 popupParam:param];
+    }
+    
+    if ([title(ins) isEqualToString:@"5"]) {
+        UIView *view = [self getViewName:@"ExcempleBubble"];
+        TFPopupParam *param = [TFPopupParam new];
+        param.popupSize = CGSizeMake(165, 165);
+        param.offset = CGPointMake(15, 10);
+        param.backgroundColorClear = YES;
+        [view tf_showBubble:self.view
+                  basePoint:self.view.center
+            bubbleDirection:PopupDirectionBottomLeft
+                 popupParam:param];
+    }
+    
+    if ([title(ins) isEqualToString:@"6"]) {
+        UIView *big = [self getViewName:@"ExcempleSliderBig"];
+        TFPopupParam *paramBig = [TFPopupParam new];
+        [big tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramBig];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UIView *small = [self getViewName:@"ExcempleSliderSmall"];
+            TFPopupParam *paramSmall = [TFPopupParam new];
+            [small tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramSmall];
+        });
+    }
+    if ([title(ins) isEqualToString:@"7"]) {
+        UIView *big = [self getViewName:@"ExcempleSliderLogin"];
+        TFPopupParam *param = [TFPopupParam new];
+        param.popupSize = kSize;
+        [big tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
     }
     
 }

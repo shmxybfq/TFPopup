@@ -15,8 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="165" height="165"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJ5-iV-dHa">
+                <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJ5-iV-dHa">
                     <rect key="frame" x="0.0" y="0.0" width="165" height="165"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" backgroundImage="popup-6"/>
                     <connections>
@@ -25,12 +26,6 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="JJ5-iV-dHa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="4q8-KI-Bha"/>
-                <constraint firstAttribute="trailing" secondItem="JJ5-iV-dHa" secondAttribute="trailing" id="CA8-tF-9VM"/>
-                <constraint firstAttribute="bottom" secondItem="JJ5-iV-dHa" secondAttribute="bottom" id="btr-IR-XtX"/>
-                <constraint firstItem="JJ5-iV-dHa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="nbv-Ru-Trc"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>

@@ -18,15 +18,27 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAH-Rw-iJZ">
                     <rect key="frame" x="0.0" y="0.0" width="370" height="226"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" backgroundImage="popup-2"/>
+                    <state key="normal" image="popup-2"/>
+                    <state key="highlighted" image="popup-2"/>
                     <connections>
                         <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZE1-dV-Q1x"/>
                     </connections>
                 </button>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PAd-E5-akT">
+                    <rect key="frame" x="84" y="25" width="213" height="30"/>
+                    <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="PAd-E5-akT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="84" id="12z-f7-mZ0"/>
                 <constraint firstItem="MAH-Rw-iJZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3mR-sK-v5K"/>
+                <constraint firstAttribute="bottom" secondItem="PAd-E5-akT" secondAttribute="bottom" constant="171" id="4XO-BA-9zp"/>
+                <constraint firstItem="PAd-E5-akT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="VBP-iB-USX"/>
+                <constraint firstAttribute="trailing" secondItem="PAd-E5-akT" secondAttribute="trailing" constant="73" id="d3G-Nk-1p5"/>
                 <constraint firstAttribute="bottom" secondItem="MAH-Rw-iJZ" secondAttribute="bottom" id="kRH-wt-dUM"/>
                 <constraint firstItem="MAH-Rw-iJZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qcU-Dy-VfG"/>
                 <constraint firstAttribute="trailing" secondItem="MAH-Rw-iJZ" secondAttribute="trailing" id="zbx-ny-3zr"/>

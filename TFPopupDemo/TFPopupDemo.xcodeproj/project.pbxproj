@@ -40,6 +40,9 @@
 		209D0768221EA4D2007570EB /* ExcempleBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0767221EA4D2007570EB /* ExcempleBubble.xib */; };
 		209D076A221EA560007570EB /* ExcempleSliderBig.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D0769221EA560007570EB /* ExcempleSliderBig.xib */; };
 		209D076C221EA5D9007570EB /* ExcempleSliderSmall.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */; };
+		209D08AF222100E2007570EB /* ExcempleSliderLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D08AE222100E2007570EB /* ExcempleSliderLogin.m */; };
+		209D08B322210128007570EB /* ExcempleSliderLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D08B222210128007570EB /* ExcempleSliderLogin.xib */; };
+		9616B610F835B20255614A5C /* libPods-TFPopupDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +100,12 @@
 		209D0767221EA4D2007570EB /* ExcempleBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleBubble.xib; sourceTree = "<group>"; };
 		209D0769221EA560007570EB /* ExcempleSliderBig.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSliderBig.xib; sourceTree = "<group>"; };
 		209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSliderSmall.xib; sourceTree = "<group>"; };
+		209D08AD222100E2007570EB /* ExcempleSliderLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleSliderLogin.h; sourceTree = "<group>"; };
+		209D08AE222100E2007570EB /* ExcempleSliderLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleSliderLogin.m; sourceTree = "<group>"; };
+		209D08B222210128007570EB /* ExcempleSliderLogin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSliderLogin.xib; sourceTree = "<group>"; };
+		6197EE904FA632423BA6B224 /* Pods-TFPopupDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TFPopupDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9616B610F835B20255614A5C /* libPods-TFPopupDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +125,8 @@
 			children = (
 				203DD46921EC6B22004ACC42 /* TFPopupDemo */,
 				203DD46821EC6B22004ACC42 /* Products */,
+				7BDA464C15B5A9A7301ECB51 /* Pods */,
+				72DDF49942EC131C6052E6B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -207,8 +219,28 @@
 				209D075A221EA1A6007570EB /* ExcempleSliderSmall.h */,
 				209D075B221EA1A6007570EB /* ExcempleSliderSmall.m */,
 				209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */,
+				209D08AD222100E2007570EB /* ExcempleSliderLogin.h */,
+				209D08AE222100E2007570EB /* ExcempleSliderLogin.m */,
+				209D08B222210128007570EB /* ExcempleSliderLogin.xib */,
 			);
 			path = Excemple;
+			sourceTree = "<group>";
+		};
+		72DDF49942EC131C6052E6B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7BDA464C15B5A9A7301ECB51 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6197EE904FA632423BA6B224 /* Pods-TFPopupDemo.debug.xcconfig */,
+				D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,9 +250,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 203DD47D21EC6B23004ACC42 /* Build configuration list for PBXNativeTarget "TFPopupDemo" */;
 			buildPhases = (
+				578629ADC1A1BDA15729B409 /* [CP] Check Pods Manifest.lock */,
 				203DD46321EC6B22004ACC42 /* Sources */,
 				203DD46421EC6B22004ACC42 /* Frameworks */,
 				203DD46521EC6B22004ACC42 /* Resources */,
+				E9A38E10CAE0C68E67B1133D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,6 +308,7 @@
 				209D0762221EA36D007570EB /* ExcempleNotification.xib in Resources */,
 				2024EEF021F892A700DEC84A /* ListView.xib in Resources */,
 				203DD49021EC847F004ACC42 /* AlertNormal.xib in Resources */,
+				209D08B322210128007570EB /* ExcempleSliderLogin.xib in Resources */,
 				209D0760221EA2F6007570EB /* ExcempleAction.xib in Resources */,
 				203DD47421EC6B22004ACC42 /* Assets.xcassets in Resources */,
 				209D0766221EA45F007570EB /* ExcempleUnfold.xib in Resources */,
@@ -286,6 +321,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		578629ADC1A1BDA15729B409 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TFPopupDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9A38E10CAE0C68E67B1133D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		203DD46321EC6B22004ACC42 /* Sources */ = {
@@ -303,6 +377,7 @@
 				209D0747221EA0EA007570EB /* ExcempleAlert.m in Sources */,
 				2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */,
 				2024EEC221F71B9900DEC84A /* BlankView.m in Sources */,
+				209D08AF222100E2007570EB /* ExcempleSliderLogin.m in Sources */,
 				209D074D221EA127007570EB /* ExcempleNotification.m in Sources */,
 				209D0759221EA197007570EB /* ExcempleSliderBig.m in Sources */,
 				203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */,
@@ -450,6 +525,7 @@
 		};
 		203DD47E21EC6B23004ACC42 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6197EE904FA632423BA6B224 /* Pods-TFPopupDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
@@ -469,6 +545,7 @@
 		};
 		203DD47F21EC6B23004ACC42 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;

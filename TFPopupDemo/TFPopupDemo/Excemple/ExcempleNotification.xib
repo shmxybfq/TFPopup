@@ -18,7 +18,8 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlC-oh-4ov">
                     <rect key="frame" x="0.0" y="0.0" width="396" height="78"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" backgroundImage="popup-3"/>
+                    <state key="normal" image="popup-3"/>
+                    <state key="highlighted" image="popup-3"/>
                     <connections>
                         <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="tTM-rL-zDD"/>
                     </connections>
