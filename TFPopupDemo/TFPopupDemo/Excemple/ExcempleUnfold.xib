@@ -15,8 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rnv-Ie-2f2">
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rnv-Ie-2f2">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="320"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" backgroundImage="popup-5"/>
                     <connections>
@@ -25,12 +26,6 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="Rnv-Ie-2f2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="D9D-fC-Exw"/>
-                <constraint firstAttribute="trailing" secondItem="Rnv-Ie-2f2" secondAttribute="trailing" id="Gut-kf-cbW"/>
-                <constraint firstItem="Rnv-Ie-2f2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OYh-or-yeu"/>
-                <constraint firstAttribute="bottom" secondItem="Rnv-Ie-2f2" secondAttribute="bottom" id="Xg9-fS-7H2"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>

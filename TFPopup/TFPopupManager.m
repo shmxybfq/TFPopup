@@ -53,9 +53,9 @@
         [self.delegate tf_popupManager_willShow:self
                                   tellToManager:^(BOOL stopDefaultAnimation,
                                                   NSTimeInterval duration) {
-            breakAnimation = stopDefaultAnimation;
-            weakself.custemAnimationDuration = duration;
-        }];
+                                      breakAnimation = stopDefaultAnimation;
+                                      weakself.custemAnimationDuration = duration;
+                                  }];
     }
     if (breakAnimation == YES) return;
     
@@ -105,10 +105,10 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                    weakself.popForBackgroundView.alpha = 1;
-                                } completion:^(BOOL finished) {
-                                    [weakself finishShow:TFPopupDefaultAnimationBackgroundAlpha isAnimationShow:YES];
-                                }];
+                                 weakself.popForBackgroundView.alpha = 1;
+                             } completion:^(BOOL finished) {
+                                 [weakself finishShow:TFPopupDefaultAnimationBackgroundAlpha isAnimationShow:YES];
+                             }];
         }else{
             if(self.popForBackgroundView != nil) self.popForBackgroundView.alpha = 1;
             [self finishShow:TFPopupDefaultAnimationBackgroundAlpha isAnimationShow:NO];
@@ -119,10 +119,10 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                    weakself.popBoardView.alpha = 1;
-                                } completion:^(BOOL finished) {
-                                    [weakself finishShow:TFPopupDefaultAnimationPopBoardAlpha isAnimationShow:YES];
-                                }];
+                                 weakself.popBoardView.alpha = 1;
+                             } completion:^(BOOL finished) {
+                                 [weakself finishShow:TFPopupDefaultAnimationPopBoardAlpha isAnimationShow:YES];
+                             }];
         }else{
             if(self.popBoardView != nil) self.popBoardView.alpha = 1;
             [self finishShow:TFPopupDefaultAnimationPopBoardAlpha isAnimationShow:NO];
@@ -134,10 +134,10 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                    weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
-                                } completion:^(BOOL finished) {
-                                    [weakself finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:YES];
-                                }];
+                                 weakself.popBoardView.frame = weakself.popBoardViewEndFrame;
+                             } completion:^(BOOL finished) {
+                                 [weakself finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:YES];
+                             }];
         }else{
             if(self.popBoardView != nil) self.popBoardView.frame = weakself.popBoardViewEndFrame;
             [self finishShow:TFPopupDefaultAnimationPopBoardFrame isAnimationShow:NO];
@@ -160,9 +160,9 @@
         [self.delegate tf_popupManager_willHide:self
                                   tellToManager:^(BOOL stopDefaultAnimation,
                                                   NSTimeInterval duration) {
-            breakAnimation = stopDefaultAnimation;
-            weakself.custemAnimationDuration = duration;
-        }];
+                                      breakAnimation = stopDefaultAnimation;
+                                      weakself.custemAnimationDuration = duration;
+                                  }];
     }
     if (breakAnimation == YES) return;
     
@@ -208,12 +208,12 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                    weakself.popForBackgroundView.alpha = 0;
-                                } completion:^(BOOL finished) {
-                                    [weakself finishHide:TFPopupDefaultAnimationBackgroundAlpha
-                                         isAnimationHide:YES];
-                                    [weakself.popForBackgroundView removeFromSuperview];
-                                }];
+                                 weakself.popForBackgroundView.alpha = 0;
+                             } completion:^(BOOL finished) {
+                                 [weakself finishHide:TFPopupDefaultAnimationBackgroundAlpha
+                                      isAnimationHide:YES];
+                                 [weakself.popForBackgroundView removeFromSuperview];
+                             }];
         }else{
             [self finishHide:TFPopupDefaultAnimationBackgroundAlpha isAnimationHide:NO];
             if(self.popForBackgroundView) [self.popForBackgroundView removeFromSuperview];
@@ -225,12 +225,12 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                    weakself.popBoardView.alpha = 0;
-                                } completion:^(BOOL finished) {
-                                    [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha
-                                         isAnimationHide:YES];
-                                    [weakself.popBoardView removeFromSuperview];
-                                }];
+                                 weakself.popBoardView.alpha = 0;
+                             } completion:^(BOOL finished) {
+                                 [weakself finishHide:TFPopupDefaultAnimationPopBoardAlpha
+                                      isAnimationHide:YES];
+                                 [weakself.popBoardView removeFromSuperview];
+                             }];
         }else{
             [self finishHide:TFPopupDefaultAnimationPopBoardAlpha isAnimationHide:NO];
         }
@@ -241,11 +241,12 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
-                                    weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
-                                } completion:^(BOOL finished) {
-                                    [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:YES];
-                                    [weakself.popBoardView removeFromSuperview];
-                                }];
+                                 weakself.popBoardView.frame = weakself.popBoardViewBeginFrame;
+                             } completion:^(BOOL finished) {
+                                 [weakself finishHide:TFPopupDefaultAnimationPopBoardFrame
+                                      isAnimationHide:YES];
+                                 [weakself.popBoardView removeFromSuperview];
+                             }];
         }else{
             [self finishHide:TFPopupDefaultAnimationPopBoardFrame  isAnimationHide:NO];
         }
@@ -273,7 +274,7 @@
         }
     }
 }
-    
+
 
 
 static inline BOOL animationContain(TFPopupDefaultAnimation total,TFPopupDefaultAnimation sub){
@@ -282,7 +283,7 @@ static inline BOOL animationContain(TFPopupDefaultAnimation total,TFPopupDefault
     }
     return NO;
 }
-    
+
 
 -(void)finishShow:(TFPopupDefaultAnimation)animation isAnimationShow:(BOOL)isAnimationShow{
     SEL sel = @selector(tf_popupManager_didShow:defaultAnimation:isAnimationShow:);

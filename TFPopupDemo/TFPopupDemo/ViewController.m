@@ -541,10 +541,14 @@
     
     if ([title(ins) isEqualToString:@"4"]) {
         UIView *view = [self getViewName:@"ExcempleUnfold"];
+        //UIView *view = [self getViewName:@"ListView"];
         TFPopupParam *param = [TFPopupParam new];
-        CGRect from = CGRectMake(0, 100, kSize.width, 0);
-        CGRect to = CGRectMake(0, 100, kSize.width, 320);
-        [view tf_showFrame:self.view from:from to:to popupParam:param];
+        param.popOriginFrame = CGRectMake(0, 100, kSize.width, 1);
+        param.popTargetFrame = CGRectMake(0, 100, kSize.width, 320);
+        [view tf_showFrame:self.view
+                      from:param.popOriginFrame
+                        to:param.popTargetFrame
+                popupParam:param];
     }
     
 }
