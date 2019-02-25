@@ -16,10 +16,8 @@
 
 -(void)awakeFromNib{
     [super awakeFromNib];
-    self.layer.cornerRadius = 6;
-    self.layer.masksToBounds = YES;
-    
-    
+//    self.layer.cornerRadius = 6;
+//    self.layer.masksToBounds = YES;
 }
 - (IBAction)sure:(id)sender {
     if (self.block) {

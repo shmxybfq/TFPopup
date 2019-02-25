@@ -15,11 +15,11 @@
             <rect key="frame" x="0.0" y="0.0" width="165" height="165"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJ5-iV-dHa">
+                <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJ5-iV-dHa">
                     <rect key="frame" x="0.0" y="0.0" width="165" height="165"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" backgroundImage="popup-6"/>
+                    <state key="normal" image="popup-6"/>
                     <connections>
                         <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="le6-QY-G7E"/>
                     </connections>

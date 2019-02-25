@@ -707,6 +707,15 @@
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dig-ra-zC4">
+                                <rect key="frame" x="335" y="20" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="HBN-Pf-yVp"/>
+                                    <constraint firstAttribute="height" constant="40" id="bNo-a1-qpv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                <state key="normal" title="+"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -717,6 +726,7 @@
                             <constraint firstItem="eIT-FH-Gc4" firstAttribute="top" secondItem="SOJ-ce-oNy" secondAttribute="bottom" id="LDx-Yn-s1j"/>
                             <constraint firstItem="eIT-FH-Gc4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Len-vd-Cy8"/>
                             <constraint firstItem="SPv-5h-UTH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Ocn-ts-khi"/>
+                            <constraint firstAttribute="trailing" secondItem="Dig-ra-zC4" secondAttribute="trailing" id="QtE-Ob-k7A"/>
                             <constraint firstItem="SOJ-ce-oNy" firstAttribute="top" secondItem="BXV-Dp-paY" secondAttribute="bottom" id="Srt-97-fEN"/>
                             <constraint firstAttribute="trailing" secondItem="SPv-5h-UTH" secondAttribute="trailing" id="UoG-fx-bwG"/>
                             <constraint firstItem="BXV-Dp-paY" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Uua-ew-Wr0"/>
@@ -724,6 +734,7 @@
                             <constraint firstAttribute="trailing" secondItem="eIT-FH-Gc4" secondAttribute="trailing" id="WFR-QA-pZX"/>
                             <constraint firstItem="BXV-Dp-paY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="XmJ-de-4MT"/>
                             <constraint firstItem="8Up-us-ycD" firstAttribute="top" secondItem="cnN-XI-Sdf" secondAttribute="bottom" id="Z9F-aj-bQl"/>
+                            <constraint firstItem="SOJ-ce-oNy" firstAttribute="top" secondItem="Dig-ra-zC4" secondAttribute="bottom" constant="4" id="fpQ-Sa-P8U"/>
                             <constraint firstItem="cnN-XI-Sdf" firstAttribute="top" secondItem="eIT-FH-Gc4" secondAttribute="bottom" id="qLy-0G-lGl"/>
                             <constraint firstAttribute="trailing" secondItem="SOJ-ce-oNy" secondAttribute="trailing" id="qM0-7A-UHE"/>
                             <constraint firstItem="i7E-dP-D50" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qaH-0T-UMl"/>

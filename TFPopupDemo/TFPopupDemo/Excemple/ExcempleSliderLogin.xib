@@ -19,6 +19,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="Button" image="popup-9"/>
+                    <state key="highlighted" image="popup-9"/>
+                    <connections>
+                        <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZAi-Y6-VY1"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

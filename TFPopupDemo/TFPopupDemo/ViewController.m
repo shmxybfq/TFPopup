@@ -511,6 +511,11 @@
     return NO;
 }
 
+-(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup{
+    [self.view endEditing:YES];
+    return NO;
+}
+
 
 -(void)excClick:(UIButton *)ins{
     if ([title(ins) isEqualToString:@"0"]) {
@@ -522,7 +527,9 @@
         
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, -60);
+        param.disuseBackgroundTouchHide = YES;
         param.popupSize = CGSizeMake(360, 226);
+        view.popupDelegate = self;
         [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
     }
     
@@ -557,9 +564,9 @@
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = CGSizeMake(165, 165);
         param.offset = CGPointMake(15, 10);
-        param.backgroundColorClear = YES;
+        param.backgroundColorClear = NO;
         [view tf_showBubble:self.view
-                  basePoint:self.view.center
+                  basePoint:CGPointMake([UIScreen mainScreen].bounds.size.width - 20, 40)
             bubbleDirection:PopupDirectionBottomLeft
                  popupParam:param];
     }
@@ -569,7 +576,7 @@
         TFPopupParam *paramBig = [TFPopupParam new];
         [big tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramBig];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             UIView *small = [self getViewName:@"ExcempleSliderSmall"];
             TFPopupParam *paramSmall = [TFPopupParam new];
             [small tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramSmall];
