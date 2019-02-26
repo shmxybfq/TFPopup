@@ -42,6 +42,8 @@
 		209D076C221EA5D9007570EB /* ExcempleSliderSmall.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D076B221EA5D9007570EB /* ExcempleSliderSmall.xib */; };
 		209D08AF222100E2007570EB /* ExcempleSliderLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 209D08AE222100E2007570EB /* ExcempleSliderLogin.m */; };
 		209D08B322210128007570EB /* ExcempleSliderLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209D08B222210128007570EB /* ExcempleSliderLogin.xib */; };
+		20F43CC0222416EB00C62A38 /* ExcempleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F43CBE222416EB00C62A38 /* ExcempleViewController.m */; };
+		20F43CC1222416EB00C62A38 /* ExcempleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F43CBF222416EB00C62A38 /* ExcempleViewController.xib */; };
 		9616B610F835B20255614A5C /* libPods-TFPopupDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +105,9 @@
 		209D08AD222100E2007570EB /* ExcempleSliderLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleSliderLogin.h; sourceTree = "<group>"; };
 		209D08AE222100E2007570EB /* ExcempleSliderLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleSliderLogin.m; sourceTree = "<group>"; };
 		209D08B222210128007570EB /* ExcempleSliderLogin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleSliderLogin.xib; sourceTree = "<group>"; };
+		20F43CBD222416EB00C62A38 /* ExcempleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExcempleViewController.h; sourceTree = "<group>"; };
+		20F43CBE222416EB00C62A38 /* ExcempleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExcempleViewController.m; sourceTree = "<group>"; };
+		20F43CBF222416EB00C62A38 /* ExcempleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleViewController.xib; sourceTree = "<group>"; };
 		6197EE904FA632423BA6B224 /* Pods-TFPopupDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TFPopupDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +150,9 @@
 				203DD46B21EC6B22004ACC42 /* AppDelegate.m */,
 				203DD46D21EC6B22004ACC42 /* ViewController.h */,
 				203DD46E21EC6B22004ACC42 /* ViewController.m */,
+				20F43CBD222416EB00C62A38 /* ExcempleViewController.h */,
+				20F43CBE222416EB00C62A38 /* ExcempleViewController.m */,
+				20F43CBF222416EB00C62A38 /* ExcempleViewController.xib */,
 				209D0744221EA0B5007570EB /* Excemple */,
 				203DD48B21EC8456004ACC42 /* DemoView */,
 				203DD48021EC6B78004ACC42 /* TFPopup */,
@@ -315,6 +323,7 @@
 				209D0764221EA3E1007570EB /* ExcempleSign.xib in Resources */,
 				203DD47221EC6B22004ACC42 /* Main.storyboard in Resources */,
 				209D076C221EA5D9007570EB /* ExcempleSliderSmall.xib in Resources */,
+				20F43CC1222416EB00C62A38 /* ExcempleViewController.xib in Resources */,
 				209D0768221EA4D2007570EB /* ExcempleBubble.xib in Resources */,
 				209D075E221EA1B7007570EB /* ExcempleAlert.xib in Resources */,
 			);
@@ -369,6 +378,7 @@
 				203DD48421EC6BD9004ACC42 /* TFPopupManager.m in Sources */,
 				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
 				203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */,
+				20F43CC0222416EB00C62A38 /* ExcempleViewController.m in Sources */,
 				203DD47A21EC6B23004ACC42 /* main.m in Sources */,
 				209D074A221EA106007570EB /* ExcempleAction.m in Sources */,
 				2024EEEE21F8929C00DEC84A /* ListView.m in Sources */,

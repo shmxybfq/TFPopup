@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="370" height="226"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAH-Rw-iJZ">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAH-Rw-iJZ">
                     <rect key="frame" x="0.0" y="0.0" width="370" height="226"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" image="popup-2"/>
@@ -35,13 +35,13 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="PAd-E5-akT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="84" id="12z-f7-mZ0"/>
-                <constraint firstItem="MAH-Rw-iJZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3mR-sK-v5K"/>
                 <constraint firstAttribute="bottom" secondItem="PAd-E5-akT" secondAttribute="bottom" constant="171" id="4XO-BA-9zp"/>
+                <constraint firstAttribute="trailing" secondItem="MAH-Rw-iJZ" secondAttribute="trailing" id="KVz-th-Ddk"/>
+                <constraint firstAttribute="bottom" secondItem="MAH-Rw-iJZ" secondAttribute="bottom" id="Unn-VE-OIf"/>
                 <constraint firstItem="PAd-E5-akT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="VBP-iB-USX"/>
+                <constraint firstItem="MAH-Rw-iJZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZY5-Ju-iRK"/>
                 <constraint firstAttribute="trailing" secondItem="PAd-E5-akT" secondAttribute="trailing" constant="73" id="d3G-Nk-1p5"/>
-                <constraint firstAttribute="bottom" secondItem="MAH-Rw-iJZ" secondAttribute="bottom" id="kRH-wt-dUM"/>
-                <constraint firstItem="MAH-Rw-iJZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qcU-Dy-VfG"/>
-                <constraint firstAttribute="trailing" secondItem="MAH-Rw-iJZ" secondAttribute="trailing" id="zbx-ny-3zr"/>
+                <constraint firstItem="MAH-Rw-iJZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="l4f-Sv-mNS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="52.799999999999997" y="48.575712143928037"/>
