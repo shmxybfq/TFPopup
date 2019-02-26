@@ -12,7 +12,8 @@
 
 @protocol TFPopupDelegate<NSObject>
 @optional;
--(UIView *)tf_popupCustemBackgroundView:(TFPopupManager *)manager popup:(UIView *)popup;
+-(UIView *)tf_popupCustemBackgroundView:(TFPopupManager *)manager
+                                  popup:(UIView *)popup;
 -(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
 -(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
 -(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
