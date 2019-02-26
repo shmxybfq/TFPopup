@@ -62,14 +62,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *cusButton4;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton5;
 
-@property (weak, nonatomic) IBOutlet UIButton *excButton0;
-@property (weak, nonatomic) IBOutlet UIButton *excButton1;
-@property (weak, nonatomic) IBOutlet UIButton *excButton2;
-@property (weak, nonatomic) IBOutlet UIButton *excButton3;
-@property (weak, nonatomic) IBOutlet UIButton *excButton4;
-@property (weak, nonatomic) IBOutlet UIButton *excButton5;
-@property (weak, nonatomic) IBOutlet UIButton *excButton6;
-@property (weak, nonatomic) IBOutlet UIButton *excButton7;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField0;
 @property (weak, nonatomic) IBOutlet UITextField *textField1;
@@ -81,6 +73,7 @@
 @property(nonatomic,strong)NSArray *botButtons;
 @property(nonatomic,strong)NSArray *cusButtons;
 @property(nonatomic,strong)NSArray *excempleButtons;
+@property (weak, nonatomic) IBOutlet UIButton *watchExcempleButton;
 
 @property(nonatomic,strong)TFPopupParam *param;
 @property(nonatomic,  copy)NSString *animationType;
@@ -106,8 +99,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    ExcempleViewController *con = [[ExcempleViewController alloc]initWithNibName:@"ExcempleViewController" bundle:nil];
-    [self presentViewController:con animated:YES completion:nil];
+    
 }
     
     
@@ -162,7 +154,8 @@
         self.param.popupSize = CGSizeMake(150, 250);
         
         UIView *popup = [self getListView];
-        
+        popup.layer.borderColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.5].CGColor;
+        popup.layer.borderWidth = 1;
         [popup tf_showBubble:self.view
                    basePoint:self.redPoint.center
              bubbleDirection:self.popupDirection
@@ -269,7 +262,7 @@
         self.param.popTargetFrame = CGRectMake(0, 32, 200, self.view.frame.size.height - 32);
     }
 }
-    
+
 -(UIView *)getAlertView{
     AlertNormal *alert = (AlertNormal *)[self getViewName:@"AlertNormal"];
     [alert observerSure:^{
@@ -310,7 +303,6 @@
     [all addObjectsFromArray:self.midButtons];
     [all addObjectsFromArray:self.botButtons];
     [all addObjectsFromArray:self.cusButtons];
-    [all addObjectsFromArray:self.excempleButtons];
     for (UIButton *bt in all) {
         bt.backgroundColor = [UIColor clearColor];
         bt.layer.cornerRadius = 10;
@@ -335,14 +327,6 @@
         [bt addTarget:self action:@selector(botClick:)
      forControlEvents:UIControlEventTouchUpInside];
     }
-    for (UIButton *bt in self.cusButtons) {
-        [bt addTarget:self action:@selector(cusClick:)
-     forControlEvents:UIControlEventTouchUpInside];
-    }
-    for (UIButton *bt in self.excempleButtons) {
-        [bt addTarget:self action:@selector(excClick:)
-     forControlEvents:UIControlEventTouchUpInside];
-    }
     self.showButton.layer.cornerRadius = 20;
     [self.showButton addTarget:self
                         action:@selector(showClick:)
@@ -350,8 +334,17 @@
     
     self.redPoint.layer.cornerRadius = 5;
     
-}
     
+    [self.watchExcempleButton addTarget:self
+                                 action:@selector(watchExcempleButtonClick)
+                       forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)watchExcempleButtonClick{
+    ExcempleViewController *con = [[ExcempleViewController alloc]initWithNibName:@"ExcempleViewController" bundle:nil];
+    [self presentViewController:con animated:YES completion:nil];
+}
+
 -(NSArray *)topButtons{
     NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,
                         self.topButton3,self.topButton4,self.topButton5,
@@ -377,12 +370,7 @@
     return cp;
 }
 
--(NSArray *)excempleButtons{
-    NSArray *cp = @[self.excButton0,self.excButton1,self.excButton2,
-                    self.excButton3,self.excButton4,self.excButton5,
-                    self.excButton6,self.excButton7];
-    return cp;
-}
+
     
 -(TFPopupParam *)param{
     if (_param == nil) {

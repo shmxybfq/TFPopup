@@ -42,6 +42,8 @@
 
 @property(nonatomic,  copy)NSString *selectedTitle;
 
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+
 @end
 
 @implementation ExcempleViewController
@@ -81,8 +83,14 @@
      forControlEvents:UIControlEventTouchUpInside];
     }
     
+    [self.backButton addTarget:self
+                        action:@selector(backButtonClick)
+              forControlEvents:UIControlEventTouchUpInside];
 }
 
+-(void)backButtonClick{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 -(void)cusClick:(UIButton *)ins{
    
@@ -330,8 +338,9 @@
         UIView *view = [self getViewName:@"ExcempleAction"];
         
         TFPopupParam *param = [TFPopupParam new];
-        param.offset = CGPointMake(0, -60);
+        param.offset = CGPointMake(0, -200);
         param.disuseBackgroundTouchHide = YES;
+        param.disusePopupAlphaAnimation = YES;
         param.popupSize = CGSizeMake(360, 226);
         view.popupDelegate = self;
         [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
@@ -362,7 +371,6 @@
         UIView *view = [self getViewName:@"ExcempleUnfold"];
         TFPopupParam *param = [TFPopupParam new];
         param.disusePopupAlphaAnimation = YES;
-        param.backgroundColorClear = YES;
         param.popOriginFrame = CGRectMake(0, 104, kSize.width, 1);
         param.popTargetFrame = CGRectMake(0, 104, kSize.width, 320);
         [view tf_showFrame:self.view
@@ -378,7 +386,7 @@
         UIView *view = [self getViewName:@"ExcempleBubble"];
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = CGSizeMake(165, 165);
-        param.offset = CGPointMake(15, 10);
+        param.offset = CGPointMake(10, 10);
         param.backgroundColorClear = NO;
         [view tf_showBubble:self.view
                   basePoint:CGPointMake([UIScreen mainScreen].bounds.size.width - 20, 40)
