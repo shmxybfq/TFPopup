@@ -257,6 +257,7 @@
     if ([title(ins) isEqualToString:@"左上"]) self.popupDirection = PopupDirectionLeftTop;
     if ([title(ins) isEqualToString:@"中"]) self.popupDirection = PopupDirectionContainerCenter;
     if ([title(ins) isEqualToString:@"随意"]) {
+        
         self.popupDirection = PopupDirectionFrame;
         self.param.popOriginFrame = CGRectMake(-200, 32, 200, self.view.frame.size.height - 32);
         self.param.popTargetFrame = CGRectMake(0, 32, 200, self.view.frame.size.height - 32);

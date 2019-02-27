@@ -21,7 +21,7 @@
 #import "ExcempleSliderBig.h"
 #import "ExcempleSliderSmall.h"
 #import "ExcempleSliderLogin.h"
-
+#import "TFPopupToast.h"
 #define kSize [UIScreen mainScreen].bounds.size
 #define kAlertSize CGSizeMake(314, 170)
 
@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cusButton1;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton2;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton3;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton4;
 
 @property (weak, nonatomic) IBOutlet UIButton *excButton0;
 @property (weak, nonatomic) IBOutlet UIButton *excButton1;
@@ -128,6 +129,14 @@
         
         view.popupDelegate = self;
         [view tf_showNormal:self.view popupParam:param];
+        
+    }else if([title(ins) isEqualToString:@"自定义5"]){
+        
+        NSString *msg = @"我是基于TFPopup制作的弹框我是基于TFPopup制作的弹框我是基于TFPopup制作的弹框";
+        [TFPopupToast tf_show:self.view msg:msg offset:CGPointMake(0, -100) dissmissDuration:1.5 animationType:TFToastAnimationTypeScale custemBlock:^(TFPopupToast *toast) {
+            //toast.msgLabel.textColor = [UIColor redColor];
+            //toast.backgroundColor = [UIColor purpleColor];
+        }];
     }
 }
 
@@ -478,7 +487,7 @@ static inline NSString *title(UIButton *bt){
 
 
 -(NSArray *)cusButtons{
-    NSArray *cp = @[self.cusButton0,self.cusButton1,self.cusButton2,self.cusButton3];
+    NSArray *cp = @[self.cusButton0,self.cusButton1,self.cusButton2,self.cusButton3,self.cusButton4];
     return cp;
 }
 

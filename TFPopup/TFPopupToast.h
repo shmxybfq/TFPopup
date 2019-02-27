@@ -8,28 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger,TFToastAnimationType) {
+    TFToastAnimationTypeFade,
+    TFToastAnimationTypeScale,
+};
+
 @class TFPopupToast;
 typedef void(^TFPopupToastBlock)(TFPopupToast *toast);
 
 @interface TFPopupToast : UIView
 
-@property(nonatomic,  copy)NSString *msg;
 @property(nonatomic,strong)UILabel  *msgLabel;
-@property(nonatomic,assign)NSTimeInterval animtionDuration;
-@property(nonatomic,assign)NSTimeInterval autoDissDuration;
 
++(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFToastAnimationType)animationType;
 
-+(void)showToast:(UIView *)inView msg:(NSString *)msg;
-
-+(void)showToast:(UIView *)inView
-             msg:(NSString *)msg
- animationFinish:(TFPopupToastBlock)animationFinishBlock;
-
-+(void)showToast:(UIView *)inView
-             msg:(NSString *)msg
-      custemShow:(TFPopupToastBlock)custemShowBlock
-      custemHide:(TFPopupToastBlock)custemHideBlock
- animationFinish:(TFPopupToastBlock)animationFinishBlock;
++(void)tf_show:(UIView *)inView
+           msg:(NSString *)msg
+        offset:(CGPoint)offset
+dissmissDuration:(NSTimeInterval)duration
+ animationType:(TFToastAnimationType)animationType
+   custemBlock:(TFPopupToastBlock)custemBlock;
 
 @end
 
