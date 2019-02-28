@@ -2,7 +2,7 @@
 //  ExcempleSliderLogin.h
 //  TFPopupDemo
 //
-//  Created by Time on 2019/2/23.
+//  Created by ztf on 2019/2/23.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 

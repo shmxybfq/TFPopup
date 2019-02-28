@@ -2,7 +2,7 @@
 //  UIView+TFPopup.m
 //  TFPopupDemo
 //
-//  Created by Time on 2019/1/14.
+//  Created by ztf on 2019/1/14.
 //  Copyright © 2019年 ztf. All rights reserved.
 //
 
@@ -507,6 +507,7 @@
     if (self.popupParam.disuseBackgroundTouchHide == NO) {
         [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
     }
+    
 }
 
 #pragma mark -- 代理 TFPopupDelegate 方法

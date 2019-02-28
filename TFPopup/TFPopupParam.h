@@ -2,7 +2,7 @@
 //  TFPopupParam.h
 //  TFPopupDemo
 //
-//  Created by Time on 2019/1/18.
+//  Created by ztf on 2019/1/18.
 //  Copyright © 2019年 ztf. All rights reserved.
 //
 
@@ -11,7 +11,6 @@
 
 typedef NS_ENUM(NSInteger,PopupDirection) {
     PopupDirectionContainerCenter = 0,
-    PopupDirectionBaseponitCenter,
     PopupDirectionTop,
     PopupDirectionTopRight,
     PopupDirectionRight,
@@ -55,17 +54,19 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 @property(nonatomic,assign)BOOL disuseBackgroundAlphaAnimation;
 
 
-/* 【全局属性】弹框动画
+/* 【全局属性】弹框渐隐动画
  disusePopupAlphaAnimation,弹出框是否叠加使用渐隐动画
  */
 @property(nonatomic,assign)BOOL disusePopupAlphaAnimation;
 
 
 /* 【全局属性】弹框尺寸和区域
- popupAreaRect,弹框所在区域尺寸,default=父视图的bounds,不设置弹框尺寸是参与计算弹框的位置和大小
- popupSize,弹框尺寸,default=弹框的frame.size,优先级popupSize<popupFrame
- popupFrame,弹框的frame,设置后popupSize失效
- keepPopupOriginFrame,是否保持弹框原有的位置不变,优先级>popupFrame
+ popupAreaRect,弹框所在区域尺寸,default=父视图的bounds,此属性决定了弹框的位置和大小计算
+ popupSize,弹框尺寸,default=弹框的frame.size
+ offset,弹框偏移,offset.x正为右移,offset.y正为下移
+ popOriginFrame,弹框初始frame
+ popTargetFrame,弹框动画后的frame
+ keepPopupOriginFrame,是否保持原有frame不变,值为YES时,不对frame进行计算和操作
  */
 @property(nonatomic,assign)CGRect popupAreaRect;
 @property(nonatomic,assign)CGSize popupSize;
@@ -91,7 +92,7 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 @property(nonatomic,strong)id hideToValue;
 
 
-/* 【tf_showFrame】形变动画,泡泡,位移动画,优先级popOriginFrame&popTargetFrame>bubbleDirection
+/* 【tf_showFrame】形变动画,泡泡,位移动画,优先级popOriginFrame=popTargetFrame>bubbleDirection
  basePoint,弹出泡泡基于哪个点
  bubbleDirection,弹出泡泡的方向
  popOriginFrame,弹出初始frame
@@ -102,10 +103,10 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 
 
 /* 【tf_showMask】遮罩
- maskShowFromPath,
- maskShowToPath,
- maskHideFromPath,
- maskHideToPath,
+ maskShowFromPath,必须参数
+ maskShowToPath,必须参数
+ maskHideFromPath,非必填，为空时值为maskShowToPath
+ maskHideToPath,非必填，为空时值为maskShowFromPath
  */
 @property(nonatomic,strong)UIBezierPath *maskShowFromPath;
 @property(nonatomic,strong)UIBezierPath *maskShowToPath;
