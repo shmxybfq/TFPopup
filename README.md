@@ -95,6 +95,16 @@ property{
 -(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
 ```
 ## 效果截图示例ScreenShot
-
+#### 自定义动画效果
+___
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-3.gif" width="30%" height="30%">
+</div>
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-5.gif" width="30%" height="30%">
+</div>
 
 
