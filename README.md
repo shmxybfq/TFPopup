@@ -311,6 +311,17 @@ view.popupDelegate = self;
 
 ```
 
+## 注意
+```
+//默认值
+//param.popupSize = 弹框本身的尺寸
+//param.popupAreaRect = 弹框容器视图的bounds
+//param.offset = CGPointZero;
+//param.offset = CGPointZero;
+//param.duration = 0.3;
+//TFPopupDelegate代理默认值为弹框本身
+```
+
 ## 使用
 ```
 pod 'TFPopup'
