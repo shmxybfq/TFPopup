@@ -229,3 +229,21 @@ param.maskShowToPath = p1;
 [view tf_showMask:self.view popupParam:param];
 ```
 
+**默认动画基础上修改属性动画弹出**
+
+```
+TFPopupParam *param = [TFPopupParam new];
+param.showKeyPath = @"transform.rotation.y";//弹出时的属性动画
+param.showFromValue = @(-M_PI * 2);//起始动画值
+param.showToValue = @(0);//结束动画值
+param.hideKeyPath = @"transform.rotation.x";//消失时的属性动画
+param.hideFromValue = @(0);
+param.hideToValue = @(M_PI * 2);
+param.autoDissmissDuration = 1;//弹出后1s后自动消失
+param.duration = 0.5;//动画时间0.5
+[view tf_showCustem:self.view popupParam:param delegate:nil];
+```
+
+
+
+        
