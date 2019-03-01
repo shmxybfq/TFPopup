@@ -17,6 +17,7 @@
                 <outlet property="cusButton2" destination="N3n-2G-k4m" id="96s-z7-cLD"/>
                 <outlet property="cusButton3" destination="KkF-N9-7LS" id="JDK-gS-c21"/>
                 <outlet property="cusButton4" destination="Ftb-4Y-faJ" id="ZpJ-LT-D1G"/>
+                <outlet property="cusButton5" destination="FZW-ru-z77" id="040-Se-0oq"/>
                 <outlet property="excButton0" destination="8FJ-T0-rEd" id="kJd-hR-KgX"/>
                 <outlet property="excButton1" destination="0Ng-fX-PIb" id="Zn2-qo-A7M"/>
                 <outlet property="excButton2" destination="v8f-jV-wgE" id="x1j-ha-Izp"/>
@@ -42,47 +43,57 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rxu-r5-uqq">
-                                    <rect key="frame" x="15" y="5" width="61" height="35"/>
+                                    <rect key="frame" x="15" y="5" width="49" height="35"/>
                                     <color key="backgroundColor" red="1" green="0.99849101029999998" blue="0.73474957190000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="自定义1"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XOm-bk-wSz">
-                                    <rect key="frame" x="86" y="5" width="61" height="35"/>
+                                    <rect key="frame" x="74" y="5" width="49.5" height="35"/>
                                     <color key="backgroundColor" red="1" green="0.99849101029999998" blue="0.73474957190000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="自定义2"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N3n-2G-k4m">
-                                    <rect key="frame" x="157" y="5" width="61" height="35"/>
+                                    <rect key="frame" x="133.5" y="5" width="49" height="35"/>
                                     <color key="backgroundColor" red="1" green="0.99849101029999998" blue="0.73474957190000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="自定义3"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkF-N9-7LS">
-                                    <rect key="frame" x="228" y="5" width="61" height="35"/>
+                                    <rect key="frame" x="192.5" y="5" width="49" height="35"/>
                                     <color key="backgroundColor" red="1" green="0.99849101029999998" blue="0.73474957190000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="自定义4"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ftb-4Y-faJ">
-                                    <rect key="frame" x="299" y="5" width="61" height="35"/>
+                                    <rect key="frame" x="251.5" y="5" width="49.5" height="35"/>
                                     <color key="backgroundColor" red="1" green="0.99849101029999998" blue="0.73474957190000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="自定义5"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZW-ru-z77">
+                                    <rect key="frame" x="311" y="5" width="49" height="35"/>
+                                    <color key="backgroundColor" red="1" green="0.99849101029999998" blue="0.73474957190000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <state key="normal" title="自定义6"/>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="Rxu-r5-uqq" secondAttribute="bottom" constant="5" id="1rj-lq-XfN"/>
+                                <constraint firstAttribute="bottom" secondItem="FZW-ru-z77" secondAttribute="bottom" constant="5" id="4YI-Yf-67K"/>
                                 <constraint firstItem="KkF-N9-7LS" firstAttribute="leading" secondItem="N3n-2G-k4m" secondAttribute="trailing" constant="10" id="8kx-fC-kKM"/>
                                 <constraint firstAttribute="bottom" secondItem="KkF-N9-7LS" secondAttribute="bottom" constant="5" id="CR5-jP-R7g"/>
                                 <constraint firstItem="XOm-bk-wSz" firstAttribute="leading" secondItem="Rxu-r5-uqq" secondAttribute="trailing" constant="10" id="CYl-XW-bXP"/>
                                 <constraint firstAttribute="bottom" secondItem="XOm-bk-wSz" secondAttribute="bottom" constant="5" id="Dde-B9-JiJ"/>
-                                <constraint firstAttribute="trailing" secondItem="Ftb-4Y-faJ" secondAttribute="trailing" constant="15" id="HRB-Z4-FA4"/>
                                 <constraint firstItem="N3n-2G-k4m" firstAttribute="leading" secondItem="XOm-bk-wSz" secondAttribute="trailing" constant="10" id="JlT-Tv-1GJ"/>
                                 <constraint firstItem="XOm-bk-wSz" firstAttribute="top" secondItem="9iC-d1-07j" secondAttribute="top" constant="5" id="Juh-aO-ThX"/>
                                 <constraint firstAttribute="bottom" secondItem="N3n-2G-k4m" secondAttribute="bottom" constant="5" id="K3y-Qb-d6e"/>
+                                <constraint firstAttribute="trailing" secondItem="FZW-ru-z77" secondAttribute="trailing" constant="15" id="Pul-iU-5KC"/>
+                                <constraint firstItem="FZW-ru-z77" firstAttribute="top" secondItem="9iC-d1-07j" secondAttribute="top" constant="5" id="Qlg-ju-3xd"/>
+                                <constraint firstItem="FZW-ru-z77" firstAttribute="leading" secondItem="Ftb-4Y-faJ" secondAttribute="trailing" constant="10" id="U8o-Vd-B9J"/>
+                                <constraint firstItem="FZW-ru-z77" firstAttribute="width" secondItem="Rxu-r5-uqq" secondAttribute="width" id="ZGl-kC-nWs"/>
                                 <constraint firstItem="Ftb-4Y-faJ" firstAttribute="top" secondItem="9iC-d1-07j" secondAttribute="top" constant="5" id="bHE-mQ-oUE"/>
                                 <constraint firstItem="KkF-N9-7LS" firstAttribute="width" secondItem="Rxu-r5-uqq" secondAttribute="width" id="cbG-df-eOT"/>
                                 <constraint firstItem="N3n-2G-k4m" firstAttribute="width" secondItem="Rxu-r5-uqq" secondAttribute="width" id="hbc-6M-adE"/>

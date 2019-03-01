@@ -22,6 +22,7 @@
 #import "ExcempleSliderSmall.h"
 #import "ExcempleSliderLogin.h"
 #import "TFPopupToast.h"
+
 #define kSize [UIScreen mainScreen].bounds.size
 #define kAlertSize CGSizeMake(314, 170)
 
@@ -32,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cusButton2;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton3;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton4;
+@property (weak, nonatomic) IBOutlet UIButton *cusButton5;
 
 @property (weak, nonatomic) IBOutlet UIButton *excButton0;
 @property (weak, nonatomic) IBOutlet UIButton *excButton1;
@@ -87,6 +89,10 @@
     [self.backButton addTarget:self
                         action:@selector(backButtonClick)
               forControlEvents:UIControlEventTouchUpInside];
+    
+    
+
+    
 }
 
 -(void)backButtonClick{
@@ -137,7 +143,24 @@
             //toast.msgLabel.textColor = [UIColor redColor];
             //toast.backgroundColor = [UIColor purpleColor];
         }];
+    }else if([title(ins) isEqualToString:@"自定义6"]){
+        
+        //效果参考：【自定义动画效果2-3】
+        TFPopupParam *param = [TFPopupParam new];
+        param.showKeyPath = @"transform.rotation.y";//弹出时的属性动画
+        param.showFromValue = @(-M_PI * 2);//起始动画值
+        param.showToValue = @(0);//结束动画值
+        param.hideKeyPath = @"transform.rotation.x";//消失时的属性动画
+        param.hideFromValue = @(0);
+        param.hideToValue = @(M_PI * 2);
+        param.autoDissmissDuration = 1;//弹出后1s后自动消失
+        param.duration = 0.5;//动画时间0.5
+        
+        ;
+        UIView *view = [self getViewName:@"ExcempleAlert"];
+        [view tf_showCustem:self.view popupParam:param delegate:nil];
     }
+    
 }
 
 
@@ -182,7 +205,6 @@
             } completion:^(BOOL finished) {}];
         }
         return NO;
-        
     }else if([self.selectedTitle isEqualToString:@"自定义3"]){
         
         if (@available(iOS 9.0, *)) {
@@ -284,8 +306,8 @@
                 bt.frame = CGRectMake(f.origin.x, 300, 40, 40);
             } completion:^(BOOL finished) {}];
         }
-        CGRect of = popup.frame;
         
+        CGRect of = popup.frame;
         [UIView animateWithDuration:0.25
                               delay:(0.1+8*0.05)
                             options:UIViewAnimationOptionCurveEaseInOut
@@ -344,6 +366,7 @@
         [((ExcempleAlert *)view) observerClick:^{
             [view tf_hide];
         }];
+
     }
     if ([title(ins) isEqualToString:@"exc1"]) {
         UIView *view = [self getViewName:@"ExcempleAction"];
@@ -489,7 +512,8 @@ static inline NSString *title(UIButton *bt){
 
 
 -(NSArray *)cusButtons{
-    NSArray *cp = @[self.cusButton0,self.cusButton1,self.cusButton2,self.cusButton3,self.cusButton4];
+    NSArray *cp = @[self.cusButton0,self.cusButton1,self.cusButton2,
+                    self.cusButton3,self.cusButton4,self.cusButton5];
     return cp;
 }
 

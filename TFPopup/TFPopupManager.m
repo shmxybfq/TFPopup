@@ -130,8 +130,6 @@
         
         //弹出框-位移动画
         if (popFrame){
-            NSLog(@">>>>>>:%@:%@",NSStringFromCGRect(weakself.popBoardView.frame),
-                  NSStringFromCGRect(weakself.popBoardViewEndFrame));
             [UIView animateWithDuration:self.defaultAnimationDuration
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
