@@ -94,6 +94,7 @@ property{
  * manager & popup 同上 */
 -(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
 ```
+## 效果截图示例ScreenShot
 
 
 
