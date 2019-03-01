@@ -138,13 +138,17 @@ ___
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-slide.gif" width="30%" height="30%">
 </div>
 ## 使用
+
 **固定位置-无动画**
+
 ```
 UIView *view = nil;
 [view tf_showNormal:self.view animated:NO];
 //[view tf_showNormal:self.view offset:CGPointMake(0, -100) animated:NO];//offset弹框相对于原来位置的偏移
 ```
+
 **固定位置-渐隐动画**
+
 ```
 UIView *view = nil;
 [view tf_showNormal:self.view animated:YES];
