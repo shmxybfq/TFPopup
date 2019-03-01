@@ -239,6 +239,8 @@ param.maskShowToPath = p1;
 **默认动画基础上修改属性动画弹出**
 
 ```
+//效果参考：【自定义动画效果2-3】
+
 TFPopupParam *param = [TFPopupParam new];
 param.showKeyPath = @"transform.rotation.y";//弹出时的属性动画
 param.showFromValue = @(-M_PI * 2);//起始动画值
@@ -248,7 +250,65 @@ param.hideFromValue = @(0);
 param.hideToValue = @(M_PI * 2);
 param.autoDissmissDuration = 1;//弹出后1s后自动消失
 param.duration = 0.5;//动画时间0.5
+
+UIView *view = nil;
 [view tf_showCustem:self.view popupParam:param delegate:nil];
+```
+
+**自定义动画**
+
+```
+//【自定义动画效果1-3代码】
+UIView *view = nil;
+view.popupDelegate = self;
+[view tf_showNormal:self.view popupParam:param];
+//代理方法
+//代理方法
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+    if (@available(iOS 9.0, *)) {
+        CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+        spring.damping = 15;
+        spring.stiffness = 100;
+        spring.mass = 1.5;
+        spring.initialVelocity = 0;
+        spring.duration = spring.settlingDuration;
+        spring.fromValue = @(-200);
+        spring.toValue = @(self.view.center.y);
+        spring.fillMode = kCAFillModeForwards;
+        [popup.layer addAnimation:spring forKey:nil];
+        __weak typeof(popup) weakPopup = popup;
+        [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+            if (finished) {
+                weakPopup.center = CGPointMake(kSize.width * 0.5, kSize.height * 0.5);
+            }
+        }];
+    }
+    return NO;
+}
+
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+    if (@available(iOS 9.0, *)) {
+        popup.center = CGPointMake(kSize.width * 0.5, -500);
+        CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+        spring.damping = 15;
+        spring.stiffness = 100;
+        spring.mass = 1.5;
+        spring.initialVelocity = 0;
+        spring.duration = spring.settlingDuration;
+        spring.fromValue = @(self.view.center.y);
+        spring.toValue = @(-200);
+        spring.fillMode = kCAFillModeForwards;
+        [popup.layer addAnimation:spring forKey:nil];
+        __weak typeof(popup) weakPopup = popup;
+        [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+            if (finished) {
+                weakPopup.center = CGPointMake(kSize.width * 0.5, -200);
+            }
+        }];
+    }
+    return NO;
+}
+
 ```
 
 
