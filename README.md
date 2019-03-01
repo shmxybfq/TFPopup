@@ -105,6 +105,7 @@ ___
 <div>
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-4.gif" width="30%" height="30%">
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-5.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-6.gif" width="30%" height="30%">
 </div>
 <br>
 
