@@ -11,7 +11,7 @@
 4.自定义背景属性,完全自定义背景<br>
 5.完全自定义动画
 ## 默认支持几种弹出方式：
-接弹出<br>
+1.直接弹出<br>
 2.缩放弹出<br>
 3.滑动弹出<br>
 4.基于某点的泡泡弹出<br>
@@ -68,8 +68,32 @@ property{
     }
 }
 ```
+## 自定义动画和弹出方式
+如果以上默认动画都不能满足需求的话，可以使用自定义动画的方式实现更多不确定的动画方式，需要实现以下代理方法：
+```
+// 自定义动画代理,弹出框模式实现了此代理，并且代理对象为本身。通过以下代理的设置，为弹框设置了动画。
+@protocol TFPopupDelegate<NSObject>
+@optional;
 
+/* 自定义背景弹框背景覆盖层view，设置动画的情况下覆盖层的alpha的值会0-1过渡
+ * manager 中包含弹框过程多数基本信息，可以从此参数中获取可设置参数，具体参照TFPopupManager类
+ * popup 即弹框的view */
+-(UIView *)tf_popupCustemBackgroundView:(TFPopupManager *)manager
+                                  popup:(UIView *)popup;
 
+/* 准备动画前调用此函数，所以参数及设置都已经设置完成，在此函数回调中可随时修改可变参数
+ * 返回值是否打断默认动画，切断默认动画意味着所有开始动画将自己实现
+ * manager & popup 同上 */
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup;
+
+/* 使用方式和作用tf_popupWillShow，不同的是如果打断默认动画，自己需要额外管理弹出框和背景视图等*/
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup;
+
+/* 用户点击背景覆盖层时调用此函数，默认点击关闭弹框。
+ * 返回值是否打断默认事件，如果打断默认事件，需要自己控制弹框的消失
+ * manager & popup 同上 */
+-(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
+```
 
 
 
