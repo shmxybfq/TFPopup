@@ -143,6 +143,7 @@ ___
 **固定位置-无动画**
 
 ```
+//效果参考：【默认动画效果1-1】
 UIView *view = nil;
 [view tf_showNormal:self.view animated:NO];
 //[view tf_showNormal:self.view offset:CGPointMake(0, -100) animated:NO];//offset弹框相对于原来位置的偏移
@@ -153,6 +154,7 @@ UIView *view = nil;
 **固定位置-渐隐动画**
 
 ```
+//效果参考：【默认动画效果1-1,此基础上背景和弹框具有渐隐效果】
 UIView *view = nil;
 [view tf_showNormal:self.view animated:YES];
 //[view tf_showNormal:self.view offset:CGPointMake(0, -100) animated:YES];//offset弹框相对于原来位置的偏移
@@ -160,9 +162,10 @@ UIView *view = nil;
 //[view tf_showNormal:self.view popupParam:param];
 ```
 
-**固定位置-渐隐动画**
+**固定位置-缩放动画**
 
 ```
+//效果参考：【默认动画效果2-1】
 UIView *view = nil;
 TFPopupParam *param = [TFPopupParam new];
 [view tf_showScale:self.view offset:CGPointMake(0, 50) popupParam:param];
@@ -173,6 +176,7 @@ TFPopupParam *param = [TFPopupParam new];
 **滑动弹出**
 
 ```
+//效果参考：【默认动画效果1-2,1-3,3-2】
 UIView *view = nil;
 TFPopupParam *param = [TFPopupParam new];
 param.popupSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 300);//设置弹框的尺寸
@@ -184,6 +188,7 @@ param.offset = CGPointZero;//在计算好的位置上偏移
 **泡泡弹出**
 
 ```
+//效果参考：【默认动画效果3-1】
 UIView *view = nil;
 TFPopupParam *param = [TFPopupParam new];
 param.popupSize = CGSizeMake(200, 300);//设置弹框的尺寸
@@ -194,6 +199,7 @@ param.offset = CGPointMake(-30, 50);//左移30右移50
 **形变&位移【frame】弹出**
 
 ```
+//效果参考：【默认动画效果1-2,1-3,2-2,2-3,3-2】
 UIView *view = nil;
 TFPopupParam *param = [TFPopupParam new];
 param.backgroundColorClear = YES;//设置背景色透明
@@ -205,6 +211,7 @@ CGRect to = CGRectMake(0, 0, 200, [UIScreen mainScreen].bounds.size.height);
 **遮罩弹出**
 
 ```
+//效果参考：【基于默认动画效果的参数自由组合1-2】【自定义动画效果2-1】
 //小五角形在左
 UIBezierPath *p0 = [UIBezierPath bezierPath];
 [p0 moveToPoint:CGPointMake(-200, 0)];
