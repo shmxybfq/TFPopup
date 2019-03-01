@@ -107,6 +107,7 @@ ___
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-5.gif" width="30%" height="30%">
 </div>
 <br>
+
 **默认动画效果**
 
 ___
@@ -126,6 +127,7 @@ ___
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc8.gif" width="30%" height="30%">
 </div>
 <br>
+
 **基于默认动画效果的参数自由组合**
 
 ___
