@@ -311,6 +311,14 @@ view.popupDelegate = self;
 
 ```
 
+## 使用
+```
+pod 'TFPopup'
+```
+
+## 使用有bug请随时联系我
+qq:927141965
+
 
 
         
