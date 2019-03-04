@@ -25,10 +25,15 @@ typedef NS_ENUM(NSInteger,PopupDirection) {
 
 typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleNone = 0,
-    PopupStyleAlpha = 1 << 0,
-    PopupStyleAniamtion = 1 << 1,
-    PopupStyleFrame = 1 << 2,
-    PopupStyleMask = 1 << 3,
+    PopupStyleDefaultAlpha = 1 << 0,
+    PopupStyleDefaultFrame = 1 << 1,
+    PopupStyleExtensionMask = 1 << 2,
+    PopupStyleExtensionAniamtion = 1 << 3,
+};
+
+typedef NS_ENUM(NSInteger,TFPopupState) {
+    TFPopupStateShow = 0,
+    TFPopupStateHide,
 };
 
 
@@ -51,13 +56,15 @@ typedef NS_ENUM(NSInteger,PopupStyle) {
 @property(nonatomic,assign)BOOL backgroundColorClear;
 @property(nonatomic,assign)BOOL disuseBackground;
 @property(nonatomic,assign)BOOL disuseBackgroundTouchHide;
-@property(nonatomic,assign)BOOL disuseBackgroundAlphaAnimation;
+@property(nonatomic,assign)BOOL disuseShowBackgroundAlphaAnimation;
+@property(nonatomic,assign)BOOL disuseHideBackgroundAlphaAnimation;
 
 
 /* 【全局属性】弹框渐隐动画
  disusePopupAlphaAnimation,弹出框是否叠加使用渐隐动画
  */
-@property(nonatomic,assign)BOOL disusePopupAlphaAnimation;
+@property(nonatomic,assign)BOOL disuseShowPopupAlphaAnimation;
+@property(nonatomic,assign)BOOL disuseHidePopupAlphaAnimation;
 
 
 /* 【全局属性】弹框尺寸和区域

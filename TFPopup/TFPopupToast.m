@@ -7,7 +7,6 @@
 //
 
 #import "TFPopupToast.h"
-#import "TFPopupManager.h"
 #import "UIView+TFPopup.h"
 
 @interface TFPopupToast ()<TFPopupDelegate>
@@ -61,12 +60,12 @@ dissmissDuration:(NSTimeInterval)duration
     
 }
 
--(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-    if (self.cusBlock) {
-        self.cusBlock(self);
-    }
-    return NO;
-}
+//-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+//    if (self.cusBlock) {
+//        self.cusBlock(self);
+//    }
+//    return NO;
+//}
 
 -(instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {

@@ -9,7 +9,6 @@
 #ifndef TFPopup_h
 #define TFPopup_h
 
-#import "TFPopupManager.h"
 #import "TFPopupToast.h"
 #import "UIView+TFPopup.h"
 

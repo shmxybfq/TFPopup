@@ -9,13 +9,12 @@
 #import "UIView+TFPopup.h"
 #import <objc/runtime.h>
 
-@implementation UIView (TFPopup)
-@dynamic inView,manager,popupParam,style,direction;
-@dynamic popupDelegate,backgroundView;
+#ifndef x_weakSelf
+#define x_weakSelf __weak typeof(self) weakself = self
+#endif
 
--(void)tf_hide{
-    [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
-}
+@implementation UIView (TFPopup)
+@dynamic inView,extension,popupDataSource,popupDelegate,popupParam,style,direction;
 
 #pragma mark -- 基本
 -(void)tf_showNormal:(UIView *)inView animated:(BOOL)animated{
@@ -24,14 +23,17 @@
 
 -(void)tf_showNormal:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated{
     TFPopupParam *param = [TFPopupParam new];
+    
     param.offset = offset;
-    param.disusePopupAlphaAnimation = !animated;
-    param.disuseBackgroundAlphaAnimation = !animated;
+    param.disuseShowPopupAlphaAnimation = !animated;
+    param.disuseHidePopupAlphaAnimation = !animated;
+    param.disuseShowBackgroundAlphaAnimation = !animated;
+    param.disuseHideBackgroundAlphaAnimation = !animated;
+    
     [self tf_showNormal:inView popupParam:param];
 }
 
--(void)tf_showNormal:(UIView *)inView
-          popupParam:(TFPopupParam *)popupParam{
+-(void)tf_showNormal:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
     
     self.inView = inView;
     self.popupParam = popupParam;
@@ -49,8 +51,7 @@
 }
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset{
-    TFPopupParam *param = [TFPopupParam new];
-    [self tf_showScale:inView offset:offset popupParam:param];
+    [self tf_showScale:inView offset:offset popupParam:[TFPopupParam new]];
 }
 
 -(void)tf_showScale:(UIView *)inView offset:(CGPoint)offset popupParam:(TFPopupParam *)popupParam{
@@ -200,202 +201,188 @@
     [self checkStyle];
     //代理
     self.popupDelegate = delegate==nil?self:delegate;
+    self.popupDataSource = self;
     
-    [self.manager performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:YES];
-    [self.manager performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(tf_reload) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(tf_show) withObject:nil waitUntilDone:YES];
 }
 
--(void)setDefault{
+-(void)tf_reload{
     
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
+    if (self.popupDataSource == nil) {return;}
     
-    //初始化弹框管理
-    if (self.manager == nil) {
-        self.manager = [TFPopupManager tf_popupManagerDataSource:self delegate:self];
+    self.extension.inView = nil;
+    
+    self.extension.popupArea = CGSizeZero;
+    
+    self.extension.disuseShowAlphaAnimation = NO;
+    self.extension.showFromAlpha = -1;
+    self.extension.showToAlpha = -1;
+    
+    self.extension.disuseShowFrameAnimation = NO;
+    self.extension.showFromFrame = CGRectZero;
+    self.extension.showToFrame = CGRectZero;
+    
+    self.extension.disuseHideAlphaAnimation = NO;
+    self.extension.hideFromAlpha = -1;
+    self.extension.hideToAlpha = -1;
+    
+    self.extension.disuseHideFrameAnimation = NO;
+    self.extension.hideFromFrame = CGRectZero;
+    self.extension.hideToFrame = CGRectZero;
+    
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupInView:)]) {
+        self.extension.inView = [self.popupDataSource tf_popupInView:self];
     }
     
-    //时间
-    if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
-    //自动消失时间
-    if (self.popupParam.autoDissmissDuration != 0) {
-        [self.manager performSelector:@selector(hide)
-                           withObject:nil
-                           afterDelay:self.popupParam.autoDissmissDuration];
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupInArea:)]) {
+        self.extension.popupArea = [self.popupDataSource tf_popupInArea:self];
     }
     
-    //弹框尺寸
-    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero))
-        self.popupParam.popupSize = self.bounds.size;
+    /* show-alpha */
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithAlphaForState:)]) {
+        BOOL animation = [self.popupDataSource tf_popupView:self animationWithAlphaForState:TFPopupStateShow];
+        self.extension.disuseShowAlphaAnimation = animation;
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromAlphaForState:)]) {
+        self.extension.showFromAlpha = [self.popupDataSource tf_popupView:self fromAlphaForState:TFPopupStateShow];
+        self.alpha = self.extension.showFromAlpha;
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toAlphaForState:)]) {
+        self.extension.showToAlpha = [self.popupDataSource tf_popupView:self toAlphaForState:TFPopupStateShow];
+    }
     
-    //弹框区域
-    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero))
-        self.popupParam.popupAreaRect = self.inView.bounds;
+    /* show-frame */
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithFrameForState:)]) {
+        BOOL animation = [self.popupDataSource tf_popupView:self animationWithFrameForState:TFPopupStateShow];
+        self.extension.disuseShowFrameAnimation = animation;
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromFrameForState:)]) {
+        self.extension.showFromFrame = [self.popupDataSource tf_popupView:self fromFrameForState:TFPopupStateShow];
+        self.frame = self.extension.showFromFrame;
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toFrameForState:)]) {
+        self.extension.showToFrame = [self.popupDataSource tf_popupView:self toFrameForState:TFPopupStateShow];
+    }
+    
+    /* hide-alpha */
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithAlphaForState:)]) {
+        BOOL animation = [self.popupDataSource tf_popupView:self animationWithAlphaForState:TFPopupStateHide];
+        self.extension.disuseHideAlphaAnimation = animation;
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromAlphaForState:)]) {
+        self.extension.hideFromAlpha = [self.popupDataSource tf_popupView:self fromAlphaForState:TFPopupStateHide];
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toAlphaForState:)]) {
+        self.extension.hideToAlpha = [self.popupDataSource tf_popupView:self toAlphaForState:TFPopupStateHide];
+    }
+    
+    /* hide-frame */
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithFrameForState:)]) {
+        BOOL animation = [self.popupDataSource tf_popupView:self animationWithFrameForState:TFPopupStateHide];
+        self.extension.disuseHideFrameAnimation = animation;
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromFrameForState:)]) {
+        self.extension.hideFromFrame = [self.popupDataSource tf_popupView:self fromFrameForState:TFPopupStateHide];
+    }
+    if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toFrameForState:)]) {
+        self.extension.hideToFrame = [self.popupDataSource tf_popupView:self toFrameForState:TFPopupStateHide];
+    }
+    
+    /* 设置默认参数 */
+    
+    if (self.extension.inView == nil) {
+        self.extension.inView = [UIApplication sharedApplication].keyWindow;
+    }
+    
+    if (CGSizeEqualToSize(self.extension.popupArea, CGSizeZero)) {
+        self.extension.popupArea = self.extension.inView.frame.size;
+    }
+    
+    if (self.extension.showFromAlpha == -1) {
+        self.extension.showFromAlpha = 0;
+    }
+    if (self.extension.showToAlpha == -1) {
+        self.extension.showToAlpha = 1;
+    }
+    if (CGRectEqualToRect(self.extension.showFromFrame, CGRectZero)) {
+        self.extension.showFromFrame = self.frame;
+    }
+    if (CGRectEqualToRect(self.extension.showToFrame, CGRectZero)) {
+        self.extension.showToFrame = self.frame;
+    }
+    
+    
+    if (self.extension.hideFromAlpha == -1) {
+        self.extension.hideFromAlpha = self.extension.showToAlpha;
+    }
+    if (self.extension.hideToAlpha == -1) {
+        self.extension.hideToAlpha = self.extension.showFromAlpha;
+    }
+    if (CGRectEqualToRect(self.extension.hideFromFrame, CGRectZero)) {
+        self.extension.hideFromFrame = self.extension.showToFrame;
+    }
+    if (CGRectEqualToRect(self.extension.hideToFrame, CGRectZero)) {
+        self.extension.hideToFrame = self.extension.showFromFrame;
+    }
+    
 }
 
--(void)checkStyle{
-    //参数值检测
-    //alpha
-    PopupStyle style = PopupStyleNone;
-    if (self.popupParam.disuseBackgroundAlphaAnimation == NO ||
-        self.popupParam.disusePopupAlphaAnimation == NO)
-        style = style | PopupStyleAlpha;
+-(void)tf_show{
     
-    //animation
-    if (self.popupParam.showKeyPath != nil &&
-        self.popupParam.showFromValue != nil &&
-        self.popupParam.showToValue != nil){
+    x_weakSelf;
+    
+    [self.inView addSubview:self];
+    
+    self.alpha = self.extension.showFromAlpha;
+    self.frame = self.extension.showFromFrame;
+    
+    self.extension.showAnimationDuration = 0.3;
+    self.extension.showAnimationDelay = 0.0;
+    self.extension.showAnimationOptions = UIViewAnimationOptionCurveEaseOut;
+    
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupView:animationDurationForState:)]) {
+        self.extension.showAnimationDuration = [self.popupDelegate tf_popupView:self animationDurationForState:TFPopupStateShow];
+    }
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupView:animationDelayForState:)]) {
+        self.extension.showAnimationDelay = [self.popupDelegate tf_popupView:self animationDelayForState:TFPopupStateShow];
+    }
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupView:animationOptionsForState:)]) {
+        self.extension.showAnimationOptions = [self.popupDelegate tf_popupView:self animationOptionsForState:TFPopupStateShow];
+    }
+    
+    if (self.extension.disuseShowAlphaAnimation == NO &&
+        self.extension.showFromAlpha != self.extension.showToAlpha) {
         
-        style = style | PopupStyleAniamtion;
+        [UIView animateWithDuration:self.extension.showAnimationDuration
+                              delay:self.extension.showAnimationDelay
+                            options:self.extension.showAnimationOptions
+                         animations:^{
+                             weakself.alpha = weakself.extension.showToAlpha;
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+    }else{
+        self.alpha = weakself.extension.showToAlpha;
+    }
+    if (self.extension.disuseShowFrameAnimation == NO &&
+        (CGRectEqualToRect(self.extension.showFromFrame, self.extension.showToFrame) == NO)) {
         
-        if (self.popupParam.hideKeyPath == nil)
-            self.popupParam.hideKeyPath = self.popupParam.showKeyPath;
-        if (self.popupParam.hideFromValue == nil)
-            self.popupParam.hideFromValue = self.popupParam.showToValue;
-        if (self.popupParam.hideToValue == nil)
-            self.popupParam.hideToValue = self.popupParam.showFromValue;
+        [UIView animateWithDuration:self.extension.showAnimationDuration
+                              delay:self.extension.showAnimationDelay
+                            options:self.extension.showAnimationOptions
+                         animations:^{
+                             weakself.frame = weakself.extension.showToFrame;
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+    }else{
+        self.frame = weakself.extension.showToFrame;
     }
     
-    //frame
-    if (CGRectEqualToRect(self.popupParam.popOriginFrame, self.popupParam.popTargetFrame) == NO) {
-        style = style | PopupStyleFrame;
-    }
     
-    //mask
-    if (self.popupParam.maskShowFromPath != nil &&
-        self.popupParam.maskShowToPath != nil ) {
-        style = style | PopupStyleMask;
-        
-        if (self.popupParam.maskHideFromPath == nil)
-            self.popupParam.maskHideFromPath = self.popupParam.maskShowToPath;
-        if (self.popupParam.maskHideToPath == nil)
-            self.popupParam.maskHideToPath = self.popupParam.maskShowFromPath;
-    }
-    self.style = style;
-}
-
-#pragma mark 代理 TFPopupManagerDataSource 方法
-/* 执行顺序:0 返回【默认使用的动画方式,可叠加】 */
--(TFPopupDefaultAnimation)tf_popupManager_popDefaultAnimation:(TFPopupManager *)manager{
-    
-    TFPopupDefaultAnimation ani = TFPopupDefaultAnimationNone;
-    if (styleInclude(self.style, PopupStyleAlpha)){
-        if (self.popupParam.disuseBackgroundAlphaAnimation == NO)
-            ani = ani | TFPopupDefaultAnimationBackgroundAlpha;
-        if (self.popupParam.disusePopupAlphaAnimation == NO)
-            ani = ani | TFPopupDefaultAnimationPopBoardAlpha;
-    }
-    
-    if (styleInclude(self.style, PopupStyleAniamtion)||
-        styleInclude(self.style, PopupStyleMask)){
-        ani = ani | TFPopupDefaultAnimationCustem;
-    }
-    
-    if (styleInclude(self.style, PopupStyleFrame)){
-        ani = ani | TFPopupDefaultAnimationPopBoardFrame;
-    }
-    return ani;
-}
-
-/* 执行顺序:1 返回【弹框的父视图】 */
--(UIView  *)tf_popupManager_popForView:(TFPopupManager *)manager{
-    return self.inView;
-}
-
-/* 执行顺序:4 返回【弹出框view】 */
--(UIView  *)tf_popupManager_popBoardView:(TFPopupManager *)manager{
-    return self;
-}
-
-/* 执行顺序:2 返回【弹出框的上层背景视图,默认动画alpha=0,弹出时动画为alpha=1,自定义动画则忽略默认动画 */
--(UIView  *)tf_popupManager_popForBackgroundView:(TFPopupManager *)manager{
-    if (self.popupParam.disuseBackground == NO) {
-        if ([self.popupDelegate respondsToSelector:@selector(tf_popupCustemBackgroundView:popup:)]) {
-            self.backgroundView = [self.popupDelegate tf_popupCustemBackgroundView:self.manager
-                                                                             popup:self];
-        }else{
-            self.backgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
-        }
-        if (self.popupParam.backgroundColorClear) {
-            self.backgroundView.backgroundColor = [UIColor clearColor];
-        }else{
-            UIColor *color = [[UIColor blackColor]colorWithAlphaComponent:0.3];
-            self.backgroundView.backgroundColor = color;
-        }
-        if ([self.backgroundView respondsToSelector:@selector(addTarget:action:forControlEvents:)]) {
-            [((UIButton *)self.backgroundView) addTarget:self
-                                                  action:@selector(coverClick:)
-                                        forControlEvents:UIControlEventTouchUpInside];
-        }else{
-            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]init];
-            [tapGes addTarget:self action:@selector(coverTap:)];
-            [self.backgroundView addGestureRecognizer:tapGes];
-        }
-        return self.backgroundView;
-    }
-    return nil;
-}
-
-/* 执行顺序:3 返回【弹出框的上层背景视图的位置,frame或者 约束,如设置了约束则frame无效 */
--(CGRect   )tf_popupManager_popForBackgroundViewPosition:(TFPopupManager *)manager
-                                          backgroundView:(UIView *)backgroundView{
-    return self.popupParam.popupAreaRect;
-}
-
-/* 执行顺序:5 返回【弹出框view,动画开始时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */
--(CGRect   )tf_popupManager_popBoardViewBeginPosition:(TFPopupManager *)manager
-                                            boardView:(UIView *)boardView{
-    
-    //不改变
-    if (self.popupParam.keepPopupOriginFrame)return self.frame;
-    //优先级popOriginFrame > 默认计算
-    if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO)
-        return self.popupParam.popOriginFrame;
-    //默认计算
-    CGRect ar = self.popupParam.popupAreaRect;
-    CGSize s = self.popupParam.popupSize;
-    CGPoint st = self.popupParam.offset;
-    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
-    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
-    return CGRectMake(x, y, s.width, s.height);
-}
-
-/* 执行顺序:6 返回【弹出框view,动画结束时候的位置,frame或者 约束,自定义动画则忽略默认动画】 */
--(CGRect   )tf_popupManager_popBoardViewEndPosition:(TFPopupManager *)manager
-                                          boardView:(UIView *)boardView{
-    
-    if (self.popupParam.keepPopupOriginFrame)return self.frame;
-    //优先级popTargetFrame > 默认计算
-    if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero) == NO)
-        return self.popupParam.popTargetFrame;
-    //默认计算
-    CGRect ar = self.popupParam.popupAreaRect;
-    CGSize s = self.popupParam.popupSize;
-    CGPoint st = self.popupParam.offset;
-    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
-    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
-    return CGRectMake(x, y, s.width, s.height);
-}
-
--(NSTimeInterval)tf_popupManager_popDefaultAnimationDuration:(TFPopupManager *)manager{
-    return self.popupParam.duration;
-}
-
-#pragma mark 代理 TFPopupManagerDelegate 方法
-
-/* 弹出框展示动画开始前回调 */
--(void)tf_popupManager_willShow:(TFPopupManager *)manager
-                  tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
-    
-    BOOL breakAnimation = NO;
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupWillShow:popup:)]) {
-        breakAnimation = [self.popupDelegate tf_popupWillShow:self.manager popup:self];
-        if (breakAnimation) {
-            tellToManager(YES,self.popupParam.duration);
-            return;
-        }
-    }
     //动画
-    if (styleInclude(self.style, PopupStyleAniamtion)) {
+    if (styleInclude(self.style, PopupStyleExtensionAniamtion)) {
         CAAnimation *animation = [self animation:self.popupParam.showKeyPath
                                             from:self.popupParam.showFromValue
                                               to:self.popupParam.showToValue
@@ -405,7 +392,7 @@
     }
     
     //遮罩
-    if (styleInclude(self.style, PopupStyleMask)) {
+    if (styleInclude(self.style, PopupStyleExtensionMask)) {
         
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
@@ -421,7 +408,181 @@
         if (animation)
             [mask addAnimation:animation forKey:NSStringFromClass([self class])];
     }
-    tellToManager(NO,self.popupParam.duration);
+}
+
+
+
+-(void)tf_hide{
+    
+    x_weakSelf;
+   
+    self.extension.hideAnimationDuration = 0.3;
+    self.extension.hideAnimationDelay = 0.0;
+    self.extension.hideAnimationOptions = UIViewAnimationOptionCurveEaseOut;
+    
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupView:animationDurationForState:)]) {
+        self.extension.hideAnimationDuration = [self.popupDelegate tf_popupView:self animationDurationForState:TFPopupStateHide];
+    }
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupView:animationDelayForState:)]) {
+        self.extension.hideAnimationDelay = [self.popupDelegate tf_popupView:self animationDelayForState:TFPopupStateHide];
+    }
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupView:animationOptionsForState:)]) {
+        self.extension.hideAnimationOptions = [self.popupDelegate tf_popupView:self animationOptionsForState:TFPopupStateHide];
+    }
+    
+    if (self.extension.disuseHideAlphaAnimation == NO &&
+        self.extension.hideFromAlpha != self.extension.hideToAlpha) {
+        
+        [UIView animateWithDuration:self.extension.hideAnimationDuration
+                              delay:self.extension.hideAnimationDelay
+                            options:self.extension.hideAnimationOptions
+                         animations:^{
+                             weakself.alpha = weakself.extension.hideToAlpha;
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+    }else{
+        self.alpha = weakself.extension.hideToAlpha;
+    }
+    
+    if (self.extension.disuseHideFrameAnimation == NO &&
+        (CGRectEqualToRect(self.extension.hideFromFrame, self.extension.hideToFrame) == NO)) {
+        
+        [UIView animateWithDuration:self.extension.hideAnimationDuration
+                              delay:self.extension.hideAnimationDelay
+                            options:self.extension.hideAnimationOptions
+                         animations:^{
+                             weakself.frame = weakself.extension.hideToFrame;
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+    }else{
+        self.frame = weakself.extension.hideToFrame;
+    }
+    
+    //动画
+    if (styleInclude(self.style, PopupStyleExtensionAniamtion)) {
+        CAAnimation *animation = [self animation:self.popupParam.hideKeyPath
+                                            from:self.popupParam.hideFromValue
+                                              to:self.popupParam.hideToValue
+                                             dur:self.popupParam.duration];
+        if (animation)
+            [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
+    }
+    
+    //遮罩
+    if (styleInclude(self.style, PopupStyleExtensionMask)) {
+        NSTimeInterval dur = self.popupParam.duration;
+        NSString *keyPath = @"path";
+        CAShapeLayer *mask = self.layer.mask;
+        [mask removeAnimationForKey:NSStringFromClass([self class])];
+        id from = (__bridge id)self.popupParam.maskHideFromPath.CGPath;
+        if (from == nil) {
+            from = (__bridge id)self.popupParam.maskShowToPath.CGPath;
+        }
+        id to = (__bridge id)self.popupParam.maskHideToPath.CGPath;
+        if (to == nil) {
+            to = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
+        }
+        CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
+        if (animation)
+            [mask addAnimation:animation forKey:NSStringFromClass([self class])];
+    }
+}
+
+#pragma mark -- TFPopupDataSource
+- (UIView *)tf_popupInView:(UIView *)popup{
+    return self.inView;
+}
+
+- (CGSize  )tf_popupInArea:(UIView *)popup{
+    return self.popupParam.popupAreaRect.size;
+}
+
+- (BOOL    )tf_popupView:(UIView *)popup animationWithAlphaForState:(TFPopupState)state{
+    switch (state) {
+        case TFPopupStateShow:{
+            return !self.popupParam.disuseShowPopupAlphaAnimation;
+        }break;
+        case TFPopupStateHide:{
+            return !self.popupParam.disuseHidePopupAlphaAnimation;
+        }break;
+        default:break;
+    }
+    return YES;
+}
+- (CGFloat )tf_popupView:(UIView *)popup fromAlphaForState:(TFPopupState)state{
+    switch (state) {
+        case TFPopupStateShow:{
+            return 0;
+        }break;
+        case TFPopupStateHide:{
+            return 1;
+        }break;
+        default:break;
+    }
+    return NO;
+}
+- (CGFloat )tf_popupView:(UIView *)popup toAlphaForState:(TFPopupState)state{
+    switch (state) {
+        case TFPopupStateShow:{
+            return 1;
+        }break;
+        case TFPopupStateHide:{
+            return 0;
+        }break;
+        default:break;
+    }
+    return NO;
+}
+
+- (BOOL    )tf_popupView:(UIView *)popup animationWithFrameForState:(TFPopupState)state{
+    switch (state) {
+        case TFPopupStateShow:{
+            return !self.popupParam.disuseShowBackgroundAlphaAnimation;
+        }break;
+        case TFPopupStateHide:{
+            return !self.popupParam.disuseHideBackgroundAlphaAnimation;
+        }break;
+        default:break;
+    }
+    return YES;
+}
+- (CGRect  )tf_popupView:(UIView *)popup fromFrameForState:(TFPopupState)state{
+    switch (state) {
+        case TFPopupStateShow:{
+            if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO) {
+                return self.popupParam.popOriginFrame;
+            }
+            return normalOriginFrame(self.popupParam);
+        }break;
+        case TFPopupStateHide:{
+            if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero) == NO) {
+                return self.popupParam.popTargetFrame;
+            }
+            return normalTargetFrame(self.popupParam);
+        }break;
+        default:break;
+    }
+    return CGRectZero;
+}
+- (CGRect  )tf_popupView:(UIView *)popup toFrameForState:(TFPopupState)state{
+    switch (state) {
+        case TFPopupStateShow:{
+            if (CGRectEqualToRect(self.popupParam.popTargetFrame, CGRectZero) == NO) {
+                return self.popupParam.popTargetFrame;
+            }
+            return normalTargetFrame(self.popupParam);
+        }break;
+        case TFPopupStateHide:{
+            if (CGRectEqualToRect(self.popupParam.popOriginFrame, CGRectZero) == NO) {
+                return self.popupParam.popOriginFrame;
+            }
+            return normalOriginFrame(self.popupParam);
+        }break;
+        default:break;
+    }
+    return CGRectZero;
 }
 
 -(CAAnimation *)animation:(NSString *)path from:(id)from to:(id)to dur:(NSTimeInterval)dur{
@@ -439,101 +600,86 @@
     return ani;
 }
 
-/* 弹出框展示动画完成后回调,自定义动画不回调 */
--(void)tf_popupManager_didShow:(TFPopupManager *)manager
-              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
-               isAnimationShow:(BOOL)isAnimationShow{
-    
-}
-/* 弹出框隐藏动画开始前回调 */
--(void)tf_popupManager_willHide:(TFPopupManager *)manager
-                  tellToManager:(void(^)(BOOL stopDefaultAnimation,NSTimeInterval duration))tellToManager{
-    BOOL breakOriginAnimation = NO;
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupWillHide:popup:)]) {
-        breakOriginAnimation = [self.popupDelegate tf_popupWillHide:self.manager popup:self];
-        if (breakOriginAnimation) {
-            tellToManager(YES,self.popupParam.duration);
-            return;
-        }
-    }
-    
-    //动画
-    if (styleInclude(self.style, PopupStyleAniamtion)) {
-        CAAnimation *animation = [self animation:self.popupParam.hideKeyPath
-                                            from:self.popupParam.hideFromValue
-                                              to:self.popupParam.hideToValue
-                                             dur:self.popupParam.duration];
-        if (animation)
-            [self.layer addAnimation:animation forKey:NSStringFromClass([self class])];
-    }
-    
-    //遮罩
-    if (styleInclude(self.style, PopupStyleMask)) {
-        NSTimeInterval dur = self.popupParam.duration;
-        NSString *keyPath = @"path";
-        CAShapeLayer *mask = self.layer.mask;
-        [mask removeAnimationForKey:NSStringFromClass([self class])];
-        id from = (__bridge id)self.popupParam.maskHideFromPath.CGPath;
-        if (from == nil) {
-            from = (__bridge id)self.popupParam.maskShowToPath.CGPath;
-        }
-        id to = (__bridge id)self.popupParam.maskHideToPath.CGPath;
-        if (to == nil) {
-            to = (__bridge id)self.popupParam.maskShowFromPath.CGPath;
-        }
-        CAAnimation *animation = [self animation:keyPath from:from to:to dur:dur];
-        if (animation)
-            [mask addAnimation:animation forKey:NSStringFromClass([self class])];
-    }
-    tellToManager(NO,self.popupParam.duration);
-}
-
-/* 弹出框隐藏动画完成后回调,自定义动画不回调 */
--(void)tf_popupManager_didHide:(TFPopupManager *)manager
-              defaultAnimation:(TFPopupDefaultAnimation)defaultAnimation
-               isAnimationHide:(BOOL)isAnimationHide{
-    
-}
-
-
--(void)coverClick:(UIButton *)ins{
-    [self coverAction];
-}
-
--(void)coverTap:(UITapGestureRecognizer *)ins{
-    [self coverAction];
-}
-
--(void)coverAction{
-    BOOL breakOpration = NO;
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupBackgroundTouch:popup:)]) {
-        breakOpration = [self.popupDelegate tf_popupBackgroundTouch:self.manager popup:self];
-        if (breakOpration) {
-            return;
-        }
-    }
-    if (self.popupParam.disuseBackgroundTouchHide == NO) {
-        [self.manager performSelectorOnMainThread:@selector(hide) withObject:nil waitUntilDone:YES];
-    }
-    
-}
-
 #pragma mark -- 代理 TFPopupDelegate 方法
--(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-    return NO;
-}
--(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
-    return NO;
-}
--(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup{
-    return self.popupParam.disuseBackgroundTouchHide;
+-(void)setDefault{
+    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
+    //时间
+    if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
+    //自动消失时间
+    if (self.popupParam.autoDissmissDuration != 0) {
+        [self performSelector:@selector(tf_hide)
+                           withObject:nil
+                           afterDelay:self.popupParam.autoDissmissDuration];
+    }
+    
+    //弹框尺寸
+    if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero))
+        self.popupParam.popupSize = self.bounds.size;
+    
+    //弹框区域
+    if (CGRectEqualToRect(self.popupParam.popupAreaRect, CGRectZero))
+        self.popupParam.popupAreaRect = self.inView.bounds;
 }
 
+-(void)checkStyle{
+    //参数值检测
+    //alpha
+    PopupStyle style = PopupStyleNone;
+    
+    //animation
+    if (self.popupParam.showKeyPath != nil &&
+        self.popupParam.showFromValue != nil &&
+        self.popupParam.showToValue != nil){
+        
+        style = style | PopupStyleExtensionAniamtion;
+        
+        if (self.popupParam.hideKeyPath == nil)
+            self.popupParam.hideKeyPath = self.popupParam.showKeyPath;
+        if (self.popupParam.hideFromValue == nil)
+            self.popupParam.hideFromValue = self.popupParam.showToValue;
+        if (self.popupParam.hideToValue == nil)
+            self.popupParam.hideToValue = self.popupParam.showFromValue;
+    }
+
+    //mask
+    if (self.popupParam.maskShowFromPath != nil &&
+        self.popupParam.maskShowToPath != nil ) {
+        style = style | PopupStyleExtensionMask;
+        
+        if (self.popupParam.maskHideFromPath == nil)
+            self.popupParam.maskHideFromPath = self.popupParam.maskShowToPath;
+        if (self.popupParam.maskHideToPath == nil)
+            self.popupParam.maskHideToPath = self.popupParam.maskShowFromPath;
+    }
+    self.style = style;
+}
 
 #pragma mark -- styleInclude
 static inline BOOL styleInclude(PopupStyle total,PopupStyle inc){
     return ((total & inc) == inc);
 }
+
+
+#pragma mark -- normal-frame
+static inline CGRect normalOriginFrame(TFPopupParam *param){
+    CGRect ar = param.popupAreaRect;
+    CGSize s = param.popupSize;
+    CGPoint st = param.offset;
+    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
+    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    return CGRectMake(x, y, s.width, s.height);
+}
+
+static inline CGRect normalTargetFrame(TFPopupParam *param){
+    CGRect ar = param.popupAreaRect;
+    CGSize s = param.popupSize;
+    CGPoint st = param.offset;
+    CGFloat x = (ar.size.width - s.width) * 0.5 + st.x;
+    CGFloat y = (ar.size.height - s.height) * 0.5 + st.y;
+    return CGRectMake(x, y, s.width, s.height);
+}
+
 
 #pragma mark -- bubble-frame
 static inline CGRect bubbleOrigin(CGPoint basePoint,PopupDirection direction,CGPoint offset){
@@ -662,11 +808,24 @@ static inline CGRect slideTargetFrame(TFPopupParam *param,PopupDirection directi
 #define tf_synthesize_category_property_assign(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_ASSIGN,id)
 #endif
 
-tf_synthesize_category_property_retain(manager, setManager);
 tf_synthesize_category_property_retain(inView, setInView);
-tf_synthesize_category_property_retain(popupParam, setPopupParam);
 tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
-tf_synthesize_category_property_retain(backgroundView, setBackgroundView);
+tf_synthesize_category_property_assign(popupDataSource, setPopupDataSource);
+tf_synthesize_category_property_retain(popupParam, setPopupParam);
+
+-(TFPopupExtension *)extension{
+    id value = objc_getAssociatedObject(self, @selector(extension));
+    if (value) {
+        return value;
+    }else{
+        self.extension = [[TFPopupExtension alloc]init];
+        value = self.extension;
+    }
+    return value;;
+}
+-(void)setExtension:(TFPopupExtension *)extension{
+    objc_setAssociatedObject(self, @selector(extension), extension, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 -(PopupDirection)direction{
     id value = objc_getAssociatedObject(self, @selector(direction));
