@@ -362,6 +362,7 @@
 
 
 -(void)excClick:(UIButton *)ins{
+    
     if ([title(ins) isEqualToString:@"exc0"]) {
         UIView *view = [self getViewName:@"ExcempleAlert"];
         [view tf_showNormal:self.view animated:NO];
@@ -370,15 +371,12 @@
         }];
 
     }
+    
     if ([title(ins) isEqualToString:@"exc1"]) {
         UIView *view = [self getViewName:@"ExcempleAction"];
 
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, -200);
-        param.disuseShowBackgroundAlphaAnimation = YES;
-        param.disuseHideBackgroundAlphaAnimation = YES;
-        param.disuseShowPopupAlphaAnimation = YES;
-        param.disuseHidePopupAlphaAnimation = YES;
         param.popupSize = CGSizeMake(360, 226);
         view.popupDelegate = self;
         [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
@@ -392,7 +390,7 @@
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, +30);
         param.popupSize = CGSizeMake(396, 78);
-        param.autoDissmissDuration = 1;
+        param.autoDissmissDuration = 3;
         param.disuseShowPopupAlphaAnimation = YES;
         param.disuseHidePopupAlphaAnimation = YES;
         [view tf_showSlide:self.view direction:PopupDirectionTop popupParam:param];
@@ -400,6 +398,7 @@
             [view tf_hide];
         }];
     }
+    
     if ([title(ins) isEqualToString:@"exc3"]) {
         UIView *view = [self getViewName:@"ExcempleSign"];
         TFPopupParam *param = [TFPopupParam new];
@@ -453,6 +452,7 @@
             }];
         });
     }
+    
     if ([title(ins) isEqualToString:@"exc7"]) {
         UIView *big = [self getViewName:@"ExcempleSliderLogin"];
         TFPopupParam *param = [TFPopupParam new];
@@ -462,7 +462,6 @@
             [big tf_hide];
         }];
     }
-
 }
 
 -(UIView *)getAlertView{

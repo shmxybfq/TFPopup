@@ -65,6 +65,8 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
  */
 @property(nonatomic,assign)BOOL disuseShowPopupAlphaAnimation;
 @property(nonatomic,assign)BOOL disuseHidePopupAlphaAnimation;
+@property(nonatomic,assign)BOOL disuseShowPopupFrameAnimation;
+@property(nonatomic,assign)BOOL disuseHidePopupFrameAnimation;
 
 
 /* 【全局属性】弹框尺寸和区域

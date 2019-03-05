@@ -10,4 +10,17 @@
 
 @implementation TFPopupExtension
 
+-(NSMutableArray *)backgroundViewArray{
+    if (_backgroundViewArray == nil) {
+        _backgroundViewArray = [[NSMutableArray alloc]init];
+    }
+    return _backgroundViewArray;
+}
+-(NSMutableArray *)backgroundViewFrameArray{
+    if (_backgroundViewFrameArray == nil) {
+        _backgroundViewFrameArray = [[NSMutableArray alloc]init];
+    }
+    return _backgroundViewFrameArray;
+}
+
 @end

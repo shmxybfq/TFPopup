@@ -17,6 +17,10 @@
 
 @property(nonatomic,assign)CGSize popupArea;
 
+@property(nonatomic,assign)NSInteger backgroundViewCount;
+@property(nonatomic,strong)NSMutableArray *backgroundViewArray;
+@property(nonatomic,strong)NSMutableArray *backgroundViewFrameArray;
+
 @property(nonatomic,assign)BOOL disuseShowAlphaAnimation;
 @property(nonatomic,assign)CGFloat showFromAlpha;
 @property(nonatomic,assign)CGFloat showToAlpha;

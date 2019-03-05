@@ -11,6 +11,7 @@
 #import "TFPopupExtension.h"
 
 @protocol TFPopupDataSource<NSObject>
+
 @required;
 - (UIView *)tf_popupInView:(UIView *)popup;
 
@@ -24,36 +25,49 @@
 - (CGRect  )tf_popupView:(UIView *)popup fromFrameForState:(TFPopupState)state;
 - (CGRect  )tf_popupView:(UIView *)popup toFrameForState:(TFPopupState)state;
 
-@end
-
-// 自定义动画代理,弹出框模式实现了此代理，并且代理对象为本身。通过以下代理的设置，为弹框设置了动画。
-@protocol TFPopupDelegate<NSObject>
-
-@optional;
-
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDurationForState:(TFPopupState)state;
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state;
 - (UIViewAnimationOptions)tf_popupView:(UIView *)popup animationOptionsForState:(TFPopupState)state;
+@end
 
-- (BOOL)tf_popupView:(UIView *)popup willShowStopAnimationForPopupStyle:(PopupStyle)style;
 
-- (BOOL)tf_popupView:(UIView *)popup willHideStopAnimationForPopupStyle:(PopupStyle)style;
+@protocol TFPopupBackgroundDelegate<NSObject,UITableViewDataSource>
+@optional
+- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup;
 
-//- (BOOL)tf_popupView:(UIView *)popup
-//     touchBackground:(UIView *)backgroundView
-//               index:(NSInteger)index;
+- (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index;
+- (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index;
+@end
+
+
+// 自定义动画代理,弹出框模式实现了此代理，并且代理对象为本身。通过以下代理的设置，为弹框设置了动画。
+@protocol TFPopupDelegate<NSObject>
+@optional;
+
+- (void)tf_popupViewWillGetConfiguration:(UIView *)popup;
+
+- (void)tf_popupViewDidGetConfiguration:(UIView *)popup;
+
+- (BOOL)tf_popupViewWillShow:(UIView *)popup;
+- (void)tf_popupViewDidShow:(UIView *)popup;
+- (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup;
+
+- (BOOL)tf_popupViewWillHide:(UIView *)popup;
+- (void)tf_popupViewDidHide:(UIView *)popup;
+- (void)tf_popupViewHideAnimationDidFinish:(UIView *)popup;
 
 @end
 
 
 
-@interface UIView (TFPopup)<TFPopupDataSource,TFPopupDelegate>
+@interface UIView (TFPopup)<TFPopupDataSource,TFPopupDelegate,TFPopupBackgroundDelegate,CAAnimationDelegate>
 
 @property(nonatomic,strong)UIView *inView;//弹框的容器视图
 @property(nonatomic,strong)TFPopupExtension *extension;
 
 @property(nonatomic,assign)id<TFPopupDelegate>popupDelegate;//自定义动画代理
 @property(nonatomic,assign)id<TFPopupDataSource>popupDataSource;
+@property(nonatomic,assign)id<TFPopupBackgroundDelegate>backgroundDelegate;
 
 @property(nonatomic,strong)TFPopupParam *popupParam;//默认动画参数
 @property(nonatomic,assign)PopupStyle style;//默认动画类型
@@ -130,8 +144,8 @@
 -(void)tf_showCustem:(UIView *)inView
           popupParam:(TFPopupParam *)popupParam
             delegate:(id<TFPopupDelegate>)delegate;
-@end
 
+@end
 
 
 typedef void(^AnimationStartBlock)(CAAnimation *anima);
