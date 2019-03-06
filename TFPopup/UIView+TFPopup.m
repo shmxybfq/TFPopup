@@ -33,7 +33,7 @@
 @end
 
 @implementation UIView (TFPopup)
-@dynamic inView,extension,popupDataSource,popupDelegate,backgroundDelegate,popupParam,style,direction;
+@dynamic inView,extension,popupDataSource,popupDelegate,backgroundDelegate,popupParam;
 
 #pragma mark -- 【入口函数】基本
 -(void)tf_showNormal:(UIView *)inView animated:(BOOL)animated{
@@ -261,7 +261,7 @@
         if (self.popupParam.maskHideToPath == nil)
             self.popupParam.maskHideToPath = self.popupParam.maskShowFromPath;
     }
-    self.style = style;
+    self.extension.style = style;
 }
 
 #pragma mark -- 刷新和展示
@@ -511,7 +511,7 @@
     
     
     //动画
-    if (styleInclude(self.style, PopupStyleExtensionAniamtion)) {
+    if (styleInclude(self.extension.style, PopupStyleExtensionAniamtion)) {
         CAAnimation *animation = [self animation:self.popupParam.showKeyPath
                                             from:self.popupParam.showFromValue
                                               to:self.popupParam.showToValue
@@ -524,7 +524,7 @@
     }
     
     //遮罩
-    if (styleInclude(self.style, PopupStyleExtensionMask)) {
+    if (styleInclude(self.extension.style, PopupStyleExtensionMask)) {
         
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
@@ -598,7 +598,7 @@
     }
     
     //动画
-    if (styleInclude(self.style, PopupStyleExtensionAniamtion)) {
+    if (styleInclude(self.extension.style, PopupStyleExtensionAniamtion)) {
         CAAnimation *animation = [self animation:self.popupParam.hideKeyPath
                                             from:self.popupParam.hideFromValue
                                               to:self.popupParam.hideToValue
@@ -612,7 +612,7 @@
     }
     
     //遮罩
-    if (styleInclude(self.style, PopupStyleExtensionMask)) {
+    if (styleInclude(self.extension.style, PopupStyleExtensionMask)) {
         NSTimeInterval dur = self.popupParam.duration;
         NSString *keyPath = @"path";
         CAShapeLayer *mask = self.layer.mask;
@@ -1112,28 +1112,6 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 }
 -(void)setExtension:(TFPopupExtension *)extension{
     objc_setAssociatedObject(self, @selector(extension), extension, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
--(PopupDirection)direction{
-    id value = objc_getAssociatedObject(self, @selector(direction));
-    if (value) {
-        return [value integerValue];
-    }
-    return 0;
-}
--(void)setDirection:(PopupDirection)direction{
-    objc_setAssociatedObject(self, @selector(direction), @(direction), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
--(PopupStyle)style{
-    id value = objc_getAssociatedObject(self, @selector(style));
-    if (value) {
-        return [value integerValue];
-    }
-    return 0;
-}
--(void)setStyle:(PopupStyle)style{
-    objc_setAssociatedObject(self, @selector(style), @(style), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 

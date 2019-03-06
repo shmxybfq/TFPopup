@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-
+#import "TFPopupParam.h"
 
 @interface TFPopupExtension : NSObject
 
@@ -47,6 +47,8 @@
 @property(nonatomic,assign)NSTimeInterval hideAnimationDelay;
 @property(nonatomic,assign)UIViewAnimationOptions hideAnimationOptions;
 
+@property(nonatomic,assign)PopupStyle style;//默认动画类型
+@property(nonatomic,assign)PopupDirection direction;//默认动画方向，仅在滑动动画和泡泡动画下有效
 
 @end
 
