@@ -31,7 +31,7 @@
 @end
 
 
-@protocol TFPopupBackgroundDelegate<NSObject,UITableViewDataSource>
+@protocol TFPopupBackgroundDelegate<NSObject>
 @optional
 - (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup;
 
@@ -53,8 +53,8 @@
 - (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup;
 
 - (BOOL)tf_popupViewWillHide:(UIView *)popup;
-- (void)tf_popupViewDidHide:(UIView *)popup;
-- (void)tf_popupViewHideAnimationDidFinish:(UIView *)popup;
+- (BOOL)tf_popupViewDidHide:(UIView *)popup;
+- (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup;
 
 @end
 
