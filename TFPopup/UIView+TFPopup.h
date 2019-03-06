@@ -56,6 +56,8 @@
 - (BOOL)tf_popupViewDidHide:(UIView *)popup;
 - (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup;
 
+- (void)tf_popupViewBackgroundDidTouch:(UIView *)popup;
+
 @end
 
 
@@ -83,8 +85,7 @@
  * popupParam 弹出的更多参数设置，具体参照TFPopupParam类 */
 -(void)tf_showNormal:(UIView *)inView animated:(BOOL)animated;
 -(void)tf_showNormal:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated;
--(void)tf_showNormal:(UIView *)inView
-          popupParam:(TFPopupParam *)popupParam;
+-(void)tf_showNormal:(UIView *)inView popupParam:(TFPopupParam *)popupParam;
 
 
 /* 缩放动画，位置固定
@@ -102,9 +103,7 @@
  * 如不设置direction值，可以设置popupParam.popOriginFrame&popupParam.popTargetFrame自由控制弹框的初始frame和最终frame
  * popupParam 弹出的更多参数设置，具体参照TFPopupParam类 */
 -(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction;
--(void)tf_showSlide:(UIView *)inView
-          direction:(PopupDirection)direction
-         popupParam:(TFPopupParam *)popupParam;
+-(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction popupParam:(TFPopupParam *)popupParam;
 
 
 /* 泡泡动画，基于point&bubbleDirection -> 展开弹框
@@ -142,8 +141,7 @@
  * popupParam 弹出的更多参数设置，具体参照TFPopupParam类
  * delegate 动画代理，默认为弹框本类，具体请参照TFPopupDelegate类 */
 -(void)tf_showCustem:(UIView *)inView
-          popupParam:(TFPopupParam *)popupParam
-            delegate:(id<TFPopupDelegate>)delegate;
+          popupParam:(TFPopupParam *)popupParam;
 
 @end
 

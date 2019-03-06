@@ -54,9 +54,7 @@
     
     [self setDefault];
     
-    [self tf_showCustem:inView
-             popupParam:self.popupParam
-               delegate:self.popupDelegate?self.popupDelegate:self];
+    [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
 #pragma mark -- 缩放
@@ -83,9 +81,7 @@
     self.popupParam.hideFromValue = @(1.0);
     self.popupParam.hideToValue = @(0.0);
     
-    [self tf_showCustem:inView
-             popupParam:self.popupParam
-               delegate:self.popupDelegate?self.popupDelegate:self];
+    [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
 #pragma mark -- 滑动
@@ -120,9 +116,7 @@
         }
     }
     
-    [self tf_showCustem:inView
-             popupParam:self.popupParam
-               delegate:self.popupDelegate?self.popupDelegate:self];
+    [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
 
@@ -161,9 +155,7 @@
                                                   self.popupParam.popupSize,
                                                   self.popupParam.bubbleDirection,
                                                   self.popupParam.offset);
-    [self tf_showCustem:inView
-             popupParam:self.popupParam
-               delegate:self.popupDelegate?self.popupDelegate:self];
+    [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
 #pragma mark -- 形变
@@ -180,9 +172,7 @@
     self.popupParam.popOriginFrame = CGRectEqualToRect(CGRectZero, from)?self.popupParam.popOriginFrame:from;
     self.popupParam.popTargetFrame = CGRectEqualToRect(CGRectZero, to)?self.popupParam.popOriginFrame:to;
     
-    [self tf_showCustem:inView
-             popupParam:self.popupParam
-               delegate:self.popupDelegate?self.popupDelegate:self];
+    [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
 
@@ -195,16 +185,12 @@
     
     [self setDefault];
     
-    [self tf_showCustem:inView
-             popupParam:self.popupParam
-               delegate:self.popupDelegate?self.popupDelegate:self];
+    [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
 
 -(void)tf_showCustem:(UIView *)inView
-          popupParam:(TFPopupParam *)popupParam
-            delegate:(id<TFPopupDelegate>)delegate{
-    PopupLog(@"666");
+          popupParam:(TFPopupParam *)popupParam{
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     
     self.inView = inView;
@@ -214,9 +200,9 @@
     
     [self checkStyle];
     //代理
-    self.popupDelegate = delegate==nil?self:delegate;
-    self.popupDataSource = self;
-    self.backgroundDelegate = self;
+    self.popupDelegate = self.popupDelegate==nil?self:self.popupDelegate;
+    self.popupDataSource = self.popupDataSource==nil?self:self.popupDataSource;
+    self.backgroundDelegate = self.backgroundDelegate==nil?self:self.backgroundDelegate;
     
     [self performSelectorOnMainThread:@selector(tf_reload) withObject:nil waitUntilDone:YES];
     [self performSelectorOnMainThread:@selector(tf_show) withObject:nil waitUntilDone:YES];
@@ -438,14 +424,12 @@ static inline void deleteRunCache(NSObject *obj){
 #define kHideMaskAnimationKey @"kHideMaskAnimationKey"
 -(void)tf_show{
     x_weakSelf;
-    
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillShow:)]) {
         BOOL breanAnimation = [self.popupDelegate tf_popupViewWillShow:self];
         if (breanAnimation) {
             return;
         }
     }
-    
     //自动消失时间
     if (self.popupParam.autoDissmissDuration != 0) {
         [self performSelector:@selector(tf_hide)
@@ -467,7 +451,6 @@ static inline void deleteRunCache(NSObject *obj){
     ext.currentIsShowState = YES;
     ext.showAnimationCount = 0;
     
-    //self.userInteractionEnabled = NO;
     if (self.extension.disuseShowAlphaAnimation == NO &&
         self.extension.showFromAlpha != self.extension.showToAlpha) {
         ext.showAnimationCount += 1;
@@ -537,7 +520,7 @@ static inline void deleteRunCache(NSObject *obj){
 }
 
 - (void)animationDidStart:(CAAnimation *)anim{
-
+    
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
     TFPopupPrivateExtension *ext = getRunCache(self);
@@ -567,6 +550,7 @@ static inline void deleteRunCache(NSObject *obj){
     BOOL hasFrameAniamtion = NO;
     BOOL hasBaseAniamtion = NO;
     BOOL hasMaskAniamtion = NO;
+    
     if (self.extension.disuseHideAlphaAnimation == NO &&
         self.extension.hideFromAlpha != self.extension.hideToAlpha) {
         
@@ -666,7 +650,6 @@ static inline void deleteRunCache(NSObject *obj){
         }
         
     }
-    
 }
 -(void)hideAnimationCompletion{
     TFPopupPrivateExtension *ext = getRunCache(self);
@@ -684,12 +667,14 @@ static inline void deleteRunCache(NSObject *obj){
 }
 #pragma mark -- 事件
 -(void)backgroundViewClick:(UIButton *)ins{
-    [self tf_hide];
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewBackgroundDidTouch:)]) {
+        [self.popupDelegate tf_popupViewBackgroundDidTouch:self];
+    }
 }
 
 #pragma mark -- TFPopupDelegate
 - (void)tf_popupViewWillGetConfiguration:(UIView *)popup{
-
+    
 }
 - (void)tf_popupViewDidGetConfiguration:(UIView *)popup{
     
@@ -697,16 +682,18 @@ static inline void deleteRunCache(NSObject *obj){
 
 - (BOOL)tf_popupViewWillShow:(UIView *)popup{
     UIView *backgroundView = self.extension.backgroundViewArray.firstObject;
-    __weak typeof(backgroundView) weakBackgroundView = backgroundView;
     if (backgroundView) {
-        [UIView animateWithDuration:self.extension.showAnimationDuration
-                              delay:self.extension.showAnimationDelay
-                            options:self.extension.showAnimationOptions
-                         animations:^{
-                             weakBackgroundView.alpha = 1;
-                         } completion:^(BOOL finished) {
-                             
-                         }];
+        if (self.popupParam.disuseShowBackgroundAlphaAnimation) {
+            backgroundView.alpha = 1;
+        }else{
+            __weak typeof(backgroundView) weakBackgroundView = backgroundView;
+            [UIView animateWithDuration:self.extension.showAnimationDuration
+                                  delay:self.extension.showAnimationDelay
+                                options:self.extension.showAnimationOptions
+                             animations:^{
+                                 weakBackgroundView.alpha = 1;
+                             } completion:nil];
+        }
     }
     return NO;
 }
@@ -715,16 +702,21 @@ static inline void deleteRunCache(NSObject *obj){
 
 - (BOOL)tf_popupViewWillHide:(UIView *)popup{
     UIView *backgroundView = self.extension.backgroundViewArray.firstObject;
-    __weak typeof(backgroundView) weakBackgroundView = backgroundView;
     if (backgroundView) {
-        [UIView animateWithDuration:self.extension.hideAnimationDuration
-                              delay:self.extension.hideAnimationDelay
-                            options:self.extension.hideAnimationOptions
-                         animations:^{
-                             weakBackgroundView.alpha = 0;
-                         } completion:^(BOOL finished) {
-                             [weakBackgroundView removeFromSuperview];
-                         }];
+        if (self.popupParam.disuseHideBackgroundAlphaAnimation) {
+            backgroundView.alpha = 0;
+            [backgroundView removeFromSuperview];
+        }else{
+            __weak typeof(backgroundView) weakBackgroundView = backgroundView;
+            [UIView animateWithDuration:self.extension.hideAnimationDuration
+                                  delay:self.extension.hideAnimationDelay
+                                options:self.extension.hideAnimationOptions
+                             animations:^{
+                                 weakBackgroundView.alpha = 0;
+                             } completion:^(BOOL finished) {
+                                 [weakBackgroundView removeFromSuperview];
+                             }];
+        }
     }
     return NO;
 }
@@ -735,14 +727,27 @@ static inline void deleteRunCache(NSObject *obj){
     return YES;
 }
 
+- (void)tf_popupViewBackgroundDidTouch:(UIView *)popup{
+    if (self.popupParam.disuseBackgroundTouchHide == NO) {
+        [self tf_hide];
+    }
+}
+
 #pragma mark -- TFPopupBackgroundDelegate
 - (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup{
+    if (self.popupParam.disuseBackground) {
+        return 0;
+    }
     return 1;
 }
 
 - (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index{
     UIButton *backgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
-    backgroundView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
+    if (self.popupParam.backgroundColorClear) {
+        backgroundView.backgroundColor = [UIColor clearColor];
+    }else{
+        backgroundView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
+    }
     [backgroundView addTarget:self action:@selector(backgroundViewClick:) forControlEvents:UIControlEventTouchUpInside];
     backgroundView.alpha = 0;
     return backgroundView;
@@ -895,7 +900,7 @@ static inline void deleteRunCache(NSObject *obj){
         if (self.popupParam.hideToValue == nil)
             self.popupParam.hideToValue = self.popupParam.showFromValue;
     }
-
+    
     //mask
     if (self.popupParam.maskShowFromPath != nil &&
         self.popupParam.maskShowToPath != nil ) {
