@@ -56,7 +56,7 @@
 - (BOOL)tf_popupViewDidHide:(UIView *)popup;
 - (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup;
 
-- (void)tf_popupViewBackgroundDidTouch:(UIView *)popup;
+- (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup;
 
 @end
 
@@ -77,6 +77,9 @@
 
 
 -(void)tf_hide;//手动控制弹框消失
+-(void)showDefaultBackground;
+-(void)hideDefaultBackground;
+
 
 /* 基本动画，位置固定，可设置无任何动画弹出和渐隐方式
  * inView 容器视图

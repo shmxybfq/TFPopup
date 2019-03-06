@@ -425,8 +425,8 @@ static inline void deleteRunCache(NSObject *obj){
 -(void)tf_show{
     x_weakSelf;
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillShow:)]) {
-        BOOL breanAnimation = [self.popupDelegate tf_popupViewWillShow:self];
-        if (breanAnimation) {
+        BOOL continueAnimation = [self.popupDelegate tf_popupViewWillShow:self];
+        if (continueAnimation == NO) {
             return;
         }
     }
@@ -536,8 +536,8 @@ static inline void deleteRunCache(NSObject *obj){
     
     x_weakSelf;
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillHide:)]) {
-        BOOL breanAnimation = [self.popupDelegate tf_popupViewWillHide:self];
-        if (breanAnimation) {
+        BOOL continueAnimation = [self.popupDelegate tf_popupViewWillHide:self];
+        if (continueAnimation == NO) {
             return;
         }
     }
@@ -667,8 +667,15 @@ static inline void deleteRunCache(NSObject *obj){
 }
 #pragma mark -- 事件
 -(void)backgroundViewClick:(UIButton *)ins{
+    if (self.popupParam.disuseBackgroundTouchHide) {
+        return;
+    }
+    BOOL continueAnimation = YES;
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewBackgroundDidTouch:)]) {
-        [self.popupDelegate tf_popupViewBackgroundDidTouch:self];
+        continueAnimation = [self.popupDelegate tf_popupViewBackgroundDidTouch:self];
+    }
+    if (continueAnimation) {
+        [self tf_hide];
     }
 }
 
@@ -681,6 +688,28 @@ static inline void deleteRunCache(NSObject *obj){
 }
 
 - (BOOL)tf_popupViewWillShow:(UIView *)popup{
+    [self showDefaultBackground];
+    return YES;
+}
+- (void)tf_popupViewDidShow:(UIView *)popup{}
+- (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup{}
+
+- (BOOL)tf_popupViewWillHide:(UIView *)popup{
+    [self hideDefaultBackground];
+    return YES;
+}
+- (BOOL)tf_popupViewDidHide:(UIView *)popup{
+    return YES;
+}
+- (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup{
+    return YES;
+}
+
+- (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup{
+    return YES;
+}
+
+-(void)showDefaultBackground{
     UIView *backgroundView = self.extension.backgroundViewArray.firstObject;
     if (backgroundView) {
         if (self.popupParam.disuseShowBackgroundAlphaAnimation) {
@@ -695,12 +724,10 @@ static inline void deleteRunCache(NSObject *obj){
                              } completion:nil];
         }
     }
-    return NO;
 }
-- (void)tf_popupViewDidShow:(UIView *)popup{}
-- (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup{}
 
-- (BOOL)tf_popupViewWillHide:(UIView *)popup{
+
+-(void)hideDefaultBackground{
     UIView *backgroundView = self.extension.backgroundViewArray.firstObject;
     if (backgroundView) {
         if (self.popupParam.disuseHideBackgroundAlphaAnimation) {
@@ -717,19 +744,6 @@ static inline void deleteRunCache(NSObject *obj){
                                  [weakBackgroundView removeFromSuperview];
                              }];
         }
-    }
-    return NO;
-}
-- (BOOL)tf_popupViewDidHide:(UIView *)popup{
-    return YES;
-}
-- (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup{
-    return YES;
-}
-
-- (void)tf_popupViewBackgroundDidTouch:(UIView *)popup{
-    if (self.popupParam.disuseBackgroundTouchHide == NO) {
-        [self tf_hide];
     }
 }
 
