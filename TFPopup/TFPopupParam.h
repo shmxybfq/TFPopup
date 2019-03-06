@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL keepPopupOriginFrame;
 
 
-/* 【tf_showCustemAnimation】属性动画
+/* 【全局属性】属性动画和缩放弹出冲突
  showKeyPath,显示时的属性动画keyPath
  showFromValue,显示动画初始值
  showToValue,,显示动画结束值
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,strong)id hideToValue;
 
 
-/* 【tf_showFrame】形变动画,泡泡,位移动画,优先级popOriginFrame=popTargetFrame>bubbleDirection
+/* 【泡泡弹出方式属性】
  basePoint,弹出泡泡基于哪个点
  bubbleDirection,弹出泡泡的方向
  popOriginFrame,弹出初始frame
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)PopupDirection bubbleDirection;
 
 
-/* 【tf_showMask】遮罩
+/* 【全局属性】遮罩
  maskShowFromPath,必须参数
  maskShowToPath,必须参数
  maskHideFromPath,非必填，为空时值为maskShowToPath

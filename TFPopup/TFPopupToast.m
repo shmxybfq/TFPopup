@@ -21,7 +21,12 @@
 
 
 +(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFToastAnimationType)animationType{
-    [TFPopupToast tf_show:inView msg:msg offset:CGPointZero dissmissDuration:0 animationType:animationType custemBlock:nil];
+    [TFPopupToast tf_show:inView
+                      msg:msg
+                   offset:CGPointZero
+         dissmissDuration:0
+            animationType:animationType
+              custemBlock:nil];
 }
 
 +(void)tf_show:(UIView *)inView
@@ -59,13 +64,6 @@ dissmissDuration:(NSTimeInterval)duration
     }
     
 }
-
-//-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-//    if (self.cusBlock) {
-//        self.cusBlock(self);
-//    }
-//    return NO;
-//}
 
 -(instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
