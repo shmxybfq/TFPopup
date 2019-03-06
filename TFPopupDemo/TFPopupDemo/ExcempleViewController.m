@@ -169,196 +169,196 @@
 
 
 
-//-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
-//
-//    if ([self.selectedTitle isEqualToString:@"自定义1"]) {
-//
-//        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-//        [ani setFromValue:@(-M_PI)];
-//        [ani setToValue:@(0)];
-//        [ani setDuration:0.3];
-//        [ani setRemovedOnCompletion:NO];
-//        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
-//        [ani setAutoreverses:NO];
-//        [ani setFillMode:kCAFillModeBoth];
-//        [popup.layer addAnimation:ani forKey:@"rotation"];
-//        return NO;
-//    }else if([self.selectedTitle isEqualToString:@"自定义2"]){
-//
-//        NSArray *bts = [((BlankView *)popup) buttons];
-//        CGFloat x = 30;
-//        CGFloat y = 300;
-//        NSMutableArray *fs = [NSMutableArray array];
-//        for (int i = 0; i < bts.count; i++) {
-//            UIView *bt = [bts objectAtIndex:i];
-//            bt.frame = CGRectMake(x , y, 40, 40);
-//            [fs addObject:NSStringFromCGRect(CGRectMake(x, y - 300 + 40, 40, 40))];
-//            x = x + 40 + (kSize.width - 40 * 4 - 30 * 2) / 3.0;
-//            if (i == 3) {
-//                x = 30;
-//                y = y + 40 + 30;
-//            }
-//        }
-//        for (int i = 0; i < bts.count; i++) {
-//            UIView *bt = [bts objectAtIndex:i];
-//            CGRect frame = CGRectFromString([fs objectAtIndex:i]);
-//            [UIView animateWithDuration:0.25 delay:(0.1+i*0.05) options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//                bt.frame = frame;
-//            } completion:^(BOOL finished) {}];
-//        }
-//        return NO;
-//    }else if([self.selectedTitle isEqualToString:@"自定义3"]){
-//
-//        if (@available(iOS 9.0, *)) {
-//            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
-//            spring.damping = 15;
-//            spring.stiffness = 100;
-//            spring.mass = 1.5;
-//            spring.initialVelocity = 0;
-//            spring.duration = spring.settlingDuration;
-//            spring.fromValue = @(-200);
-//            spring.toValue = @(self.view.center.y);
-//            spring.fillMode = kCAFillModeForwards;
-//            [popup.layer addAnimation:spring forKey:nil];
-//            __weak typeof(popup) weakPopup = popup;
-//            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-//                if (finished) {
-//                    weakPopup.center = CGPointMake(kSize.width * 0.5, kSize.height * 0.5);
-//                }
-//            }];
-//        } else {
-//
-//        }
-//        return NO;
-//
-//    }else if([self.selectedTitle isEqualToString:@"自定义4"]){
-//
-//        popup.layer.masksToBounds = NO;
-//        popup.clipsToBounds = NO;
-//
-//        CGFloat dur = popup.popupParam.duration;
-//        CAShapeLayer *layer = [CAShapeLayer layer];
-//        CGSize ss = kAlertSize;
-//        UIBezierPath *prepp = nil;
-//        UIBezierPath *sufpp = nil;
-//        CAAnimationGroup *group = [CAAnimationGroup animation];
-//        NSMutableArray *ans = [NSMutableArray array];
-//        for (NSInteger i = 1; i <= 7; i++) {
-//            UIBezierPath *pp = [UIBezierPath bezierPath];
-//            [pp moveToPoint:CGPointMake(0, ss.height)];
-//            [pp addLineToPoint:CGPointMake(0, ss.height - ss.height * 0.2 * i)];
-//            CGPoint p0 = CGPointMake(ss.width * 0.33, ss.height - ss.height * 0.2 * i - 34);
-//            CGPoint p1 = CGPointMake(ss.width * 0.66, ss.height - ss.height * 0.2 * i + 34);
-//            [pp addCurveToPoint:CGPointMake(ss.width, ss.height - ss.height * 0.2 * i)
-//                  controlPoint1:(i % 2 == 0)?p0:p1
-//                  controlPoint2:(i % 2 == 0)?p1:p0];
-//            [pp addLineToPoint:CGPointMake(ss.width, ss.height)];
-//            [pp addLineToPoint:CGPointMake(0, ss.height)];
-//            [pp closePath];
-//
-//            if (i == 1) {
-//                layer.path = pp.CGPath;
-//                popup.layer.mask = layer;
-//            }else if(i == 7){
-//                sufpp = pp;
-//            }else{
-//                CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
-//                animation.duration = dur / 7.0;
-//                animation.beginTime = dur / 7.0 * (i - 2);
-//                animation.fromValue = (__bridge id)prepp.CGPath;
-//                animation.toValue = (__bridge id)pp.CGPath;
-//                [ans addObject:animation];
-//            }
-//            prepp = pp;
-//        }
-//        layer.path = sufpp.CGPath;
-//
-//        group.animations = ans;
-//        group.removedOnCompletion = NO;
-//        group.duration = ans.count * dur / 7.0;
-//        group.fillMode = kCAFillModeBoth;
-//        [group observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-//            NSLog(@">>>>>>>:%@",sufpp);
-//            layer.path = sufpp.CGPath;
-//        }];
-//        [layer addAnimation:group forKey:nil];
-//
-//    }
-//    return NO;
-//}
-//
-//-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
-//    if([self.selectedTitle isEqualToString:@"自定义1"]){
-//        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-//        [ani setFromValue:@(0)];
-//        [ani setToValue:@(-M_PI)];
-//        [ani setDuration:0.3];
-//        [ani setRemovedOnCompletion:NO];
-//        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
-//        [ani setAutoreverses:NO];
-//        [ani setFillMode:kCAFillModeBoth];
-//        [popup.layer addAnimation:ani forKey:@"rotation"];
-//        return NO;
-//    }else if([self.selectedTitle isEqualToString:@"自定义2"]){
-//        NSArray *bts = [((BlankView *)popup) buttons];
-//        for (int i = 0; i < bts.count; i++) {
-//            UIView *bt = [bts objectAtIndex:i];
-//            CGRect f = bt.frame;
-//            [UIView animateWithDuration:0.25 delay:(0.1+i*0.05) options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//                bt.frame = CGRectMake(f.origin.x, 300, 40, 40);
-//            } completion:^(BOOL finished) {}];
-//        }
-//
-//        CGRect of = popup.frame;
-//        [UIView animateWithDuration:0.25
-//                              delay:(0.1+8*0.05)
-//                            options:UIViewAnimationOptionCurveEaseInOut
-//                         animations:^{
-//
-//                             popup.frame = CGRectMake(of.origin.x, kSize.height, of.size.width, of.size.height);
-//                         } completion:^(BOOL finished) {
-//
-//                         }];
-//        [UIView animateWithDuration:0.25
-//                              delay:(0.1+8*0.05)
-//                            options:UIViewAnimationOptionCurveEaseInOut
-//                         animations:^{
-//                             popup.backgroundView.alpha = 0;
-//                         } completion:^(BOOL finished) {
-//                             [popup.backgroundView removeFromSuperview];
-//                         }];
-//        return YES;
-//    }else if([self.selectedTitle isEqualToString:@"自定义3"]){
-//        if (@available(iOS 9.0, *)) {
-//            popup.center = CGPointMake(kSize.width * 0.5, -500);
-//            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
-//            spring.damping = 15;
-//            spring.stiffness = 100;
-//            spring.mass = 1.5;
-//            spring.initialVelocity = 0;
-//            spring.duration = spring.settlingDuration;
-//            spring.fromValue = @(self.view.center.y);
-//            spring.toValue = @(-200);
-//            spring.fillMode = kCAFillModeForwards;
-//            [popup.layer addAnimation:spring forKey:nil];
-//            __weak typeof(popup) weakPopup = popup;
-//            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-//                if (finished) {
-//                    weakPopup.center = CGPointMake(kSize.width * 0.5, -200);
-//                }
-//            }];
-//        } else {
-//
-//        }
-//        return NO;
-//    }
-//    return NO;
-//}
-//
-//-(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup{
-//    [self.view endEditing:YES];
-//    return NO;
-//}
+-(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+
+    if ([self.selectedTitle isEqualToString:@"自定义1"]) {
+
+        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        [ani setFromValue:@(-M_PI)];
+        [ani setToValue:@(0)];
+        [ani setDuration:0.3];
+        [ani setRemovedOnCompletion:NO];
+        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
+        [ani setAutoreverses:NO];
+        [ani setFillMode:kCAFillModeBoth];
+        [popup.layer addAnimation:ani forKey:@"rotation"];
+        return NO;
+    }else if([self.selectedTitle isEqualToString:@"自定义2"]){
+
+        NSArray *bts = [((BlankView *)popup) buttons];
+        CGFloat x = 30;
+        CGFloat y = 300;
+        NSMutableArray *fs = [NSMutableArray array];
+        for (int i = 0; i < bts.count; i++) {
+            UIView *bt = [bts objectAtIndex:i];
+            bt.frame = CGRectMake(x , y, 40, 40);
+            [fs addObject:NSStringFromCGRect(CGRectMake(x, y - 300 + 40, 40, 40))];
+            x = x + 40 + (kSize.width - 40 * 4 - 30 * 2) / 3.0;
+            if (i == 3) {
+                x = 30;
+                y = y + 40 + 30;
+            }
+        }
+        for (int i = 0; i < bts.count; i++) {
+            UIView *bt = [bts objectAtIndex:i];
+            CGRect frame = CGRectFromString([fs objectAtIndex:i]);
+            [UIView animateWithDuration:0.25 delay:(0.1+i*0.05) options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                bt.frame = frame;
+            } completion:^(BOOL finished) {}];
+        }
+        return NO;
+    }else if([self.selectedTitle isEqualToString:@"自定义3"]){
+
+        if (@available(iOS 9.0, *)) {
+            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+            spring.damping = 15;
+            spring.stiffness = 100;
+            spring.mass = 1.5;
+            spring.initialVelocity = 0;
+            spring.duration = spring.settlingDuration;
+            spring.fromValue = @(-200);
+            spring.toValue = @(self.view.center.y);
+            spring.fillMode = kCAFillModeForwards;
+            [popup.layer addAnimation:spring forKey:nil];
+            __weak typeof(popup) weakPopup = popup;
+            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+                if (finished) {
+                    weakPopup.center = CGPointMake(kSize.width * 0.5, kSize.height * 0.5);
+                }
+            }];
+        } else {
+
+        }
+        return NO;
+
+    }else if([self.selectedTitle isEqualToString:@"自定义4"]){
+
+        popup.layer.masksToBounds = NO;
+        popup.clipsToBounds = NO;
+
+        CGFloat dur = popup.popupParam.duration;
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        CGSize ss = kAlertSize;
+        UIBezierPath *prepp = nil;
+        UIBezierPath *sufpp = nil;
+        CAAnimationGroup *group = [CAAnimationGroup animation];
+        NSMutableArray *ans = [NSMutableArray array];
+        for (NSInteger i = 1; i <= 7; i++) {
+            UIBezierPath *pp = [UIBezierPath bezierPath];
+            [pp moveToPoint:CGPointMake(0, ss.height)];
+            [pp addLineToPoint:CGPointMake(0, ss.height - ss.height * 0.2 * i)];
+            CGPoint p0 = CGPointMake(ss.width * 0.33, ss.height - ss.height * 0.2 * i - 34);
+            CGPoint p1 = CGPointMake(ss.width * 0.66, ss.height - ss.height * 0.2 * i + 34);
+            [pp addCurveToPoint:CGPointMake(ss.width, ss.height - ss.height * 0.2 * i)
+                  controlPoint1:(i % 2 == 0)?p0:p1
+                  controlPoint2:(i % 2 == 0)?p1:p0];
+            [pp addLineToPoint:CGPointMake(ss.width, ss.height)];
+            [pp addLineToPoint:CGPointMake(0, ss.height)];
+            [pp closePath];
+
+            if (i == 1) {
+                layer.path = pp.CGPath;
+                popup.layer.mask = layer;
+            }else if(i == 7){
+                sufpp = pp;
+            }else{
+                CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+                animation.duration = dur / 7.0;
+                animation.beginTime = dur / 7.0 * (i - 2);
+                animation.fromValue = (__bridge id)prepp.CGPath;
+                animation.toValue = (__bridge id)pp.CGPath;
+                [ans addObject:animation];
+            }
+            prepp = pp;
+        }
+        layer.path = sufpp.CGPath;
+
+        group.animations = ans;
+        group.removedOnCompletion = NO;
+        group.duration = ans.count * dur / 7.0;
+        group.fillMode = kCAFillModeBoth;
+        [group observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+            NSLog(@">>>>>>>:%@",sufpp);
+            layer.path = sufpp.CGPath;
+        }];
+        [layer addAnimation:group forKey:nil];
+
+    }
+    return NO;
+}
+
+-(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+    if([self.selectedTitle isEqualToString:@"自定义1"]){
+        CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        [ani setFromValue:@(0)];
+        [ani setToValue:@(-M_PI)];
+        [ani setDuration:0.3];
+        [ani setRemovedOnCompletion:NO];
+        [ani setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.35 :0.15 :0.35 :0.15]];
+        [ani setAutoreverses:NO];
+        [ani setFillMode:kCAFillModeBoth];
+        [popup.layer addAnimation:ani forKey:@"rotation"];
+        return NO;
+    }else if([self.selectedTitle isEqualToString:@"自定义2"]){
+        NSArray *bts = [((BlankView *)popup) buttons];
+        for (int i = 0; i < bts.count; i++) {
+            UIView *bt = [bts objectAtIndex:i];
+            CGRect f = bt.frame;
+            [UIView animateWithDuration:0.25 delay:(0.1+i*0.05) options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                bt.frame = CGRectMake(f.origin.x, 300, 40, 40);
+            } completion:^(BOOL finished) {}];
+        }
+
+        CGRect of = popup.frame;
+        [UIView animateWithDuration:0.25
+                              delay:(0.1+8*0.05)
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+
+                             popup.frame = CGRectMake(of.origin.x, kSize.height, of.size.width, of.size.height);
+                         } completion:^(BOOL finished) {
+
+                         }];
+        [UIView animateWithDuration:0.25
+                              delay:(0.1+8*0.05)
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             popup.backgroundView.alpha = 0;
+                         } completion:^(BOOL finished) {
+                             [popup.backgroundView removeFromSuperview];
+                         }];
+        return YES;
+    }else if([self.selectedTitle isEqualToString:@"自定义3"]){
+        if (@available(iOS 9.0, *)) {
+            popup.center = CGPointMake(kSize.width * 0.5, -500);
+            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
+            spring.damping = 15;
+            spring.stiffness = 100;
+            spring.mass = 1.5;
+            spring.initialVelocity = 0;
+            spring.duration = spring.settlingDuration;
+            spring.fromValue = @(self.view.center.y);
+            spring.toValue = @(-200);
+            spring.fillMode = kCAFillModeForwards;
+            [popup.layer addAnimation:spring forKey:nil];
+            __weak typeof(popup) weakPopup = popup;
+            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+                if (finished) {
+                    weakPopup.center = CGPointMake(kSize.width * 0.5, -200);
+                }
+            }];
+        } else {
+
+        }
+        return NO;
+    }
+    return NO;
+}
+
+-(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup{
+    [self.view endEditing:YES];
+    return NO;
+}
 
 
 -(void)excClick:(UIButton *)ins{
