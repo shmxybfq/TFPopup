@@ -267,7 +267,9 @@
 #pragma mark -- 刷新和展示
 //刷新
 -(void)tf_reload{
-    
+    NSLog(@"666");
+    PopupLog(@"");
+    NSLog(@"666");
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillGetConfiguration:)]) {
         [self.popupDelegate tf_popupViewWillGetConfiguration:self];
     }

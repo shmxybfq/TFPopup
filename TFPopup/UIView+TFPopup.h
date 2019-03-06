@@ -10,53 +10,118 @@
 #import "TFPopupParam.h"
 #import "TFPopupExtension.h"
 
+/* 动画数据源代理,询问动画的各种配置
+ * 弹框本身自动实现,若将代理设为其他类则其他类需要实现以下方法
+ */
 @protocol TFPopupDataSource<NSObject>
 
 @required;
-- (UIView *)tf_popupInView:(UIView *)popup;
 
-- (CGSize  )tf_popupInArea:(UIView *)popup;
-
-- (BOOL    )tf_popupView:(UIView *)popup animationWithAlphaForState:(TFPopupState)state;
-- (CGFloat )tf_popupView:(UIView *)popup fromAlphaForState:(TFPopupState)state;
-- (CGFloat )tf_popupView:(UIView *)popup toAlphaForState:(TFPopupState)state;
-
-- (BOOL    )tf_popupView:(UIView *)popup animationWithFrameForState:(TFPopupState)state;
+- (UIView *)tf_popupInView:(UIView *)popup;//将弹框弹到哪个view上,无默认值
+- (CGSize  )tf_popupInArea:(UIView *)popup;//参与计算的弹框区域的大小,默认为弹框容器的size
+/* 弹框的渐隐动画设置
+ * popup:弹框本类
+ * state:有两个参数TFPopupStateShow,TFPopupStateHide分别设置弹框展示时的参数和参考消失时的参数
+ * animationWithAlphaForState:弹出和消失时分别是否需要渐隐动画
+ * fromAlphaForState:弹出和消失时起始alpha值
+ * toAlphaForState:弹出和消失时结束alpha值
+ */
+- (BOOL    )tf_popupView:(UIView *)popup animationWithAlphaForState:(TFPopupState)state;//默认返回YES
+- (CGFloat )tf_popupView:(UIView *)popup fromAlphaForState:(TFPopupState)state;//默认show=0,hide=1
+- (CGFloat )tf_popupView:(UIView *)popup toAlphaForState:(TFPopupState)state;//默认show=1,hide=0
+/* 弹框的尺寸【位移】动画设置
+ * popup:弹框本类
+ * state:有两个参数TFPopupStateShow,TFPopupStateHide分别设置弹框展示时的参数和参考消失时的参数
+ * animationWithAlphaForState:弹出和消失时分别是否需要尺寸【位移】动画
+ * fromAlphaForState:弹出和消失时起始frame值
+ * toAlphaForState:弹出和消失时结束frame值
+ */
+- (BOOL    )tf_popupView:(UIView *)popup animationWithFrameForState:(TFPopupState)state;//默认返回YES
+//默认show&hide大小为弹框原来尺寸,位置为弹框区域的终点位置
 - (CGRect  )tf_popupView:(UIView *)popup fromFrameForState:(TFPopupState)state;
-- (CGRect  )tf_popupView:(UIView *)popup toFrameForState:(TFPopupState)state;
+- (CGRect  )tf_popupView:(UIView *)popup toFrameForState:(TFPopupState)state;//同上
 
-- (NSTimeInterval)tf_popupView:(UIView *)popup animationDurationForState:(TFPopupState)state;
-- (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state;
+/* 弹出动画参数设置
+ * popup:弹框本类
+ * state:有两个参数TFPopupStateShow,TFPopupStateHide分别设置弹框展示时的参数和参考消失时的参数
+ * animationDurationForState:弹出和消失时分别的动画时间
+ * animationDelayForState:弹出和消失时分别的动画开始前延迟时间
+ * animationOptionsForState:弹出和消失时分别的动画曲线类型
+ */
+@optional;
+- (NSTimeInterval)tf_popupView:(UIView *)popup animationDurationForState:(TFPopupState)state;//默认0.3
+- (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state;//默认0.3
+//默认UIViewAnimationOptionCurveEaseOut
 - (UIViewAnimationOptions)tf_popupView:(UIView *)popup animationOptionsForState:(TFPopupState)state;
 @end
 
 
-@protocol TFPopupBackgroundDelegate<NSObject>
-@optional
-- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup;
 
+/* 弹出背景视图代理,询问背景视图的数量,view,和frame
+ * 弹框本身自动实现,默认为一个背景black-0.3透明度,尺寸为弹出区域尺寸,若将代理设为其他类则其他类需要实现以下方法
+ */
+@protocol TFPopupBackgroundDelegate<NSObject>
+/* 弹出背景视图设置
+ * popup:弹框本类
+ * tf_popupBackgroundViewCount:背景视图的数量
+ * backgroundViewAtIndex:返回每一个背景视图
+ * backgroundViewFrameAtIndex:返回每一个背景视图的frame
+ */
+@optional
+- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup;//默认1
+//默认UIButton背景色为black-0.3透明度
 - (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index;
-- (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index;
+- (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index;//默认弹框区域大小
 @end
 
 
-// 自定义动画代理,弹出框模式实现了此代理，并且代理对象为本身。通过以下代理的设置，为弹框设置了动画。
+
+
+/* 动画过程代理
+ * 代理包含了动画执行过程中的各个阶段,在这个阶段中你可以获取和修改参数以达到修改动画的目的
+ */
 @protocol TFPopupDelegate<NSObject>
 @optional;
-
+/* 监听获取参数前后
+ * popup:弹框本类
+ * tf_popupViewWillGetConfiguration:开始获取所有配置前调用
+ * tf_popupViewDidGetConfiguration:获取完所有配置后调用
+ */
 - (void)tf_popupViewWillGetConfiguration:(UIView *)popup;
-
 - (void)tf_popupViewDidGetConfiguration:(UIView *)popup;
 
-- (BOOL)tf_popupViewWillShow:(UIView *)popup;
+/* 弹框show过程
+ * popup:弹框本类
+ * tf_popupViewWillShow:开始执行动画代码前调用
+ * tf_popupViewDidShow:执行完动画代码后调用,此函数早于tf_popupViewShowAnimationDidFinish调用
+ * tf_popupViewShowAnimationDidFinish:动画执行完成时调用
+ */
+- (BOOL)tf_popupViewWillShow:(UIView *)popup;//默认YES
 - (void)tf_popupViewDidShow:(UIView *)popup;
 - (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup;
 
-- (BOOL)tf_popupViewWillHide:(UIView *)popup;
-- (BOOL)tf_popupViewDidHide:(UIView *)popup;
-- (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup;
 
-- (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup;
+/* 弹框即将执行hide代码
+ * popup:弹框本类
+ * return:返回是否继续动画,如返回NO则需要自己定义消失方式和自己调用tf_remove
+ */
+- (BOOL)tf_popupViewWillHide:(UIView *)popup;//默认YES
+/* 弹框已经执行完hide代码
+ * popup:弹框本类
+ * return:返回如果没有任何动画的情况下,是否移除背景和弹框
+ */
+- (BOOL)tf_popupViewDidHide:(UIView *)popup;//默认YES
+/* hide动画执行完成时调用
+ * popup:弹框本类
+ * return:返回是否移除背景和弹框,如果返回NO则需要自己调用tf_remove
+ */
+- (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup;//默认YES
+
+/* 点击默认背景时调用
+ * popup:弹框本类
+ * return:返回点击背景后是否调用tf_hide
+ */
+- (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup;//默认YES
 
 @end
 
@@ -67,9 +132,9 @@
 @property(nonatomic,strong)UIView *inView;//弹框的容器视图
 @property(nonatomic,strong)TFPopupExtension *extension;
 
-@property(nonatomic,assign)id<TFPopupDelegate>popupDelegate;//自定义动画代理
-@property(nonatomic,assign)id<TFPopupDataSource>popupDataSource;
-@property(nonatomic,assign)id<TFPopupBackgroundDelegate>backgroundDelegate;
+@property(nonatomic,assign)id<TFPopupDelegate>popupDelegate;//动画调用过程代理
+@property(nonatomic,assign)id<TFPopupDataSource>popupDataSource;//动画所有配置代理
+@property(nonatomic,assign)id<TFPopupBackgroundDelegate>backgroundDelegate;//动画背景视图设置代理
 
 @property(nonatomic,strong)TFPopupParam *popupParam;//默认动画参数
 @property(nonatomic,assign)PopupStyle style;//默认动画类型
