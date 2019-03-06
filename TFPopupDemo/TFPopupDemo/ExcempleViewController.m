@@ -271,7 +271,6 @@
         group.duration = ans.count * dur / 7.0;
         group.fillMode = kCAFillModeBoth;
         [group observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-            NSLog(@">>>>>>>:%@",sufpp);
             layer.path = sufpp.CGPath;
         }];
         [layer addAnimation:group forKey:nil];
@@ -305,16 +304,16 @@
                 bt.frame = CGRectMake(f.origin.x, 300, 40, 40);
             } completion:^(BOOL finished) {}];
         }
-        
         CGRect of = popup.frame;
+        __weak typeof(popup) weakPopup = popup;
         [UIView animateWithDuration:0.25
                               delay:(0.1+8*0.05)
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
                              
-                             popup.frame = CGRectMake(of.origin.x, kSize.height, of.size.width, of.size.height);
+                             weakPopup.frame = CGRectMake(of.origin.x, kSize.height, of.size.width, of.size.height);
                          } completion:^(BOOL finished) {
-                             
+                             [weakPopup tf_remove];
                          }];
         return NO;
         

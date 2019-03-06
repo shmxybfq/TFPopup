@@ -77,6 +77,7 @@
 
 
 -(void)tf_hide;//手动控制弹框消失
+-(void)tf_remove;
 -(void)showDefaultBackground;
 -(void)hideDefaultBackground;
 
