@@ -127,10 +127,6 @@
     }else if([title(ins) isEqualToString:@"自定义4"]){
         
         param.duration = 1;
-        param.disuseShowBackgroundAlphaAnimation = YES;
-        param.disuseHideBackgroundAlphaAnimation = YES;
-        param.disuseShowPopupAlphaAnimation = YES;
-        param.disuseHidePopupAlphaAnimation = YES;
         param.popupSize = kAlertSize;
         UIView *view = [self getViewName:@"ExcempleAction"];
         
@@ -339,7 +335,6 @@
         } else {
             
         }
-        
     }
     return YES;
 }
