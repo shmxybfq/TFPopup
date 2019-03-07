@@ -154,11 +154,12 @@
     }
 }
 
-
-- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup{
-    return 16;
+-(BOOL)tf_popupIsUseDefaultBackground:(UIView *)popup{
+    return NO;
 }
-
+- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup{
+    return 1;
+}
 - (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index{
     UIButton *bg = [UIButton buttonWithType:UIButtonTypeCustom];
     bg.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:0 blue:0 alpha:1];
@@ -172,7 +173,6 @@
     if (index % 4 == 0) {
         x = 0;
     }else{
-
         x = (index % 4) / 4.0 * ss.width;
     }
     y = floor((index /4.0)) * (ss.height * 0.25);
@@ -182,9 +182,10 @@
 
 - (BOOL)tf_popupViewWillShow:(UIView *)popup{
     
-    [popup showDefaultBackground];
+    
     
     if ([self.selectedTitle isEqualToString:@"自定义1"]) {
+        [popup showDefaultBackground];
         CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
         [ani setFromValue:@(-M_PI)];
         [ani setToValue:@(0)];
@@ -196,7 +197,7 @@
         [popup.layer addAnimation:ani forKey:@"rotation"];
         
     }else if([self.selectedTitle isEqualToString:@"自定义2"]){
-        
+        [popup showDefaultBackground];
         NSArray *bts = [((BlankView *)popup) buttons];
         CGFloat x = 30;
         CGFloat y = 300;
@@ -220,7 +221,7 @@
         }
         
     }else if([self.selectedTitle isEqualToString:@"自定义3"]){
-        
+        [popup showDefaultBackground];
         if (@available(iOS 9.0, *)) {
             CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
             spring.damping = 15;
@@ -243,7 +244,7 @@
         }
         
     }else if([self.selectedTitle isEqualToString:@"自定义4"]){
-        
+        [popup showDefaultBackground];
         popup.layer.masksToBounds = NO;
         popup.clipsToBounds = NO;
         
@@ -295,39 +296,7 @@
         
     }else if([self.selectedTitle isEqualToString:@"自定义6"]){
         
-        if (@available(iOS 9.0, *)) {
-            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"transform.scale"];
-            spring.damping = 10;
-            spring.stiffness = 100;
-            spring.mass = 1.5;
-            spring.initialVelocity = 0;
-            spring.duration = spring.settlingDuration;
-            spring.fromValue = @(0);
-            spring.toValue = @(1);
-            spring.fillMode = kCAFillModeForwards;
-            spring.beginTime = CACurrentMediaTime() + arc4random_uniform(100)/200.0;
-            [popup.layer addAnimation:spring forKey:nil];
-        }
         
-        for (NSInteger i = 0; i < popup.extension.backgroundViewCount; i ++) {
-            UIView *bg = [popup.extension.backgroundViewArray objectAtIndex:i];
-            [UIView animateWithDuration:1.5 animations:^{
-                bg.alpha = 1;
-            }];
-            if (@available(iOS 9.0, *)) {
-                CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"transform.scale"];
-                spring.damping = 10;
-                spring.stiffness = 100;
-                spring.mass = 1.5;
-                spring.initialVelocity = 0;
-                spring.duration = spring.settlingDuration;
-                spring.fromValue = @(0);
-                spring.toValue = @(1);
-                spring.fillMode = kCAFillModeForwards;
-                spring.beginTime = CACurrentMediaTime() + arc4random_uniform(100)/200.0;
-                [bg.layer addAnimation:spring forKey:nil];
-            }
-        }
         return YES;
     }
     return YES;
@@ -396,54 +365,9 @@
         
     }else if([self.selectedTitle isEqualToString:@"自定义6"]){
         
-        if (@available(iOS 9.0, *)) {
-            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"transform.scale"];
-            spring.damping = 10;
-            spring.stiffness = 100;
-            spring.mass = 1.5;
-            spring.initialVelocity = 0;
-            spring.duration = spring.settlingDuration;
-            spring.fromValue = @(1);
-            spring.toValue = @(0);
-            spring.fillMode = kCAFillModeBoth;
-            spring.beginTime = CACurrentMediaTime() + arc4random_uniform(100)/200.0;
-            [popup.layer addAnimation:spring forKey:nil];
-            __weak typeof(popup) weakPopup= popup;
-            [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-                if (finished) {
-                    [weakPopup removeFromSuperview];
-                }
-            }];
-        }
+       
         
-        for (NSInteger i = 0; i < popup.extension.backgroundViewCount; i ++) {
-
-            UIView *bg = [popup.extension.backgroundViewArray objectAtIndex:i];
-            [UIView animateWithDuration:1.5 animations:^{
-                bg.alpha = 0;
-            }];
-
-            if (@available(iOS 9.0, *)) {
-                CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"transform.scale"];
-                spring.damping = 10;
-                spring.stiffness = 100;
-                spring.mass = 1.5;
-                spring.initialVelocity = 0;
-                spring.duration = spring.settlingDuration;
-                spring.fromValue = @(0);
-                spring.toValue = @(1);
-                spring.fillMode = kCAFillModeForwards;
-                spring.beginTime = CACurrentMediaTime() + arc4random_uniform(100)/200.0;
-                [bg.layer addAnimation:spring forKey:nil];
-                __weak typeof(bg) weakBg= bg;
-                [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-                    if (finished) {
-                        [weakBg removeFromSuperview];
-                    }
-                }];
-            }
-        }
-        return NO;
+        return YES;
     }
     return YES;
 }

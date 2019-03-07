@@ -1121,6 +1121,19 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
 
 @implementation CAAnimation (TFPopup)
 @dynamic startBlock,stopBlock;
+
+-(BOOL)openOberserBlock{
+    if (self.delegate == self) {
+        return YES;
+    }
+    return NO;
+}
+-(void)setOpenOberserBlock:(BOOL)openOberserBlock{
+    if (openOberserBlock && self.delegate == nil) {
+        self.delegate = self;
+    }
+}
+
 -(AnimationStartBlock)startBlock{
     id value = objc_getAssociatedObject(self, @selector(startBlock));
     if (value)return value;
@@ -1139,18 +1152,17 @@ tf_synthesize_category_property_retain(popupParam, setPopupParam);
     objc_setAssociatedObject(self, @selector(stopBlock), stopBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-
 -(void)observerAnimationDidStart:(AnimationStartBlock)start{
     if (self.delegate == nil) {
         self.delegate = self;
-        self.startBlock = start;
     }
+    self.startBlock = start;
 }
 -(void)observerAnimationDidStop:(AnimationStopBlock)stop{
     if (self.delegate == nil) {
         self.delegate = self;
-        self.stopBlock = stop;
     }
+    self.stopBlock = stop;
 }
 
 -(void)animationDidStart:(CAAnimation *)anim{

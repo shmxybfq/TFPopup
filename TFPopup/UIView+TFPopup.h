@@ -217,6 +217,7 @@ typedef void(^AnimationStartBlock)(CAAnimation *anima);
 typedef void(^AnimationStopBlock)(CAAnimation *anima,BOOL finished);
 @interface CAAnimation (TFPopup)<CAAnimationDelegate>
 
+@property(nonatomic,assign)BOOL openOberserBlock;
 @property(nonatomic,  copy)AnimationStartBlock startBlock;
 @property(nonatomic,  copy)AnimationStopBlock stopBlock;
 
