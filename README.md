@@ -328,7 +328,10 @@ view.popupDelegate = self;
 pod 'TFPopup'
 ```
 
-## 使用有bug请随时联系我
+## 如果
+使用过程中有bug，请随时issues我或者联系我；
+现有功能满足不了你的需求，请随时issues我或者联系我；
+有更好的建议或者优化，请随时issues我或者联系我；
 qq:927141965
 
 
