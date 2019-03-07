@@ -265,7 +265,7 @@ view.popupDelegate = self;
 [view tf_showNormal:self.view popupParam:param];
 //代理方法
 //代理方法
--(BOOL)tf_popupWillShow:(TFPopupManager *)manager popup:(UIView *)popup{
+- (BOOL)tf_popupViewWillShow:(UIView *)popup{
     if (@available(iOS 9.0, *)) {
         CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
         spring.damping = 15;
@@ -287,7 +287,7 @@ view.popupDelegate = self;
     return NO;
 }
 
--(BOOL)tf_popupWillHide:(TFPopupManager *)manager popup:(UIView *)popup{
+- (BOOL)tf_popupViewWillHide:(UIView *)popup{
     if (@available(iOS 9.0, *)) {
         popup.center = CGPointMake(kSize.width * 0.5, -500);
         CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
