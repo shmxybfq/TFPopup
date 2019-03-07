@@ -566,7 +566,7 @@
     BOOL hasFrameAniamtion = NO;
     BOOL hasBaseAniamtion = NO;
     BOOL hasMaskAniamtion = NO;
-    
+    NSLog(@">>>>>>>>:%f",self.extension.hideAnimationDuration);
     if (self.extension.disuseHideAlphaAnimation == NO &&
         self.extension.hideFromAlpha != self.extension.hideToAlpha) {
         
@@ -753,6 +753,9 @@
     return CGRectZero;
 }
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDurationForState:(TFPopupState)state{
+    if (self.popupParam.duration > 0) {
+        return self.popupParam.duration;
+    }
     return 0.3;
 }
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state{

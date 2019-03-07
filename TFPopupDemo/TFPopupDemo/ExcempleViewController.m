@@ -143,22 +143,21 @@
         
         //效果参考：【自定义动画效果2-3】
         TFPopupParam *param = [TFPopupParam new];
-        param.duration = 1.5;//动画时间0.5
+        param.disuseShowPopupAlphaAnimation = YES;
+        param.duration = 0.9;//动画时间0.5
         UIView *view = [self getViewName:@"ExcempleAlert"];
         view.backgroundDelegate = self;
         view.popupDelegate = self;
-        [view tf_showNormal:self.view animated:YES];
+        [view tf_showNormal:self.view popupParam:param];
         [((ExcempleAlert *)view) observerClick:^{
             [view tf_hide];
         }];
     }
 }
 
--(BOOL)tf_popupIsUseDefaultBackground:(UIView *)popup{
-    return NO;
-}
+
 - (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup{
-    return 1;
+    return 16;
 }
 - (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index{
     UIButton *bg = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -181,8 +180,6 @@
 }
 
 - (BOOL)tf_popupViewWillShow:(UIView *)popup{
-    
-    
     
     if ([self.selectedTitle isEqualToString:@"自定义1"]) {
         [popup showDefaultBackground];
@@ -296,7 +293,26 @@
         
     }else if([self.selectedTitle isEqualToString:@"自定义6"]){
         
+        CAAnimationGroup *group = [self groupAnimationIsShow:YES dur:0.3];
+        group.openOberserBlock = YES;
+        [group observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+            
+        }];
+        [popup.layer addAnimation:group forKey:nil];
         
+        for (NSInteger i = 0; i < popup.extension.backgroundViewCount; i++) {
+            CGFloat delay = 0.03;
+            UIView *view = [popup.extension.backgroundViewArray objectAtIndex:i];
+            [UIView animateWithDuration:0.3 delay:(delay * i) options:UIViewAnimationOptionCurveLinear animations:^{
+                view.alpha = 1;
+            } completion:^(BOOL finished) {
+                view.alpha = 1;
+            }];
+            CAAnimationGroup *gp = [self groupAnimationIsShow:YES dur:0.3];
+            gp.beginTime = CACurrentMediaTime() + delay * i;
+            gp.openOberserBlock = YES;
+            [view.layer addAnimation:gp forKey:nil];
+        }
         return YES;
     }
     return YES;
@@ -364,12 +380,82 @@
         }
         
     }else if([self.selectedTitle isEqualToString:@"自定义6"]){
+        CAAnimationGroup *group = [self groupAnimationIsShow:NO dur:0.3];
+        group.openOberserBlock = YES;
+        [group observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
+            [popup removeFromSuperview];
+        }];
+        [popup.layer addAnimation:group forKey:nil];
         
-       
-        
+        for (NSInteger i = 0; i < popup.extension.backgroundViewCount; i++) {
+            CGFloat delay = 0.03;
+            UIView *view = [popup.extension.backgroundViewArray objectAtIndex:i];
+            [UIView animateWithDuration:0.3 delay:(delay * i) options:UIViewAnimationOptionCurveLinear animations:^{
+                view.alpha = 0;
+            } completion:^(BOOL finished) {
+                [view removeFromSuperview];
+            }];
+            
+            CAAnimationGroup *gp = [self groupAnimationIsShow:NO dur:0.3];
+            gp.beginTime = CACurrentMediaTime() + delay * i;
+            gp.openOberserBlock = YES;
+            [view.layer addAnimation:gp forKey:nil];
+        }
         return YES;
     }
     return YES;
+}
+
+-(CAAnimationGroup *)groupAnimationIsShow:(BOOL)show dur:(CGFloat)dur{
+    
+    CGFloat duration = dur;
+    CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    if (show) {
+        animation1.fromValue = @(0);
+        animation1.toValue = @(1.2);
+    }else{
+        animation1.fromValue = @(1.0);
+        animation1.toValue = @(0.9);
+    }
+    animation1.duration = duration;
+    animation1.beginTime = 0;
+    [animation1 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+    [animation1 setAutoreverses:NO];
+    
+    CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    if (show) {
+        animation2.fromValue = @(1.2);
+        animation2.toValue = @(0.9);
+    }else{
+        animation2.fromValue = @(0.9);
+        animation2.toValue = @(1.2);
+    }
+    animation2.duration = duration;
+    animation2.beginTime = animation1.beginTime + duration;
+    [animation2 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+    [animation2 setAutoreverses:NO];
+    
+    CABasicAnimation *animation3 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    if (show) {
+        animation3.fromValue = @(0.9);
+        animation3.toValue = @(1.0);
+    }else{
+        animation3.fromValue = @(1.2);
+        animation3.toValue = @(0.0);
+    }
+    animation3.duration = duration;
+    animation3.beginTime = animation2.beginTime + duration;
+    [animation3 setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];
+    [animation3 setAutoreverses:NO];
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = @[animation1,
+                         animation2,
+                         animation3];
+    group.removedOnCompletion = NO;
+    group.duration = duration * 3;
+    group.fillMode = kCAFillModeBackwards;
+    return group;
 }
 
 -(void)excClick:(UIButton *)ins{
