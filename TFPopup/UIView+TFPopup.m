@@ -566,7 +566,6 @@
     BOOL hasFrameAniamtion = NO;
     BOOL hasBaseAniamtion = NO;
     BOOL hasMaskAniamtion = NO;
-    NSLog(@">>>>>>>>:%f",self.extension.hideAnimationDuration);
     if (self.extension.disuseHideAlphaAnimation == NO &&
         self.extension.hideFromAlpha != self.extension.hideToAlpha) {
         

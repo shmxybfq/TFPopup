@@ -236,10 +236,7 @@
                     weakPopup.center = CGPointMake(kSize.width * 0.5, kSize.height * 0.5);
                 }
             }];
-        } else {
-            
         }
-        
     }else if([self.selectedTitle isEqualToString:@"自定义4"]){
         [popup showDefaultBackground];
         popup.layer.masksToBounds = NO;
@@ -354,19 +351,17 @@
                              [weakPopup tf_remove];
                          }];
         return NO;
-        
+
     }else if([self.selectedTitle isEqualToString:@"自定义3"]){
-        popup.extension.hideAnimationDuration = 10;
         if (@available(iOS 9.0, *)) {
-            popup.center = CGPointMake(kSize.width * 0.5, -500);
-            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"transform.rotation"];
+            CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
             spring.damping = 15;
             spring.stiffness = 100;
             spring.mass = 1.5;
             spring.initialVelocity = 0;
             spring.duration = spring.settlingDuration;
-            spring.fromValue = @(0);
-            spring.toValue = @(M_PI);
+            spring.fromValue = @(self.view.center.y);
+            spring.toValue = @(-200);
             spring.fillMode = kCAFillModeForwards;
             [popup.layer addAnimation:spring forKey:nil];
             __weak typeof(popup) weakPopup = popup;
@@ -375,10 +370,8 @@
                     weakPopup.center = CGPointMake(kSize.width * 0.5, -200);
                 }
             }];
-        } else {
-            
         }
-        
+        return YES;
     }else if([self.selectedTitle isEqualToString:@"自定义6"]){
         CAAnimationGroup *group = [self groupAnimationIsShow:NO dur:0.3];
         group.openOberserBlock = YES;
