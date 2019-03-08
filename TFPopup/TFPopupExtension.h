@@ -17,6 +17,7 @@
 
 @property(nonatomic,assign)CGSize popupArea;
 
+@property(nonatomic,strong)UIButton *defaultBackgroundView;
 @property(nonatomic,assign)NSInteger backgroundViewCount;
 @property(nonatomic,strong)NSMutableArray *backgroundViewArray;
 @property(nonatomic,strong)NSMutableArray *backgroundViewFrameArray;

@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
  disuseBackgroundAlphaAnimation,背景视图是否叠加使用渐隐动画
  */
 @property(nonatomic,assign)BOOL disuseBackground;
+@property(nonatomic,assign)BOOL defaultBackgroundView;
 @property(nonatomic,assign)BOOL backgroundColorClear;
 @property(nonatomic,assign)BOOL disuseBackgroundTouchHide;
 @property(nonatomic,assign)BOOL disuseShowBackgroundAlphaAnimation;

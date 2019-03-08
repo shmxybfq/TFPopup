@@ -267,9 +267,7 @@
 #pragma mark -- 刷新和展示
 //刷新
 -(void)tf_reload{
-    NSLog(@"666");
-    PopupLog(@"");
-    NSLog(@"666");
+   
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillGetConfiguration:)]) {
         [self.popupDelegate tf_popupViewWillGetConfiguration:self];
     }
@@ -277,6 +275,8 @@
     self.extension.inView = nil;
     self.extension.popupArea = CGSizeZero;
     
+    [self.extension.defaultBackgroundView removeFromSuperview];
+    self.extension.defaultBackgroundView = nil;
     self.extension.backgroundViewCount = 0;
     [self.extension.backgroundViewArray removeAllObjects];
     [self.extension.backgroundViewFrameArray removeAllObjects];
@@ -313,25 +313,41 @@
     }
     
     /* background */
-    if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupBackgroundViewCount:)]) {
-        self.extension.backgroundViewCount = [self.backgroundDelegate tf_popupBackgroundViewCount:self];
-    }
-    if (self.extension.backgroundViewCount > 0) {
-        for (NSInteger i = 0; i < self.extension.backgroundViewCount; i++) {
-            UIView *backgroundView = nil;
-            CGRect  backgroundViewFrame = CGRectZero;
-            if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewAtIndex:)]) {
-                backgroundView = [self.backgroundDelegate tf_popupView:self backgroundViewAtIndex:i];
+    if (self.popupParam.disuseBackground == NO) {
+        if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupBackgroundViewCount:)]) {
+            self.extension.backgroundViewCount = [self.backgroundDelegate tf_popupBackgroundViewCount:self];
+        }
+        if (self.extension.backgroundViewCount <= 0) {
+            self.extension.defaultBackgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
+            if (self.popupParam.backgroundColorClear) {
+                self.extension.defaultBackgroundView.backgroundColor = [UIColor clearColor];
+            }else{
+                self.extension.defaultBackgroundView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
             }
-            if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewFrameAtIndex:)]) {
-                backgroundViewFrame = [self.backgroundDelegate tf_popupView:self backgroundViewFrameAtIndex:i];
-            }
-            NSAssert(backgroundView != nil, @"backgroundView can't be a nil");
-            NSAssert([backgroundView isKindOfClass:[UIView class]], @"backgroundView must be a view");
-            if (backgroundView != nil && [backgroundView isKindOfClass:[UIView class]]) {
-                [self.extension.backgroundViewArray addObject:backgroundView];
-                [self.extension.backgroundViewFrameArray addObject:NSStringFromCGRect(backgroundViewFrame)];
-                backgroundView.frame = backgroundViewFrame;
+            [self.extension.defaultBackgroundView addTarget:self
+                               action:@selector(defaultBackgroundViewClick:)
+                     forControlEvents:UIControlEventTouchUpInside];
+            self.extension.defaultBackgroundView.alpha = 0;
+            
+        }else{
+            if (self.extension.backgroundViewCount > 0) {
+                for (NSInteger i = 0; i < self.extension.backgroundViewCount; i++) {
+                    UIView *backgroundView = nil;
+                    CGRect  backgroundViewFrame = CGRectZero;
+                    if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewAtIndex:)]) {
+                        backgroundView = [self.backgroundDelegate tf_popupView:self backgroundViewAtIndex:i];
+                    }
+                    if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewFrameAtIndex:)]) {
+                        backgroundViewFrame = [self.backgroundDelegate tf_popupView:self backgroundViewFrameAtIndex:i];
+                    }
+                    NSAssert(backgroundView != nil, @"backgroundView can't be a nil");
+                    NSAssert([backgroundView isKindOfClass:[UIView class]], @"backgroundView must be a view");
+                    if (backgroundView != nil && [backgroundView isKindOfClass:[UIView class]]) {
+                        [self.extension.backgroundViewArray addObject:backgroundView];
+                        [self.extension.backgroundViewFrameArray addObject:NSStringFromCGRect(backgroundViewFrame)];
+                        backgroundView.frame = backgroundViewFrame;
+                    }
+                }
             }
         }
     }
@@ -466,12 +482,19 @@
                    afterDelay:self.popupParam.autoDissmissDuration];
     }
     
-    for (NSInteger i = 0; i < self.extension.backgroundViewCount; i++) {
-        UIView *backgroundView = [self.extension.backgroundViewArray objectAtIndex:i];
-        NSString *frameString = [self.extension.backgroundViewFrameArray objectAtIndex:i];
-        backgroundView.frame = CGRectFromString(frameString);
-        [self.inView addSubview:backgroundView];
+    if (self.extension.backgroundViewCount <= 0) {
+        CGSize area = self.extension.popupArea;
+        self.extension.defaultBackgroundView.frame = CGRectMake(0, 0, area.width, area.height);
+        [self.inView addSubview:self.extension.defaultBackgroundView];
+    }else{
+        for (NSInteger i = 0; i < self.extension.backgroundViewCount; i++) {
+            UIView *backgroundView = [self.extension.backgroundViewArray objectAtIndex:i];
+            NSString *frameString = [self.extension.backgroundViewFrameArray objectAtIndex:i];
+            backgroundView.frame = CGRectFromString(frameString);
+            [self.inView addSubview:backgroundView];
+        }
     }
+    
     self.alpha = self.extension.showFromAlpha;
     self.frame = self.extension.showFromFrame;
     [self.inView addSubview:self];
@@ -767,26 +790,13 @@
 
 #pragma mark -- TFPopupBackgroundDelegate
 - (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup{
-    if (self.popupParam.disuseBackground) {
-        return 0;
-    }
-    return 1;
+    return 0;
 }
-
 - (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index{
-    UIButton *backgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
-    if (self.popupParam.backgroundColorClear) {
-        backgroundView.backgroundColor = [UIColor clearColor];
-    }else{
-        backgroundView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
-    }
-    [backgroundView addTarget:self action:@selector(backgroundViewClick:) forControlEvents:UIControlEventTouchUpInside];
-    backgroundView.alpha = 0;
-    return backgroundView;
+    return nil;
 }
 - (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index{
-    CGSize area = self.extension.popupArea;
-    return CGRectMake(0, 0, area.width, area.height);
+    return CGRectZero;
 }
 
 #pragma mark -- TFPopupDelegate
@@ -820,38 +830,46 @@
 
 #pragma mark -- 收尾函数
 -(void)showDefaultBackground{
-    UIView *backgroundView = self.extension.backgroundViewArray.firstObject;
-    if (backgroundView) {
-        if (self.popupParam.disuseShowBackgroundAlphaAnimation) {
-            backgroundView.alpha = 1;
-        }else{
-            __weak typeof(backgroundView) weakBackgroundView = backgroundView;
-            [UIView animateWithDuration:self.extension.showAnimationDuration
-                                  delay:self.extension.showAnimationDelay
-                                options:self.extension.showAnimationOptions
-                             animations:^{
-                                 weakBackgroundView.alpha = 1;
-                             } completion:nil];
+    x_weakSelf;
+    if (self.popupParam.disuseBackground) {
+        return;
+    }
+    if (self.extension.backgroundViewCount <= 0) {
+        if (self.extension.defaultBackgroundView) {
+            if (self.popupParam.disuseShowBackgroundAlphaAnimation) {
+                self.extension.defaultBackgroundView.alpha = 1;
+            }else{
+                [UIView animateWithDuration:self.extension.showAnimationDuration
+                                      delay:self.extension.showAnimationDelay
+                                    options:self.extension.showAnimationOptions
+                                 animations:^{
+                                     weakself.extension.defaultBackgroundView.alpha = 1;
+                                 } completion:nil];
+            }
         }
     }
 }
 
 -(void)hideDefaultBackground{
-    UIView *backgroundView = self.extension.backgroundViewArray.firstObject;
-    if (backgroundView) {
-        if (self.popupParam.disuseHideBackgroundAlphaAnimation) {
-            backgroundView.alpha = 0;
-            [backgroundView removeFromSuperview];
-        }else{
-            __weak typeof(backgroundView) weakBackgroundView = backgroundView;
-            [UIView animateWithDuration:self.extension.hideAnimationDuration
-                                  delay:self.extension.hideAnimationDelay
-                                options:self.extension.hideAnimationOptions
-                             animations:^{
-                                 weakBackgroundView.alpha = 0;
-                             } completion:^(BOOL finished) {
-                                 [weakBackgroundView removeFromSuperview];
-                             }];
+    x_weakSelf;
+    if (self.popupParam.disuseBackground) {
+        return;
+    }
+    if (self.extension.backgroundViewCount <= 0) {
+        if (self.extension.defaultBackgroundView) {
+            if (self.popupParam.disuseHideBackgroundAlphaAnimation) {
+                self.extension.defaultBackgroundView.alpha = 0;
+                [self.extension.defaultBackgroundView removeFromSuperview];
+            }else{
+                [UIView animateWithDuration:self.extension.hideAnimationDuration
+                                      delay:self.extension.hideAnimationDelay
+                                    options:self.extension.hideAnimationOptions
+                                 animations:^{
+                                     weakself.extension.defaultBackgroundView.alpha = 0;
+                                 } completion:^(BOOL finished) {
+                                     [weakself.extension.defaultBackgroundView removeFromSuperview];
+                                 }];
+            }
         }
     }
 }
@@ -884,10 +902,13 @@
 
 -(void)tf_remove{
     [self removeFromSuperview];
-    NSArray *backgroundViewArray = [NSArray arrayWithArray:self.extension.backgroundViewArray];
-    for (UIView *v in backgroundViewArray) {
-        [v removeFromSuperview];
+    if (self.extension.backgroundViewCount <= 0) {
+        [self.extension.defaultBackgroundView removeFromSuperview];
+    }else{
+        [self.extension.backgroundViewArray makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
+    
+    self.extension.defaultBackgroundView = nil;
     self.extension.backgroundViewCount = 0;
     [self.extension.backgroundViewArray removeAllObjects];
     [self.extension.backgroundViewFrameArray removeAllObjects];
@@ -895,7 +916,7 @@
 
 
 #pragma mark -- 点击事件
--(void)backgroundViewClick:(UIButton *)ins{
+-(void)defaultBackgroundViewClick:(UIButton *)ins{
     if (self.popupParam.disuseBackgroundTouchHide) {
         return;
     }
