@@ -312,6 +312,29 @@ view.popupDelegate = self;
 
 ```
 
+**自定义背景**
+需要自己实现代理TFPopupBackgroundDelegate,具体请看demo
+
+```
+//【自定义动画效果1-3代码】
+/* 弹出背景视图代理,询问背景视图的数量,view,和frame
+ * 弹框本身自动实现,默认为一个背景black-0.3透明度,尺寸为弹出区域尺寸,若将代理设为其他类则其他类需要实现以下方法
+ */
+@protocol TFPopupBackgroundDelegate<NSObject>
+/* 弹出背景视图设置
+ * popup:弹框本类
+ * tf_popupBackgroundViewCount:背景视图的数量
+ * backgroundViewAtIndex:返回每一个背景视图
+ * backgroundViewFrameAtIndex:返回每一个背景视图的frame
+ */
+@optional
+- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup;//默认1
+//默认UIButton背景色为black-0.3透明度
+- (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index;
+- (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index;//默认弹框区域大小
+@end
+```
+
 ## 注意
 ```
 //默认值
