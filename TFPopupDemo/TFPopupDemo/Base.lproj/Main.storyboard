@@ -136,7 +136,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="Qek-I7-sHs"/>
                                                 </constraints>
-                                                <state key="normal" title="形变">
+                                                <state key="normal" title="折叠">
                                                     <color key="titleColor" red="0.92941176470588238" green="0.0" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                             </button>

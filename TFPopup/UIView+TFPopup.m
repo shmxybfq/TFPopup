@@ -56,7 +56,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
-    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
     [self tf_showCustem:inView popupParam:self.popupParam];
@@ -75,7 +75,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
-    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
     self.popupParam.offset = CGPointEqualToPoint(offset, CGPointZero)?self.popupParam.offset:offset;
@@ -100,7 +100,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
-    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
     if (direction == PopupDirectionTop ||
@@ -125,6 +125,40 @@
 }
 
 
+#pragma mark -- 【入口函数】折叠
+-(void)tf_showFold:(UIView *)inView
+       targetFrame:(CGRect)targetFrame
+         direction:(PopupDirection)direction
+        popupParam:(TFPopupParam *)popupParam{
+    
+    
+    if (CGRectEqualToRect(targetFrame, CGRectZero))return;
+    self.inView = inView;
+    self.popupParam = popupParam;
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
+    [self setDefault];
+    
+    self.popupParam.popOriginFrame = targetFrame;
+    self.popupParam.popTargetFrame = targetFrame;
+    self.popupParam.popupSize = targetFrame.size;
+    
+    if (direction == PopupDirectionTop ||
+        direction == PopupDirectionRight ||
+        direction == PopupDirectionBottom ||
+        direction == PopupDirectionLeft){
+        
+        self.popupParam.maskShowFromPath = nil;
+        self.popupParam.maskShowToPath = nil;
+        self.popupParam.maskHideFromPath = nil;
+        self.popupParam.maskHideToPath = nil;
+        
+        self.popupParam.maskShowFromPath = foldPath(targetFrame, direction, NO);
+        self.popupParam.maskShowToPath = foldPath(targetFrame, direction, YES);
+        
+        [self tf_showCustem:inView popupParam:self.popupParam];
+    }
+}
+
 #pragma mark -- 【入口函数】泡泡
 -(void)tf_showBubble:(UIView *)inView
            basePoint:(CGPoint)basePoint
@@ -133,6 +167,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     self.popupParam.basePoint = basePoint;
     self.popupParam.bubbleDirection = bubbleDirection;
     
@@ -152,16 +187,24 @@
             return;
         }
     }
-    
-    self.popupParam.popOriginFrame = bubbleOrigin(self.popupParam.basePoint,
-                                                  self.popupParam.bubbleDirection,
-                                                  self.popupParam.offset);
-    self.popupParam.popTargetFrame = bubbleTarget(self.popupParam.basePoint,
+    self.popupParam.popOriginFrame = bubbleTarget(self.popupParam.basePoint,
                                                   self.popupParam.popupSize,
                                                   self.popupParam.bubbleDirection,
                                                   self.popupParam.offset);
+    self.popupParam.popTargetFrame = self.popupParam.popOriginFrame;
+    
+    self.popupParam.maskShowFromPath = nil;
+    self.popupParam.maskShowToPath = nil;
+    self.popupParam.maskHideFromPath = nil;
+    self.popupParam.maskHideToPath = nil;
+    self.popupParam.maskShowFromPath = bubblePath(self.popupParam.popupSize, bubbleDirection, NO);
+    self.popupParam.maskShowToPath = bubblePath(self.popupParam.popupSize, bubbleDirection, YES);
+
     [self tf_showCustem:inView popupParam:self.popupParam];
 }
+
+
+
 
 #pragma mark -- 【入口函数】形变
 -(void)tf_showFrame:(UIView *)inView
@@ -171,7 +214,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
-    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
     self.popupParam.popOriginFrame = CGRectEqualToRect(CGRectZero, from)?self.popupParam.popOriginFrame:from;
@@ -187,7 +230,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
-    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
     [self tf_showCustem:inView popupParam:self.popupParam];
@@ -202,7 +245,7 @@
     
     self.inView = inView;
     self.popupParam = popupParam;
-    
+    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
     [self checkStyle];
@@ -218,7 +261,6 @@
 #pragma mark -- 动画默认设置和动画类型判断
 -(void)setDefault{
     
-    if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     //时间
     if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
     
@@ -267,7 +309,7 @@
 #pragma mark -- 刷新和展示
 //刷新
 -(void)tf_reload{
-   
+    
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillGetConfiguration:)]) {
         [self.popupDelegate tf_popupViewWillGetConfiguration:self];
     }
@@ -325,8 +367,8 @@
                 self.extension.defaultBackgroundView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];
             }
             [self.extension.defaultBackgroundView addTarget:self
-                               action:@selector(defaultBackgroundViewClick:)
-                     forControlEvents:UIControlEventTouchUpInside];
+                                                     action:@selector(defaultBackgroundViewClick:)
+                                           forControlEvents:UIControlEventTouchUpInside];
             self.extension.defaultBackgroundView.alpha = 0;
             
         }else{
@@ -994,25 +1036,44 @@ static inline CGRect normalTargetFrame(TFPopupParam *param){
     return CGRectMake(x, y, s.width, s.height);
 }
 
-static inline CGRect bubbleOrigin(CGPoint basePoint,PopupDirection direction,CGPoint offset){
-    
-    CGFloat x = 0,y = 0;
+
+static inline UIBezierPath *foldPath(CGRect targetFrame,PopupDirection direction,BOOL target){
+    CGSize ss = targetFrame.size;
+    CGFloat x = 0;
+    CGFloat y = 0;
+    CGFloat w = 0;
+    CGFloat h = 0;
     switch (direction) {
-        case PopupDirectionTop:
-        case PopupDirectionTopRight:
-        case PopupDirectionRight:
-        case PopupDirectionRightBottom:
-        case PopupDirectionBottom:
-        case PopupDirectionBottomLeft:
-        case PopupDirectionLeft:
-        case PopupDirectionLeftTop:{
-            x = basePoint.x + offset.x;
-            y = basePoint.y + offset.y;
+        case PopupDirectionTop:{
+            x = 0;
+            y = 0;
+            w = ss.width;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionLeft:{
+            x = 0;
+            y = 0;
+            w = target?ss.width:0;
+            h = ss.height;
+        }break;
+        case PopupDirectionBottom:{
+            x = 0;
+            y = target?0:ss.height;
+            w = ss.width;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionRight:{
+            x = target?0:ss.width;
+            y = 0;
+            w = target?ss.width:0;
+            h = ss.height;
         }break;
         default:break;
     }
-    return CGRectMake(x, y, 0, 0);
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(x, y, w, h)];
+    return path;
 }
+
 
 static inline CGRect bubbleTarget(CGPoint basePoint,
                                   CGSize popupSize,
@@ -1058,6 +1119,71 @@ static inline CGRect bubbleTarget(CGPoint basePoint,
     }
     return CGRectMake(x, y, w, h);
 }
+
+
+static inline UIBezierPath *bubblePath(CGSize popupSize,PopupDirection direction,BOOL target){
+    CGSize ss = popupSize;
+    CGFloat halfW = ss.width * 0.5;
+    CGFloat halfH = ss.height * 0.5;
+    CGFloat x = 0;
+    CGFloat y = 0;
+    CGFloat w = 0;
+    CGFloat h = 0;
+    switch (direction) {
+        case PopupDirectionTop:{
+            x = target?0:halfW;
+            y = target?0:ss.height;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionTopRight:{
+            x = 0;
+            y = target?0:ss.height;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionRight:{
+            x = 0;
+            y = target?0:halfH;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionRightBottom:{
+            x = 0;
+            y = 0;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionBottom:{
+            x = target?0:halfW;
+            y = 0;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionBottomLeft:{
+            x = target?0:ss.width;
+            y = 0;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionLeft:{
+            x = target?0:ss.width;
+            y = target?0:halfH;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        case PopupDirectionLeftTop:{
+            x = target?0:ss.width;
+            y = target?0:ss.height;
+            w = target?ss.width:0;
+            h = target?ss.height:0;
+        }break;
+        default:break;
+    }
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(x, y, w, h)];
+    return path;
+}
+
 
 static inline CGRect slideOriginFrame(TFPopupParam *param,PopupDirection direction){
     CGRect ar = param.popupAreaRect;

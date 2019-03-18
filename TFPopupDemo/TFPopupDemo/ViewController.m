@@ -140,7 +140,7 @@
     }else if ([self.animationType isEqualToString:@"泡泡"]) {
 
         self.param.popupSize = CGSizeMake(150, 250);
-
+//        self.param.duration = 2;
         UIView *popup = [self getListView];
         popup.layer.borderColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.5].CGColor;
         popup.layer.borderWidth = 1;
@@ -176,17 +176,15 @@
         UIView *popup = [self getAlertView];
         [popup tf_showMask:self.view popupParam:self.param];
 
-    }else if ([self.animationType isEqualToString:@"形变"]) {
+    }else if ([self.animationType isEqualToString:@"折叠"]) {
 
-        self.param.popOriginFrame = CGRectMake(0, 110, kSize.width, 0);
-        self.param.popTargetFrame = CGRectMake(0, 110, kSize.width, 200);
-
+        CGRect targetFrame = CGRectMake(0, 110, kSize.width, 200);
         UIView *popup = [self getListView];
+        [popup tf_showFold:self.view
+               targetFrame:targetFrame
+                 direction:self.popupDirection
+                popupParam:self.param];
 
-        [popup tf_showFrame:self.view
-                       from:self.param.popOriginFrame
-                         to:self.param.popTargetFrame
-                 popupParam:self.param];
     }
 }
 

@@ -173,7 +173,23 @@
 -(void)tf_showSlide:(UIView *)inView direction:(PopupDirection)direction popupParam:(TFPopupParam *)popupParam;
 
 
-/* 泡泡动画，基于point&bubbleDirection -> 展开弹框
+
+/* 基于mask,所以此弹出方式不可以同时使用mask动画
+ * 折叠动画，弹框最终显示位置->可选四个方向折叠展开
+ * inView 容器视图
+ * targetFrame 弹框的显示frame
+ * direction 折叠方向,可设置四个默认折叠方向：向下展开，向右展开，向左展开，向上展开
+ * popupParam 弹出的更多参数设置，具体参照TFPopupParam类
+ */
+-(void)tf_showFold:(UIView *)inView
+       targetFrame:(CGRect)targetFrame
+         direction:(PopupDirection)direction
+        popupParam:(TFPopupParam *)popupParam;
+
+
+
+/* 基于mask,所以此弹出方式不可以同时使用mask动画
+ * 泡泡动画，基于point&bubbleDirection -> 展开弹框
  * inView 容器视图
  * basePoint 基础点，泡泡基于哪个位置做弹出，
  * direction 弹出方向，支持上，右上，右，右下，下，下左，左，左上八个方向，可结合popupParam.offset设置弹框的偏移
