@@ -826,7 +826,10 @@
     return 0;
 }
 - (UIViewAnimationOptions)tf_popupView:(UIView *)popup animationOptionsForState:(TFPopupState)state{
-    return UIViewAnimationOptionCurveEaseOut;
+    if (self.popupParam.animationOptions == 0) {
+        return UIViewAnimationOptionCurveEaseOut;
+    }
+    return self.popupParam.animationOptions;
 }
 
 

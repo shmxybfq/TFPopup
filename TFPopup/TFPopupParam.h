@@ -42,16 +42,20 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 /* 【全局属性】时间
  duration,动画时间default=0.3
  autoDissmissDuration,自动消失时间,default=0
+ animationOptions,默认渐隐和frame动画的动画曲线default=UIViewAnimationOptionCurveEaseOut
  */
 @property(nonatomic,assign)NSTimeInterval duration;
 @property(nonatomic,assign)NSTimeInterval autoDissmissDuration;
+@property(nonatomic,assign)UIViewAnimationOptions animationOptions;
 
 
 /* 【全局属性】背景
- backgroundColorClear,背景色透明
- disuseBackground,不使用背景视图,default=0.3alpha的黑色视图
+ disuseBackground,不使用背景,default=NO,如果设为YES则自定义代理的方法也会被禁止
+ defaultBackgroundView,不自定义背景时的默认背景view,default=0.3alpha的黑色视图,如果自定义背景此值为nil
+ backgroundColorClear,默认背景的背景色设为透明
  disuseBackgroundTouchHide,禁止点击背景消失弹框
- disuseBackgroundAlphaAnimation,背景视图是否叠加使用渐隐动画
+ disuseShowBackgroundAlphaAnimation,不使用显示时的渐隐动画default=NO
+ disuseShowBackgroundAlphaAnimation,不使用消失时的渐隐动画default=NO
  */
 @property(nonatomic,assign)BOOL disuseBackground;
 @property(nonatomic,assign)BOOL defaultBackgroundView;
@@ -62,7 +66,10 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 
 
 /* 【全局属性】弹框渐隐动画
- disusePopupAlphaAnimation,弹出框是否叠加使用渐隐动画
+ disuseShowPopupAlphaAnimation,不使用弹出时的渐隐动画default=NO
+ disuseHidePopupAlphaAnimation,不使用消失时的渐隐动画default=NO
+ disuseShowPopupFrameAnimation,不使用弹出时的frame动画default=NO
+ disuseHidePopupFrameAnimation,不使用消失时的frame动画default=NO
  */
 @property(nonatomic,assign)BOOL disuseShowPopupAlphaAnimation;
 @property(nonatomic,assign)BOOL disuseHidePopupAlphaAnimation;
@@ -86,13 +93,13 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL keepPopupOriginFrame;
 
 
-/* 【全局属性】属性动画和缩放弹出冲突
+/* 【全局属性】属性动画 和 默认缩放动画冲突
  showKeyPath,显示时的属性动画keyPath
  showFromValue,显示动画初始值
  showToValue,,显示动画结束值
  hideKeyPath,隐藏时的属性动画keyPath
  hideFromValue,隐藏动画初始值
- hideToValue,,隐藏动画结束值
+ hideToValue,隐藏动画结束值
  */
 @property(nonatomic,  copy)NSString *showKeyPath;
 @property(nonatomic,strong)id showFromValue;
@@ -104,9 +111,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 
 /* 【泡泡弹出方式属性】
  basePoint,弹出泡泡基于哪个点
- bubbleDirection,弹出泡泡的方向
- popOriginFrame,弹出初始frame
- popTargetFrame,弹出目标frame
+ bubbleDirection,弹出泡泡的方向,八个方向
  */
 @property(nonatomic,assign)CGPoint basePoint;
 @property(nonatomic,assign)PopupDirection bubbleDirection;
