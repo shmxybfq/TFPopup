@@ -243,6 +243,7 @@
     NSAssert(inView != nil, @"(TFPopup)you must setting a inView.");
     NSAssert([inView isKindOfClass:[UIView class]], @"(TFPopup)inView must be a view.");
     
+    self.tag = kTFPopupDefaultTag;
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];

@@ -10,6 +10,9 @@
 #import "TFPopupParam.h"
 #import "TFPopupExtension.h"
 
+//弹框的默认tag
+#define kTFPopupDefaultTag (201912)
+
 /* 动画数据源代理,询问动画的各种配置
  * 弹框本身自动实现,若将代理设为其他类则其他类需要实现以下方法
  */
@@ -139,11 +142,14 @@
 @property(nonatomic,strong)TFPopupParam *popupParam;//默认动画参数
 
 
--(void)tf_hide;//手动控制弹框消失
+//手动控制弹框消失
+-(void)tf_hide;
+//手动控制弹框移除
 -(void)tf_remove;
+//手动控制显示默认弹框 popupParam.disuseBackground = YES 时无效
 -(void)showDefaultBackground;
+//手动控制移除默认弹框
 -(void)hideDefaultBackground;
-
 
 /* 基本动画，位置固定，可设置无任何动画弹出和渐隐方式
  * inView 容器视图
