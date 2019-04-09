@@ -12,15 +12,15 @@
 
 
 typedef NS_ENUM(NSInteger,DelegateProcess) {
-    DelegateProcessWillGetConfiguration = 0,
-    DelegateProcessDidGetConfiguration,
-    DelegateProcessWillShow,
-    DelegateProcessDidShow,
-    DelegateProcessShowAnimationDidFinish,
-    DelegateProcessWillHide,
-    DelegateProcessDidHide,
-    DelegateProcessHideAnimationDidFinish,
-    DelegateProcessBackgroundDidTouch,
+    DelegateProcessWillGetConfiguration = 0,//将要获取弹出配置
+    DelegateProcessDidGetConfiguration,//已经获取弹出配置
+    DelegateProcessWillShow,//将要弹出
+    DelegateProcessDidShow,//已经调用完弹出,正在执行动画
+    DelegateProcessShowAnimationDidFinish,//弹出动画执行完成
+    DelegateProcessWillHide,//将要消失
+    DelegateProcessDidHide,//已经调用完消失,正在执行动画
+    DelegateProcessHideAnimationDidFinish,//消失动画执行完成
+    DelegateProcessBackgroundDidTouch,//默认背景点击
 };
 
 typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
