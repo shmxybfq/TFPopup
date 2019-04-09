@@ -10,6 +10,21 @@
 #import <Foundation/Foundation.h>
 #import "TFPopupParam.h"
 
+
+typedef NS_ENUM(NSInteger,DelegateProcess) {
+    DelegateProcessWillGetConfiguration = 0,
+    DelegateProcessDidGetConfiguration,
+    DelegateProcessWillShow,
+    DelegateProcessDidShow,
+    DelegateProcessShowAnimationDidFinish,
+    DelegateProcessWillHide,
+    DelegateProcessDidHide,
+    DelegateProcessHideAnimationDidFinish,
+    DelegateProcessBackgroundDidTouch,
+};
+
+typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
+
 @interface TFPopupExtension : NSObject
 
 /* TFPopupDataSource */
@@ -50,6 +65,8 @@
 
 @property(nonatomic,assign)PopupStyle style;//默认动画类型
 @property(nonatomic,assign)PopupDirection direction;//默认动画方向，仅在滑动动画和泡泡动画下有效
+
+@property(nonatomic,  copy)TFDelegateProcessBlock delegateProcessBlock;//默认动画方向，仅在滑动动画和泡泡动画下有效
 
 @end
 

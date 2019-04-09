@@ -10,7 +10,7 @@
 #import "TFPopupParam.h"
 #import "TFPopupExtension.h"
 
-//弹框的默认tag
+//如果弹框view不设tag值,那么弹框的tag值将设为此值
 #define kTFPopupDefaultTag (201912)
 
 /* 动画数据源代理,询问动画的各种配置
@@ -150,6 +150,9 @@
 -(void)showDefaultBackground;
 //手动控制移除默认弹框
 -(void)hideDefaultBackground;
+//监听弹框隐藏完毕回调,需要再显示弹框前调用此方法
+-(void)tf_observerDelegateProcess:(TFDelegateProcessBlock)delegateProcessBlock;
+
 
 /* 基本动画，位置固定，可设置无任何动画弹出和渐隐方式
  * inView 容器视图

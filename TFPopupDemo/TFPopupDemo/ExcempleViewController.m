@@ -468,6 +468,7 @@
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, -200);
         param.popupSize = CGSizeMake(360, 226);
+        
         [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
         [((ExcempleAction *)view) observerClick:^{
             [view tf_hide];

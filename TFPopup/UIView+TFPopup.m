@@ -243,10 +243,11 @@
     NSAssert(inView != nil, @"(TFPopup)you must setting a inView.");
     NSAssert([inView isKindOfClass:[UIView class]], @"(TFPopup)inView must be a view.");
     
-    self.tag = kTFPopupDefaultTag;
+    if (self.tag == 0) {self.tag = kTFPopupDefaultTag;}
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
+    
     [self setDefault];
     
     [self checkStyle];
@@ -847,30 +848,66 @@
 
 #pragma mark -- TFPopupDelegate
 - (void)tf_popupViewWillGetConfiguration:(UIView *)popup{
-    
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessWillGetConfiguration);
+    }
 }
 - (void)tf_popupViewDidGetConfiguration:(UIView *)popup{
-    
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessDidGetConfiguration);
+    }
 }
 - (BOOL)tf_popupViewWillShow:(UIView *)popup{
+    x_weakSelf;
     [self showDefaultBackground];
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessWillShow);
+    }
     return YES;
 }
-- (void)tf_popupViewDidShow:(UIView *)popup{}
-- (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup{}
+- (void)tf_popupViewDidShow:(UIView *)popup{
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessDidShow);
+    }
+}
+- (void)tf_popupViewShowAnimationDidFinish:(UIView *)popup{
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessShowAnimationDidFinish);
+    }
+}
 
 - (BOOL)tf_popupViewWillHide:(UIView *)popup{
+    x_weakSelf;
     [self hideDefaultBackground];
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessWillHide);
+    }
     return YES;
 }
 - (BOOL)tf_popupViewDidHide:(UIView *)popup{
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessDidHide);
+    }
     return YES;
 }
 - (BOOL)tf_popupViewHideAnimationDidFinish:(UIView *)popup{
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessHideAnimationDidFinish);
+    }
     return YES;
 }
 
 - (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup{
+    x_weakSelf;
+    if (self.extension.delegateProcessBlock) {
+        self.extension.delegateProcessBlock(weakself,DelegateProcessBackgroundDidTouch);
+    }
     return YES;
 }
 
@@ -920,6 +957,14 @@
     }
 }
 
+#pragma mark -- 监听代理过程block
+//监听弹框隐藏完毕回调
+-(void)tf_observerDelegateProcess:(TFDelegateProcessBlock)delegateProcessBlock{
+    if (delegateProcessBlock) {
+        self.extension.delegateProcessBlock = delegateProcessBlock;
+    }
+}
+
 -(void)showAnimationCompletion{
     TFPopupPrivateExtension *ext = getRunCache(self);
     ext.showAnimationCount -= 1;
@@ -939,6 +984,8 @@
         BOOL removeIfAllAnimationFinish = YES;
         if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewHideAnimationDidFinish:)]) {
             removeIfAllAnimationFinish = [self.popupDelegate tf_popupViewHideAnimationDidFinish:self];
+            //如果有延迟,取消之前的延迟
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tf_hide) object:nil];
         }
         if (removeIfAllAnimationFinish) {
             [self tf_remove];
