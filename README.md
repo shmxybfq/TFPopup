@@ -323,6 +323,27 @@ view.popupDelegate = self;
 - (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index;//默认弹框区域大小
 ```
 
+## 监听弹出过程:block&delegate
+监听弹出过程有两种方式,一种是代理方式如上所述，另外一种是block如下代码
+```
+//弹出前调用此函数以监听弹出过程
+-(void)tf_observerDelegateProcess:(TFDelegateProcessBlock)delegateProcessBlock;
+
+//弹出过程阶段枚举如下：
+typedef NS_ENUM(NSInteger,DelegateProcess) {
+    DelegateProcessWillGetConfiguration = 0,//将要获取弹出配置
+    DelegateProcessDidGetConfiguration,//已经获取弹出配置
+    DelegateProcessWillShow,//将要弹出
+    DelegateProcessDidShow,//已经调用完弹出,正在执行动画
+    DelegateProcessShowAnimationDidFinish,//弹出动画执行完成
+    DelegateProcessWillHide,//将要消失
+    DelegateProcessDidHide,//已经调用完消失,正在执行动画
+    DelegateProcessHideAnimationDidFinish,//消失动画执行完成
+    DelegateProcessBackgroundDidTouch,//默认背景点击
+};
+
+```
+
 ## Tips
 ```
 1.当需要自定义动画自己重写代理方法时,有两种实现方式
