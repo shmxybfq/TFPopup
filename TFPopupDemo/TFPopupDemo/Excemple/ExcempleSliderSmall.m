@@ -9,7 +9,9 @@
 #import "ExcempleSliderSmall.h"
 
 @implementation ExcempleSliderSmall
-
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
 -(void)observerClick:(ExcempleSliderSmallBlock)block{
     self.block = block;
 }

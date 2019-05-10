@@ -9,7 +9,9 @@
 #import "ExcempleNotification.h"
 
 @implementation ExcempleNotification
-
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
 -(void)observerClick:(ExcempleNotificationBlock)block{
     self.block = block;
 }

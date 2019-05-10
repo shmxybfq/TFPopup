@@ -10,6 +10,10 @@
 
 @implementation AlertNormal
 
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
+
 -(void)observerSure:(ActionBlock)block{
     self.block = block;
 }

@@ -9,7 +9,9 @@
 #import "ExcempleUnfold.h"
 
 @implementation ExcempleUnfold
-
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
 -(void)observerClick:(ExcempleUnfoldBlock)block{
     self.block = block;
 }

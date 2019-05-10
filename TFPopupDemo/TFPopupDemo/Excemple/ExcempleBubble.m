@@ -9,7 +9,9 @@
 #import "ExcempleBubble.h"
 
 @implementation ExcempleBubble
-
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
 -(void)observerClick:(ExcempleBubbleBlock)block{
     self.block = block;
 }

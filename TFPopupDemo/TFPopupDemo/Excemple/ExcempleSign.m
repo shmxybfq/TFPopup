@@ -9,7 +9,9 @@
 #import "ExcempleSign.h"
 
 @implementation ExcempleSign
-
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
 -(void)observerClick:(ExcempleSignBlock)block{
     self.block = block;
 }
@@ -18,6 +20,9 @@
     [super awakeFromNib];
     self.layer.cornerRadius = 6;
     self.layer.masksToBounds = YES;
+
+    
+    
     
     
 }

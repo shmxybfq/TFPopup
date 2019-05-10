@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */; };
 		2024EEBB21F18A0D00DEC84A /* TFPopupParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024EEBA21F18A0D00DEC84A /* TFPopupParam.m */; };
 		2024EEC221F71B9900DEC84A /* BlankView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2024EEC121F71B9900DEC84A /* BlankView.m */; };
 		2024EEC421F71BAF00DEC84A /* BlankView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2024EEC321F71BAF00DEC84A /* BlankView.xib */; };
@@ -48,8 +47,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2024EEAB21EDDF6A00DEC84A /* TFPopupProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupProtocol.h; sourceTree = "<group>"; };
-		2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupProtocol.m; sourceTree = "<group>"; };
 		2024EEB921F18A0D00DEC84A /* TFPopupParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupParam.h; sourceTree = "<group>"; };
 		2024EEBA21F18A0D00DEC84A /* TFPopupParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFPopupParam.m; sourceTree = "<group>"; };
 		2024EEC021F71B9900DEC84A /* BlankView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlankView.h; sourceTree = "<group>"; };
@@ -169,8 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				203DD48121EC6B92004ACC42 /* TFPopup.h */,
-				2024EEAB21EDDF6A00DEC84A /* TFPopupProtocol.h */,
-				2024EEAC21EDDF6A00DEC84A /* TFPopupProtocol.m */,
 				203DD48521EC6BFA004ACC42 /* TFPopupToast.h */,
 				203DD48621EC6BFA004ACC42 /* TFPopupToast.m */,
 				203DD49121EC865F004ACC42 /* UIView+TFPopup.h */,
@@ -384,7 +379,6 @@
 				209D0756221EA17C007570EB /* ExcempleBubble.m in Sources */,
 				209D0753221EA15A007570EB /* ExcempleUnfold.m in Sources */,
 				209D0747221EA0EA007570EB /* ExcempleAlert.m in Sources */,
-				2024EEAD21EDDF6A00DEC84A /* TFPopupProtocol.m in Sources */,
 				2024EEC221F71B9900DEC84A /* BlankView.m in Sources */,
 				209D08AF222100E2007570EB /* ExcempleSliderLogin.m in Sources */,
 				209D074D221EA127007570EB /* ExcempleNotification.m in Sources */,

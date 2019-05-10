@@ -26,6 +26,11 @@
 #define kSize [UIScreen mainScreen].bounds.size
 #define kAlertSize CGSizeMake(314, 170)
 
+#ifndef x_weak
+#define x_weak(ins) __weak typeof(ins) weak##ins = ins;
+#endif
+
+
 @interface ExcempleViewController ()<TFPopupDelegate,TFPopupBackgroundDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *cusButton0;
@@ -54,8 +59,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self config];
+    
+    
 }
-
 
 
 -(void)config{
@@ -149,8 +155,10 @@
         view.backgroundDelegate = self;
         view.popupDelegate = self;
         [view tf_showNormal:self.view popupParam:param];
+        
+        x_weak(view);
         [((ExcempleAlert *)view) observerClick:^{
-            [view tf_hide];
+            [weakview tf_hide];
         }];
     }
 }
@@ -458,8 +466,10 @@
     if ([title(ins) isEqualToString:@"exc0"]) {
         UIView *view = [self getViewName:@"ExcempleAlert"];
         [view tf_showNormal:self.view animated:NO];
+        
+        x_weak(view);
         [((ExcempleAlert *)view) observerClick:^{
-            [view tf_hide];
+            [weakview tf_hide];
         }];
     }
     
@@ -470,8 +480,10 @@
         param.popupSize = CGSizeMake(360, 226);
         
         [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
+        
+        x_weak(view);
         [((ExcempleAction *)view) observerClick:^{
-            [view tf_hide];
+            [weakview tf_hide];
         }];
     }
     
@@ -484,8 +496,10 @@
         param.disuseShowPopupAlphaAnimation = YES;
         param.disuseHidePopupAlphaAnimation = YES;
         [view tf_showSlide:self.view direction:PopupDirectionTop popupParam:param];
+        
+        x_weak(view);
         [((ExcempleNotification *)view) observerClick:^{
-            [view tf_hide];
+            [weakview tf_hide];
         }];
     }
     
@@ -506,8 +520,10 @@
                       from:param.popOriginFrame
                         to:param.popTargetFrame
                 popupParam:param];
+        
+        x_weak(view);
         [((ExcempleUnfold *)view) observerClick:^{
-            [view tf_hide];
+            [weakview tf_hide];
         }];
     }
     
@@ -521,8 +537,10 @@
                   basePoint:CGPointMake([UIScreen mainScreen].bounds.size.width - 20, 40)
             bubbleDirection:PopupDirectionBottomLeft
                  popupParam:param];
+        
+        x_weak(view);
         [((ExcempleBubble *)view) observerClick:^{
-            [view tf_hide];
+            [weakview tf_hide];
         }];
     }
     
@@ -530,15 +548,19 @@
         UIView *big = [self getViewName:@"ExcempleSliderBig"];
         TFPopupParam *paramBig = [TFPopupParam new];
         [big tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramBig];
+        
+        x_weak(big);
         [((ExcempleSliderBig *)big) observerClick:^{
-            [big tf_hide];
+            [weakbig tf_hide];
         }];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             UIView *small = [self getViewName:@"ExcempleSliderSmall"];
             TFPopupParam *paramSmall = [TFPopupParam new];
             [small tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramSmall];
+            
+            x_weak(small);
             [((ExcempleSliderSmall *)small) observerClick:^{
-                [small tf_hide];
+                [weaksmall tf_hide];
             }];
         });
     }
@@ -548,16 +570,20 @@
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = kSize;
         [big tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
+        
+        x_weak(big);
         [((ExcempleSliderLogin *)big) observerClick:^{
-            [big tf_hide];
+            [weakbig tf_hide];
         }];
     }
 }
 
 -(UIView *)getAlertView{
     AlertNormal *alert = (AlertNormal *)[self getViewName:@"AlertNormal"];
+    
+    x_weak(alert);
     [alert observerSure:^{
-        [alert tf_hide];
+        [weakalert tf_hide];
     }];
     return alert;
 }
@@ -565,8 +591,10 @@
 
 -(UIView *)getListView{
     ListView *list = (ListView *)[self getViewName:@"ListView"];
+    
+    x_weak(list);
     [list observerSelected:^(NSString *data) {
-        [list tf_hide];
+        [weaklist tf_hide];
     }];
     return list;
 }

@@ -9,7 +9,9 @@
 #import "ExcempleAction.h"
 
 @implementation ExcempleAction
-
+-(void)dealloc{
+    NSLog(@"dealloc === %@",[self class]);
+}
 -(void)observerClick:(ExcempleActionBlock)block{
     self.block = block;
 }
