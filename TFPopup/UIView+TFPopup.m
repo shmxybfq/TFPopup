@@ -994,6 +994,9 @@
 }
 
 -(void)tf_remove{
+
+    [self.layer removeAllAnimations];
+    if (self.layer.mask) [self.layer.mask removeAllAnimations];
     [self removeFromSuperview];
     if (self.extension.backgroundViewCount <= 0) {
         [self.extension.defaultBackgroundView removeFromSuperview];
