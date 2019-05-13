@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSInteger,TFToastAnimationType) {
-    TFToastAnimationTypeFade,
-    TFToastAnimationTypeScale,
-};
+#import "TFPopupConst.h"
 
 @class TFPopupToast;
 typedef void(^TFPopupToastBlock)(TFPopupToast *toast);
@@ -22,7 +18,7 @@ typedef void(^TFPopupToastBlock)(TFPopupToast *toast);
 @property(nonatomic,strong)UILabel  *msgLabel;
 
 //注释同下
-+(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFToastAnimationType)animationType;
++(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFAnimationType)animationType;
 
 /* toast展示,默认黑底白字,底80%黑色不透明度
  * inView 容器视图
@@ -35,7 +31,7 @@ typedef void(^TFPopupToastBlock)(TFPopupToast *toast);
            msg:(NSString *)msg
         offset:(CGPoint)offset
 dissmissDuration:(NSTimeInterval)duration
- animationType:(TFToastAnimationType)animationType
+ animationType:(TFAnimationType)animationType
    custemBlock:(TFPopupToastBlock)custemBlock;
 
 @end

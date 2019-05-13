@@ -20,7 +20,7 @@
 @implementation TFPopupToast
 
 
-+(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFToastAnimationType)animationType{
++(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFAnimationType)animationType{
     [TFPopupToast tf_show:inView
                       msg:msg
                    offset:CGPointZero
@@ -33,7 +33,7 @@
            msg:(NSString *)msg
         offset:(CGPoint)offset
 dissmissDuration:(NSTimeInterval)duration
- animationType:(TFToastAnimationType)animationType
+ animationType:(TFAnimationType)animationType
    custemBlock:(TFPopupToastBlock)custemBlock{
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     if (msg == nil) {NSLog(@"****** %@ %@ ******",[self class],@"msg 不能为空！");return;}
@@ -53,10 +53,10 @@ dissmissDuration:(NSTimeInterval)duration
     toast.cusBlock = custemBlock;
     
     switch (animationType) {
-        case TFToastAnimationTypeFade:
+        case TFAnimationTypeFade:
             [toast tf_showNormal:inView popupParam:param];
             break;
-        case TFToastAnimationTypeScale:
+        case TFAnimationTypeScale:
             [toast tf_showScale:inView offset:CGPointZero popupParam:param];
             break;
         default:

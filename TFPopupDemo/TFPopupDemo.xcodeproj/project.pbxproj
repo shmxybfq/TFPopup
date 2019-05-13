@@ -43,6 +43,7 @@
 		20EC88BE222CFC3F006C4302 /* TFPopupExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EC88BD222CFC3F006C4302 /* TFPopupExtension.m */; };
 		20F43CC0222416EB00C62A38 /* ExcempleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F43CBE222416EB00C62A38 /* ExcempleViewController.m */; };
 		20F43CC1222416EB00C62A38 /* ExcempleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20F43CBF222416EB00C62A38 /* ExcempleViewController.xib */; };
+		902C94FF228972B0002A60EA /* TFPopupLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 902C94FE228972AF002A60EA /* TFPopupLoading.m */; };
 		9616B610F835B20255614A5C /* libPods-TFPopupDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,9 @@
 		20F43CBF222416EB00C62A38 /* ExcempleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExcempleViewController.xib; sourceTree = "<group>"; };
 		6197EE904FA632423BA6B224 /* Pods-TFPopupDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TFPopupDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		902C94F9228970F1002A60EA /* TFPopupConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupConst.h; sourceTree = "<group>"; };
+		902C94FD228972AF002A60EA /* TFPopupLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFPopupLoading.h; sourceTree = "<group>"; };
+		902C94FE228972AF002A60EA /* TFPopupLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFPopupLoading.m; sourceTree = "<group>"; };
 		D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,8 +170,11 @@
 			isa = PBXGroup;
 			children = (
 				203DD48121EC6B92004ACC42 /* TFPopup.h */,
+				902C94F9228970F1002A60EA /* TFPopupConst.h */,
 				203DD48521EC6BFA004ACC42 /* TFPopupToast.h */,
 				203DD48621EC6BFA004ACC42 /* TFPopupToast.m */,
+				902C94FD228972AF002A60EA /* TFPopupLoading.h */,
+				902C94FE228972AF002A60EA /* TFPopupLoading.m */,
 				203DD49121EC865F004ACC42 /* UIView+TFPopup.h */,
 				203DD49221EC865F004ACC42 /* UIView+TFPopup.m */,
 				20EC88BC222CFC3F006C4302 /* TFPopupExtension.h */,
@@ -379,6 +386,7 @@
 				209D0756221EA17C007570EB /* ExcempleBubble.m in Sources */,
 				209D0753221EA15A007570EB /* ExcempleUnfold.m in Sources */,
 				209D0747221EA0EA007570EB /* ExcempleAlert.m in Sources */,
+				902C94FF228972B0002A60EA /* TFPopupLoading.m in Sources */,
 				2024EEC221F71B9900DEC84A /* BlankView.m in Sources */,
 				209D08AF222100E2007570EB /* ExcempleSliderLogin.m in Sources */,
 				209D074D221EA127007570EB /* ExcempleNotification.m in Sources */,

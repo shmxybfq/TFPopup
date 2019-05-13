@@ -24,6 +24,8 @@
 #import "ExcempleSliderLogin.h"
 #import "ExcempleViewController.h"
 
+#import "TFPopupLoading.h"
+
 #define kSize [UIScreen mainScreen].bounds.size
 #define kAlertSize CGSizeMake(314, 170)
 
@@ -84,7 +86,7 @@
 //默认alpha = 0
 @property (weak, nonatomic) IBOutlet UIButton *excempleCoverButton;
 
-    @end
+@end
 
 @implementation ViewController
     
@@ -97,7 +99,13 @@
 }
 
 -(void)showClick:(UIButton *)ins{
+    
+    [TFPopupLoading tf_show:self.view animationType:TFAnimationTypeFade];
 
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [TFPopupLoading tf_hide:self.view];
+    });
+    return;
     self.param.duration = 0.3;
 
     if ([self.animationType isEqualToString:@"直接弹"]) {
