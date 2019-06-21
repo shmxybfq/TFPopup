@@ -22,7 +22,7 @@
 #import "ExcempleSliderSmall.h"
 #import "ExcempleSliderLogin.h"
 #import "TFPopupToast.h"
-
+#import "TFPopupLoading.h"
 #define kSize [UIScreen mainScreen].bounds.size
 #define kAlertSize CGSizeMake(314, 170)
 
@@ -47,6 +47,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *excButton4;
 @property (weak, nonatomic) IBOutlet UIButton *excButton5;
 @property (weak, nonatomic) IBOutlet UIButton *excButton6;
+@property (weak, nonatomic) IBOutlet UIButton *excButton7;
+@property (weak, nonatomic) IBOutlet UIButton *excButton8;
+@property (weak, nonatomic) IBOutlet UIButton *excButton9;
 
 @property(nonatomic,  copy)NSString *selectedTitle;
 
@@ -59,8 +62,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self config];
-    
-    
 }
 
 
@@ -577,6 +578,19 @@
             [weakbig tf_hide];
         }];
     }
+    
+    if ([title(ins) isEqualToString:@"exc8"]) {
+        [TFPopupLoading tf_show:self.view animationType:TFAnimationTypeFade];
+        x_weak(self);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [TFPopupLoading tf_hide:weakself.view];
+        });
+    }
+    
+    if ([title(ins) isEqualToString:@"exc9"]) {
+      
+        
+    }
 }
 
 -(UIView *)getAlertView{
@@ -642,7 +656,8 @@ static inline NSString *title(UIButton *bt){
 -(NSArray *)excempleButtons{
     NSArray *cp = @[self.excButton0,self.excButton1,self.excButton2,
                     self.excButton3,self.excButton4,self.excButton5,
-                    self.excButton6];
+                    self.excButton6,self.excButton7,self.excButton8,
+                    self.excButton9];
     return cp;
 }
 

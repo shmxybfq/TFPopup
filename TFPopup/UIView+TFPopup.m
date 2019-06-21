@@ -199,7 +199,7 @@
     self.popupParam.maskHideToPath = nil;
     self.popupParam.maskShowFromPath = bubblePath(self.popupParam.popupSize, bubbleDirection, NO);
     self.popupParam.maskShowToPath = bubblePath(self.popupParam.popupSize, bubbleDirection, YES);
-
+    
     [self tf_showCustem:inView popupParam:self.popupParam];
 }
 
@@ -586,7 +586,9 @@
         if (animation){
             ext.showAnimationCount += 1;
             animation.delegate = self;
-            [self.layer addAnimation:animation forKey:kShowBaseAnimationKey];
+            tf_popupDelay(self.extension.showAnimationDelay, ^{
+                [weakself.layer addAnimation:animation forKey:kShowBaseAnimationKey];
+            });
         }
     }
     
@@ -607,11 +609,26 @@
         if (animation){
             ext.showAnimationCount += 1;
             animation.delegate = self;
-            [mask addAnimation:animation forKey:kShowMaskAnimationKey];
+            __weak typeof(mask) weakMask = mask;
+            tf_popupDelay(self.extension.showAnimationDelay, ^{
+                [weakMask addAnimation:animation forKey:kShowMaskAnimationKey];
+            });
         }
     }
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidShow:)]) {
         [self.popupDelegate tf_popupViewDidShow:self];
+    }
+}
+
+//延时
+static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block){
+    if (!block) {
+        return;
+    }
+    if (interval == 0) {
+        block();
+    }else{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((interval) * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
     }
 }
 
@@ -673,7 +690,9 @@
             hasBaseAniamtion = YES;
             ext.hideAnimationCount += 1;
             animation.delegate = self;
-            [self.layer addAnimation:animation forKey:kHideBaseAnimationKey];
+            tf_popupDelay(self.extension.showAnimationDelay, ^{
+                [weakself.layer addAnimation:animation forKey:kHideBaseAnimationKey];
+            });
         }
     }
     
@@ -696,7 +715,10 @@
             hasMaskAniamtion = YES;
             ext.hideAnimationCount += 1;
             animation.delegate = self;
-            [mask addAnimation:animation forKey:kHideMaskAnimationKey];
+            __weak typeof(mask) weakMask = mask;
+            tf_popupDelay(self.extension.showAnimationDelay, ^{
+                [weakMask addAnimation:animation forKey:kHideMaskAnimationKey];
+            });
         }
     }
     
@@ -825,6 +847,11 @@
     return 0.3;
 }
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state{
+    if (state == TFPopupStateShow) {
+        return MAX(self.popupParam.showAnimationDelay, 0.0);
+    }else if(state == TFPopupStateHide){
+        return MAX(self.popupParam.hideAnimationDelay, 0.0);
+    }
     return 0;
 }
 - (UIViewAnimationOptions)tf_popupView:(UIView *)popup animationOptionsForState:(TFPopupState)state{
@@ -994,7 +1021,7 @@
 }
 
 -(void)tf_remove{
-
+    
     [self.layer removeAllAnimations];
     if (self.layer.mask) [self.layer.mask removeAllAnimations];
     [self removeFromSuperview];

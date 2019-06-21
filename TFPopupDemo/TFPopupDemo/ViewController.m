@@ -67,6 +67,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField0;
 @property (weak, nonatomic) IBOutlet UITextField *textField1;
+@property (weak, nonatomic) IBOutlet UITextField *textField2;
 
 @property (weak, nonatomic) IBOutlet UIButton *showButton;
 
@@ -100,14 +101,19 @@
 
 -(void)showClick:(UIButton *)ins{
     
-    [TFPopupLoading tf_show:self.view animationType:TFAnimationTypeFade];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [TFPopupLoading tf_hide:self.view];
-    });
-    return;
     self.param.duration = 0.3;
-
+    if ([self.textField0.text floatValue] != 0.3 && [self.textField0.text floatValue] > 0.0) {
+        self.param.duration = [self.textField0.text floatValue];
+    }
+    if ([self.textField1.text floatValue] > 0.0) {
+        self.param.autoDissmissDuration = [self.textField1.text floatValue];
+    }
+    if ([self.textField2.text floatValue] > 0.0) {
+        self.param.showAnimationDelay = [self.textField2.text floatValue];
+        self.param.hideAnimationDelay = [self.textField2.text floatValue];
+    }
+    
     if ([self.animationType isEqualToString:@"直接弹"]) {
 
         UIView *popup = [self getAlertView];

@@ -45,6 +45,8 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
  animationOptions,默认渐隐和frame动画的动画曲线default=UIViewAnimationOptionCurveEaseOut
  */
 @property(nonatomic,assign)NSTimeInterval duration;
+@property(nonatomic,assign)NSTimeInterval showAnimationDelay;
+@property(nonatomic,assign)NSTimeInterval hideAnimationDelay;
 @property(nonatomic,assign)NSTimeInterval autoDissmissDuration;
 @property(nonatomic,assign)UIViewAnimationOptions animationOptions;
 
