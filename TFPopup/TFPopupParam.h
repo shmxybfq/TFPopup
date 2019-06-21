@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 
 /* 【全局属性】时间
  duration,动画时间default=0.3
+ showAnimationDelay,动画延迟执行时间:调用弹出后延迟此时间后执行弹出动画
+ hideAnimationDelay,动画延迟执行时间:调用消失后延迟此时间后执行弹出动画
  autoDissmissDuration,自动消失时间,default=0
  animationOptions,默认渐隐和frame动画的动画曲线default=UIViewAnimationOptionCurveEaseOut
  */
