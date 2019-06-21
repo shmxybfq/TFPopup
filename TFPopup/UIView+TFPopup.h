@@ -53,7 +53,7 @@
  */
 @optional;
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDurationForState:(TFPopupState)state;//默认0.3
-- (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state;//默认0.3
+- (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state;//默认0.0
 //默认UIViewAnimationOptionCurveEaseOut
 - (UIViewAnimationOptions)tf_popupView:(UIView *)popup animationOptionsForState:(TFPopupState)state;
 @end
