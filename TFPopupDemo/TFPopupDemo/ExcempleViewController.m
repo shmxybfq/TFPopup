@@ -571,6 +571,8 @@
         UIView *big = [self getViewName:@"ExcempleSliderLogin"];
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = kSize;
+        param.disuseShowPopupAlphaAnimation = YES;
+        param.disuseHidePopupAlphaAnimation = YES;
         [big tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
         
         x_weak(big);

@@ -4,6 +4,54 @@
 <br>弹框是UI开发中很常用的一种界面展示和交互方式，弹框在页面开发中占着很重要的位置。但是由于弹框具有UI不确定性，弹出方式不确定性，动画不确定性，还有需求的不确定性一直以来没能统一成一定的标准去做一个固定的轮子。所以可以退而求其次把UI，动画和弹出方式拆分开来，UI由开发者开发，动画和弹出方式统一成多数的标准，这样以来做弹框就会变得异常的简单:
 <br>1.已经有一个弹框，或者新写一个页面作为弹框。
 <br>2.用喜欢的方式将它弹出来。<br>
+
+
+## 效果图示例
+**自定义动画效果**
+___
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-3.gif" width="30%" height="30%">
+</div>
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-5.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-6.gif" width="30%" height="30%">
+</div>
+<br>
+
+**默认动画效果**
+
+___
+
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc3.gif" width="30%" height="30%">
+</div>
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc5.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc6.gif" width="30%" height="30%">
+</div>
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc7.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc8.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc9.gif" width="30%" height="30%">
+</div>
+<br>
+
+**基于默认动画效果的参数自由组合**
+
+___
+
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-bubble.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-mask.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-slide.gif" width="30%" height="30%">
+</div>
+
 ## 特点
 1.和UI代码不耦合<br>
 2.1+行代码调用<br>
@@ -94,50 +142,6 @@ property{
  * manager & popup 同上 */
 -(BOOL)tf_popupBackgroundTouch:(TFPopupManager *)manager popup:(UIView *)popup;
 ```
-## 效果截图示例ScreenShot
-**自定义动画效果**
-___
-<div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-1.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-2.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-3.gif" width="30%" height="30%">
-</div>
-<div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-4.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-5.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/cus-6.gif" width="30%" height="30%">
-</div>
-<br>
-
-**默认动画效果**
-
-___
-
-<div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc1.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc2.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc3.gif" width="30%" height="30%">
-</div>
-<div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc4.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc5.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc6.gif" width="30%" height="30%">
-</div>
-<div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc7.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/exc8.gif" width="30%" height="30%">
-</div>
-<br>
-
-**基于默认动画效果的参数自由组合**
-
-___
-
-<div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-bubble.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-mask.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Excemple/nor-slide.gif" width="30%" height="30%">
-</div>
 
 ## 使用
 
