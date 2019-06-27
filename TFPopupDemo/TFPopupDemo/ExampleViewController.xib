@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,16 +18,16 @@
                 <outlet property="cusButton3" destination="KkF-N9-7LS" id="JDK-gS-c21"/>
                 <outlet property="cusButton4" destination="Ftb-4Y-faJ" id="ZpJ-LT-D1G"/>
                 <outlet property="cusButton5" destination="FZW-ru-z77" id="040-Se-0oq"/>
-                <outlet property="excButton0" destination="8FJ-T0-rEd" id="kJd-hR-KgX"/>
-                <outlet property="excButton1" destination="0Ng-fX-PIb" id="Zn2-qo-A7M"/>
-                <outlet property="excButton2" destination="v8f-jV-wgE" id="x1j-ha-Izp"/>
-                <outlet property="excButton3" destination="dvl-jb-13x" id="bkk-H5-hTD"/>
-                <outlet property="excButton4" destination="xaV-Zt-bdd" id="QeA-gb-ZUm"/>
-                <outlet property="excButton5" destination="euZ-xT-JgV" id="gKU-YW-Yrt"/>
-                <outlet property="excButton6" destination="mJH-gg-E6Z" id="DvC-OZ-Woi"/>
-                <outlet property="excButton7" destination="pE3-eI-eME" id="cns-Eg-vlZ"/>
-                <outlet property="excButton8" destination="tnB-Pr-T3V" id="IrQ-w3-MqH"/>
-                <outlet property="excButton9" destination="ZLV-Fe-Kk5" id="Om8-fT-gHc"/>
+                <outlet property="exaButton0" destination="8FJ-T0-rEd" id="kJd-hR-KgX"/>
+                <outlet property="exaButton1" destination="0Ng-fX-PIb" id="Zn2-qo-A7M"/>
+                <outlet property="exaButton2" destination="v8f-jV-wgE" id="x1j-ha-Izp"/>
+                <outlet property="exaButton3" destination="dvl-jb-13x" id="bkk-H5-hTD"/>
+                <outlet property="exaButton4" destination="xaV-Zt-bdd" id="QeA-gb-ZUm"/>
+                <outlet property="exaButton5" destination="euZ-xT-JgV" id="gKU-YW-Yrt"/>
+                <outlet property="exaButton6" destination="mJH-gg-E6Z" id="DvC-OZ-Woi"/>
+                <outlet property="exaButton7" destination="pE3-eI-eME" id="cns-Eg-vlZ"/>
+                <outlet property="exaButton8" destination="tnB-Pr-T3V" id="IrQ-w3-MqH"/>
+                <outlet property="exaButton9" destination="ZLV-Fe-Kk5" id="Om8-fT-gHc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -113,37 +117,37 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FJ-T0-rEd">
                                     <rect key="frame" x="15" y="5" width="40.5" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc0"/>
+                                    <state key="normal" title="exa0"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ng-fX-PIb">
                                     <rect key="frame" x="65.5" y="5" width="41" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc1"/>
+                                    <state key="normal" title="exa1"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8f-jV-wgE">
                                     <rect key="frame" x="116.5" y="5" width="40.5" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc2"/>
+                                    <state key="normal" title="exa2"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvl-jb-13x">
                                     <rect key="frame" x="167" y="5" width="41" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc3"/>
+                                    <state key="normal" title="exa3"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaV-Zt-bdd">
                                     <rect key="frame" x="218" y="5" width="40.5" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc4"/>
+                                    <state key="normal" title="exa4"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="euZ-xT-JgV">
                                     <rect key="frame" x="268.5" y="5" width="41" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc5"/>
+                                    <state key="normal" title="exa5"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJH-gg-E6Z">
                                     <rect key="frame" x="319.5" y="5" width="40.5" height="30"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="exc6"/>
+                                    <state key="normal" title="exa6"/>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -187,7 +191,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="350-4Z-NLZ"/>
                                     </constraints>
-                                    <state key="normal" title="exc7"/>
+                                    <state key="normal" title="exa7"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnB-Pr-T3V">
                                     <rect key="frame" x="75" y="5" width="50" height="30"/>
@@ -195,7 +199,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="ghC-EL-8vf"/>
                                     </constraints>
-                                    <state key="normal" title="exc8"/>
+                                    <state key="normal" title="exa8"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZLV-Fe-Kk5">
                                     <rect key="frame" x="135" y="5" width="50" height="30"/>
@@ -203,7 +207,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="TRH-UV-NaT"/>
                                     </constraints>
-                                    <state key="normal" title="exc9"/>
+                                    <state key="normal" title="exa9"/>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

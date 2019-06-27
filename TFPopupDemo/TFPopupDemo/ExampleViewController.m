@@ -40,16 +40,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *cusButton4;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton5;
 
-@property (weak, nonatomic) IBOutlet UIButton *excButton0;
-@property (weak, nonatomic) IBOutlet UIButton *excButton1;
-@property (weak, nonatomic) IBOutlet UIButton *excButton2;
-@property (weak, nonatomic) IBOutlet UIButton *excButton3;
-@property (weak, nonatomic) IBOutlet UIButton *excButton4;
-@property (weak, nonatomic) IBOutlet UIButton *excButton5;
-@property (weak, nonatomic) IBOutlet UIButton *excButton6;
-@property (weak, nonatomic) IBOutlet UIButton *excButton7;
-@property (weak, nonatomic) IBOutlet UIButton *excButton8;
-@property (weak, nonatomic) IBOutlet UIButton *excButton9;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton0;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton1;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton2;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton3;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton4;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton5;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton6;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton7;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton8;
+@property (weak, nonatomic) IBOutlet UIButton *exaButton9;
 
 @property(nonatomic,  copy)NSString *selectedTitle;
 
@@ -89,7 +89,7 @@
      forControlEvents:UIControlEventTouchUpInside];
     }
     for (UIButton *bt in self.ExampleButtons) {
-        [bt addTarget:self action:@selector(excClick:)
+        [bt addTarget:self action:@selector(exaClick:)
      forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -460,11 +460,11 @@
     return group;
 }
 
--(void)excClick:(UIButton *)ins{
+-(void)exaClick:(UIButton *)ins{
     
     self.selectedTitle = title(ins);
     
-    if ([title(ins) isEqualToString:@"exc0"]) {
+    if ([title(ins) isEqualToString:@"exa0"]) {
         UIView *view = [self getViewName:@"ExampleAlert"];
         [view tf_showNormal:self.view animated:NO];
         
@@ -474,7 +474,7 @@
         }];
     }
     
-    if ([title(ins) isEqualToString:@"exc1"]) {
+    if ([title(ins) isEqualToString:@"exa1"]) {
         UIView *view = [self getViewName:@"ExampleAction"];
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, -200);
@@ -488,7 +488,7 @@
         }];
     }
     
-    if ([title(ins) isEqualToString:@"exc2"]) {
+    if ([title(ins) isEqualToString:@"exa2"]) {
         UIView *view = [self getViewName:@"ExampleNotification"];
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, +30);
@@ -505,13 +505,13 @@
         }];
     }
     
-    if ([title(ins) isEqualToString:@"exc3"]) {
+    if ([title(ins) isEqualToString:@"exa3"]) {
         UIView *view = [self getViewName:@"ExampleSign"];
         TFPopupParam *param = [TFPopupParam new];
         [view tf_showScale:self.view offset:CGPointMake(0, -100) popupParam:param];
     }
     
-    if ([title(ins) isEqualToString:@"exc4"]) {
+    if ([title(ins) isEqualToString:@"exa4"]) {
         UIView *view = [self getViewName:@"ExampleUnfold"];
         TFPopupParam *param = [TFPopupParam new];
         param.disuseShowPopupAlphaAnimation = YES;
@@ -529,7 +529,7 @@
         }];
     }
     
-    if ([title(ins) isEqualToString:@"exc5"]) {
+    if ([title(ins) isEqualToString:@"exa5"]) {
         UIView *view = [self getViewName:@"ExampleBubble"];
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = CGSizeMake(165, 165);
@@ -546,7 +546,7 @@
         }];
     }
     
-    if ([title(ins) isEqualToString:@"exc6"]) {
+    if ([title(ins) isEqualToString:@"exa6"]) {
         UIView *big = [self getViewName:@"ExampleSliderBig"];
         TFPopupParam *paramBig = [TFPopupParam new];
         [big tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramBig];
@@ -567,7 +567,7 @@
         });
     }
     
-    if ([title(ins) isEqualToString:@"exc7"]) {
+    if ([title(ins) isEqualToString:@"exa7"]) {
         UIView *big = [self getViewName:@"ExampleSliderLogin"];
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = kSize;
@@ -581,7 +581,7 @@
         }];
     }
     
-    if ([title(ins) isEqualToString:@"exc8"]) {
+    if ([title(ins) isEqualToString:@"exa8"]) {
         [TFPopupLoading tf_show:self.view animationType:TFAnimationTypeFade];
         x_weak(self);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -589,7 +589,7 @@
         });
     }
     
-    if ([title(ins) isEqualToString:@"exc9"]) {
+    if ([title(ins) isEqualToString:@"exa9"]) {
       
         
     }
@@ -656,10 +656,10 @@ static inline NSString *title(UIButton *bt){
 }
 
 -(NSArray *)ExampleButtons{
-    NSArray *cp = @[self.excButton0,self.excButton1,self.excButton2,
-                    self.excButton3,self.excButton4,self.excButton5,
-                    self.excButton6,self.excButton7,self.excButton8,
-                    self.excButton9];
+    NSArray *cp = @[self.exaButton0,self.exaButton1,self.exaButton2,
+                    self.exaButton3,self.exaButton4,self.exaButton5,
+                    self.exaButton6,self.exaButton7,self.exaButton8,
+                    self.exaButton9];
     return cp;
 }
 
