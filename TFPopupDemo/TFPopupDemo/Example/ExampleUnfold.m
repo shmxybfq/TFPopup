@@ -1,25 +1,25 @@
 //
-//  ExcempleAction.m
+//  ExampleUnfold.m
 //  TFPopupDemo
 //
 //  Created by ztf on 2019/2/21.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleAction.h"
+#import "ExampleUnfold.h"
 
-@implementation ExcempleAction
+@implementation ExampleUnfold
 -(void)dealloc{
     NSLog(@"dealloc === %@",[self class]);
 }
--(void)observerClick:(ExcempleActionBlock)block{
+-(void)observerClick:(ExampleUnfoldBlock)block{
     self.block = block;
 }
 
 -(void)awakeFromNib{
     [super awakeFromNib];
-    self.layer.cornerRadius = 6;
-    self.layer.masksToBounds = YES;
+//    self.layer.cornerRadius = 6;
+//    self.layer.masksToBounds = YES;
     
     
 }

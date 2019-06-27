@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
 s.name         = "TFPopup"
-s.version      = "0.5.0"
+s.version      = "0.5.1"
 s.ios.deployment_target = '7.0'
 s.summary      = "A powerful pop-up tool"
 s.homepage     = "https://github.com/shmxybfq/TFPopup"

@@ -1,18 +1,18 @@
 //
-//  ExcempleUnfold.m
+//  ExampleSliderLogin.m
 //  TFPopupDemo
 //
-//  Created by ztf on 2019/2/21.
+//  Created by ztf on 2019/2/23.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleUnfold.h"
+#import "ExampleSliderLogin.h"
 
-@implementation ExcempleUnfold
+@implementation ExampleSliderLogin
 -(void)dealloc{
     NSLog(@"dealloc === %@",[self class]);
 }
--(void)observerClick:(ExcempleUnfoldBlock)block{
+-(void)observerClick:(ExampleSliderLoginBlock)block{
     self.block = block;
 }
 
@@ -28,5 +28,4 @@
         self.block();
     }
 }
-
 @end

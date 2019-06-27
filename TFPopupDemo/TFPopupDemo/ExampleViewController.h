@@ -1,5 +1,5 @@
 //
-//  ExcempleViewController.h
+//  ExampleViewController.h
 //  TFPopupDemo
 //
 //  Created by ztf on 2019/2/25.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ExcempleViewController : UIViewController
+@interface ExampleViewController : UIViewController
 
 @end
 

@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ExcempleSliderSmall">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="736"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ExampleAlert">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="310"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOd-qf-uIy">
-                    <rect key="frame" x="0.0" y="0.0" width="300" height="736"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H1Z-Ag-ZUf">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="310"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" backgroundImage="popup-8"/>
+                    <state key="normal" image="popup-1"/>
+                    <state key="highlighted" image="popup-1"/>
                     <connections>
-                        <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="ypi-kL-gmX"/>
+                        <action selector="sure:" destination="iN0-l3-epB" eventType="touchUpInside" id="EUk-SO-Nku"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="YOd-qf-uIy" secondAttribute="bottom" id="1dS-uL-8JV"/>
-                <constraint firstItem="YOd-qf-uIy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DPS-Zg-44k"/>
-                <constraint firstItem="YOd-qf-uIy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ym6-aa-lmI"/>
-                <constraint firstAttribute="trailing" secondItem="YOd-qf-uIy" secondAttribute="trailing" id="qMa-59-kET"/>
+                <constraint firstAttribute="bottom" secondItem="H1Z-Ag-ZUf" secondAttribute="bottom" id="KDc-YN-81O"/>
+                <constraint firstItem="H1Z-Ag-ZUf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KJ1-8t-Wup"/>
+                <constraint firstItem="H1Z-Ag-ZUf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Xpt-dT-FLP"/>
+                <constraint firstAttribute="trailing" secondItem="H1Z-Ag-ZUf" secondAttribute="trailing" id="rAV-Q8-zXF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
     <resources>
-        <image name="popup-8" width="487" height="1104"/>
+        <image name="popup-1" width="450.5" height="463.5"/>
     </resources>
 </document>

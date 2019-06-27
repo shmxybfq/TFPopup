@@ -13,16 +13,16 @@
 #import "BlankView.h"
 #import "AlertNormal.h"
 
-#import "ExcempleAlert.h"
-#import "ExcempleAction.h"
-#import "ExcempleNotification.h"
-#import "ExcempleSign.h"
-#import "ExcempleUnfold.h"
-#import "ExcempleBubble.h"
-#import "ExcempleSliderBig.h"
-#import "ExcempleSliderSmall.h"
-#import "ExcempleSliderLogin.h"
-#import "ExcempleViewController.h"
+#import "ExampleAlert.h"
+#import "ExampleAction.h"
+#import "ExampleNotification.h"
+#import "ExampleSign.h"
+#import "ExampleUnfold.h"
+#import "ExampleBubble.h"
+#import "ExampleSliderBig.h"
+#import "ExampleSliderSmall.h"
+#import "ExampleSliderLogin.h"
+#import "ExampleViewController.h"
 
 #import "TFPopupLoading.h"
 
@@ -75,8 +75,8 @@
 @property(nonatomic,strong)NSArray *midButtons;
 @property(nonatomic,strong)NSArray *botButtons;
 @property(nonatomic,strong)NSArray *cusButtons;
-@property(nonatomic,strong)NSArray *excempleButtons;
-@property (weak, nonatomic) IBOutlet UIButton *watchExcempleButton;
+@property(nonatomic,strong)NSArray *ExampleButtons;
+@property (weak, nonatomic) IBOutlet UIButton *watchExampleButton;
 
 @property(nonatomic,strong)TFPopupParam *param;
 @property(nonatomic,  copy)NSString *animationType;
@@ -85,7 +85,7 @@
 @property (weak, nonatomic) IBOutlet UIView *redPoint;
 
 //默认alpha = 0
-@property (weak, nonatomic) IBOutlet UIButton *excempleCoverButton;
+@property (weak, nonatomic) IBOutlet UIButton *ExampleCoverButton;
 
 @end
 
@@ -338,13 +338,13 @@
     self.redPoint.layer.cornerRadius = 5;
 
 
-    [self.watchExcempleButton addTarget:self
-                                 action:@selector(watchExcempleButtonClick)
+    [self.watchExampleButton addTarget:self
+                                 action:@selector(watchExampleButtonClick)
                        forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void)watchExcempleButtonClick{
-    ExcempleViewController *con = [[ExcempleViewController alloc]initWithNibName:@"ExcempleViewController" bundle:nil];
+-(void)watchExampleButtonClick{
+    ExampleViewController *con = [[ExampleViewController alloc]initWithNibName:@"ExampleViewController" bundle:nil];
     [self presentViewController:con animated:YES completion:nil];
 }
 

@@ -1,18 +1,18 @@
 //
-//  ExcempleSign.m
+//  ExampleNotification.m
 //  TFPopupDemo
 //
 //  Created by ztf on 2019/2/21.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleSign.h"
+#import "ExampleNotification.h"
 
-@implementation ExcempleSign
+@implementation ExampleNotification
 -(void)dealloc{
     NSLog(@"dealloc === %@",[self class]);
 }
--(void)observerClick:(ExcempleSignBlock)block{
+-(void)observerClick:(ExampleNotificationBlock)block{
     self.block = block;
 }
 
@@ -20,9 +20,6 @@
     [super awakeFromNib];
     self.layer.cornerRadius = 6;
     self.layer.masksToBounds = YES;
-
-    
-    
     
     
 }

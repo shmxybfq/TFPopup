@@ -1,25 +1,25 @@
 //
-//  ExcempleSliderLogin.m
+//  ExampleAlert.m
 //  TFPopupDemo
 //
-//  Created by ztf on 2019/2/23.
+//  Created by ztf on 2019/2/21.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleSliderLogin.h"
+#import "ExampleAlert.h"
 
-@implementation ExcempleSliderLogin
+@implementation ExampleAlert
 -(void)dealloc{
     NSLog(@"dealloc === %@",[self class]);
 }
--(void)observerClick:(ExcempleSliderLoginBlock)block{
+-(void)observerClick:(ExampleAlertBlock)block{
     self.block = block;
 }
 
 -(void)awakeFromNib{
     [super awakeFromNib];
-//    self.layer.cornerRadius = 6;
-//    self.layer.masksToBounds = YES;
+    self.layer.cornerRadius = 6;
+    self.layer.masksToBounds = YES;
     
     
 }

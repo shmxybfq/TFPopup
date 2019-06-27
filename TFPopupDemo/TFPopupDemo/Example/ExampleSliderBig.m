@@ -1,18 +1,18 @@
 //
-//  ExcempleSliderBig.m
+//  ExampleSliderBig.m
 //  TFPopupDemo
 //
 //  Created by ztf on 2019/2/21.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleSliderBig.h"
+#import "ExampleSliderBig.h"
 
-@implementation ExcempleSliderBig
+@implementation ExampleSliderBig
 -(void)dealloc{
     NSLog(@"dealloc === %@",[self class]);
 }
--(void)observerClick:(ExcempleSliderBigBlock)block{
+-(void)observerClick:(ExampleSliderBigBlock)block{
     self.block = block;
 }
 

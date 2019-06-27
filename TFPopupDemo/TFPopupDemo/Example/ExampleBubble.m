@@ -1,18 +1,18 @@
 //
-//  ExcempleNotification.m
+//  ExampleBubble.m
 //  TFPopupDemo
 //
 //  Created by ztf on 2019/2/21.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleNotification.h"
+#import "ExampleBubble.h"
 
-@implementation ExcempleNotification
+@implementation ExampleBubble
 -(void)dealloc{
     NSLog(@"dealloc === %@",[self class]);
 }
--(void)observerClick:(ExcempleNotificationBlock)block{
+-(void)observerClick:(ExampleBubbleBlock)block{
     self.block = block;
 }
 
@@ -28,4 +28,5 @@
         self.block();
     }
 }
+
 @end

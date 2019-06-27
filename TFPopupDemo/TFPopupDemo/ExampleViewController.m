@@ -1,26 +1,26 @@
 //
-//  ExcempleViewController.m
+//  ExampleViewController.m
 //  TFPopupDemo
 //
 //  Created by ztf on 2019/2/25.
 //  Copyright © 2019 ztf. All rights reserved.
 //
 
-#import "ExcempleViewController.h"
+#import "ExampleViewController.h"
 #import "TFPopup.h"
 #import "ListView.h"
 #import "BlankView.h"
 #import "AlertNormal.h"
 
-#import "ExcempleAlert.h"
-#import "ExcempleAction.h"
-#import "ExcempleNotification.h"
-#import "ExcempleSign.h"
-#import "ExcempleUnfold.h"
-#import "ExcempleBubble.h"
-#import "ExcempleSliderBig.h"
-#import "ExcempleSliderSmall.h"
-#import "ExcempleSliderLogin.h"
+#import "ExampleAlert.h"
+#import "ExampleAction.h"
+#import "ExampleNotification.h"
+#import "ExampleSign.h"
+#import "ExampleUnfold.h"
+#import "ExampleBubble.h"
+#import "ExampleSliderBig.h"
+#import "ExampleSliderSmall.h"
+#import "ExampleSliderLogin.h"
 #import "TFPopupToast.h"
 #import "TFPopupLoading.h"
 #define kSize [UIScreen mainScreen].bounds.size
@@ -31,7 +31,7 @@
 #endif
 
 
-@interface ExcempleViewController ()<TFPopupDelegate,TFPopupBackgroundDelegate>
+@interface ExampleViewController ()<TFPopupDelegate,TFPopupBackgroundDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *cusButton0;
 @property (weak, nonatomic) IBOutlet UIButton *cusButton1;
@@ -57,7 +57,7 @@
 
 @end
 
-@implementation ExcempleViewController
+@implementation ExampleViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,7 +70,7 @@
     
     NSMutableArray *all = [[NSMutableArray alloc]init];
     [all addObjectsFromArray:self.cusButtons];
-    [all addObjectsFromArray:self.excempleButtons];
+    [all addObjectsFromArray:self.ExampleButtons];
     for (UIButton *bt in all) {
         bt.backgroundColor = [UIColor clearColor];
         bt.layer.cornerRadius = 10;
@@ -88,7 +88,7 @@
         [bt addTarget:self action:@selector(cusClick:)
      forControlEvents:UIControlEventTouchUpInside];
     }
-    for (UIButton *bt in self.excempleButtons) {
+    for (UIButton *bt in self.ExampleButtons) {
         [bt addTarget:self action:@selector(excClick:)
      forControlEvents:UIControlEventTouchUpInside];
     }
@@ -127,7 +127,7 @@
         
     }else if([title(ins) isEqualToString:@"自定义3"]){
         
-        UIView *view = [self getViewName:@"ExcempleAlert"];
+        UIView *view = [self getViewName:@"ExampleAlert"];
         view.popupDelegate = self;
         [view tf_showNormal:self.view popupParam:param];
         
@@ -135,7 +135,7 @@
         
         param.duration = 1;
         param.popupSize = kAlertSize;
-        UIView *view = [self getViewName:@"ExcempleAction"];
+        UIView *view = [self getViewName:@"ExampleAction"];
         view.popupDelegate = self;
         [view tf_showNormal:self.view popupParam:param];
        
@@ -152,13 +152,13 @@
         TFPopupParam *param = [TFPopupParam new];
         param.disuseShowPopupAlphaAnimation = YES;
         param.duration = 0.9;//动画时间0.5
-        UIView *view = [self getViewName:@"ExcempleAlert"];
+        UIView *view = [self getViewName:@"ExampleAlert"];
         view.backgroundDelegate = self;
         view.popupDelegate = self;
         [view tf_showNormal:self.view popupParam:param];
         
         x_weak(view);
-        [((ExcempleAlert *)view) observerClick:^{
+        [((ExampleAlert *)view) observerClick:^{
             [weakview tf_hide];
         }];
     }
@@ -465,17 +465,17 @@
     self.selectedTitle = title(ins);
     
     if ([title(ins) isEqualToString:@"exc0"]) {
-        UIView *view = [self getViewName:@"ExcempleAlert"];
+        UIView *view = [self getViewName:@"ExampleAlert"];
         [view tf_showNormal:self.view animated:NO];
         
         x_weak(view);
-        [((ExcempleAlert *)view) observerClick:^{
+        [((ExampleAlert *)view) observerClick:^{
             [weakview tf_hide];
         }];
     }
     
     if ([title(ins) isEqualToString:@"exc1"]) {
-        UIView *view = [self getViewName:@"ExcempleAction"];
+        UIView *view = [self getViewName:@"ExampleAction"];
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, -200);
         param.popupSize = CGSizeMake(360, 226);
@@ -483,13 +483,13 @@
         [view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
         
         x_weak(view);
-        [((ExcempleAction *)view) observerClick:^{
+        [((ExampleAction *)view) observerClick:^{
             [weakview tf_hide];
         }];
     }
     
     if ([title(ins) isEqualToString:@"exc2"]) {
-        UIView *view = [self getViewName:@"ExcempleNotification"];
+        UIView *view = [self getViewName:@"ExampleNotification"];
         TFPopupParam *param = [TFPopupParam new];
         param.offset = CGPointMake(0, +30);
         param.popupSize = CGSizeMake(396, 78);
@@ -500,19 +500,19 @@
         [view tf_showSlide:self.view direction:PopupDirectionTop popupParam:param];
         
         x_weak(view);
-        [((ExcempleNotification *)view) observerClick:^{
+        [((ExampleNotification *)view) observerClick:^{
             [weakview tf_hide];
         }];
     }
     
     if ([title(ins) isEqualToString:@"exc3"]) {
-        UIView *view = [self getViewName:@"ExcempleSign"];
+        UIView *view = [self getViewName:@"ExampleSign"];
         TFPopupParam *param = [TFPopupParam new];
         [view tf_showScale:self.view offset:CGPointMake(0, -100) popupParam:param];
     }
     
     if ([title(ins) isEqualToString:@"exc4"]) {
-        UIView *view = [self getViewName:@"ExcempleUnfold"];
+        UIView *view = [self getViewName:@"ExampleUnfold"];
         TFPopupParam *param = [TFPopupParam new];
         param.disuseShowPopupAlphaAnimation = YES;
         param.disuseHidePopupAlphaAnimation = YES;
@@ -524,13 +524,13 @@
                 popupParam:param];
         
         x_weak(view);
-        [((ExcempleUnfold *)view) observerClick:^{
+        [((ExampleUnfold *)view) observerClick:^{
             [weakview tf_hide];
         }];
     }
     
     if ([title(ins) isEqualToString:@"exc5"]) {
-        UIView *view = [self getViewName:@"ExcempleBubble"];
+        UIView *view = [self getViewName:@"ExampleBubble"];
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = CGSizeMake(165, 165);
         param.offset = CGPointMake(10, 10);
@@ -541,34 +541,34 @@
                  popupParam:param];
         
         x_weak(view);
-        [((ExcempleBubble *)view) observerClick:^{
+        [((ExampleBubble *)view) observerClick:^{
             [weakview tf_hide];
         }];
     }
     
     if ([title(ins) isEqualToString:@"exc6"]) {
-        UIView *big = [self getViewName:@"ExcempleSliderBig"];
+        UIView *big = [self getViewName:@"ExampleSliderBig"];
         TFPopupParam *paramBig = [TFPopupParam new];
         [big tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramBig];
         
         x_weak(big);
-        [((ExcempleSliderBig *)big) observerClick:^{
+        [((ExampleSliderBig *)big) observerClick:^{
             [weakbig tf_hide];
         }];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            UIView *small = [self getViewName:@"ExcempleSliderSmall"];
+            UIView *small = [self getViewName:@"ExampleSliderSmall"];
             TFPopupParam *paramSmall = [TFPopupParam new];
             [small tf_showSlide:self.view direction:PopupDirectionRight popupParam:paramSmall];
             
             x_weak(small);
-            [((ExcempleSliderSmall *)small) observerClick:^{
+            [((ExampleSliderSmall *)small) observerClick:^{
                 [weaksmall tf_hide];
             }];
         });
     }
     
     if ([title(ins) isEqualToString:@"exc7"]) {
-        UIView *big = [self getViewName:@"ExcempleSliderLogin"];
+        UIView *big = [self getViewName:@"ExampleSliderLogin"];
         TFPopupParam *param = [TFPopupParam new];
         param.popupSize = kSize;
         param.disuseShowPopupAlphaAnimation = YES;
@@ -576,7 +576,7 @@
         [big tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
         
         x_weak(big);
-        [((ExcempleSliderLogin *)big) observerClick:^{
+        [((ExampleSliderLogin *)big) observerClick:^{
             [weakbig tf_hide];
         }];
     }
@@ -655,7 +655,7 @@ static inline NSString *title(UIButton *bt){
     return cp;
 }
 
--(NSArray *)excempleButtons{
+-(NSArray *)ExampleButtons{
     NSArray *cp = @[self.excButton0,self.excButton1,self.excButton2,
                     self.excButton3,self.excButton4,self.excButton5,
                     self.excButton6,self.excButton7,self.excButton8,
