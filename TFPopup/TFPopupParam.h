@@ -39,6 +39,13 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 
 @interface TFPopupParam : NSObject
 
+/* 【全局属性】参数载体
+ object0,object1,object1,用于弹框时需要携带的参数;
+ */
+@property(nonatomic,strong)id object0;
+@property(nonatomic,strong)id object1;
+@property(nonatomic,strong)id object2;
+
 /* 【全局属性】时间
  duration,动画时间default=0.3
  showAnimationDelay,动画延迟执行时间:调用弹出后延迟此时间后执行弹出动画
