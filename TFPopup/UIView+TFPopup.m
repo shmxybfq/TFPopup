@@ -59,7 +59,7 @@
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
-    [self tf_showCustem:inView popupParam:self.popupParam];
+    [self tf_showcustom:inView popupParam:self.popupParam];
 }
 
 #pragma mark -- 【入口函数】缩放
@@ -86,7 +86,7 @@
     self.popupParam.hideFromValue = @(1.0);
     self.popupParam.hideToValue = @(0.0);
     
-    [self tf_showCustem:inView popupParam:self.popupParam];
+    [self tf_showcustom:inView popupParam:self.popupParam];
 }
 
 #pragma mark -- 【入口函数】滑动
@@ -121,7 +121,7 @@
         }
     }
     
-    [self tf_showCustem:inView popupParam:self.popupParam];
+    [self tf_showcustom:inView popupParam:self.popupParam];
 }
 
 
@@ -155,7 +155,7 @@
         self.popupParam.maskShowFromPath = foldPath(targetFrame, direction, NO);
         self.popupParam.maskShowToPath = foldPath(targetFrame, direction, YES);
         
-        [self tf_showCustem:inView popupParam:self.popupParam];
+        [self tf_showcustom:inView popupParam:self.popupParam];
     }
 }
 
@@ -200,7 +200,7 @@
     self.popupParam.maskShowFromPath = bubblePath(self.popupParam.popupSize, bubbleDirection, NO);
     self.popupParam.maskShowToPath = bubblePath(self.popupParam.popupSize, bubbleDirection, YES);
     
-    [self tf_showCustem:inView popupParam:self.popupParam];
+    [self tf_showcustom:inView popupParam:self.popupParam];
 }
 
 
@@ -220,7 +220,7 @@
     self.popupParam.popOriginFrame = CGRectEqualToRect(CGRectZero, from)?self.popupParam.popOriginFrame:from;
     self.popupParam.popTargetFrame = CGRectEqualToRect(CGRectZero, to)?self.popupParam.popOriginFrame:to;
     
-    [self tf_showCustem:inView popupParam:self.popupParam];
+    [self tf_showcustom:inView popupParam:self.popupParam];
 }
 
 
@@ -233,11 +233,11 @@
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     [self setDefault];
     
-    [self tf_showCustem:inView popupParam:self.popupParam];
+    [self tf_showcustom:inView popupParam:self.popupParam];
 }
 
 #pragma mark -- 【入口函数】自定义
--(void)tf_showCustem:(UIView *)inView
+-(void)tf_showcustom:(UIView *)inView
           popupParam:(TFPopupParam *)popupParam{
     
     NSAssert(inView != nil, @"(TFPopup)you must setting a inView.");

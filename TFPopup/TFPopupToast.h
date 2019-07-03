@@ -26,13 +26,13 @@ typedef void(^TFPopupToastBlock)(TFPopupToast *toast);
  * offset,弹框偏移,offset.x正为右移,offset.y正为下移
  * duration,自动消失时间，值为0时默认被设置为最低为1.5s,根据字数计算消失时间最大5s
  * animationType,动画方式，渐隐和缩放，默认渐隐
- * custemBlock,可在此回调内设置样式 */
+ * customBlock,可在此回调内设置样式 */
 +(void)tf_show:(UIView *)inView
            msg:(NSString *)msg
         offset:(CGPoint)offset
 dissmissDuration:(NSTimeInterval)duration
  animationType:(TFAnimationType)animationType
-   custemBlock:(TFPopupToastBlock)custemBlock;
+   customBlock:(TFPopupToastBlock)customBlock;
 
 @end
 

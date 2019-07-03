@@ -232,7 +232,7 @@
  * inView 容器视图
  * popupParam 弹出的更多参数设置，具体参照TFPopupParam类
  * delegate 动画代理，默认为弹框本类，具体请参照TFPopupDelegate类 */
--(void)tf_showCustem:(UIView *)inView
+-(void)tf_showcustom:(UIView *)inView
           popupParam:(TFPopupParam *)popupParam;
 
 @end

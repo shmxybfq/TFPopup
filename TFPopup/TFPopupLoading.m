@@ -27,14 +27,14 @@
                         msg:msg
                      offset:CGPointZero
               animationType:animationType
-                custemBlock:nil];
+                customBlock:nil];
 }
 
 +(void)tf_show:(UIView *)inView
            msg:(NSString *)msg
         offset:(CGPoint)offset
  animationType:(TFAnimationType)animationType
-   custemBlock:(TFPopupLoadingBlock)custemBlock{
+   customBlock:(TFPopupLoadingBlock)customBlock{
     
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     if (msg == nil) {NSLog(@"****** %@ %@ ******",[self class],@"msg 不能为空！");return;}
@@ -48,7 +48,7 @@
     TFPopupLoading *loading = [[TFPopupLoading alloc]initWithFrame:CGRectZero];
     loading.inViewFrame = inView.bounds;
     loading.msg = msg;
-    loading.cusBlock = custemBlock;
+    loading.cusBlock = customBlock;
     
     switch (animationType) {
         case TFAnimationTypeFade:

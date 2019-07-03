@@ -81,7 +81,7 @@
 @property(nonatomic,strong)TFPopupParam *param;
 @property(nonatomic,  copy)NSString *animationType;
 @property(nonatomic,assign)PopupDirection popupDirection;
-@property(nonatomic,assign)NSInteger custemIndex;
+@property(nonatomic,assign)NSInteger customIndex;
 @property (weak, nonatomic) IBOutlet UIView *redPoint;
 
 //默认alpha = 0

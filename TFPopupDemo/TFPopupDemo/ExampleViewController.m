@@ -142,7 +142,7 @@
     }else if([title(ins) isEqualToString:@"自定义5"]){
         
         NSString *msg = @"我是基于TFPopup制作的弹框我是基于TFPopup制作的弹框我是基于TFPopup制作的弹框";
-        [TFPopupToast tf_show:self.view msg:msg offset:CGPointMake(0, -100) dissmissDuration:1.5 animationType:TFAnimationTypeScale custemBlock:^(TFPopupToast *toast) {
+        [TFPopupToast tf_show:self.view msg:msg offset:CGPointMake(0, -100) dissmissDuration:1.5 animationType:TFAnimationTypeScale customBlock:^(TFPopupToast *toast) {
             //toast.msgLabel.textColor = [UIColor redColor];
             //toast.backgroundColor = [UIColor purpleColor];
         }];

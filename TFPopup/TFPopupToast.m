@@ -26,7 +26,7 @@
                    offset:CGPointZero
          dissmissDuration:0
             animationType:animationType
-              custemBlock:nil];
+              customBlock:nil];
 }
 
 +(void)tf_show:(UIView *)inView
@@ -34,7 +34,7 @@
         offset:(CGPoint)offset
 dissmissDuration:(NSTimeInterval)duration
  animationType:(TFAnimationType)animationType
-   custemBlock:(TFPopupToastBlock)custemBlock{
+   customBlock:(TFPopupToastBlock)customBlock{
     if (inView == nil) {NSLog(@"****** %@ %@ ******",[self class],@"inView 不能为空！");return;}
     if (msg == nil) {NSLog(@"****** %@ %@ ******",[self class],@"msg 不能为空！");return;}
     
@@ -50,7 +50,7 @@ dissmissDuration:(NSTimeInterval)duration
     TFPopupToast *toast = [[TFPopupToast alloc]initWithFrame:CGRectZero];
     toast.inViewFrame = inView.bounds;
     toast.msg = msg;
-    toast.cusBlock = custemBlock;
+    toast.cusBlock = customBlock;
     
     switch (animationType) {
         case TFAnimationTypeFade:
