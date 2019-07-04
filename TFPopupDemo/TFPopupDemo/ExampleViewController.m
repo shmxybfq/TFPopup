@@ -111,7 +111,7 @@
     self.selectedTitle = title(ins);
     
     TFPopupParam *param = [TFPopupParam new];
-    
+    param.disuseBackgroundTouchHide = NO;
     if ([title(ins) isEqualToString:@"自定义1"]) {
         
         UIView *blank = [self getAlertView];
@@ -142,7 +142,13 @@
     }else if([title(ins) isEqualToString:@"自定义5"]){
         
         NSString *msg = @"我是基于TFPopup制作的弹框我是基于TFPopup制作的弹框我是基于TFPopup制作的弹框";
-        [TFPopupToast tf_show:self.view msg:msg offset:CGPointMake(0, -100) dissmissDuration:1.5 animationType:TFAnimationTypeScale customBlock:^(TFPopupToast *toast) {
+        [TFPopupToast tf_show:self.view
+                          msg:msg
+                       offset:CGPointMake(0, -100)
+             dissmissDuration:1.5
+                animationType:TFAnimationTypeScale
+                  customBlock:^(TFPopupToast *toast) {
+                      
             //toast.msgLabel.textColor = [UIColor redColor];
             //toast.backgroundColor = [UIColor purpleColor];
         }];

@@ -19,6 +19,11 @@
 
 @implementation TFPopupToast
 
+-(void)dealloc{
+#if DEBUG
+    NSLog(@"****** TFPopupToast(已释放) msg:%@ ******",self.msg);
+#endif
+}
 
 +(void)tf_show:(UIView *)inView msg:(NSString *)msg animationType:(TFAnimationType)animationType{
     [TFPopupToast tf_show:inView

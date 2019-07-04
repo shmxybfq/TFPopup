@@ -18,6 +18,12 @@
 @end
 @implementation TFPopupLoading
 
+-(void)dealloc{
+#if DEBUG
+    NSLog(@"****** TFPopupLoading(已释放) msg:%@ ******",self.msg);
+#endif
+}
+
 +(void)tf_show:(UIView *)inView animationType:(TFAnimationType)animationType{
     [TFPopupLoading tf_show:inView msg:@"正在加载..." animationType:animationType];
 }
