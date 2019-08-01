@@ -255,7 +255,6 @@
     self.popupDelegate = self.popupDelegate==nil?self:self.popupDelegate;
     self.popupDataSource = self.popupDataSource==nil?self:self.popupDataSource;
     self.backgroundDelegate = self.backgroundDelegate==nil?self:self.backgroundDelegate;
-    
     [self performSelectorOnMainThread:@selector(tf_reload) withObject:nil waitUntilDone:YES];
     [self performSelectorOnMainThread:@selector(tf_show) withObject:nil waitUntilDone:YES];
 }
@@ -987,7 +986,7 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
 #pragma mark -- 监听代理过程block
 //监听弹框隐藏完毕回调
 -(void)tf_observerDelegateProcess:(TFDelegateProcessBlock)delegateProcessBlock{
-    if (delegateProcessBlock) {
+    if (delegateProcessBlock) {        
         self.extension.delegateProcessBlock = delegateProcessBlock;
     }
 }
