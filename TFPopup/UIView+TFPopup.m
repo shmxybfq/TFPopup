@@ -570,6 +570,16 @@
     self.frame = self.extension.showFromFrame;
     [self.inView addSubview:self];
     
+    
+    if (!self.popupParam.dragEnable) {
+        if (!self.extension.dragGes) {
+            self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
+            [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
+            [self addGestureRecognizer:self.extension.dragGes];
+        }
+    }
+    
+    
     TFPopupPrivateExtension *ext = getRunCache(self);
     ext.currentIsShowState = YES;
     ext.showAnimationCount = 0;
@@ -644,6 +654,39 @@
     }
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidShow:)]) {
         [self.popupDelegate tf_popupViewDidShow:self];
+    }
+}
+
+-(void)dragGesAction:(UIPanGestureRecognizer *)dragGes{
+    
+    if (dragGes.state == UIGestureRecognizerStateBegan) {
+        
+        CGPoint point0 = [dragGes locationInView:self];
+        CGPoint point1 = [dragGes locationInView:self.superview];
+        
+        self.extension.dragBeginPoint = point0;
+        
+        NSLog(@">>>>>>>>>>>>>>>>UIGestureRecognizerStateBegan:%@  %@",NSStringFromCGPoint(point0),NSStringFromCGPoint(point1));
+        
+    }else if (dragGes.state == UIGestureRecognizerStateChanged) {
+        
+        CGPoint point0 = [dragGes locationInView:self];
+        CGPoint point1 = [dragGes locationInView:self.superview];
+        
+        self.frame = CGRectMake(0, point1.y - self.extension.dragBeginPoint.y, self.frame.size.width, self.frame.size.height);
+        NSLog(@">>>>>>>>>>>>>>>>UIGestureRecognizerStateChanged:%@  %@",NSStringFromCGPoint(point0),NSStringFromCGPoint(point1));
+        
+    }else if (dragGes.state == UIGestureRecognizerStateEnded) {
+        //        CGPoint point0 = [panGes locationInView:self];
+        //        CGPoint point1 = [panGes locationInView:self.superview];
+        //
+        //        CGFloat hei = point1.y / ([UIScreen mainScreen].bounds.size.height - 200);
+        //        CGFloat dur = hei * 0.3;
+        //        [UIView animateKeyframesWithDuration:dur delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+        //            self.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        //        } completion:nil];
+        
+        //        NSLog(@">>>>>>>>>>>>>>>>UIGestureRecognizerStateEnded:%@  %@",NSStringFromCGPoint(point0),NSStringFromCGPoint(point1));
     }
 }
 
