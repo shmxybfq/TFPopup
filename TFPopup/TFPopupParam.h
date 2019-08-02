@@ -23,6 +23,16 @@ typedef NS_ENUM(NSInteger,PopupDirection) {
 };
 
 
+typedef NS_ENUM(NSInteger,DragDirection) {
+    DragDirectionNone = 0,
+    DragDirectionAll = 1,
+    DragDirectionTop = 2 << 0,
+    DragDirectionLeft = 2 << 1,
+    DragDirectionBottom = 2 << 2,
+    DragDirectionRight = 2 << 3,
+};
+
+
 typedef NS_ENUM(NSInteger,PopupStyle) {
     PopupStyleNone = 0,
     PopupStyleDefaultAlpha = 1 << 0,
@@ -40,7 +50,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @interface TFPopupParam : NSObject
 
 /* 【全局属性】参数载体
- object0,object1,object1,用于弹框时需要携带的参数;
+ object0,object1,object1,用于弹框时需要传递的参数;
  */
 @property(nonatomic,strong)id object0;
 @property(nonatomic,strong)id object1;
@@ -74,6 +84,10 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL disuseBackgroundTouchHide;
 @property(nonatomic,assign)BOOL disuseShowBackgroundAlphaAnimation;
 @property(nonatomic,assign)BOOL disuseHideBackgroundAlphaAnimation;
+
+
+@property(nonatomic,assign)BOOL dragEnable;
+@property(nonatomic,assign)DragDirection dragDirection;
 
 
 /* 【全局属性】弹框渐隐动画
