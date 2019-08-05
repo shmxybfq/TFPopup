@@ -126,6 +126,10 @@
  */
 - (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup;//默认YES
 
+
+- (void)tf_popupViewDidDragOnOtherView:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes;
+
+
 @end
 
 

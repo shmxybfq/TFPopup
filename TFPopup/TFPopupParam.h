@@ -88,6 +88,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 
 @property(nonatomic,assign)BOOL dragEnable;
 @property(nonatomic,assign)DragDirection dragDirection;
+@property(nonatomic,assign)NSUInteger dragAutoDissmissDistance;
 
 
 /* 【全局属性】弹框渐隐动画

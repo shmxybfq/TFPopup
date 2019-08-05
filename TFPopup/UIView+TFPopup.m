@@ -571,6 +571,7 @@
     [self.inView addSubview:self];
     
     
+    //检测拖拽是否设置
     if (!self.popupParam.dragEnable) {
         if (!self.extension.dragGes) {
             self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
@@ -657,37 +658,103 @@
     }
 }
 
+
 -(void)dragGesAction:(UIPanGestureRecognizer *)dragGes{
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDragOnOtherView:dragGes:)]) {
+        [self.popupDelegate tf_popupViewDidDragOnOtherView:self dragGes:dragGes];
+    }
+}
+
+
+- (void)tf_popupViewDidDragOnOtherView:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
+//    if (self.extension.direction == DragDirectionNone) {
+//        return;
+//    }
+    
+    CGPoint selfPoint = [dragGes locationInView:self];
+    CGPoint superPoint = [dragGes locationInView:self.superview];
+   
     
     if (dragGes.state == UIGestureRecognizerStateBegan) {
         
-        CGPoint point0 = [dragGes locationInView:self];
-        CGPoint point1 = [dragGes locationInView:self.superview];
-        
-        self.extension.dragBeginPoint = point0;
-        
-        NSLog(@">>>>>>>>>>>>>>>>UIGestureRecognizerStateBegan:%@  %@",NSStringFromCGPoint(point0),NSStringFromCGPoint(point1));
+        self.extension.dragBeginSelfPoint = selfPoint;
+        self.extension.dragBeginSuperPoint = superPoint;
+        self.popupParam.dragDirection = DragDirectionLeft | DragDirectionBottom | DragDirectionRight | DragDirectionTop;
+        self.popupParam.dragAutoDissmissDistance = self.popupParam.dragAutoDissmissDistance==0?80:self.popupParam.dragAutoDissmissDistance;
         
     }else if (dragGes.state == UIGestureRecognizerStateChanged) {
         
-        CGPoint point0 = [dragGes locationInView:self];
-        CGPoint point1 = [dragGes locationInView:self.superview];
         
-        self.frame = CGRectMake(0, point1.y - self.extension.dragBeginPoint.y, self.frame.size.width, self.frame.size.height);
-        NSLog(@">>>>>>>>>>>>>>>>UIGestureRecognizerStateChanged:%@  %@",NSStringFromCGPoint(point0),NSStringFromCGPoint(point1));
+        CGRect showToFrame = self.extension.showToFrame;
+        CGFloat y = showToFrame.origin.y;
+        CGFloat x = showToFrame.origin.x;
         
-    }else if (dragGes.state == UIGestureRecognizerStateEnded) {
-        //        CGPoint point0 = [panGes locationInView:self];
-        //        CGPoint point1 = [panGes locationInView:self.superview];
-        //
-        //        CGFloat hei = point1.y / ([UIScreen mainScreen].bounds.size.height - 200);
-        //        CGFloat dur = hei * 0.3;
-        //        [UIView animateKeyframesWithDuration:dur delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
-        //            self.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-        //        } completion:nil];
+        //只上不下
+        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
+            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
+            y = superPoint.y - self.extension.dragBeginSelfPoint.y;
+            if (y >= showToFrame.origin.y) {
+                y = showToFrame.origin.y;
+            }
+            //只下不上
+        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom) &&
+                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop)) {
+            y =  superPoint.y - self.extension.dragBeginSelfPoint.y;
+            if (y <= showToFrame.origin.y) {
+                y = showToFrame.origin.y;
+            }
+            //上和下
+        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
+                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
+            y =  superPoint.y - self.extension.dragBeginSelfPoint.y;
+        }
+     
+        //只左不右
+        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
+            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
+            x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+            if (x >= showToFrame.origin.x) {
+                x = showToFrame.origin.x;
+            }
+            //只右不左
+        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight) &&
+                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft)) {
+            x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+            if (x <= showToFrame.origin.x) {
+                x = showToFrame.origin.x;
+            }
+            //左和右
+        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
+                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
+            x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+        }
         
-        //        NSLog(@">>>>>>>>>>>>>>>>UIGestureRecognizerStateEnded:%@  %@",NSStringFromCGPoint(point0),NSStringFromCGPoint(point1));
+        
+        self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
+        
+        
+    }else if (dragGes.state == UIGestureRecognizerStateEnded ||
+              dragGes.state == UIGestureRecognizerStateCancelled ||
+              dragGes.state == UIGestureRecognizerStateFailed ||
+              dragGes.state == UIGestureRecognizerStateRecognized) {
+        
+        CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissDistance);
+        CGFloat dragDis = tf_pointDistance(self.extension.dragBeginSuperPoint, superPoint);
+        
+        if (dragDis <= minDragDis) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.frame = self.extension.showToFrame;
+            }];
+        }
     }
+}
+
+
+//两点间距离
+static inline CGFloat tf_pointDistance(CGPoint p0,CGPoint p1){
+    CGFloat a = ABS(p1.x - p0.x);
+    CGFloat b = ABS(p1.y - p0.y);
+    return sqrt((a * a + b * b));
 }
 
 //延时
@@ -1165,7 +1232,12 @@ static inline void deleteRunCache(NSObject *obj){
     
     return ani;
 }
+
 static inline BOOL styleInclude(PopupStyle total,PopupStyle inc){
+    return ((total & inc) == inc);
+}
+
+static inline BOOL dragDirectionInclude(DragDirection total,DragDirection inc){
     return ((total & inc) == inc);
 }
 

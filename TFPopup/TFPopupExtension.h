@@ -69,8 +69,10 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 //监听弹框隐藏完毕回调,需要再显示弹框前调用此方法
 @property(nonatomic,  copy)TFDelegateProcessBlock delegateProcessBlock;
 
-@property(nonatomic, strong)UIPanGestureRecognizer *dragGes;
-@property(nonatomic, assign)CGPoint dragBeginPoint;
+@property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
+@property(nonatomic,assign)CGPoint dragBeginSelfPoint;
+@property(nonatomic,assign)CGPoint dragBeginSuperPoint;
+
 @end
 
 
