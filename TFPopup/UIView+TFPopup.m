@@ -237,19 +237,21 @@
 }
 
 #pragma mark -- 【入口函数】自定义
--(void)tf_showcustom:(UIView *)inView
-          popupParam:(TFPopupParam *)popupParam{
+-(void)tf_showcustom:(UIView *)inView popupParam:(TFPopupParam *)popupParam{
     
+#ifdef DEBUG
     NSAssert(inView != nil, @"(TFPopup)you must setting a inView.");
     NSAssert([inView isKindOfClass:[UIView class]], @"(TFPopup)inView must be a view.");
-    
+#endif
     if (self.tag == 0) {self.tag = kTFPopupDefaultTag;}
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
     
+    //设置时间,弹框大小,弹框区域大小默认值
     [self setDefault];
     
+    //设置动画和遮罩默认值
     [self checkStyle];
     //代理
     self.popupDelegate = self.popupDelegate==nil?self:self.popupDelegate;
@@ -311,15 +313,19 @@
 //刷新
 -(void)tf_reload{
     
+    //将要获取参数
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewWillGetConfiguration:)]) {
         [self.popupDelegate tf_popupViewWillGetConfiguration:self];
     }
     
+    //设置内部参数初始值
     self.extension.inView = nil;
+    
     self.extension.popupArea = CGSizeZero;
     
     [self.extension.defaultBackgroundView removeFromSuperview];
     self.extension.defaultBackgroundView = nil;
+    
     self.extension.backgroundViewCount = 0;
     [self.extension.backgroundViewArray removeAllObjects];
     [self.extension.backgroundViewFrameArray removeAllObjects];
@@ -327,15 +333,13 @@
     self.extension.disuseShowAlphaAnimation = NO;
     self.extension.showFromAlpha = -1;
     self.extension.showToAlpha = -1;
-    
-    self.extension.disuseShowFrameAnimation = NO;
-    self.extension.showFromFrame = CGRectZero;
-    self.extension.showToFrame = CGRectZero;
-    
     self.extension.disuseHideAlphaAnimation = NO;
     self.extension.hideFromAlpha = -1;
     self.extension.hideToAlpha = -1;
     
+    self.extension.disuseShowFrameAnimation = NO;
+    self.extension.showFromFrame = CGRectZero;
+    self.extension.showToFrame = CGRectZero;
     self.extension.disuseHideFrameAnimation = NO;
     self.extension.hideFromFrame = CGRectZero;
     self.extension.hideToFrame = CGRectZero;
@@ -360,6 +364,8 @@
         if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupBackgroundViewCount:)]) {
             self.extension.backgroundViewCount = [self.backgroundDelegate tf_popupBackgroundViewCount:self];
         }
+        
+        //默认背景
         if (self.extension.backgroundViewCount <= 0) {
             self.extension.defaultBackgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
             if (self.popupParam.backgroundColorClear) {
@@ -373,96 +379,117 @@
             self.extension.defaultBackgroundView.alpha = 0;
             
         }else{
-            if (self.extension.backgroundViewCount > 0) {
-                for (NSInteger i = 0; i < self.extension.backgroundViewCount; i++) {
-                    UIView *backgroundView = nil;
-                    CGRect  backgroundViewFrame = CGRectZero;
-                    if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewAtIndex:)]) {
-                        backgroundView = [self.backgroundDelegate tf_popupView:self backgroundViewAtIndex:i];
-                    }
-                    if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewFrameAtIndex:)]) {
-                        backgroundViewFrame = [self.backgroundDelegate tf_popupView:self backgroundViewFrameAtIndex:i];
-                    }
-                    NSAssert(backgroundView != nil, @"backgroundView can't be a nil");
-                    NSAssert([backgroundView isKindOfClass:[UIView class]], @"backgroundView must be a view");
-                    if (backgroundView != nil && [backgroundView isKindOfClass:[UIView class]]) {
-                        [self.extension.backgroundViewArray addObject:backgroundView];
-                        [self.extension.backgroundViewFrameArray addObject:NSStringFromCGRect(backgroundViewFrame)];
-                        backgroundView.frame = backgroundViewFrame;
-                    }
+            //多个背景
+            for (NSInteger i = 0; i < self.extension.backgroundViewCount; i++) {
+                UIView *backgroundView = nil;
+                CGRect  backgroundViewFrame = CGRectZero;
+                if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewAtIndex:)]) {
+                    backgroundView = [self.backgroundDelegate tf_popupView:self backgroundViewAtIndex:i];
+                }
+                if ([self.backgroundDelegate respondsToSelector:@selector(tf_popupView:backgroundViewFrameAtIndex:)]) {
+                    backgroundViewFrame = [self.backgroundDelegate tf_popupView:self backgroundViewFrameAtIndex:i];
+                }
+#ifdef DEBUG
+                NSAssert(backgroundView != nil, @"backgroundView can't be a nil");
+                NSAssert([backgroundView isKindOfClass:[UIView class]], @"backgroundView must be a view");
+#endif
+                if (backgroundView != nil && [backgroundView isKindOfClass:[UIView class]]) {
+                    [self.extension.backgroundViewArray addObject:backgroundView];
+                    [self.extension.backgroundViewFrameArray addObject:NSStringFromCGRect(backgroundViewFrame)];
+                    backgroundView.frame = backgroundViewFrame;
                 }
             }
         }
     }
     
     /* show-alpha */
+    //show-alpha是否动画
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithAlphaForState:)]) {
         BOOL animation = [self.popupDataSource tf_popupView:self animationWithAlphaForState:TFPopupStateShow];
         self.extension.disuseShowAlphaAnimation = !animation;
     }
+    //show-alpha开始初始的alpha
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromAlphaForState:)]) {
         self.extension.showFromAlpha = [self.popupDataSource tf_popupView:self fromAlphaForState:TFPopupStateShow];
         self.alpha = self.extension.showFromAlpha;
     }
+    //show-alpha开始目标的alpha
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toAlphaForState:)]) {
         self.extension.showToAlpha = [self.popupDataSource tf_popupView:self toAlphaForState:TFPopupStateShow];
     }
     
     /* show-frame */
+    //show-frame是否动画
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithFrameForState:)]) {
         BOOL animation = [self.popupDataSource tf_popupView:self animationWithFrameForState:TFPopupStateShow];
         self.extension.disuseShowFrameAnimation = !animation;
     }
+    //show-frame开始时的frame
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromFrameForState:)]) {
         self.extension.showFromFrame = [self.popupDataSource tf_popupView:self fromFrameForState:TFPopupStateShow];
         self.frame = self.extension.showFromFrame;
     }
+    //show-frame结束时的frame
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toFrameForState:)]) {
         self.extension.showToFrame = [self.popupDataSource tf_popupView:self toFrameForState:TFPopupStateShow];
     }
     
     /* hide-alpha */
+    //hide-alpha是否动画
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithAlphaForState:)]) {
         BOOL animation = [self.popupDataSource tf_popupView:self animationWithAlphaForState:TFPopupStateHide];
         self.extension.disuseHideAlphaAnimation = !animation;
     }
+    //hide-alpha开始时的alpha
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromAlphaForState:)]) {
         self.extension.hideFromAlpha = [self.popupDataSource tf_popupView:self fromAlphaForState:TFPopupStateHide];
     }
+    //hide-alpha结束时的alpha
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toAlphaForState:)]) {
         self.extension.hideToAlpha = [self.popupDataSource tf_popupView:self toAlphaForState:TFPopupStateHide];
     }
     
     /* hide-frame */
+    //hide-frame是否动画
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationWithFrameForState:)]) {
         BOOL animation = [self.popupDataSource tf_popupView:self animationWithFrameForState:TFPopupStateHide];
         self.extension.disuseHideFrameAnimation = !animation;
     }
+    //hide-frame开始时的frame
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:fromFrameForState:)]) {
         self.extension.hideFromFrame = [self.popupDataSource tf_popupView:self fromFrameForState:TFPopupStateHide];
     }
+    //hide-frame结束时的frame
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:toFrameForState:)]) {
         self.extension.hideToFrame = [self.popupDataSource tf_popupView:self toFrameForState:TFPopupStateHide];
     }
     
     /* animation-configue */
     /* show */
+    //show动画时间
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationDurationForState:)]) {
         self.extension.showAnimationDuration = [self.popupDataSource tf_popupView:self animationDurationForState:TFPopupStateShow];
     }
+    //show动画延迟
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationDelayForState:)]) {
         self.extension.showAnimationDelay = [self.popupDataSource tf_popupView:self animationDelayForState:TFPopupStateShow];
     }
+    //show动画选项
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationOptionsForState:)]) {
         self.extension.showAnimationOptions = [self.popupDataSource tf_popupView:self animationOptionsForState:TFPopupStateShow];
     }
+    
+    
     /* hide */
+    //hide动画时间
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationDurationForState:)]) {
         self.extension.hideAnimationDuration = [self.popupDataSource tf_popupView:self animationDurationForState:TFPopupStateHide];
     }
+    //hide动画延迟
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationDelayForState:)]) {
         self.extension.hideAnimationDelay = [self.popupDataSource tf_popupView:self animationDelayForState:TFPopupStateHide];
     }
+    //hide动画选项
     if ([self.popupDataSource respondsToSelector:@selector(tf_popupView:animationOptionsForState:)]) {
         self.extension.hideAnimationOptions = [self.popupDataSource tf_popupView:self animationOptionsForState:TFPopupStateHide];
     }
@@ -542,6 +569,17 @@
     self.frame = self.extension.showFromFrame;
     [self.inView addSubview:self];
     
+    
+    //检测拖拽是否设置
+    if (self.popupParam.DragStyle == DragStyleNone) {
+        if (!self.extension.dragGes) {
+            self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
+            [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
+            [self addGestureRecognizer:self.extension.dragGes];
+        }
+    }
+    
+    
     TFPopupPrivateExtension *ext = getRunCache(self);
     ext.currentIsShowState = YES;
     ext.showAnimationCount = 0;
@@ -619,11 +657,125 @@
     }
 }
 
+
+-(void)dragGesAction:(UIPanGestureRecognizer *)dragGes{
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDragOnOtherView:dragGes:)]) {
+        [self.popupDelegate tf_popupViewDidDragOnOtherView:self dragGes:dragGes];
+    }
+}
+
+
+- (void)tf_popupViewDidDragOnOtherView:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
+
+    CGPoint selfPoint = [dragGes locationInView:self];
+    CGPoint superPoint = [dragGes locationInView:self.superview];
+    
+    if (dragGes.state == UIGestureRecognizerStateBegan) {
+        
+        self.extension.dragBeginSelfPoint = selfPoint;
+        self.extension.dragBeginSuperPoint = superPoint;
+        self.popupParam.DragStyle = DragStyleToBottom;
+        self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
+        
+    }else if (dragGes.state == UIGestureRecognizerStateChanged) {
+        
+        CGFloat x = self.extension.showToFrame.origin.x;
+        CGFloat y = self.extension.showToFrame.origin.y;
+        
+        switch (self.popupParam.DragStyle) {
+            case DragStyleToTop:{
+                y = superPoint.y - self.extension.dragBeginSelfPoint.y;
+                
+                NSLog(@">>>>>>>>>>yyy:%@",@(y));
+//                if (y >= self.extension.showToFrame.origin.y) {
+//                    y = self.extension.showToFrame.origin.y;
+//                }
+            }break;
+            case DragStyleToBottom:{
+                y = superPoint.y - self.extension.dragBeginSelfPoint.y;
+                
+                NSLog(@">>>>>>>>>>yyy:%.1f   %.1f",y,self.extension.showToFrame.origin.y);
+                //                if (y >= self.extension.showToFrame.origin.y) {
+                //                    y = self.extension.showToFrame.origin.y;
+                //                }
+            }break;
+            default:break;
+        }
+        
+        //        CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+        
+        
+        
+        ////        CGRect showToFrame = self.extension.showToFrame;
+        ////        CGFloat y = showToFrame.origin.y;
+        ////        CGFloat x = showToFrame.origin.x;
+        //
+        //        //只上不下
+        //        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
+        //            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
+        //            if (y >= showToFrame.origin.y) {
+        //                y = showToFrame.origin.y;
+        //            }
+        //            //只下不上
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom) &&
+        //                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop)) {
+        //            if (y <= showToFrame.origin.y) {
+        ////                y = showToFrame.origin.y;
+        //                y = showToFrame.origin.y - ABS((y - showToFrame.origin.y) * 0.2);
+        //                NSLog(@">>>>>>>>>:%.f  %.f",y,showToFrame.origin.y);
+        //
+        //            }
+        //            //上和下
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
+        //                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
+        //
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
+        //            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
+        //            if (x >= showToFrame.origin.x) {
+        //                x = showToFrame.origin.x;
+        //            }
+        //            //只右不左
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight) &&
+        //                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft)) {
+        //            if (x <= showToFrame.origin.x) {
+        //                x = showToFrame.origin.x;
+        //            }
+        //            //左和右
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
+        //                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
+        //        }
+        //
+        
+        self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
+        
+        
+    }else if (dragGes.state == UIGestureRecognizerStateEnded ||
+              dragGes.state == UIGestureRecognizerStateCancelled ||
+              dragGes.state == UIGestureRecognizerStateFailed ||
+              dragGes.state == UIGestureRecognizerStateRecognized) {
+        
+        CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
+        CGFloat dragDis = tf_pointDistance(self.extension.dragBeginSuperPoint, superPoint);
+        
+        if (dragDis <= minDragDis) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.frame = self.extension.showToFrame;
+            }];
+        }
+    }
+}
+
+
+//两点间距离
+static inline CGFloat tf_pointDistance(CGPoint p0,CGPoint p1){
+    CGFloat a = ABS(p1.x - p0.x);
+    CGFloat b = ABS(p1.y - p0.y);
+    return sqrt((a * a + b * b));
+}
+
 //延时
 static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block){
-    if (!block) {
-        return;
-    }
+    if (!block) {return;}
     if (interval == 0) {
         block();
     }else{
@@ -1094,9 +1246,11 @@ static inline void deleteRunCache(NSObject *obj){
     
     return ani;
 }
+
 static inline BOOL styleInclude(PopupStyle total,PopupStyle inc){
     return ((total & inc) == inc);
 }
+
 
 static inline CGRect normalOriginFrame(TFPopupParam *param){
     CGRect ar = param.popupAreaRect;
