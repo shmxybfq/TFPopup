@@ -572,7 +572,7 @@
     
     
     //检测拖拽是否设置
-    if (!self.popupParam.dragEnable) {
+    if (self.popupParam.DragStyle == DragStyleNone) {
         if (!self.extension.dragGes) {
             self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
             [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
@@ -667,68 +667,85 @@
 
 
 - (void)tf_popupViewDidDragOnOtherView:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
-//    if (self.extension.direction == DragDirectionNone) {
-//        return;
-//    }
-    
+
     CGPoint selfPoint = [dragGes locationInView:self];
     CGPoint superPoint = [dragGes locationInView:self.superview];
-   
     
     if (dragGes.state == UIGestureRecognizerStateBegan) {
         
         self.extension.dragBeginSelfPoint = selfPoint;
         self.extension.dragBeginSuperPoint = superPoint;
-        self.popupParam.dragDirection = DragDirectionLeft | DragDirectionBottom | DragDirectionRight | DragDirectionTop;
-        self.popupParam.dragAutoDissmissDistance = self.popupParam.dragAutoDissmissDistance==0?80:self.popupParam.dragAutoDissmissDistance;
+        self.popupParam.DragStyle = DragStyleToBottom;
+        self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
         
     }else if (dragGes.state == UIGestureRecognizerStateChanged) {
         
+        CGFloat x = self.extension.showToFrame.origin.x;
+        CGFloat y = self.extension.showToFrame.origin.y;
         
-        CGRect showToFrame = self.extension.showToFrame;
-        CGFloat y = showToFrame.origin.y;
-        CGFloat x = showToFrame.origin.x;
-        
-        //只上不下
-        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
-            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
-            y = superPoint.y - self.extension.dragBeginSelfPoint.y;
-            if (y >= showToFrame.origin.y) {
-                y = showToFrame.origin.y;
-            }
-            //只下不上
-        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom) &&
-                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop)) {
-            y =  superPoint.y - self.extension.dragBeginSelfPoint.y;
-            if (y <= showToFrame.origin.y) {
-                y = showToFrame.origin.y;
-            }
-            //上和下
-        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
-                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
-            y =  superPoint.y - self.extension.dragBeginSelfPoint.y;
-        }
-     
-        //只左不右
-        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
-            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
-            x = superPoint.x - self.extension.dragBeginSelfPoint.x;
-            if (x >= showToFrame.origin.x) {
-                x = showToFrame.origin.x;
-            }
-            //只右不左
-        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight) &&
-                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft)) {
-            x = superPoint.x - self.extension.dragBeginSelfPoint.x;
-            if (x <= showToFrame.origin.x) {
-                x = showToFrame.origin.x;
-            }
-            //左和右
-        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
-                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
-            x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+        switch (self.popupParam.DragStyle) {
+            case DragStyleToTop:{
+                y = superPoint.y - self.extension.dragBeginSelfPoint.y;
+                
+                NSLog(@">>>>>>>>>>yyy:%@",@(y));
+//                if (y >= self.extension.showToFrame.origin.y) {
+//                    y = self.extension.showToFrame.origin.y;
+//                }
+            }break;
+            case DragStyleToBottom:{
+                y = superPoint.y - self.extension.dragBeginSelfPoint.y;
+                
+                NSLog(@">>>>>>>>>>yyy:%.1f   %.1f",y,self.extension.showToFrame.origin.y);
+                //                if (y >= self.extension.showToFrame.origin.y) {
+                //                    y = self.extension.showToFrame.origin.y;
+                //                }
+            }break;
+            default:break;
         }
         
+        //        CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+        
+        
+        
+        ////        CGRect showToFrame = self.extension.showToFrame;
+        ////        CGFloat y = showToFrame.origin.y;
+        ////        CGFloat x = showToFrame.origin.x;
+        //
+        //        //只上不下
+        //        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
+        //            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
+        //            if (y >= showToFrame.origin.y) {
+        //                y = showToFrame.origin.y;
+        //            }
+        //            //只下不上
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom) &&
+        //                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop)) {
+        //            if (y <= showToFrame.origin.y) {
+        ////                y = showToFrame.origin.y;
+        //                y = showToFrame.origin.y - ABS((y - showToFrame.origin.y) * 0.2);
+        //                NSLog(@">>>>>>>>>:%.f  %.f",y,showToFrame.origin.y);
+        //
+        //            }
+        //            //上和下
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
+        //                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
+        //
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
+        //            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
+        //            if (x >= showToFrame.origin.x) {
+        //                x = showToFrame.origin.x;
+        //            }
+        //            //只右不左
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight) &&
+        //                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft)) {
+        //            if (x <= showToFrame.origin.x) {
+        //                x = showToFrame.origin.x;
+        //            }
+        //            //左和右
+        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
+        //                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
+        //        }
+        //
         
         self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
         
@@ -738,7 +755,7 @@
               dragGes.state == UIGestureRecognizerStateFailed ||
               dragGes.state == UIGestureRecognizerStateRecognized) {
         
-        CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissDistance);
+        CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
         CGFloat dragDis = tf_pointDistance(self.extension.dragBeginSuperPoint, superPoint);
         
         if (dragDis <= minDragDis) {
@@ -759,9 +776,7 @@ static inline CGFloat tf_pointDistance(CGPoint p0,CGPoint p1){
 
 //延时
 static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block){
-    if (!block) {
-        return;
-    }
+    if (!block) {return;}
     if (interval == 0) {
         block();
     }else{
@@ -1237,9 +1252,6 @@ static inline BOOL styleInclude(PopupStyle total,PopupStyle inc){
     return ((total & inc) == inc);
 }
 
-static inline BOOL dragDirectionInclude(DragDirection total,DragDirection inc){
-    return ((total & inc) == inc);
-}
 
 static inline CGRect normalOriginFrame(TFPopupParam *param){
     CGRect ar = param.popupAreaRect;
