@@ -87,8 +87,9 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL disuseHideBackgroundAlphaAnimation;
 
 
+
 @property(nonatomic,assign)DragStyle DragStyle;
-@property(nonatomic,assign)NSUInteger dragBounces;
+@property(nonatomic,assign)BOOL dragBounces;
 @property(nonatomic,assign)NSUInteger dragAutoDissmissMinDistance;
 
 

@@ -572,11 +572,12 @@
     
     //检测拖拽是否设置
     if (self.popupParam.DragStyle == DragStyleNone) {
-        if (!self.extension.dragGes) {
-            self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
-            [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
-            [self addGestureRecognizer:self.extension.dragGes];
-        }
+       
+    }
+    if (!self.extension.dragGes) {
+        self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
+        [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
+        [self addGestureRecognizer:self.extension.dragGes];
     }
     
     
@@ -666,12 +667,26 @@
 
 
 - (void)tf_popupViewDidDragOnOtherView:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
-
+    
+    x_weakSelf;
+    
     CGPoint selfPoint = [dragGes locationInView:self];
     CGPoint superPoint = [dragGes locationInView:self.superview];
     
+    CGFloat originX = self.extension.showToFrame.origin.x;
+    CGFloat originY = self.extension.showToFrame.origin.y;
+    
+    CGFloat moveX = superPoint.x - self.extension.dragBeginSelfPoint.x;
+    CGFloat moveY = superPoint.y - self.extension.dragBeginSelfPoint.y;
+  
+    CGFloat x = originX;
+    CGFloat y = originY;
+    CGFloat distanceY = moveY - originY;
+    CGFloat distanceX = moveX - originX;
+
     if (dragGes.state == UIGestureRecognizerStateBegan) {
         
+        self.popupParam.dragBounces = YES;
         self.extension.dragBeginSelfPoint = selfPoint;
         self.extension.dragBeginSuperPoint = superPoint;
         self.popupParam.DragStyle = DragStyleToBottom;
@@ -679,75 +694,55 @@
         
     }else if (dragGes.state == UIGestureRecognizerStateChanged) {
         
-        CGFloat x = self.extension.showToFrame.origin.x;
-        CGFloat y = self.extension.showToFrame.origin.y;
-        
         switch (self.popupParam.DragStyle) {
             case DragStyleToTop:{
-                y = superPoint.y - self.extension.dragBeginSelfPoint.y;
-                
-                NSLog(@">>>>>>>>>>yyy:%@",@(y));
-//                if (y >= self.extension.showToFrame.origin.y) {
-//                    y = self.extension.showToFrame.origin.y;
-//                }
+                if (distanceY <= 0) {
+                    y = moveY;
+                }else{
+                    if (self.popupParam.dragBounces) {
+                        y = originY + ABS(distanceY) * 0.15;
+                    }else{
+                        y = originY;
+                    }
+                }
             }break;
             case DragStyleToBottom:{
-                y = superPoint.y - self.extension.dragBeginSelfPoint.y;
-                
-                NSLog(@">>>>>>>>>>yyy:%.1f   %.1f",y,self.extension.showToFrame.origin.y);
-                //                if (y >= self.extension.showToFrame.origin.y) {
-                //                    y = self.extension.showToFrame.origin.y;
-                //                }
+                if (distanceY >= 0) {
+                    y = moveY;
+                }else{
+                    if (self.popupParam.dragBounces) {
+                        y = originY - ABS(distanceY) * 0.15;
+                    }else{
+                        y = originY;
+                    }
+                }
+            }break;
+            case DragStyleToLeft:{
+                if (distanceX <= 0) {
+                    x = moveX;
+                }else{
+                    if (self.popupParam.dragBounces) {
+                        x = originX + ABS(distanceX) * 0.15;
+                    }else{
+                        x = originX;
+                    }
+                }
+            }break;
+            case DragStyleToRight:{
+                if (distanceX >= 0) {
+                    x = moveX;
+                }else{
+                    if (self.popupParam.dragBounces) {
+                        x = originX - ABS(distanceX) * 0.15;
+                    }else{
+                        x = originX;
+                    }
+                }
             }break;
             default:break;
         }
         
-        //        CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
-        
-        
-        
-        ////        CGRect showToFrame = self.extension.showToFrame;
-        ////        CGFloat y = showToFrame.origin.y;
-        ////        CGFloat x = showToFrame.origin.x;
-        //
-        //        //只上不下
-        //        if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
-        //            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
-        //            if (y >= showToFrame.origin.y) {
-        //                y = showToFrame.origin.y;
-        //            }
-        //            //只下不上
-        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom) &&
-        //                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop)) {
-        //            if (y <= showToFrame.origin.y) {
-        ////                y = showToFrame.origin.y;
-        //                y = showToFrame.origin.y - ABS((y - showToFrame.origin.y) * 0.2);
-        //                NSLog(@">>>>>>>>>:%.f  %.f",y,showToFrame.origin.y);
-        //
-        //            }
-        //            //上和下
-        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionTop) &&
-        //                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionBottom)) {
-        //
-        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
-        //            !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
-        //            if (x >= showToFrame.origin.x) {
-        //                x = showToFrame.origin.x;
-        //            }
-        //            //只右不左
-        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight) &&
-        //                  !dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft)) {
-        //            if (x <= showToFrame.origin.x) {
-        //                x = showToFrame.origin.x;
-        //            }
-        //            //左和右
-        //        }else if (dragDirectionInclude(self.popupParam.dragDirection, DragDirectionLeft) &&
-        //                  dragDirectionInclude(self.popupParam.dragDirection, DragDirectionRight)) {
-        //        }
-        //
-        
         self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
-        
         
     }else if (dragGes.state == UIGestureRecognizerStateEnded ||
               dragGes.state == UIGestureRecognizerStateCancelled ||
@@ -755,16 +750,29 @@
               dragGes.state == UIGestureRecognizerStateRecognized) {
         
         CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
-        CGFloat dragDis = tf_pointDistance(self.extension.dragBeginSuperPoint, superPoint);
+        CGFloat dragDis = tf_pointDistance(self.extension.showToFrame.origin, self.frame.origin);
         
-        if (dragDis <= minDragDis) {
-            [UIView animateWithDuration:0.3 animations:^{
-                self.frame = self.extension.showToFrame;
-            }];
+        BOOL directionRight = NO;
+        if (self.popupParam.DragStyle == DragStyleToTop && distanceY < 0) directionRight = YES;
+        else if (self.popupParam.DragStyle == DragStyleToBottom && distanceY > 0) directionRight = YES;
+        else if (self.popupParam.DragStyle == DragStyleToLeft && distanceX < 0) directionRight = YES;
+        else if (self.popupParam.DragStyle == DragStyleToRight && distanceX > 0) directionRight = YES;
+        if (directionRight && dragDis >= minDragDis) {
+            [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+                weakself.frame = weakself.extension.hideToFrame;
+            } completion:nil];
+        }else{
+            [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+                weakself.frame = weakself.extension.showToFrame;
+            } completion:nil];
         }
     }
 }
 
+
+-(void)moveToFrame:(CGRect)frame{
+    
+}
 
 //两点间距离
 static inline CGFloat tf_pointDistance(CGPoint p0,CGPoint p1){
@@ -1138,7 +1146,7 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
 #pragma mark -- 监听代理过程block
 //监听弹框隐藏完毕回调
 -(void)tf_observerDelegateProcess:(TFDelegateProcessBlock)delegateProcessBlock{
-    if (delegateProcessBlock) {        
+    if (delegateProcessBlock) {
         self.extension.delegateProcessBlock = delegateProcessBlock;
     }
 }
