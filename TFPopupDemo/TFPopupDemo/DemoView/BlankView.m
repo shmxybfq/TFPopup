@@ -9,7 +9,9 @@
 #import "BlankView.h"
 
 @implementation BlankView
-
+-(void)dealloc{
+    NSLog(@"已释放====:%@",NSStringFromClass([self class]));
+}
 -(NSArray *)buttons{
     return @[self.button0,
              self.button1,

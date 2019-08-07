@@ -10,7 +10,7 @@
 
 @implementation ExampleSliderLogin
 -(void)dealloc{
-    NSLog(@"dealloc === %@",[self class]);
+    NSLog(@"已释放====:%@",NSStringFromClass([self class]));
 }
 -(void)observerClick:(ExampleSliderLoginBlock)block{
     self.block = block;

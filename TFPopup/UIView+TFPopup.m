@@ -687,9 +687,9 @@
     if (dragGes.state == UIGestureRecognizerStateBegan) {
         
         self.popupParam.dragBounces = YES;
+        self.popupParam.DragStyle = DragStyleToBottom;
         self.extension.dragBeginSelfPoint = selfPoint;
         self.extension.dragBeginSuperPoint = superPoint;
-        self.popupParam.DragStyle = DragStyleToBottom;
         self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
         
     }else if (dragGes.state == UIGestureRecognizerStateChanged) {
@@ -742,7 +742,18 @@
             default:break;
         }
         
-        self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
+        CGRect nowFrame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
+        self.frame = nowFrame;
+        if (self.superview && self.extension.defaultBackgroundView) {
+            CGPoint cp = CGPointMake(x + nowFrame.size.width * 0.5, y + nowFrame.size.height * 0.5);
+            CGPoint sp = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
+                                     self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
+            CGFloat dis = tf_pointDistance(cp, sp);
+            CGFloat min = MIN(self.frame.size.width, self.frame.size.height) * 0.5;
+            self.extension.defaultBackgroundView.alpha = (1 - dis / min)<=0?0:(1 - dis / min);
+            //NSLog(@">>>>>>>>>:%@   :%@  :%.1f   :%.1f   :%.1f",NSStringFromCGPoint(cp),NSStringFromCGPoint(sp),dis,min,self.extension.defaultBackgroundView.alpha);
+        }
+        
         
     }else if (dragGes.state == UIGestureRecognizerStateEnded ||
               dragGes.state == UIGestureRecognizerStateCancelled ||
@@ -760,10 +771,18 @@
         if (directionRight && dragDis >= minDragDis) {
             [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                 weakself.frame = weakself.extension.hideToFrame;
-            } completion:nil];
+                if (weakself.extension.defaultBackgroundView) {
+                    weakself.extension.defaultBackgroundView.alpha = 0;
+                }
+            } completion:^(BOOL finished) {
+                [weakself tf_hide];
+            }];
         }else{
             [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                 weakself.frame = weakself.extension.showToFrame;
+                if (weakself.extension.defaultBackgroundView) {
+                    weakself.extension.defaultBackgroundView.alpha = 1;
+                }
             } completion:nil];
         }
     }
@@ -1194,6 +1213,11 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
     self.extension.backgroundViewCount = 0;
     [self.extension.backgroundViewArray removeAllObjects];
     [self.extension.backgroundViewFrameArray removeAllObjects];
+    __weak __typeof(self)weakSelf = self;;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"打印对象。。。。。%ld :%@",CFGetRetainCount((__bridge  CFTypeRef)(weakSelf)),weakSelf);
+        
+    });
 }
 
 

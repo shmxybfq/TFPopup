@@ -10,7 +10,7 @@
 
 @implementation ExampleSign
 -(void)dealloc{
-    NSLog(@"dealloc === %@",[self class]);
+    NSLog(@"已释放====:%@",NSStringFromClass([self class]));
 }
 -(void)observerClick:(ExampleSignBlock)block{
     self.block = block;

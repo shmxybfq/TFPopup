@@ -10,7 +10,7 @@
 
 @implementation ExampleUnfold
 -(void)dealloc{
-    NSLog(@"dealloc === %@",[self class]);
+    NSLog(@"已释放====:%@",NSStringFromClass([self class]));
 }
 -(void)observerClick:(ExampleUnfoldBlock)block{
     self.block = block;

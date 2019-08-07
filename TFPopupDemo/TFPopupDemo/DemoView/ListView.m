@@ -10,6 +10,10 @@
 
 @implementation ListView
 
+-(void)dealloc{
+    NSLog(@"已释放====:%@",NSStringFromClass([self class]));
+}
+
 -(void)awakeFromNib{
     [super awakeFromNib];
     
