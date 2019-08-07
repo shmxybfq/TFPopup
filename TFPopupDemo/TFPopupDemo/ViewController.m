@@ -268,8 +268,9 @@
 
 -(UIView *)getAlertView{
     AlertNormal *alert = (AlertNormal *)[self getViewName:@"AlertNormal"];
+    __weak __typeof(alert) weakView = alert;
     [alert observerSure:^{
-        [alert tf_hide];
+        [weakView tf_hide];
     }];
     return alert;
 }
@@ -277,8 +278,9 @@
 
 -(UIView *)getListView{
     ListView *list = (ListView *)[self getViewName:@"ListView"];
+    __weak __typeof(list) weakView = list;
     [list observerSelected:^(NSString *data) {
-        [list tf_hide];
+        [weakView tf_hide];
     }];
     return list;
 }

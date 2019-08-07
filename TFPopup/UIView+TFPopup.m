@@ -1213,11 +1213,6 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
     self.extension.backgroundViewCount = 0;
     [self.extension.backgroundViewArray removeAllObjects];
     [self.extension.backgroundViewFrameArray removeAllObjects];
-    __weak __typeof(self)weakSelf = self;;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"打印对象。。。。。%ld :%@",CFGetRetainCount((__bridge  CFTypeRef)(weakSelf)),weakSelf);
-        
-    });
 }
 
 
