@@ -694,7 +694,7 @@
             case PopupDirectionRight:{self.popupParam.DragStyle = DragStyleToRight;}break;
             default:break;
         }
-        self.popupParam.DragStyle = DragStyleToLeftAndRight;
+//        self.popupParam.DragStyle = DragStyleToLeftAndRight;
         
         self.extension.dragBeginSelfPoint = selfPoint;
         self.extension.dragBeginSuperPoint = superPoint;
@@ -745,8 +745,8 @@
         //根据位置计算背景透明度
         if (self.superview && self.extension.defaultBackgroundView) {
             
-            CGPoint cp = CGPointMake(nowFrame.origin.x + nowFrame.size.width * 0.5,
-                                     nowFrame.origin.y + nowFrame.size.height * 0.5);
+            CGPoint cp = CGPointMake(self.frame.origin.x + self.frame.size.width * 0.5,
+                                     self.frame.origin.y + self.frame.size.height * 0.5);
             CGPoint sp = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
                                      self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
             
@@ -775,16 +775,15 @@
               dragGes.state == UIGestureRecognizerStateFailed ||
               dragGes.state == UIGestureRecognizerStateRecognized) {
         
+        CGPoint nowCenter = CGPointMake(self.frame.origin.x + self.frame.size.width * 0.5,
+                                 self.frame.origin.y + self.frame.size.height * 0.5);
+        CGPoint showedCenter = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
+                                 self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
+        
+        CGFloat distance = tf_pointDistance(nowCenter, showedCenter);
         CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
-        CGFloat dragDis = tf_pointDistance(self.extension.showToFrame.origin, self.frame.origin);
-        CGFloat distance = x - originX;
 
-        BOOL directionRight = NO;
-        if (self.popupParam.DragStyle == DragStyleToTop && distance < 0) directionRight = YES;
-        else if (self.popupParam.DragStyle == DragStyleToBottom && distance > 0) directionRight = YES;
-        else if (self.popupParam.DragStyle == DragStyleToLeft && distance < 0) directionRight = YES;
-        else if (self.popupParam.DragStyle == DragStyleToRight && distance > 0) directionRight = YES;
-        if (directionRight && dragDis >= minDragDis) {
+        if (distance >= minDragDis) {
             [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                 weakself.frame = weakself.extension.hideToFrame;
                 if (weakself.extension.defaultBackgroundView) {
