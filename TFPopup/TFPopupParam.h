@@ -156,6 +156,9 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,strong)UIBezierPath *maskHideFromPath;
 @property(nonatomic,strong)UIBezierPath *maskHideToPath;
 
+@property(nonatomic,assign)PopupDirection foldDirection;
+
+@property(nonatomic,assign)PopupDirection slideDirection;
 
 @end
 

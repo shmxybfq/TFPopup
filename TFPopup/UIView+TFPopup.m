@@ -101,6 +101,7 @@
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
+    self.popupParam.slideDirection = direction;
     [self setDefault];
     
     if (direction == PopupDirectionTop ||
@@ -136,6 +137,7 @@
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
+    self.popupParam.foldDirection = direction;
     [self setDefault];
     
     self.popupParam.popOriginFrame = targetFrame;
@@ -660,34 +662,40 @@
 
 
 -(void)dragGesAction:(UIPanGestureRecognizer *)dragGes{
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDragOnOtherView:dragGes:)]) {
-        [self.popupDelegate tf_popupViewDidDragOnOtherView:self dragGes:dragGes];
+    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
+        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
     }
 }
 
 
-- (void)tf_popupViewDidDragOnOtherView:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
+/* 拖动非scrollview的view时调用
+ * popup:弹框本类
+ * dragGes:拖拽手势
+ */
+- (void)tf_popupViewDidDrag:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
     
     x_weakSelf;
-    
-    CGPoint selfPoint = [dragGes locationInView:self];
-    CGPoint superPoint = [dragGes locationInView:self.superview];
-    
     CGFloat originX = self.extension.showToFrame.origin.x;
     CGFloat originY = self.extension.showToFrame.origin.y;
     
-    CGFloat moveX = superPoint.x - self.extension.dragBeginSelfPoint.x;
-    CGFloat moveY = superPoint.y - self.extension.dragBeginSelfPoint.y;
-  
-    CGFloat x = originX;
-    CGFloat y = originY;
-    CGFloat distanceY = moveY - originY;
-    CGFloat distanceX = moveX - originX;
+    CGPoint selfPoint = [dragGes locationInView:self];
+    CGPoint superPoint = [dragGes locationInView:self.superview];
+
+    CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
+    CGFloat y = superPoint.y - self.extension.dragBeginSelfPoint.y;
 
     if (dragGes.state == UIGestureRecognizerStateBegan) {
         
         self.popupParam.dragBounces = YES;
-        self.popupParam.DragStyle = DragStyleToBottom;
+        switch (self.popupParam.slideDirection) {
+            case PopupDirectionTop:{self.popupParam.DragStyle = DragStyleToTop;}break;
+            case PopupDirectionLeft:{self.popupParam.DragStyle = DragStyleToLeft;}break;
+            case PopupDirectionBottom:{self.popupParam.DragStyle = DragStyleToBottom;}break;
+            case PopupDirectionRight:{self.popupParam.DragStyle = DragStyleToRight;}break;
+            default:break;
+        }
+        self.popupParam.DragStyle = DragStyleToLeftAndRight;
+        
         self.extension.dragBeginSelfPoint = selfPoint;
         self.extension.dragBeginSuperPoint = superPoint;
         self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
@@ -696,65 +704,72 @@
         
         switch (self.popupParam.DragStyle) {
             case DragStyleToTop:{
-                if (distanceY <= 0) {
-                    y = moveY;
-                }else{
-                    if (self.popupParam.dragBounces) {
-                        y = originY + ABS(distanceY) * 0.15;
-                    }else{
-                        y = originY;
-                    }
+                x = originX;
+                CGFloat distanceY = y - originY;
+                if (distanceY > 0 && self.popupParam.dragBounces) {
+                    y = originY + ABS(distanceY) * 0.15;
                 }
             }break;
             case DragStyleToBottom:{
-                if (distanceY >= 0) {
-                    y = moveY;
-                }else{
-                    if (self.popupParam.dragBounces) {
-                        y = originY - ABS(distanceY) * 0.15;
-                    }else{
-                        y = originY;
-                    }
+                x = originX;
+                CGFloat distanceY = y - originY;
+                if (distanceY < 0 && self.popupParam.dragBounces) {
+                    y = originY - ABS(distanceY) * 0.15;
                 }
             }break;
+            case DragStyleToTopAndBottom:{
+                x = originX;
+            }break;
             case DragStyleToLeft:{
-                if (distanceX <= 0) {
-                    x = moveX;
-                }else{
-                    if (self.popupParam.dragBounces) {
-                        x = originX + ABS(distanceX) * 0.15;
-                    }else{
-                        x = originX;
-                    }
+                y = originY;
+                CGFloat distanceX = x - originX;
+                if (distanceX > 0 && self.popupParam.dragBounces) {
+                    x = originX + ABS(distanceX) * 0.15;
                 }
             }break;
             case DragStyleToRight:{
-                if (distanceX >= 0) {
-                    x = moveX;
-                }else{
-                    if (self.popupParam.dragBounces) {
-                        x = originX - ABS(distanceX) * 0.15;
-                    }else{
-                        x = originX;
-                    }
+                y = originY;
+                CGFloat distanceX = x - originX;
+                if (distanceX < 0 && self.popupParam.dragBounces) {
+                    x = originX - ABS(distanceX) * 0.15;
                 }
+            }break;
+            case DragStyleToLeftAndRight:{
+                y = originY;
             }break;
             default:break;
         }
-        
+        //更新拖动
         CGRect nowFrame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
         self.frame = nowFrame;
+        //根据位置计算背景透明度
         if (self.superview && self.extension.defaultBackgroundView) {
-            CGPoint cp = CGPointMake(x + nowFrame.size.width * 0.5, y + nowFrame.size.height * 0.5);
+            
+            CGPoint cp = CGPointMake(nowFrame.origin.x + nowFrame.size.width * 0.5,
+                                     nowFrame.origin.y + nowFrame.size.height * 0.5);
             CGPoint sp = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
                                      self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
+            
             CGFloat dis = tf_pointDistance(cp, sp);
-            CGFloat min = MIN(self.frame.size.width, self.frame.size.height) * 0.5;
-            self.extension.defaultBackgroundView.alpha = (1 - dis / min)<=0?0:(1 - dis / min);
-            //NSLog(@">>>>>>>>>:%@   :%@  :%.1f   :%.1f   :%.1f",NSStringFromCGPoint(cp),NSStringFromCGPoint(sp),dis,min,self.extension.defaultBackgroundView.alpha);
+            CGFloat min = MIN(self.frame.size.width, self.frame.size.height);
+            switch (self.popupParam.DragStyle) {
+                case DragStyleToTop:
+                case DragStyleToBottom:{
+                    min = self.frame.size.height;
+                }break;
+                case DragStyleToLeft:
+                case DragStyleToRight:{
+                    min = self.frame.size.width;
+                }break;
+                case DragStyleToTopAndBottom:
+                case DragStyleToLeftAndRight:{
+                    min = MIN(self.extension.popupArea.width, self.extension.popupArea.height);
+                }break;
+                default:break;
+            }
+            CGFloat disPercent = dis / min;
+            self.extension.defaultBackgroundView.alpha = (1 - disPercent)<=0?0:(1 - disPercent);
         }
-        
-        
     }else if (dragGes.state == UIGestureRecognizerStateEnded ||
               dragGes.state == UIGestureRecognizerStateCancelled ||
               dragGes.state == UIGestureRecognizerStateFailed ||
@@ -762,12 +777,13 @@
         
         CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
         CGFloat dragDis = tf_pointDistance(self.extension.showToFrame.origin, self.frame.origin);
-        
+        CGFloat distance = x - originX;
+
         BOOL directionRight = NO;
-        if (self.popupParam.DragStyle == DragStyleToTop && distanceY < 0) directionRight = YES;
-        else if (self.popupParam.DragStyle == DragStyleToBottom && distanceY > 0) directionRight = YES;
-        else if (self.popupParam.DragStyle == DragStyleToLeft && distanceX < 0) directionRight = YES;
-        else if (self.popupParam.DragStyle == DragStyleToRight && distanceX > 0) directionRight = YES;
+        if (self.popupParam.DragStyle == DragStyleToTop && distance < 0) directionRight = YES;
+        else if (self.popupParam.DragStyle == DragStyleToBottom && distance > 0) directionRight = YES;
+        else if (self.popupParam.DragStyle == DragStyleToLeft && distance < 0) directionRight = YES;
+        else if (self.popupParam.DragStyle == DragStyleToRight && distance > 0) directionRight = YES;
         if (directionRight && dragDis >= minDragDis) {
             [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                 weakself.frame = weakself.extension.hideToFrame;
@@ -786,11 +802,6 @@
             } completion:nil];
         }
     }
-}
-
-
--(void)moveToFrame:(CGRect)frame{
-    
 }
 
 //两点间距离
