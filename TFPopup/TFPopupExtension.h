@@ -73,6 +73,9 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 @property(nonatomic,assign)CGPoint dragBeginSelfPoint;
 @property(nonatomic,assign)CGPoint dragBeginSuperPoint;
 
+@property(nonatomic,assign)PopupDirection foldDirection;
+
+@property(nonatomic,assign)PopupDirection slideDirection;
 
 @end
 

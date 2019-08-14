@@ -87,9 +87,9 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL disuseHideBackgroundAlphaAnimation;
 
 
-
-@property(nonatomic,assign)DragStyle DragStyle;
+@property(nonatomic,assign)BOOL dragEnable;
 @property(nonatomic,assign)BOOL dragBounces;
+@property(nonatomic,assign)DragStyle dragStyle;
 @property(nonatomic,assign)NSUInteger dragAutoDissmissMinDistance;
 
 
@@ -155,10 +155,6 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,strong)UIBezierPath *maskShowToPath;
 @property(nonatomic,strong)UIBezierPath *maskHideFromPath;
 @property(nonatomic,strong)UIBezierPath *maskHideToPath;
-
-@property(nonatomic,assign)PopupDirection foldDirection;
-
-@property(nonatomic,assign)PopupDirection slideDirection;
 
 @end
 

@@ -24,6 +24,8 @@
 #define kHideBaseAnimationKey @"kHideBaseAnimationKey"
 #define kHideMaskAnimationKey @"kHideMaskAnimationKey"
 
+#define kDefaultAnimationDuration 0.3
+
 @interface TFPopupPrivateExtension : NSObject
 @property(nonatomic,assign)BOOL currentIsShowState;
 @property(nonatomic,assign)NSInteger showAnimationCount;
@@ -101,7 +103,7 @@
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
-    self.popupParam.slideDirection = direction;
+    self.extension.slideDirection = direction;
     [self setDefault];
     
     if (direction == PopupDirectionTop ||
@@ -137,7 +139,7 @@
     self.inView = inView;
     self.popupParam = popupParam;
     if (self.popupParam == nil)self.popupParam = [[TFPopupParam alloc]init];
-    self.popupParam.foldDirection = direction;
+    self.extension.foldDirection = direction;
     [self setDefault];
     
     self.popupParam.popOriginFrame = targetFrame;
@@ -267,7 +269,7 @@
 -(void)setDefault{
     
     //时间
-    if (self.popupParam.duration == 0) self.popupParam.duration = 0.3;
+    if (self.popupParam.duration == 0) self.popupParam.duration = kDefaultAnimationDuration;
     
     //弹框尺寸
     if (CGSizeEqualToSize(self.popupParam.popupSize, CGSizeZero))
@@ -346,10 +348,10 @@
     self.extension.hideFromFrame = CGRectZero;
     self.extension.hideToFrame = CGRectZero;
     
-    self.extension.showAnimationDuration = 0.3;
+    self.extension.showAnimationDuration = kDefaultAnimationDuration;
     self.extension.showAnimationDelay = 0.0;
     self.extension.showAnimationOptions = UIViewAnimationOptionCurveEaseOut;
-    self.extension.hideAnimationDuration = 0.3;
+    self.extension.hideAnimationDuration = kDefaultAnimationDuration;
     self.extension.hideAnimationDelay = 0.0;
     self.extension.hideAnimationOptions = UIViewAnimationOptionCurveEaseOut;
     
@@ -572,14 +574,14 @@
     [self.inView addSubview:self];
     
     
-    //检测拖拽是否设置
-    if (self.popupParam.DragStyle == DragStyleNone) {
-       
-    }
-    if (!self.extension.dragGes) {
-        self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
-        [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
-        [self addGestureRecognizer:self.extension.dragGes];
+    //检测拖拽是否可用
+    #warning 修改默认不能拖拽
+    if (!self.popupParam.dragEnable) {
+        if (!self.extension.dragGes) {
+            self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
+            [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
+            [self addGestureRecognizer:self.extension.dragGes];
+        }
     }
     
     
@@ -661,6 +663,11 @@
 }
 
 
+/*
+ * 拖动非scrollview的view时调用
+ * popup:弹框本类
+ * dragGes:拖拽手势
+ */
 -(void)dragGesAction:(UIPanGestureRecognizer *)dragGes{
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
         [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
@@ -668,41 +675,53 @@
 }
 
 
-/* 拖动非scrollview的view时调用
+/* 拖拽协议方法,本类实现
  * popup:弹框本类
  * dragGes:拖拽手势
  */
 - (void)tf_popupViewDidDrag:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
     
+    if (self.extension.slideDirection == PopupDirectionTop ||
+        self.extension.slideDirection == PopupDirectionLeft ||
+        self.extension.slideDirection == PopupDirectionBottom ||
+        self.extension.slideDirection == PopupDirectionRight) {
+        
+        [self tf_popupViewDidDragSlide:popup dragGes:dragGes];
+    }
+}
+
+/* 滑动弹出后的拖拽
+ * popup:弹框本类
+ * dragGes:拖拽手势
+ */
+- (void)tf_popupViewDidDragSlide:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
     x_weakSelf;
     CGFloat originX = self.extension.showToFrame.origin.x;
     CGFloat originY = self.extension.showToFrame.origin.y;
     
     CGPoint selfPoint = [dragGes locationInView:self];
     CGPoint superPoint = [dragGes locationInView:self.superview];
-
+    
     CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
     CGFloat y = superPoint.y - self.extension.dragBeginSelfPoint.y;
-
+    
     if (dragGes.state == UIGestureRecognizerStateBegan) {
-        
+#warning 删除默认的dragBounces为yes
         self.popupParam.dragBounces = YES;
-        switch (self.popupParam.slideDirection) {
-            case PopupDirectionTop:{self.popupParam.DragStyle = DragStyleToTop;}break;
-            case PopupDirectionLeft:{self.popupParam.DragStyle = DragStyleToLeft;}break;
-            case PopupDirectionBottom:{self.popupParam.DragStyle = DragStyleToBottom;}break;
-            case PopupDirectionRight:{self.popupParam.DragStyle = DragStyleToRight;}break;
+        switch (self.extension.slideDirection) {
+            case PopupDirectionTop:{self.popupParam.dragStyle = DragStyleToTop;}break;
+            case PopupDirectionLeft:{self.popupParam.dragStyle = DragStyleToLeft;}break;
+            case PopupDirectionBottom:{self.popupParam.dragStyle = DragStyleToBottom;}break;
+            case PopupDirectionRight:{self.popupParam.dragStyle = DragStyleToRight;}break;
             default:break;
         }
-//        self.popupParam.DragStyle = DragStyleToLeftAndRight;
-        
         self.extension.dragBeginSelfPoint = selfPoint;
         self.extension.dragBeginSuperPoint = superPoint;
         self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
         
     }else if (dragGes.state == UIGestureRecognizerStateChanged) {
         
-        switch (self.popupParam.DragStyle) {
+        switch (self.popupParam.dragStyle) {
             case DragStyleToTop:{
                 x = originX;
                 CGFloat distanceY = y - originY;
@@ -745,46 +764,29 @@
         //根据位置计算背景透明度
         if (self.superview && self.extension.defaultBackgroundView) {
             
-            CGPoint cp = CGPointMake(self.frame.origin.x + self.frame.size.width * 0.5,
-                                     self.frame.origin.y + self.frame.size.height * 0.5);
-            CGPoint sp = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
-                                     self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
+            CGFloat distance = [self distanceOfShowToFrameAndNow];
+            CGFloat min = [self radiusOfMaxDragArea];
             
-            CGFloat dis = tf_pointDistance(cp, sp);
-            CGFloat min = MIN(self.frame.size.width, self.frame.size.height);
-            switch (self.popupParam.DragStyle) {
-                case DragStyleToTop:
-                case DragStyleToBottom:{
-                    min = self.frame.size.height;
-                }break;
-                case DragStyleToLeft:
-                case DragStyleToRight:{
-                    min = self.frame.size.width;
-                }break;
-                case DragStyleToTopAndBottom:
-                case DragStyleToLeftAndRight:{
-                    min = MIN(self.extension.popupArea.width, self.extension.popupArea.height);
-                }break;
-                default:break;
-            }
-            CGFloat disPercent = dis / min;
-            self.extension.defaultBackgroundView.alpha = (1 - disPercent)<=0?0:(1 - disPercent);
+            CGFloat surplusPer = 1 - distance / min;
+            surplusPer = surplusPer > 0?surplusPer:0;
+            NSLog(@">>>>>>>>>>>>>>>===:%.1f   %.1f   %.1f",surplusPer,distance,min);
+            self.extension.defaultBackgroundView.alpha = surplusPer;
         }
     }else if (dragGes.state == UIGestureRecognizerStateEnded ||
               dragGes.state == UIGestureRecognizerStateCancelled ||
               dragGes.state == UIGestureRecognizerStateFailed ||
               dragGes.state == UIGestureRecognizerStateRecognized) {
         
-        CGPoint nowCenter = CGPointMake(self.frame.origin.x + self.frame.size.width * 0.5,
-                                 self.frame.origin.y + self.frame.size.height * 0.5);
-        CGPoint showedCenter = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
-                                 self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
+        CGFloat distance = [self distanceOfShowToFrameAndNow];
+        CGFloat min = [self radiusOfMaxDragArea];
+        CGFloat surplusPer = 1 - distance / min;
+        surplusPer = surplusPer > 0?surplusPer:0;
         
-        CGFloat distance = tf_pointDistance(nowCenter, showedCenter);
         CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
-
+        
         if (distance >= minDragDis) {
-            [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+            CGFloat duration = kDefaultAnimationDuration * surplusPer;
+            [UIView animateKeyframesWithDuration:duration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                 weakself.frame = weakself.extension.hideToFrame;
                 if (weakself.extension.defaultBackgroundView) {
                     weakself.extension.defaultBackgroundView.alpha = 0;
@@ -793,7 +795,7 @@
                 [weakself tf_hide];
             }];
         }else{
-            [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+            [UIView animateKeyframesWithDuration:kDefaultAnimationDuration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                 weakself.frame = weakself.extension.showToFrame;
                 if (weakself.extension.defaultBackgroundView) {
                     weakself.extension.defaultBackgroundView.alpha = 1;
@@ -801,6 +803,38 @@
             } completion:nil];
         }
     }
+}
+
+//拖动-根据拖拽方向得出拖动最大半径,以用于计算拖动于屏幕的百分比
+-(CGFloat)radiusOfMaxDragArea{
+    CGFloat min = MIN(self.frame.size.width, self.frame.size.height);
+    switch (self.popupParam.dragStyle) {
+        case DragStyleToTop:
+        case DragStyleToBottom:{
+            min = self.frame.size.height;
+        }break;
+        case DragStyleToLeft:
+        case DragStyleToRight:{
+            min = self.frame.size.width;
+        }break;
+        case DragStyleToTopAndBottom:
+        case DragStyleToLeftAndRight:{
+            min = MIN(self.extension.popupArea.width, self.extension.popupArea.height);
+        }break;
+        default:break;
+    }
+    return min;
+}
+
+//拖动-计算当前拖动位置和展示位置的中点距离
+-(CGFloat)distanceOfShowToFrameAndNow{
+    CGPoint nowCenter = CGPointMake(self.frame.origin.x + self.frame.size.width * 0.5,
+                                    self.frame.origin.y + self.frame.size.height * 0.5);
+    CGPoint showedCenter = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
+                                       self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
+    
+    CGFloat distance = tf_pointDistance(nowCenter, showedCenter);
+    return distance;
 }
 
 //两点间距离
@@ -1032,7 +1066,7 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
     if (self.popupParam.duration > 0) {
         return self.popupParam.duration;
     }
-    return 0.3;
+    return kDefaultAnimationDuration;
 }
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state{
     if (state == TFPopupStateShow) {
