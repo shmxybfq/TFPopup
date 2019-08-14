@@ -706,8 +706,6 @@
     CGFloat y = superPoint.y - self.extension.dragBeginSelfPoint.y;
     
     if (dragGes.state == UIGestureRecognizerStateBegan) {
-#warning 删除默认的dragBounces为yes
-        self.popupParam.dragBounces = YES;
         switch (self.extension.slideDirection) {
             case PopupDirectionTop:{self.popupParam.dragStyle = DragStyleToTop;}break;
             case PopupDirectionLeft:{self.popupParam.dragStyle = DragStyleToLeft;}break;
@@ -725,36 +723,46 @@
             case DragStyleToTop:{
                 x = originX;
                 CGFloat distanceY = y - originY;
-                if (distanceY > 0 && self.popupParam.dragBounces) {
-                    y = originY + ABS(distanceY) * 0.15;
+                if (distanceY > 0) {
+                    if (self.popupParam.dragBounces) {
+                        y = originY + ABS(distanceY) * 0.15;
+                    }else{
+                        y = originY;
+                    }
                 }
             }break;
             case DragStyleToBottom:{
                 x = originX;
                 CGFloat distanceY = y - originY;
-                if (distanceY < 0 && self.popupParam.dragBounces) {
-                    y = originY - ABS(distanceY) * 0.15;
+                if (distanceY < 0) {
+                    if (self.popupParam.dragBounces) {
+                        y = originY - ABS(distanceY) * 0.15;
+                    }else{
+                        y = originY;
+                    }
                 }
-            }break;
-            case DragStyleToTopAndBottom:{
-                x = originX;
             }break;
             case DragStyleToLeft:{
                 y = originY;
                 CGFloat distanceX = x - originX;
-                if (distanceX > 0 && self.popupParam.dragBounces) {
-                    x = originX + ABS(distanceX) * 0.15;
+                if (distanceX > 0) {
+                    if (self.popupParam.dragBounces) {
+                        x = originX + ABS(distanceX) * 0.15;
+                    }else{
+                        x = originX;
+                    }
                 }
             }break;
             case DragStyleToRight:{
                 y = originY;
                 CGFloat distanceX = x - originX;
-                if (distanceX < 0 && self.popupParam.dragBounces) {
-                    x = originX - ABS(distanceX) * 0.15;
+                if (distanceX < 0) {
+                    if (self.popupParam.dragBounces) {
+                        x = originX - ABS(distanceX) * 0.15;
+                    }else{
+                        x = originX;
+                    }
                 }
-            }break;
-            case DragStyleToLeftAndRight:{
-                y = originY;
             }break;
             default:break;
         }
@@ -816,10 +824,6 @@
         case DragStyleToLeft:
         case DragStyleToRight:{
             min = self.frame.size.width;
-        }break;
-        case DragStyleToTopAndBottom:
-        case DragStyleToLeftAndRight:{
-            min = MIN(self.extension.popupArea.width, self.extension.popupArea.height);
         }break;
         default:break;
     }

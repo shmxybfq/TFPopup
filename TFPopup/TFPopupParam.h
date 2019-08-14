@@ -29,8 +29,6 @@ typedef NS_ENUM(NSInteger,DragStyle) {
     DragStyleToLeft,
     DragStyleToRight,
     DragStyleToBottom,
-    DragStyleToTopAndBottom,
-    DragStyleToLeftAndRight,
 };
 
 
