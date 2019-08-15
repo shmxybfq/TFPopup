@@ -372,7 +372,9 @@
         //默认背景
         if (self.extension.backgroundViewCount <= 0) {
             self.extension.defaultBackgroundView = [UIButton buttonWithType:UIButtonTypeCustom];
-            if (self.popupParam.backgroundColorClear) {
+            if (self.popupParam.backgroundColor) {
+                self.extension.defaultBackgroundView.backgroundColor = self.popupParam.backgroundColor;
+            }else if(self.popupParam.backgroundColorClear){
                 self.extension.defaultBackgroundView.backgroundColor = [UIColor clearColor];
             }else{
                 self.extension.defaultBackgroundView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.3];

@@ -71,14 +71,14 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 
 /* 【全局属性】背景
  disuseBackground,不使用背景,default=NO,如果设为YES则自定义代理的方法也会被禁止
- defaultBackgroundView,不自定义背景时的默认背景view,default=0.3alpha的黑色视图,如果自定义背景此值为nil
+ backgroundColor,默认背景的背景颜色,default=0.3alpha的黑色
  backgroundColorClear,默认背景的背景色设为透明
  disuseBackgroundTouchHide,禁止点击背景消失弹框
  disuseShowBackgroundAlphaAnimation,不使用显示时的渐隐动画default=NO
  disuseShowBackgroundAlphaAnimation,不使用消失时的渐隐动画default=NO
  */
 @property(nonatomic,assign)BOOL disuseBackground;
-@property(nonatomic,assign)BOOL defaultBackgroundView;
+@property(nonatomic,strong)UIColor *backgroundColor;
 @property(nonatomic,assign)BOOL backgroundColorClear;
 @property(nonatomic,assign)BOOL disuseBackgroundTouchHide;
 @property(nonatomic,assign)BOOL disuseShowBackgroundAlphaAnimation;
