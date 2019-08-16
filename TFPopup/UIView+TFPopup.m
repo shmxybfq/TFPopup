@@ -8,16 +8,7 @@
 
 #import "UIView+TFPopup.h"
 #import <objc/runtime.h>
-
-#ifndef x_weakSelf
-#define x_weakSelf __weak typeof(self) weakself = self
-#endif
-
-#ifdef DEBUG
-#define PopupLog(fmt, ...) NSLog((@"\nfunc:%s,line:%d\n" fmt @"\n"), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-#else
-#define PopupLog(...)
-#endif
+#import "TFPopupConst.h"
 
 #define kShowBaseAnimationKey @"kShowBaseAnimationKey"
 #define kShowMaskAnimationKey @"kShowMaskAnimationKey"
@@ -581,7 +572,7 @@
     if (!self.popupParam.dragEnable) {
         if (!self.extension.dragGes) {
             self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
-            [self.extension.dragGes addTarget:self action:@selector(dragGesAction:)];
+            [self.extension.dragGes addTarget:self action:@selector(dragGestureRecognizer:)];
             [self addGestureRecognizer:self.extension.dragGes];
         }
     }
@@ -670,12 +661,11 @@
  * popup:弹框本类
  * dragGes:拖拽手势
  */
--(void)dragGesAction:(UIPanGestureRecognizer *)dragGes{
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
-        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
-    }
+-(void)dragGestureRecognizer:(UIPanGestureRecognizer *)dragGes{
+//    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
+//        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+//    }
 }
-
 
 /* 拖拽协议方法,本类实现
  * popup:弹框本类
@@ -683,14 +673,52 @@
  */
 - (void)tf_popupViewDidDrag:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
     
+    self.extension.dragDissmissFrame = self.extension.showToFrame;
+    
     if (self.extension.slideDirection == PopupDirectionTop ||
         self.extension.slideDirection == PopupDirectionLeft ||
         self.extension.slideDirection == PopupDirectionBottom ||
         self.extension.slideDirection == PopupDirectionRight) {
         
-        [self tf_popupViewDidDragSlide:popup dragGes:dragGes];
+        self.extension.dragDissmissFrame = self.extension.hideToFrame;
+        
+//        for (UIScrollView *scroll in self.subviews) {
+//            if ([scroll isKindOfClass:[UIScrollView class]]) {
+//                if (scroll.contentOffset.y > 0) {
+//
+//                }else{
+//                    [self tf_popupViewDidDragSlide:popup dragGes:dragGes];
+//                }
+//                NSLog(@">>>>>===:%@",@(scroll.contentOffset.y));
+//                //                scroll.scrollEnabled = NO;
+//            }
+//        }
+    }else if(self.popupParam.dragStyle == DragStyleToTop){
+        CGRect st = self.extension.showToFrame;
+        self.extension.dragDissmissFrame = CGRectMake(st.origin.x, -st.size.height, st.size.width, st.size.height);
+
+    }else if(self.popupParam.dragStyle == DragStyleToBottom){
+        CGRect st = self.extension.showToFrame;
+        self.extension.dragDissmissFrame = CGRectMake(st.origin.x, self.extension.popupArea.height, st.size.width, st.size.height);
+        
+    }else if(self.popupParam.dragStyle == DragStyleToLeft){
+        CGRect st = self.extension.showToFrame;
+        self.extension.dragDissmissFrame = CGRectMake(-st.size.width, st.origin.y, st.size.width, st.size.height);
+        
+    }else if(self.popupParam.dragStyle == DragStyleToRight){
+        CGRect st = self.extension.showToFrame;
+        self.extension.dragDissmissFrame = CGRectMake(self.extension.popupArea.width, st.origin.y, st.size.width, st.size.height);
+        
     }
+    
 }
+
+//规则
+//先识别方向再作操作相当于一个方向了
+//对冲方向不存在弹性和阻止
+//向下拖动时，向下滚动到头需要拖动，向上滚动则不需要
+//识别的反方向为阻止方向，如果反方向也是可拖动方向则不阻止
+
 
 /* 滑动弹出后的拖拽
  * popup:弹框本类
@@ -741,6 +769,19 @@
                         y = originY - ABS(distanceY) * 0.15;
                     }else{
                         y = originY;
+                    }
+                    for (UIScrollView *scroll in self.subviews) {
+                        if ([scroll isKindOfClass:[UIScrollView class]]) {
+                            NSLog(@">>>>>===:%@",@(scroll.contentOffset.y));
+                            scroll.scrollEnabled = YES;
+                        }
+                    }
+                }else{
+                    for (UIScrollView *scroll in self.subviews) {
+                        if ([scroll isKindOfClass:[UIScrollView class]]) {
+                            NSLog(@">>>>>===:%@",@(scroll.contentOffset.y));
+                            scroll.scrollEnabled = NO;
+                        }
                     }
                 }
             }break;
@@ -813,6 +854,26 @@
             } completion:nil];
         }
     }
+}
+
+
+-(void)xx{
+    //    NSLog(@">>>>>>>>vvvvvvvvvv:%@  :%@",dragGes.view,self.subviews);
+    
+//    for (UIScrollView *scroll in self.subviews) {
+//        if ([scroll isKindOfClass:[UIScrollView class]]) {
+//            NSLog(@">>>>>===:%@",@(scroll.contentOffset.y));
+//            if (scroll.contentOffset.y < 0) {
+//                scroll.scrollEnabled = NO;
+//                [self tf_popupViewDidDragSlide:popup dragGes:dragGes];
+//            }else{
+//                [self tf_popupViewDidDragSlide:popup dragGes:dragGes];
+//
+//                return;
+//            }
+//        }
+//    }
+    
 }
 
 //拖动-根据拖拽方向得出拖动最大半径,以用于计算拖动于屏幕的百分比
@@ -1535,25 +1596,6 @@ static inline CGRect slideTargetFrame(TFPopupParam *param,PopupDirection directi
 }
 
 #pragma mark -- 属性绑定
-
-#ifndef tf_synthesize_category_property
-#define tf_synthesize_category_property(getter,settter,objc_AssociationPolicy,TYPE)\
-- (TYPE)getter{return objc_getAssociatedObject(self, @selector(getter));}\
-- (void)settter:(TYPE)obj{objc_setAssociatedObject(self, @selector(getter), obj, objc_AssociationPolicy);}
-#endif
-
-#ifndef tf_synthesize_category_property_retain
-#define tf_synthesize_category_property_retain(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_RETAIN_NONATOMIC,id)
-#endif
-
-#ifndef tf_synthesize_category_property_copy
-#define tf_synthesize_category_property_copy(getter,settter)   tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_COPY,id)
-#endif
-
-#ifndef tf_synthesize_category_property_assign
-#define tf_synthesize_category_property_assign(getter,settter) tf_synthesize_category_property(getter,settter,OBJC_ASSOCIATION_ASSIGN,id)
-#endif
-
 tf_synthesize_category_property_retain(inView, setInView);
 tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
 tf_synthesize_category_property_assign(popupDataSource, setPopupDataSource);

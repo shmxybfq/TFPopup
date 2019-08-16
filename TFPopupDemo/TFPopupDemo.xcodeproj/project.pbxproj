@@ -24,6 +24,9 @@
 		203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 203DD49221EC865F004ACC42 /* UIView+TFPopup.m */; };
 		20EC88BE222CFC3F006C4302 /* TFPopupExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EC88BD222CFC3F006C4302 /* TFPopupExtension.m */; };
 		902C94FF228972B0002A60EA /* TFPopupLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 902C94FE228972AF002A60EA /* TFPopupLoading.m */; };
+		90615A132304FCD4002AEAB0 /* UIScrollView+TFPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 90615A122304FCD4002AEAB0 /* UIScrollView+TFPopup.m */; };
+		90615A162304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 90615A152304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m */; };
+		90615A19230508BE002AEAB0 /* CusTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90615A18230508BE002AEAB0 /* CusTableView.m */; };
 		90CC2B9A22C4C7B500103439 /* ExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CC2B7B22C4C7B400103439 /* ExampleViewController.m */; };
 		90CC2B9B22C4C7B500103439 /* ExampleSliderLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B7D22C4C7B400103439 /* ExampleSliderLogin.xib */; };
 		90CC2B9C22C4C7B500103439 /* ExampleBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B7E22C4C7B400103439 /* ExampleBubble.xib */; };
@@ -81,6 +84,12 @@
 		902C94F9228970F1002A60EA /* TFPopupConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFPopupConst.h; sourceTree = "<group>"; };
 		902C94FD228972AF002A60EA /* TFPopupLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFPopupLoading.h; sourceTree = "<group>"; };
 		902C94FE228972AF002A60EA /* TFPopupLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFPopupLoading.m; sourceTree = "<group>"; };
+		90615A112304FCD4002AEAB0 /* UIScrollView+TFPopup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TFPopup.h"; sourceTree = "<group>"; };
+		90615A122304FCD4002AEAB0 /* UIScrollView+TFPopup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TFPopup.m"; sourceTree = "<group>"; };
+		90615A142304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TFPopupMethodExchange.h"; sourceTree = "<group>"; };
+		90615A152304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TFPopupMethodExchange.m"; sourceTree = "<group>"; };
+		90615A17230508BE002AEAB0 /* CusTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CusTableView.h; sourceTree = "<group>"; };
+		90615A18230508BE002AEAB0 /* CusTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CusTableView.m; sourceTree = "<group>"; };
 		90CC2B7B22C4C7B400103439 /* ExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleViewController.m; sourceTree = "<group>"; };
 		90CC2B7D22C4C7B400103439 /* ExampleSliderLogin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleSliderLogin.xib; sourceTree = "<group>"; };
 		90CC2B7E22C4C7B400103439 /* ExampleBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleBubble.xib; sourceTree = "<group>"; };
@@ -179,6 +188,10 @@
 				203DD49221EC865F004ACC42 /* UIView+TFPopup.m */,
 				20EC88BC222CFC3F006C4302 /* TFPopupExtension.h */,
 				20EC88BD222CFC3F006C4302 /* TFPopupExtension.m */,
+				90615A112304FCD4002AEAB0 /* UIScrollView+TFPopup.h */,
+				90615A122304FCD4002AEAB0 /* UIScrollView+TFPopup.m */,
+				90615A142304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.h */,
+				90615A152304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m */,
 				2024EEB921F18A0D00DEC84A /* TFPopupParam.h */,
 				2024EEBA21F18A0D00DEC84A /* TFPopupParam.m */,
 			);
@@ -198,6 +211,8 @@
 				2024EEEC21F8929C00DEC84A /* ListView.h */,
 				2024EEED21F8929C00DEC84A /* ListView.m */,
 				2024EEEF21F892A700DEC84A /* ListView.xib */,
+				90615A17230508BE002AEAB0 /* CusTableView.h */,
+				90615A18230508BE002AEAB0 /* CusTableView.m */,
 			);
 			path = DemoView;
 			sourceTree = "<group>";
@@ -389,7 +404,9 @@
 				20EC88BE222CFC3F006C4302 /* TFPopupExtension.m in Sources */,
 				90CC2BA522C4C7B500103439 /* ExampleSign.m in Sources */,
 				203DD49321EC865F004ACC42 /* UIView+TFPopup.m in Sources */,
+				90615A132304FCD4002AEAB0 /* UIScrollView+TFPopup.m in Sources */,
 				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
+				90615A162304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m in Sources */,
 				90CC2B9A22C4C7B500103439 /* ExampleViewController.m in Sources */,
 				90CC2BA622C4C7B500103439 /* ExampleSliderBig.m in Sources */,
 				90CC2B9E22C4C7B500103439 /* ExampleSliderLogin.m in Sources */,
@@ -398,6 +415,7 @@
 				90CC2BA822C4C7B500103439 /* ExampleAlert.m in Sources */,
 				90CC2BA322C4C7B500103439 /* ExampleUnfold.m in Sources */,
 				90CC2B9F22C4C7B500103439 /* ExampleSliderSmall.m in Sources */,
+				90615A19230508BE002AEAB0 /* CusTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
