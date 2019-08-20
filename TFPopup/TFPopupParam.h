@@ -25,10 +25,11 @@ typedef NS_ENUM(NSInteger,PopupDirection) {
 
 typedef NS_ENUM(NSInteger,DragStyle) {
     DragStyleNone = 0,
-    DragStyleToTop,
-    DragStyleToLeft,
-    DragStyleToRight,
-    DragStyleToBottom,
+    DragStyleToTop = 1 << 0,
+    DragStyleToLeft = 1 << 1,
+    DragStyleToRight = 1 << 2,
+    DragStyleToBottom = 1 << 3,
+    DragStyleFree = 1000,
 };
 
 
@@ -85,10 +86,11 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL disuseHideBackgroundAlphaAnimation;
 
 
-@property(nonatomic,assign)BOOL dragEnable;
-@property(nonatomic,assign)BOOL dragBounces;
-@property(nonatomic,assign)DragStyle dragStyle;
-@property(nonatomic,assign)NSUInteger dragAutoDissmissMinDistance;
+@property(nonatomic,assign)BOOL dragEnable;//是否可拖拽
+@property(nonatomic,assign)DragStyle dragStyle;//拖拽类型
+@property(nonatomic,assign)BOOL dragBouncesEnable;//是否可弹性
+@property(nonatomic,assign)BOOL discernScrollEnable;//识别滚动
+@property(nonatomic,assign)NSUInteger dragAutoDissmissMinDistance;//最小拖动消失距离
 
 
 /* 【全局属性】弹框渐隐动画

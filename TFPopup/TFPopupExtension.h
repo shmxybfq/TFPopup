@@ -66,16 +66,27 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 @property(nonatomic,assign)PopupStyle style;//默认动画类型
 @property(nonatomic,assign)PopupDirection direction;//默认动画方向，仅在滑动动画和泡泡动画下有效
 
+//存储折叠和滑动时的方向
+@property(nonatomic,assign)PopupDirection foldDirection;
+@property(nonatomic,assign)PopupDirection slideDirection;
+
 //监听弹框隐藏完毕回调,需要再显示弹框前调用此方法
 @property(nonatomic,  copy)TFDelegateProcessBlock delegateProcessBlock;
 
+//拖动相关属性
 @property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
+
 @property(nonatomic,assign)CGPoint dragBeginSelfPoint;
 @property(nonatomic,assign)CGPoint dragBeginSuperPoint;
+
+@property(nonatomic,assign)BOOL needDiscernDragStyle;
+@property(nonatomic,assign)DragStyle runtimeDragStyle;
+
+@property(nonatomic,assign)CGPoint discernDragStyleBeginSelfPoint;
+@property(nonatomic,assign)CGPoint discernDragStyleBeginSuperPoint;
+
 @property(nonatomic,assign)CGRect  dragDissmissFrame;
 
-@property(nonatomic,assign)PopupDirection foldDirection;
-@property(nonatomic,assign)PopupDirection slideDirection;
 
 @end
 
