@@ -692,6 +692,7 @@
 
 //开始拖动前确定拖动方向和将要消失的目标方向
 - (void)tf_popupViewWillDrag:(UIView *)popup{
+    //如果未手动设置方向,判断是否是滑动动画,滑动动画默认同方向拖动手势
     if (self.popupParam.dragStyle == DragStyleNone) {
         switch (self.extension.slideDirection) {
             case PopupDirectionTop:{
@@ -716,16 +717,19 @@
             }break;
             default:break;
         }
+        //手动设置自由拖动方式
     }else if(self.popupParam.dragStyle == DragStyleFree){
         self.extension.needDiscernDragStyle = NO;
         self.extension.runtimeDragStyle = DragStyleFree;
         self.extension.dragDissmissFrame = self.extension.showToFrame;
     }else{
+        //已手动设置方向
         NSInteger count = 0;
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToTop);
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToLeft);
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToBottom);
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToRight);
+        //设置单方向,需要根据方向计算消失的位置
         if (count == 1) {
             CGRect st = self.extension.showToFrame;
             switch (self.popupParam.dragStyle) {
@@ -752,6 +756,7 @@
                 default:break;
             }
         }else{
+            //设置了多方向,需要自动识别方向
             self.extension.needDiscernDragStyle = YES;
         }
     }
@@ -761,10 +766,10 @@
     
     CGPoint selfPoint = [dragGes locationInView:self];
     CGPoint superPoint = [dragGes locationInView:self.superview];
-//    NSLog(@">>>>>>>>>>>>>>>:%.1f %.1f == %.1f  %.1f",selfPoint.x,selfPoint.y,superPoint.x,superPoint.y);
+
     if (dragGes.state == UIGestureRecognizerStateBegan) {
+        self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
         [self tf_popupViewWillDrag:popup];
-        self.extension.needDiscernDragStyle = YES;
         if (self.extension.needDiscernDragStyle) {
             self.extension.discernDragStyleBeginSelfPoint = selfPoint;
             self.extension.discernDragStyleBeginSuperPoint = superPoint;
@@ -772,11 +777,15 @@
             self.extension.dragBeginSelfPoint = selfPoint;
             self.extension.dragBeginSuperPoint = superPoint;
         }
+        NSLog(@"");
     }else if(dragGes.state == UIGestureRecognizerStateChanged){
         if (self.extension.runtimeDragStyle == DragStyleNone) {
             return;
         }if (self.extension.runtimeDragStyle == DragStyleFree) {
-            
+            if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) == NO &&
+                CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
+                [self tf_popupViewDidDragSlide:self superPoint:superPoint state:dragGes.state];
+            }
         }else{
             if (self.extension.needDiscernDragStyle) {
                 CGFloat x = selfPoint.x - self.extension.discernDragStyleBeginSelfPoint.x;
@@ -804,8 +813,6 @@
                     if (dragStyleInclude(self.popupParam.dragStyle, discernDragStyle) == NO) {
                         self.extension.runtimeDragStyle = DragStyleNone;
                     }else{
-                        self.extension.dragBeginSelfPoint = selfPoint;
-                        self.extension.dragBeginSuperPoint = superPoint;
                         CGRect st = self.extension.showToFrame;
                         switch (discernDragStyle) {
                             case PopupDirectionTop:{
@@ -830,13 +837,21 @@
                             }break;
                             default:break;
                         }
+                        self.extension.dragBeginSelfPoint = selfPoint;
+                        self.extension.dragBeginSuperPoint = superPoint;
                     }
                 }
             }
-            if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) != NO &&
-                CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) != NO) {
-                
+            NSLog(@":%@:%@",NSStringFromCGPoint(self.extension.dragBeginSelfPoint),NSStringFromCGPoint(self.extension.dragBeginSuperPoint));
+            if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) == NO &&
+                CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
+                [self tf_popupViewDidDragSlide:self superPoint:superPoint state:dragGes.state];
             }
+        }
+    }else{
+        if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) == NO &&
+            CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
+            [self tf_popupViewDidDragSlide:self superPoint:superPoint state:dragGes.state];
         }
     }
 }
@@ -864,32 +879,22 @@
  * popup:弹框本类
  * dragGes:拖拽手势
  */
-- (void)tf_popupViewDidDragSlide:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
+- (void)tf_popupViewDidDragSlide:(UIView *)popup superPoint:(CGPoint)superPoint state:(UIGestureRecognizerState)state{
     x_weakSelf;
     CGFloat originX = self.extension.showToFrame.origin.x;
     CGFloat originY = self.extension.showToFrame.origin.y;
     
-    CGPoint selfPoint = [dragGes locationInView:self];
-    CGPoint superPoint = [dragGes locationInView:self.superview];
-    
     CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
     CGFloat y = superPoint.y - self.extension.dragBeginSelfPoint.y;
     
-    if (dragGes.state == UIGestureRecognizerStateBegan) {
-        switch (self.extension.slideDirection) {
-            case PopupDirectionTop:{self.popupParam.dragStyle = DragStyleToTop;}break;
-            case PopupDirectionLeft:{self.popupParam.dragStyle = DragStyleToLeft;}break;
-            case PopupDirectionBottom:{self.popupParam.dragStyle = DragStyleToBottom;}break;
-            case PopupDirectionRight:{self.popupParam.dragStyle = DragStyleToRight;}break;
-            default:break;
-        }
-        self.extension.dragBeginSelfPoint = selfPoint;
-        self.extension.dragBeginSuperPoint = superPoint;
-        self.popupParam.dragAutoDissmissMinDistance = self.popupParam.dragAutoDissmissMinDistance==0?80:self.popupParam.dragAutoDissmissMinDistance;
+    self.popupParam.dragBouncesEnable = YES;
+    
+    if (state == UIGestureRecognizerStateChanged) {
         
-    }else if (dragGes.state == UIGestureRecognizerStateChanged) {
-        
-        switch (self.popupParam.dragStyle) {
+        switch (self.extension.runtimeDragStyle) {
+            case DragStyleNone:{
+                return;
+            }break;
             case DragStyleToTop:{
                 x = originX;
                 CGFloat distanceY = y - originY;
@@ -947,6 +952,9 @@
                     }
                 }
             }break;
+            case DragStyleFree:{
+                
+            }break;
             default:break;
         }
         //更新拖动
@@ -963,10 +971,11 @@
             NSLog(@">>>>>>>>>>>>>>>===:%.1f   %.1f   %.1f",surplusPer,distance,min);
             self.extension.defaultBackgroundView.alpha = surplusPer;
         }
-    }else if (dragGes.state == UIGestureRecognizerStateEnded ||
-              dragGes.state == UIGestureRecognizerStateCancelled ||
-              dragGes.state == UIGestureRecognizerStateFailed ||
-              dragGes.state == UIGestureRecognizerStateRecognized) {
+        
+    }else if (state == UIGestureRecognizerStateEnded ||
+              state == UIGestureRecognizerStateCancelled ||
+              state == UIGestureRecognizerStateFailed ||
+              state == UIGestureRecognizerStateRecognized) {
         
         CGFloat distance = [self distanceOfShowToFrameAndNow];
         CGFloat min = [self radiusOfMaxDragArea];
