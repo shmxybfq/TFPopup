@@ -662,9 +662,9 @@
  * dragGes:拖拽手势
  */
 -(void)dragGestureRecognizer:(UIPanGestureRecognizer *)dragGes{
-    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
-        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
-    }
+//    if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
+//        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+//    }
 }
 
 

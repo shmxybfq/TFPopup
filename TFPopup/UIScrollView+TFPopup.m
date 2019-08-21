@@ -11,12 +11,12 @@
 @implementation UIScrollView (TFPopup)
 
 +(void)load{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [[self class] popup_instanceMethodExchange:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)
-                                           toClass:[self class]
-                                             toSel:@selector(popup_gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)];
-    });
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        [[self class] popup_instanceMethodExchange:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)
+//                                           toClass:[self class]
+//                                             toSel:@selector(popup_gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)];
+//    });
 }
 
 - (BOOL)popup_gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
