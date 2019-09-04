@@ -23,7 +23,7 @@
 #import "ExampleSliderSmall.h"
 #import "ExampleSliderLogin.h"
 #import "ExampleViewController.h"
-
+#import "DragExampleController.h"
 #import "TFPopupLoading.h"
 
 #define kSize [UIScreen mainScreen].bounds.size
@@ -77,6 +77,7 @@
 @property(nonatomic,strong)NSArray *cusButtons;
 @property(nonatomic,strong)NSArray *ExampleButtons;
 @property (weak, nonatomic) IBOutlet UIButton *watchExampleButton;
+@property (weak, nonatomic) IBOutlet UIButton *dragExampleButton;
 
 @property(nonatomic,strong)TFPopupParam *param;
 @property(nonatomic,  copy)NSString *animationType;
@@ -343,12 +344,23 @@
     [self.watchExampleButton addTarget:self
                                  action:@selector(watchExampleButtonClick)
                        forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.dragExampleButton addTarget:self
+                                action:@selector(dragExampleButtonClick)
+                      forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)watchExampleButtonClick{
     ExampleViewController *con = [[ExampleViewController alloc]initWithNibName:@"ExampleViewController" bundle:nil];
     [self presentViewController:con animated:YES completion:nil];
 }
+
+-(void)dragExampleButtonClick{
+    DragExampleController *con = [[DragExampleController alloc]initWithNibName:@"DragExampleController" bundle:nil];
+    [self presentViewController:con animated:YES completion:nil];
+}
+
+
 
 -(NSArray *)topButtons{
     NSArray *tp = @[self.topButton0,self.topButton1,self.topButton2,

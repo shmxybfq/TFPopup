@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger,DragStyle) {
     DragStyleToRight = 1 << 2,
     DragStyleToBottom = 1 << 3,
     DragStyleFree = 1000,
-    DragStyleNeedDiscern = 1001,
+    
 };
 
 

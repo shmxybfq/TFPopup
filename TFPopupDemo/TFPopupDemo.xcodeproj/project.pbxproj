@@ -47,6 +47,8 @@
 		90CC2BAB22C4C7B500103439 /* ExampleAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B9222C4C7B400103439 /* ExampleAlert.xib */; };
 		90CC2BAC22C4C7B500103439 /* ExampleSliderSmall.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B9622C4C7B400103439 /* ExampleSliderSmall.xib */; };
 		90CC2BAD22C4C7B500103439 /* ExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B9922C4C7B400103439 /* ExampleViewController.xib */; };
+		90CC7B4B231F933400DD5E70 /* DragExampleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CC7B49231F933400DD5E70 /* DragExampleController.m */; };
+		90CC7B4C231F933400DD5E70 /* DragExampleController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC7B4A231F933400DD5E70 /* DragExampleController.xib */; };
 		9616B610F835B20255614A5C /* libPods-TFPopupDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +122,9 @@
 		90CC2B9722C4C7B400103439 /* ExampleSliderBig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleSliderBig.h; sourceTree = "<group>"; };
 		90CC2B9822C4C7B400103439 /* ExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleViewController.h; sourceTree = "<group>"; };
 		90CC2B9922C4C7B400103439 /* ExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleViewController.xib; sourceTree = "<group>"; };
+		90CC7B48231F933400DD5E70 /* DragExampleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragExampleController.h; sourceTree = "<group>"; };
+		90CC7B49231F933400DD5E70 /* DragExampleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragExampleController.m; sourceTree = "<group>"; };
+		90CC7B4A231F933400DD5E70 /* DragExampleController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DragExampleController.xib; sourceTree = "<group>"; };
 		D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +161,7 @@
 		203DD46921EC6B22004ACC42 /* TFPopupDemo */ = {
 			isa = PBXGroup;
 			children = (
+				90CC7B47231F931500DD5E70 /* DragExample */,
 				203DD46A21EC6B22004ACC42 /* AppDelegate.h */,
 				203DD46B21EC6B22004ACC42 /* AppDelegate.m */,
 				203DD46D21EC6B22004ACC42 /* ViewController.h */,
@@ -268,6 +274,16 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		90CC7B47231F931500DD5E70 /* DragExample */ = {
+			isa = PBXGroup;
+			children = (
+				90CC7B48231F933400DD5E70 /* DragExampleController.h */,
+				90CC7B49231F933400DD5E70 /* DragExampleController.m */,
+				90CC7B4A231F933400DD5E70 /* DragExampleController.xib */,
+			);
+			path = DragExample;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -337,6 +353,7 @@
 				90CC2BAC22C4C7B500103439 /* ExampleSliderSmall.xib in Resources */,
 				90CC2BA922C4C7B500103439 /* ExampleSign.xib in Resources */,
 				90CC2B9C22C4C7B500103439 /* ExampleBubble.xib in Resources */,
+				90CC7B4C231F933400DD5E70 /* DragExampleController.xib in Resources */,
 				2024EEF021F892A700DEC84A /* ListView.xib in Resources */,
 				203DD49021EC847F004ACC42 /* AlertNormal.xib in Resources */,
 				90CC2BAA22C4C7B500103439 /* ExampleUnfold.xib in Resources */,
@@ -408,6 +425,7 @@
 				203DD48721EC6BFA004ACC42 /* TFPopupToast.m in Sources */,
 				90615A162304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m in Sources */,
 				90CC2B9A22C4C7B500103439 /* ExampleViewController.m in Sources */,
+				90CC7B4B231F933400DD5E70 /* DragExampleController.m in Sources */,
 				90CC2BA622C4C7B500103439 /* ExampleSliderBig.m in Sources */,
 				90CC2B9E22C4C7B500103439 /* ExampleSliderLogin.m in Sources */,
 				2024EEBB21F18A0D00DEC84A /* TFPopupParam.m in Sources */,

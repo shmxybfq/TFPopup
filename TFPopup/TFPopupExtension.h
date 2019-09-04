@@ -73,18 +73,20 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 //监听弹框隐藏完毕回调,需要再显示弹框前调用此方法
 @property(nonatomic,  copy)TFDelegateProcessBlock delegateProcessBlock;
 
-//拖动相关属性
-@property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
 
+//拖住手势
+@property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
+//拖动开始点
 @property(nonatomic,assign)CGPoint dragBeginSelfPoint;
 @property(nonatomic,assign)CGPoint dragBeginSuperPoint;
-
+//是否需要推测多拽方式
 @property(nonatomic,assign)BOOL needDiscernDragStyle;
+//运行时的真正拖拽方式
 @property(nonatomic,assign)DragStyle runtimeDragStyle;
-
+//推测拖动方式时的开始点
 @property(nonatomic,assign)CGPoint discernDragStyleBeginSelfPoint;
 @property(nonatomic,assign)CGPoint discernDragStyleBeginSuperPoint;
-
+//拖动结束后要消失的目标frame
 @property(nonatomic,assign)CGRect  dragDissmissFrame;
 
 
