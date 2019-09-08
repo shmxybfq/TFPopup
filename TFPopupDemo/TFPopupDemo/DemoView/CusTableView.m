@@ -14,4 +14,20 @@
 //    return YES;
 //}
 
+    
+//- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+//    NSLog(@"=====1:%@",gestureRecognizer.view);
+//    return YES;
+//}
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+//    NSLog(@"=====2:%@",gestureRecognizer.view);
+//    return YES;
+//}
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+//    NSLog(@"=====5:%@",gestureRecognizer.view);
+//    return YES;
+//}
+
 @end

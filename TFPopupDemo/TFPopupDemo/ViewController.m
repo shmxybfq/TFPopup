@@ -150,6 +150,7 @@
         UIView *popup = [self getListView];
         //self.param.offset = CGPointMake(-50, -100);
         //[popup tf_showSlide:self.view direction:self.popupDirection];
+        self.param.dragEnable = YES;
         [popup tf_showSlide:self.view direction:self.popupDirection popupParam:self.param];
 
     }else if ([self.animationType isEqualToString:@"泡泡"]) {

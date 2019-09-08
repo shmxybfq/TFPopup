@@ -889,7 +889,6 @@
 - (void)tf_popupViewDidDragSlide:(UIView *)popup superPoint:(CGPoint)superPoint state:(UIGestureRecognizerState)state{
     
     x_weakSelf;
-    
     CGFloat originX = self.extension.showToFrame.origin.x;
     CGFloat originY = self.extension.showToFrame.origin.y;
     CGFloat x = superPoint.x - self.extension.dragBeginSelfPoint.x;
