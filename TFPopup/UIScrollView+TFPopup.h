@@ -13,7 +13,8 @@
 
 @interface UIScrollView (TFPopup)
 
-@property(nonatomic,  weak)UIView *belongToPopupView;
+@property(nonatomic, assign) BOOL popupDragEnable;
+
 
 @end
 

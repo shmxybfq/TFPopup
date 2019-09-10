@@ -11,18 +11,28 @@
 @implementation CusTableView
 
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+//    NSLog(@"=====666:%@",gestureRecognizer.view);
 //    return YES;
 //}
 
     
 //- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-//    NSLog(@"=====1:%@",gestureRecognizer.view);
+//    
+//    SEL sel = NSSelectorFromString(@"tf_popupView:enableScrollViewGestureRecognizerWhenDrag:");
+//    
+//    UIView *superView = gestureRecognizer.view;
+//    while (superView) {
+//        if ([superView respondsToSelector:sel] && superView) {
+//            NSLog(@"：：：：命中:%@",superView);
+//        }
+//        superView = superView.superview;
+//    }
 //    return YES;
 //}
 //
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
 //    NSLog(@"=====2:%@",gestureRecognizer.view);
-//    return YES;
+//    return NO;
 //}
 //
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{

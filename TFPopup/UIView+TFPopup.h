@@ -56,6 +56,9 @@
 - (NSTimeInterval)tf_popupView:(UIView *)popup animationDelayForState:(TFPopupState)state;//默认0.0
 //默认UIViewAnimationOptionCurveEaseOut
 - (UIViewAnimationOptions)tf_popupView:(UIView *)popup animationOptionsForState:(TFPopupState)state;
+
+//拖动子scrollView时是否同步识别并改变弹框
+- (BOOL)tf_popupView:(UIView *)popup enableScrollViewGestureRecognizerWhenDrag:(UIScrollView *)scrollView;
 @end
 
 

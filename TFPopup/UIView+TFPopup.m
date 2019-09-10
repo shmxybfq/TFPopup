@@ -532,6 +532,15 @@
         self.extension.hideToFrame = self.extension.showFromFrame;
     }
     
+    //拖拽开关
+    if (self.popupParam.dragEnable) {
+        if (!self.extension.dragGes) {
+            self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
+            [self.extension.dragGes addTarget:self action:@selector(dragGestureRecognizer:)];
+            [self addGestureRecognizer:self.extension.dragGes];
+        }
+    }
+    
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidGetConfiguration:)]) {
         [self.popupDelegate tf_popupViewDidGetConfiguration:self];
     }
@@ -569,15 +578,6 @@
     self.alpha = self.extension.showFromAlpha;
     self.frame = self.extension.showFromFrame;
     [self.inView addSubview:self];
-    
-    //拖拽开关
-    if (self.popupParam.dragEnable) {
-        if (!self.extension.dragGes) {
-            self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
-            [self.extension.dragGes addTarget:self action:@selector(dragGestureRecognizer:)];
-            [self addGestureRecognizer:self.extension.dragGes];
-        }
-    }
     
     
     TFPopupPrivateExtension *ext = getRunCache(self);
@@ -681,6 +681,7 @@
  * dragGes:拖拽手势
  */
 -(void)dragGestureRecognizer:(UIPanGestureRecognizer *)dragGes{
+    NSLog(@"888=======:%@",dragGes.view);
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
         [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
     }
@@ -1291,6 +1292,9 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
     return self.popupParam.animationOptions;
 }
 
+- (BOOL)tf_popupView:(UIView *)popup enableScrollViewGestureRecognizerWhenDrag:(UIScrollView *)scrollView{
+    return self.popupParam.discernScrollEnable;
+}
 
 #pragma mark -- TFPopupBackgroundDelegate
 - (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup{
@@ -1740,6 +1744,45 @@ static inline CGRect slideTargetFrame(TFPopupParam *param,PopupDirection directi
     CGRect position = CGRectMake(x, y, w, h);
     return position;
 }
+
+
+static inline NSMutableArray<UIView*>*allSubViews(UIView *target){
+    NSMutableArray *allSubviews = [NSMutableArray array];
+    NSMutableArray *curSubviews = [NSMutableArray arrayWithArray:target.subviews];
+    while (curSubviews.count!=0) {
+        NSMutableArray *temSubviews = [NSMutableArray array];
+        for (UIView *view in curSubviews) {
+            [allSubviews addObject:view];
+            if (view.subviews.count !=0) {
+                [temSubviews addObjectsFromArray:view.subviews];
+            }
+        }
+        [curSubviews removeAllObjects];
+        [curSubviews addObjectsFromArray:temSubviews];
+    }
+    [allSubviews addObject:target];
+    return allSubviews;
+}
+
+//-(NSMutableArray *)getAllSubviews
+//{
+
+//    NSMutableArray *allSubviews = [NSMutableArray array];
+//    NSMutableArray *curSubviews = [NSMutableArray arrayWithArray:self.subviews];
+//    while (curSubviews.count!=0) {
+//        NSMutableArray *temSubviews = [NSMutableArray array];
+//        for (UIView *view in curSubviews) {
+//            [allSubviews addObject:view];
+//            if (view.subviews.count !=0) {
+//                [temSubviews addObjectsFromArray:view.subviews];
+//            }
+//        }
+//        [curSubviews removeAllObjects];
+//        [curSubviews addObjectsFromArray:temSubviews];
+//    }
+//    [allSubviews addObject:self];
+//    return allSubviews;
+//}
 
 #pragma mark -- 属性绑定
 tf_synthesize_category_property_retain(inView, setInView);

@@ -89,7 +89,6 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 //拖动结束后要消失的目标frame
 @property(nonatomic,assign)CGRect  dragDissmissFrame;
 
-
 @end
 
 

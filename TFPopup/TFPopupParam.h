@@ -24,13 +24,12 @@ typedef NS_ENUM(NSInteger,PopupDirection) {
 
 
 typedef NS_ENUM(NSInteger,DragStyle) {
-    DragStyleNone = 0,
-    DragStyleToTop = 1 << 0,
-    DragStyleToLeft = 1 << 1,
-    DragStyleToRight = 1 << 2,
-    DragStyleToBottom = 1 << 3,
-    DragStyleFree = 1000,
-    
+    DragStyleNone = 0,//不可拖拽
+    DragStyleToTop = 1 << 0,//可以向上拖拽,可自由组合其他三个方向
+    DragStyleToLeft = 1 << 1,//可以向左拖拽,可自由组合其他三个方向
+    DragStyleToRight = 1 << 2,//可以向右拖拽,可自由组合其他三个方向
+    DragStyleToBottom = 1 << 3,//可以向下拖拽,可自由组合其他三个方向
+    DragStyleFree = 1000,//可以向任何方向拖拽,但松手后不消失
 };
 
 
@@ -87,11 +86,18 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)BOOL disuseHideBackgroundAlphaAnimation;
 
 
-@property(nonatomic,assign)BOOL dragEnable;//是否可拖拽
-@property(nonatomic,assign)DragStyle dragStyle;//拖拽类型
-@property(nonatomic,assign)BOOL dragBouncesEnable;//是否可弹性
-@property(nonatomic,assign)BOOL discernScrollEnable;//识别滚动
-@property(nonatomic,assign)NSUInteger dragAutoDissmissMinDistance;//最小拖动消失距离
+/* 【全局属性】拖拽控制
+ dragEnable,是否可拖拽,默认为NO,设为YES时tf_showSlide的上下左右方向默认可以向消失的方向拖拽
+ dragStyle,拖拽类型/方向
+ dragBouncesEnable,拖拽到底的时候是否有弹性效果
+ discernScrollEnable,当拖拽的view中包含scrollview时,是否兼容识别拖拽
+ dragAutoDissmissMinDistance,拖拽松手时的距离大于此距离时拖拽消失,否则恢复原位
+ */
+@property(nonatomic,assign)BOOL dragEnable;
+@property(nonatomic,assign)DragStyle dragStyle;
+@property(nonatomic,assign)BOOL dragBouncesEnable;
+@property(nonatomic,assign)BOOL discernScrollEnable;
+@property(nonatomic,assign)NSUInteger dragAutoDissmissMinDistance;
 
 
 /* 【全局属性】弹框渐隐动画
