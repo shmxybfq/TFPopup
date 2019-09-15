@@ -11,9 +11,9 @@
 #import "TFPopupConst.h"
 #import "NSObject+TFPopupMethodExchange.h"
 
-@interface UIScrollView (TFPopup)
+@interface UIScrollView (TFPopup)<UIGestureRecognizerDelegate,UIScrollViewDelegate>
 
-@property(nonatomic, assign) BOOL popupDragEnable;
+@property(nonatomic,  weak) UIView *faterPopupView;
 
 
 @end

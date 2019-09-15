@@ -9,6 +9,7 @@
 #import "UIView+TFPopup.h"
 #import <objc/runtime.h>
 #import "TFPopupConst.h"
+#import "UIScrollView+TFPopup.h"
 
 #define kShowBaseAnimationKey @"kShowBaseAnimationKey"
 #define kShowMaskAnimationKey @"kShowMaskAnimationKey"
@@ -535,9 +536,22 @@
     //拖拽开关
     if (self.popupParam.dragEnable) {
         if (!self.extension.dragGes) {
+            //添加手势
             self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
             [self.extension.dragGes addTarget:self action:@selector(dragGestureRecognizer:)];
             [self addGestureRecognizer:self.extension.dragGes];
+            if (self.popupParam.discernScrollEnable) {
+                //子UIScrollView传入pop对象
+                NSMutableArray *all = allSubViews(self, YES);
+                for (UIView *sub in all) {
+                    if ([sub isKindOfClass:[UIScrollView class]]) {
+                        UIScrollView *subScrollView = (UIScrollView *)sub;
+                        if (subScrollView.scrollEnabled) {
+                            subScrollView.faterPopupView = self;
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -1746,7 +1760,7 @@ static inline CGRect slideTargetFrame(TFPopupParam *param,PopupDirection directi
 }
 
 
-static inline NSMutableArray<UIView*>*allSubViews(UIView *target){
+static inline NSMutableArray<UIView*>*allSubViews(UIView *target,BOOL containTarget){
     NSMutableArray *allSubviews = [NSMutableArray array];
     NSMutableArray *curSubviews = [NSMutableArray arrayWithArray:target.subviews];
     while (curSubviews.count!=0) {
@@ -1760,29 +1774,11 @@ static inline NSMutableArray<UIView*>*allSubViews(UIView *target){
         [curSubviews removeAllObjects];
         [curSubviews addObjectsFromArray:temSubviews];
     }
-    [allSubviews addObject:target];
+    if (containTarget) {
+        [allSubviews addObject:target];
+    }
     return allSubviews;
 }
-
-//-(NSMutableArray *)getAllSubviews
-//{
-
-//    NSMutableArray *allSubviews = [NSMutableArray array];
-//    NSMutableArray *curSubviews = [NSMutableArray arrayWithArray:self.subviews];
-//    while (curSubviews.count!=0) {
-//        NSMutableArray *temSubviews = [NSMutableArray array];
-//        for (UIView *view in curSubviews) {
-//            [allSubviews addObject:view];
-//            if (view.subviews.count !=0) {
-//                [temSubviews addObjectsFromArray:view.subviews];
-//            }
-//        }
-//        [curSubviews removeAllObjects];
-//        [curSubviews addObjectsFromArray:temSubviews];
-//    }
-//    [allSubviews addObject:self];
-//    return allSubviews;
-//}
 
 #pragma mark -- 属性绑定
 tf_synthesize_category_property_retain(inView, setInView);
