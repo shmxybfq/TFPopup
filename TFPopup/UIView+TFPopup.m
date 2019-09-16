@@ -540,6 +540,8 @@
             self.extension.dragGes = [[UIPanGestureRecognizer alloc]init];
             [self.extension.dragGes addTarget:self action:@selector(dragGestureRecognizer:)];
             [self addGestureRecognizer:self.extension.dragGes];
+            
+//            self.popupParam.discernScrollEnable = YES;
             if (self.popupParam.discernScrollEnable) {
                 //子UIScrollView传入pop对象
                 NSMutableArray *all = allSubViews(self, YES);
@@ -695,7 +697,7 @@
  * dragGes:拖拽手势
  */
 -(void)dragGestureRecognizer:(UIPanGestureRecognizer *)dragGes{
-    NSLog(@"888=======:%@",dragGes.view);
+    NSLog(@"888=======:%@",[dragGes.view class]);
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
         [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
     }
@@ -934,17 +936,17 @@
                     }else{
                         y = originY;
                     }
-                    for (UIScrollView *scroll in self.subviews) {
-                        if ([scroll isKindOfClass:[UIScrollView class]]) {
-                            scroll.scrollEnabled = YES;
-                        }
-                    }
+//                    for (UIScrollView *scroll in self.subviews) {
+//                        if ([scroll isKindOfClass:[UIScrollView class]]) {
+//                            scroll.scrollEnabled = YES;
+//                        }
+//                    }
                 }else{
-                    for (UIScrollView *scroll in self.subviews) {
-                        if ([scroll isKindOfClass:[UIScrollView class]]) {
-                            scroll.scrollEnabled = NO;
-                        }
-                    }
+//                    for (UIScrollView *scroll in self.subviews) {
+//                        if ([scroll isKindOfClass:[UIScrollView class]]) {
+//                            scroll.scrollEnabled = NO;
+//                        }
+//                    }
                 }
             }break;
             case DragStyleToLeft:{

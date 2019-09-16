@@ -31,13 +31,19 @@
 }
 //执行顺序10-次数多次但有限
 -(BOOL)popup_gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    NSLog(@"=====1:");
+    if ([self isKindOfClass:[UITableView class]]) {
+        NSLog(@"==============ppp0");
+     
+    }
+    
+    NSLog(@"=====1:%@:%@",self.scrollEnabled?@"是":@"否",[self class]);
     if (self.faterPopupView && [self.faterPopupView isKindOfClass:[UIView class]]) {
         return YES;
     }else{
-       
+        
     }
     return YES;
+   
 }
 
 
@@ -52,7 +58,14 @@
 }
 //执行顺序20-次数1,当scrollview的scrollenable为no时,此函数不被调用
 - (BOOL)popup_gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    NSLog(@"=====2:");
+    
+    if ([self isKindOfClass:[UITableView class]]) {
+        NSLog(@"==============ppp1");
+        
+    }
+    
+    
+    NSLog(@"=====2:%@:%@",self.scrollEnabled?@"是":@"否",[self class]);
     if (self.faterPopupView && [self.faterPopupView isKindOfClass:[UIView class]]) {
         return YES;
     }else{
@@ -73,11 +86,16 @@
 }
 //执行顺序30-次数多次但有限
 - (BOOL)popup_gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    NSLog(@"=====3:");
+    
+    if ([self isKindOfClass:[UITableView class]]) {
+        NSLog(@"==============ppp2");
+        
+    }
+    
+    
+    NSLog(@"=====3:%@:%@",self.scrollEnabled?@"是":@"否",[self class]);
     if (self.faterPopupView && [self.faterPopupView isKindOfClass:[UIView class]]) {
         return YES;
-    }else{
-
     }
     return NO;
 }

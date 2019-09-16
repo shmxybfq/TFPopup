@@ -37,6 +37,9 @@
                    @"可以是直接弹出来",
                    @"或者滑动",
                    @"或者是你想要的任何方式"]];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    });
 }
 
 -(void)reload:(NSArray <NSString *>*)data{
