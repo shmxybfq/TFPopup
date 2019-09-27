@@ -15,7 +15,6 @@
 
 @property(nonatomic,  weak) UIView *faterPopupView;
 
-
 @end
 
 

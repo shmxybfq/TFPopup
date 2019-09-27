@@ -26,6 +26,7 @@
 		902C94FF228972B0002A60EA /* TFPopupLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 902C94FE228972AF002A60EA /* TFPopupLoading.m */; };
 		90615A132304FCD4002AEAB0 /* UIScrollView+TFPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 90615A122304FCD4002AEAB0 /* UIScrollView+TFPopup.m */; };
 		90615A162304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 90615A152304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m */; };
+		90BCD7D7233C4C95001FF34F /* CustomTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BCD7D6233C4C95001FF34F /* CustomTableView.m */; };
 		90CC2B9A22C4C7B500103439 /* ExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CC2B7B22C4C7B400103439 /* ExampleViewController.m */; };
 		90CC2B9B22C4C7B500103439 /* ExampleSliderLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B7D22C4C7B400103439 /* ExampleSliderLogin.xib */; };
 		90CC2B9C22C4C7B500103439 /* ExampleBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B7E22C4C7B400103439 /* ExampleBubble.xib */; };
@@ -89,6 +90,8 @@
 		90615A122304FCD4002AEAB0 /* UIScrollView+TFPopup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TFPopup.m"; sourceTree = "<group>"; };
 		90615A142304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TFPopupMethodExchange.h"; sourceTree = "<group>"; };
 		90615A152304FDE7002AEAB0 /* NSObject+TFPopupMethodExchange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TFPopupMethodExchange.m"; sourceTree = "<group>"; };
+		90BCD7D5233C4C95001FF34F /* CustomTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableView.h; sourceTree = "<group>"; };
+		90BCD7D6233C4C95001FF34F /* CustomTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTableView.m; sourceTree = "<group>"; };
 		90CC2B7B22C4C7B400103439 /* ExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleViewController.m; sourceTree = "<group>"; };
 		90CC2B7D22C4C7B400103439 /* ExampleSliderLogin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleSliderLogin.xib; sourceTree = "<group>"; };
 		90CC2B7E22C4C7B400103439 /* ExampleBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExampleBubble.xib; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 				2024EEEC21F8929C00DEC84A /* ListView.h */,
 				2024EEED21F8929C00DEC84A /* ListView.m */,
 				2024EEEF21F892A700DEC84A /* ListView.xib */,
+				90BCD7D5233C4C95001FF34F /* CustomTableView.h */,
+				90BCD7D6233C4C95001FF34F /* CustomTableView.m */,
 			);
 			path = DemoView;
 			sourceTree = "<group>";
@@ -405,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90CC2BA222C4C7B500103439 /* ExampleBubble.m in Sources */,
+				90BCD7D7233C4C95001FF34F /* CustomTableView.m in Sources */,
 				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
 				203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */,
 				203DD47A21EC6B23004ACC42 /* main.m in Sources */,

@@ -20,7 +20,7 @@
     self.layer.cornerRadius = 6;
     self.layer.masksToBounds = YES;
     
-    self.tableView.scrollEnabled = NO;
+    self.tableView.scrollEnabled = YES;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self reload:@[@"我只是一个普通的列表",

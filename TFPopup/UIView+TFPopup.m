@@ -541,7 +541,8 @@
             [self.extension.dragGes addTarget:self action:@selector(dragGestureRecognizer:)];
             [self addGestureRecognizer:self.extension.dragGes];
             
-//            self.popupParam.discernScrollEnable = YES;
+#warning 调试设置推测滚动
+            self.popupParam.discernScrollEnable = YES;
             if (self.popupParam.discernScrollEnable) {
                 //子UIScrollView传入pop对象
                 NSMutableArray *all = allSubViews(self, YES);
@@ -674,6 +675,7 @@
 }
 
 
+#pragma mark - 拖动部分
 //@property(nonatomic,assign)BOOL dragEnable;//是否可拖拽
 //@property(nonatomic,assign)DragStyle dragStyle;//拖拽类型
 //@property(nonatomic,assign)BOOL dragBouncesEnable;//是否可弹性
@@ -697,58 +699,57 @@
  * dragGes:拖拽手势
  */
 -(void)dragGestureRecognizer:(UIPanGestureRecognizer *)dragGes{
-    NSLog(@"888=======:%@",[dragGes.view class]);
+    NSLog(@"弹框拖动手势事件=======:%@",[dragGes.view class]);
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
-        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+        
+        [self dragGestureRecognizerConfiguration:dragGes];
+        
+        if (self.extension.currentDragScrollView == nil) {
+            [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+        }else{
+            
+        }
     }
 }
 
-//开始拖动前确定拖动方向和将要消失的目标方向
-- (BOOL)tf_popupViewWillDrag:(UIView *)popup{
+//拖动普通view
+-(void)normalDrag:(UIPanGestureRecognizer *)dragGes{
     
-    //如果未手动设置方向,判断是否是滑动动画,滑动动画默认同方向拖动手势
-    BOOL needDiscernDragStyle = YES;
-    if (self.popupParam.dragStyle == DragStyleNone) {
-        
-        //打开拖动,且未设置拖动方向,识别滑动方向为拖动方向
-        DragStyle dragStyle = DragStyleNone;
-        switch (self.extension.slideDirection) {
-            case PopupDirectionTop:dragStyle = DragStyleToTop;break;
-            case PopupDirectionLeft:dragStyle = DragStyleToLeft;break;
-            case PopupDirectionBottom:dragStyle = DragStyleToBottom;break;
-            case PopupDirectionRight:dragStyle = DragStyleToRight;break;
-            default:break;
-        }
-        BOOL caseSuccess = [self setDragStyleAndDissmissFrame:dragStyle dissmissFrame:self.extension.hideToFrame];
-        if (caseSuccess) {
-            needDiscernDragStyle = NO;
-        }
-        
-    }else if(self.popupParam.dragStyle == DragStyleFree){
-        //手动设置为自由拖动方式
-        needDiscernDragStyle = NO;
-        self.extension.runtimeDragStyle = DragStyleFree;
-        self.extension.dragDissmissFrame = self.extension.showToFrame;
-    }else{
-        //已手动设置方向,判断手动设置的方向是否为单方向,如果不是单方向则需要根据拖动动态识别用户意向的拖动方向
-        NSInteger count = 0;
-        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToTop);
-        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToLeft);
-        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToBottom);
-        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToRight);
-        //设置单方向,需要根据方向计算消失的位置
-        if (count == 1) {
-            BOOL caseSuccess = [self setDragStyleAndDissmissFrame:self.popupParam.dragStyle dissmissFrame:CGRectZero];
-            if (caseSuccess) {
-                needDiscernDragStyle = NO;
-            }
-        }else{
-            //设置了多方向,需要自动识别方向
-            needDiscernDragStyle = YES;
-        }
-    }
-    return needDiscernDragStyle;
 }
+//拖动滚动view
+-(void)scrollDrag:(UIPanGestureRecognizer *)dragGes{
+    
+}
+
+/*
+ * 拖动开始时,左右拖动操作前的配置
+ */
+-(void)dragGestureRecognizerConfiguration:(UIPanGestureRecognizer *)dragGes{
+    UIGestureRecognizerState state = dragGes.state;
+    if (state == UIGestureRecognizerStateBegan) {
+        
+        self.extension.needDiscernDragStyle = NO;
+        self.extension.runtimeDragStyle = DragStyleNone;
+        self.extension.discernDragStyleBeginSelfPoint = CGPointZero;
+        self.extension.discernDragStyleBeginSuperPoint = CGPointZero;
+        self.extension.dragBeginSelfPoint = CGPointZero;
+        self.extension.dragBeginSuperPoint = CGPointZero;
+        self.extension.dragDissmissFrame = self.extension.showToFrame;
+        
+    }else if (state == UIGestureRecognizerStateChanged) {
+        
+    }else{
+        //拖动结束后将当前正在滚动的view置空
+        self.extension.currentDragScrollView = nil;
+        self.extension.currentDragScrollViewAllowScroll = YES;
+    }
+}
+
+//-(void)drag
+
+//1.判断点到哪了，是scrollview还是其他地方
+//2.如果scrollview不允许
+//3.如果是空白区域，就不管了，如果是scrollview，先确定方向(tableview肯定是竖向，cell肯定是横向)，然后再确定拖滚动还是弹框
 
 - (void)tf_popupViewDidDrag:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
     
@@ -756,8 +757,6 @@
     CGPoint superPoint = [dragGes locationInView:self.superview];
 
     if (dragGes.state == UIGestureRecognizerStateBegan) {
-        
-        [self resetDragConfigue];
         
         if (self.extension.defaultBackgroundView) {
             //拖动期间不允许点击背景
@@ -768,7 +767,8 @@
             self.popupParam.dragAutoDissmissMinDistance = kDefaultMinDragDissmissDistance;
         }
         //计算是否需要推测拖拽方式
-        self.extension.needDiscernDragStyle = [self tf_popupViewWillDrag:popup];
+        
+        self.extension.needDiscernDragStyle = [self tf_popupSetOrEstimateDragStyleAndDismissFrame:popup];
         
         if (self.extension.needDiscernDragStyle) {
             self.extension.discernDragStyleBeginSelfPoint = selfPoint;
@@ -798,7 +798,6 @@
             
             //识别完毕
             if (discernDragStyle != DragStyleNone) {
-                
                 if (dragStyleInclude(self.popupParam.dragStyle, discernDragStyle) == NO) {
                     //识别方式不是用户设置的方向,认为此方向拖动失败
                     self.extension.runtimeDragStyle = DragStyleNone;
@@ -837,21 +836,55 @@
             CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
             [self tf_popupViewDidDragSlide:self superPoint:superPoint state:dragGes.state];
         }
-        
-        [self resetDragConfigue];
     }
 }
 
-//初始化拖动各项参数值
--(void)resetDragConfigue{
-    self.extension.needDiscernDragStyle = NO;
-    self.extension.runtimeDragStyle = DragStyleNone;
-    self.extension.discernDragStyleBeginSelfPoint = CGPointZero;
-    self.extension.discernDragStyleBeginSuperPoint = CGPointZero;
-    self.extension.dragBeginSelfPoint = CGPointZero;
-    self.extension.dragBeginSuperPoint = CGPointZero;
-    self.extension.dragDissmissFrame = self.extension.showToFrame;
+
+//开始拖动前确定拖动方向和将要消失的目标方向
+- (BOOL)tf_popupSetOrEstimateDragStyleAndDismissFrame:(UIView *)popup{
+    //如果未手动设置方向,判断是否是滑动动画,滑动动画默认同方向拖动手势
+    BOOL needDiscernDragStyle = YES;
+    if (self.popupParam.dragStyle == DragStyleNone) {
+        //打开拖动,且未设置拖动方向,识别滑动方向为拖动方向
+        DragStyle dragStyle = DragStyleNone;
+        switch (self.extension.slideDirection) {
+            case PopupDirectionTop:dragStyle = DragStyleToTop;break;
+            case PopupDirectionLeft:dragStyle = DragStyleToLeft;break;
+            case PopupDirectionBottom:dragStyle = DragStyleToBottom;break;
+            case PopupDirectionRight:dragStyle = DragStyleToRight;break;
+            default:break;
+        }
+        BOOL caseSuccess = [self setDragStyleAndDissmissFrame:dragStyle dissmissFrame:self.extension.hideToFrame];
+        if (caseSuccess) {
+            needDiscernDragStyle = NO;
+        }
+    }else if(self.popupParam.dragStyle == DragStyleFree){
+        //手动设置为自由拖动方式
+        needDiscernDragStyle = NO;
+        self.extension.runtimeDragStyle = DragStyleFree;
+        self.extension.dragDissmissFrame = self.extension.showToFrame;
+    }else{
+        //已手动设置方向,判断手动设置的方向是否为单方向,如果不是单方向则需要根据拖动动态识别用户意向的拖动方向
+        NSInteger count = 0;
+        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToTop);
+        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToLeft);
+        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToBottom);
+        count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToRight);
+        //设置单方向,需要根据方向计算消失的位置
+        if (count == 1) {
+            BOOL caseSuccess = [self setDragStyleAndDissmissFrame:self.popupParam.dragStyle dissmissFrame:CGRectZero];
+            if (caseSuccess) {
+                needDiscernDragStyle = NO;
+            }
+        }else{
+            //设置了多方向,需要自动识别方向
+            needDiscernDragStyle = YES;
+        }
+    }
+    return needDiscernDragStyle;
 }
+
+
 
 //根据拖动方向和设置的frame设置运行时的拖动方向和目标拖动消失frame
 -(BOOL)setDragStyleAndDissmissFrame:(DragStyle)style dissmissFrame:(CGRect)dissmissFrame{

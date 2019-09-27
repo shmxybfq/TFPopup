@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomTableView.h"
 typedef void(^SelectBlock)(NSString *data);
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,  copy)SelectBlock block;
 @property(nonatomic,strong)NSMutableArray *dataSource;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet CustomTableView *tableView;
 
 -(void)reload:(NSArray <NSString *>*)data;
 

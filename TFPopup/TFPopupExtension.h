@@ -76,6 +76,10 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 
 //拖住手势
 @property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
+//当前拖动的滚动视图
+@property(nonatomic,strong)UIScrollView *currentDragScrollView;
+//当前拖动的滚动视图
+@property(nonatomic,assign)BOOL currentDragScrollViewAllowScroll;
 //拖动开始点
 @property(nonatomic,assign)CGPoint dragBeginSelfPoint;
 @property(nonatomic,assign)CGPoint dragBeginSuperPoint;
