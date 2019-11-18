@@ -1,10 +1,10 @@
 # TFPopup
-==============
 
 [![License MIT](https://img.shields.io/badge/License-MIT-orange)]()&nbsp;
 [![Platform iOS](https://img.shields.io/badge/platform-iOS-grayblue)]()&nbsp;
+<br/>
+<br/>
 
-==============
 **🚀🚀🚀TFPopup不生产弹框,它只是弹框的弹出工;
 <br>🚀🚀🚀默认支持多种动画方式一行调用,支持完全自定义弹出动画;**
 
