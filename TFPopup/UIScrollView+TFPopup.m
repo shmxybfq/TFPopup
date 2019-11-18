@@ -15,8 +15,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 //        [self popExchangeShouldReceiveTouch];
-        [self popExchangeGestureRecognizerShouldBegin];
-        [self popExchangeShouldRecognizeSimultaneouslyWithGestureRecognizer];
+//        [self popExchangeGestureRecognizerShouldBegin];
+//        [self popExchangeShouldRecognizeSimultaneouslyWithGestureRecognizer];
     });
 }
 

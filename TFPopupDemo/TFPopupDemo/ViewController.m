@@ -127,6 +127,9 @@
         UIView *popup = [self getAlertView];
         //[popup tf_showNormal:self.view animated:YES];
         //[popup tf_showNormal:self.view offset:CGPointMake(0, -100) animated:YES];
+        self.param.dragEnable = YES;
+        self.param.dragBouncesEnable = YES;
+        //self.param.dragStyle = DragStyleToLeft | DragStyleToBottom | DragStyleToRight;
         [popup tf_showNormal:self.view popupParam:self.param];
 
     }else if ([self.animationType isEqualToString:@"缩放"]) {

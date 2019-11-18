@@ -707,8 +707,9 @@
         if (self.extension.currentDragScrollView == nil) {
             [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
         }else{
-            
+            [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
         }
+        
     }
 }
 
