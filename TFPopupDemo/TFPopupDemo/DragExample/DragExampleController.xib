@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,39 +14,64 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="750"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxG-FI-qnP">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEZ-Pa-1cA">
-                            <rect key="frame" x="0.0" y="24" width="40" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="Rqq-eI-IK1"/>
-                                <constraint firstAttribute="height" constant="40" id="Z2X-cF-0eg"/>
-                            </constraints>
-                            <state key="normal" title="返回"/>
-                            <connections>
-                                <action selector="navBack:" destination="-1" eventType="touchUpInside" id="6TE-jR-9aI"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="popup-bg-3" translatesAutoresizingMaskIntoConstraints="NO" id="CXj-AO-smW">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="750"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWH-it-TQW">
+                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="uEZ-Pa-1cA" secondAttribute="bottom" id="RyM-b2-CLM"/>
-                        <constraint firstAttribute="height" constant="64" id="f0w-Gd-ZRd"/>
-                        <constraint firstItem="uEZ-Pa-1cA" firstAttribute="leading" secondItem="gxG-FI-qnP" secondAttribute="leading" id="rZQ-3P-q3v"/>
+                        <constraint firstAttribute="height" constant="80" id="79O-iE-rmH"/>
+                        <constraint firstAttribute="width" constant="80" id="ZGc-Wx-XPD"/>
                     </constraints>
-                </view>
+                    <connections>
+                        <action selector="navBack:" destination="-1" eventType="touchUpInside" id="etV-Sp-z2A"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83G-OV-nWE">
+                    <rect key="frame" x="187.5" y="690" width="187.5" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="BZi-57-hfF"/>
+                    </constraints>
+                    <state key="normal" title="上面弹出"/>
+                    <connections>
+                        <action selector="showTop:" destination="-1" eventType="touchUpInside" id="5Ro-Jm-SJL"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaZ-yd-JX2">
+                    <rect key="frame" x="0.0" y="690" width="187.5" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="U7M-rP-Sgr"/>
+                    </constraints>
+                    <state key="normal" title="下面弹出"/>
+                    <connections>
+                        <action selector="showBottom:" destination="-1" eventType="touchUpInside" id="X2E-IM-ehI"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="gxG-FI-qnP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="agI-Xw-dSV"/>
-                <constraint firstItem="gxG-FI-qnP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="r2G-UW-bIN"/>
-                <constraint firstAttribute="trailing" secondItem="gxG-FI-qnP" secondAttribute="trailing" id="tt9-4s-3R2"/>
+                <constraint firstItem="aWH-it-TQW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Ma-W7-80Y"/>
+                <constraint firstItem="CXj-AO-smW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="56I-Nx-flp"/>
+                <constraint firstAttribute="bottom" secondItem="83G-OV-nWE" secondAttribute="bottom" id="8El-7r-COR"/>
+                <constraint firstAttribute="bottom" secondItem="iaZ-yd-JX2" secondAttribute="bottom" id="FDt-fz-GVt"/>
+                <constraint firstAttribute="trailing" secondItem="83G-OV-nWE" secondAttribute="trailing" id="Tlx-hx-j7o"/>
+                <constraint firstItem="aWH-it-TQW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="frd-j5-uJD"/>
+                <constraint firstItem="iaZ-yd-JX2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gzz-ce-UST"/>
+                <constraint firstItem="83G-OV-nWE" firstAttribute="leading" secondItem="iaZ-yd-JX2" secondAttribute="trailing" id="hFb-OD-ecy"/>
+                <constraint firstItem="CXj-AO-smW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nsb-C0-7tH"/>
+                <constraint firstItem="83G-OV-nWE" firstAttribute="width" secondItem="iaZ-yd-JX2" secondAttribute="width" id="sbH-3j-oag"/>
+                <constraint firstAttribute="bottom" secondItem="CXj-AO-smW" secondAttribute="bottom" id="vEK-Pf-8Ch"/>
+                <constraint firstAttribute="trailing" secondItem="CXj-AO-smW" secondAttribute="trailing" id="yNN-Zw-iRc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="136.95652173913044" y="152.67857142857142"/>
         </view>
     </objects>
+    <resources>
+        <image name="popup-bg-3" width="621" height="1104"/>
+    </resources>
 </document>
