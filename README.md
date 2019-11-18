@@ -5,10 +5,9 @@
 <br/>
 <br/>
 
-**🚀🚀🚀不耦合弹框代码,但可以为它添加弹出方式;
+**🚀🚀🚀不耦合view代码,但可以为它添加弹出方式;
 <br>🚀🚀🚀TFPopup不是弹框,它只是一种弹出方式;**
-
-<br>使用TFPopup做弹框会让你的弹框变的异常简单。
+<br>使用TFPopup做弹框会让你的弹框变的异常简单:
 <br>1.已经有一个view。
 <br>2.用喜欢的方式将它弹出来。<br>
 
@@ -19,7 +18,7 @@
 - 默认支持多种弹出方式<br>
 &nbsp;&nbsp;&nbsp;&nbsp;无动画覆盖/缩放弹出/滑动弹出/基于某点的泡泡方式弹出/基于frame变化的弹出/基于于遮罩的遮罩弹出/折叠弹出
 - 在弹出方式基础上可以通过**调节参数**来调整**弹出效果**<br>
-&nbsp;&nbsp;&nbsp;&nbsp;**拖动：**开启、关闭拖动/是否开启拖动弹性效果/设置拖动松手后自动消失距离<br>
+&nbsp;&nbsp;&nbsp;&nbsp;**拖动：** 开启、关闭拖动/是否开启拖动弹性效果/设置拖动松手后自动消失距离<br>
 &nbsp;&nbsp;&nbsp;&nbsp;**拖动方式：** 自由模式下弹框可全方向拖动,松手后触发消失/组合模式下可自由组合上下左右四个方向进行方向识别<br>
 &nbsp;&nbsp;&nbsp;&nbsp;**时间调整：** 动画时间/动画延迟开始时间/动画延迟消失时间/弹框自动消失时间<br>
 &nbsp;&nbsp;&nbsp;&nbsp;**时间曲线：** 通过UIViewAnimationOptions设置动画时间曲线<br>
@@ -30,9 +29,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;**泡泡：** 泡泡基准点/泡泡八个弹出方向<br>
 &nbsp;&nbsp;&nbsp;&nbsp;**mask：** 可分别设置显示、消失时的mask,只需要设置属性:mask初始path、mask结束path即可<br>
 - 保留弹出全过程接口，支持完全自定义弹出方式、动画、和背景<br>
-&nbsp;&nbsp;&nbsp;&nbsp;TFPopupDataSource代理包含整个弹出过程事件，TFPopup使view本身实现此代理来封装以上动画效果的组合和弹出，你可以在弹框类中
+&nbsp;&nbsp;&nbsp;&nbsp;**TFPopupDataSource**代理包含整个弹出过程事件，TFPopup使view本身实现此代理来封装以上动画效果的组合和弹出，你可以在弹框类中
 &nbsp;&nbsp;&nbsp;&nbsp;重写一个或多个方法来截断和修改弹出过程以实现完全自定义动画效果
-&nbsp;&nbsp;&nbsp;&nbsp;TFPopupBackgroundDelegate同TFPopupDataSource一样，可通过实现一个或多个方法来截断和修改弹出过程以实现完全自定义背景和背景动画
+&nbsp;&nbsp;&nbsp;&nbsp;**TFPopupBackgroundDelegate**同TFPopupDataSource一样，可通过实现一个或多个方法来截断和修改弹出过程以实现完全自定义背景和背景动画
 
 
 ## 弹出效果图示例
@@ -45,7 +44,7 @@ ___
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag3.gif" width="30%" height="30%">
 </div>
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag0.gif" width="30%" height="30%">
 </div>
 <br>
 
