@@ -38,6 +38,8 @@
     param.dragBouncesEnable = YES;
     param.dragAutoDissmissMinDistance = 60;
     [imageView tf_showSlide:self.view direction:PopupDirectionTop popupParam:param];
+   
+    
 }
 
 
