@@ -15,6 +15,9 @@
 		903164D7238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 903164D6238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m */; };
 		903164D9238FB76600FD1EE1 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164D8238FB76600FD1EE1 /* MainController.swift */; };
 		903164DB238FBB2900FD1EE1 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164DA238FBB2900FD1EE1 /* MainNavigationController.swift */; };
+		903164E0238FC01200FD1EE1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164DF238FC01200FD1EE1 /* BaseViewController.swift */; };
+		903164E2238FC03600FD1EE1 /* UniversalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164E1238FC03600FD1EE1 /* UniversalView.swift */; };
+		903164E4238FC06100FD1EE1 /* NormalController0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164E3238FC06100FD1EE1 /* NormalController0.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		903164D6238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwiftProjectUseOCPodHelper.m; sourceTree = "<group>"; };
 		903164D8238FB76600FD1EE1 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		903164DA238FBB2900FD1EE1 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		903164DF238FC01200FD1EE1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		903164E1238FC03600FD1EE1 /* UniversalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalView.swift; sourceTree = "<group>"; };
+		903164E3238FC06100FD1EE1 /* NormalController0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalController0.swift; sourceTree = "<group>"; };
 		96A489657EFD50858E095359 /* Pods-TFPopupSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-TFPopupSwiftDemo/Pods-TFPopupSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,12 +88,23 @@
 				903164DA238FBB2900FD1EE1 /* MainNavigationController.swift */,
 				903164D5238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.h */,
 				903164D6238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m */,
+				903164DC238FBE4500FD1EE1 /* Example */,
 				903164C9238FAEF000FD1EE1 /* Assets.xcassets */,
 				903164CB238FAEF000FD1EE1 /* LaunchScreen.storyboard */,
 				903164CE238FAEF000FD1EE1 /* Info.plist */,
 				903164D4238FAFF600FD1EE1 /* TFPopupSwiftDemo-Bridging-Header.h */,
 			);
 			path = TFPopupSwiftDemo;
+			sourceTree = "<group>";
+		};
+		903164DC238FBE4500FD1EE1 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				903164E1238FC03600FD1EE1 /* UniversalView.swift */,
+				903164DF238FC01200FD1EE1 /* BaseViewController.swift */,
+				903164E3238FC06100FD1EE1 /* NormalController0.swift */,
+			);
+			path = Example;
 			sourceTree = "<group>";
 		};
 		929271DB7A4D9D4296A73C17 /* Frameworks */ = {
@@ -218,6 +235,9 @@
 				903164D7238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m in Sources */,
 				903164C1238FAEEE00FD1EE1 /* AppDelegate.swift in Sources */,
 				903164D9238FB76600FD1EE1 /* MainController.swift in Sources */,
+				903164E0238FC01200FD1EE1 /* BaseViewController.swift in Sources */,
+				903164E2238FC03600FD1EE1 /* UniversalView.swift in Sources */,
+				903164E4238FC06100FD1EE1 /* NormalController0.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

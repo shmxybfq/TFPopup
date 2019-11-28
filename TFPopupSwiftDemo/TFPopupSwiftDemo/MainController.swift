@@ -34,7 +34,9 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
             cell = UITableViewCell.init(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: cellId);
             cell?.selectionStyle = UITableViewCell.SelectionStyle.none
         }
-        cell?.textLabel?.text = self.dataSource.object(at: indexPath.row) as? String
+        let model:MainModel = self.dataSource.object(at: indexPath.row) as! MainModel
+        cell?.textLabel?.text = model.title
+        cell?.detailTextLabel?.text = model.name
         return cell!
     }
     
@@ -43,7 +45,11 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let model:MainModel = self.dataSource.object(at: indexPath.row) as! MainModel
+       
+        let controller:UIViewController = (model.name?.e_initController())!
+    
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func itTableView(){
@@ -51,7 +57,7 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.tableView?.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
-
+        
         self.view.addSubview(self.tableView!)
         self.tableView?.snp.makeConstraints({ (make) in
             make.top.equalTo(self.view)
@@ -60,17 +66,8 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     @objc func itDataSource(){
-        self.dataSource.add("0")
-        self.dataSource.add("1")
-        self.dataSource.add("2")
-        self.dataSource.add("3")
-        self.dataSource.add("4")
-        self.dataSource.add("5")
-        self.dataSource.add("6")
-        self.dataSource.add("7")
-        self.dataSource.add("8")
-        self.dataSource.add("9")
-        self.dataSource.add("10")
+        
+        self.dataSource.add(MainModel.init(title: "普通弹框", name: "NormalController0"))
         
     }
     
@@ -82,3 +79,33 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
 }
 
+class MainModel: NSObject {
+    
+    public init(title:String,name:String) {
+        self.title = title
+        self.name = name
+    }
+    
+    public var title:String?
+    public var  name:String?
+}
+
+
+extension String{
+    
+     public func e_initController() -> UIViewController{
+        guard let spaceName = Bundle.main.infoDictionary!["CFBundleExecutable"] as? String else {
+            print("获取命名空间失败")
+            return UIViewController()
+        }
+        //self:表示试图控制器的类名
+        let controllerClass: AnyClass? = NSClassFromString(spaceName + "." + self)
+        //Swift中如果想通过一个Class来创建一个对象,必须告诉系统这个Class的确切类型
+        guard let typeClass = controllerClass as? UIViewController.Type else {
+            print("vcClass不能当做UIViewController")
+            return UIViewController()
+        }
+        let controller = typeClass.init()
+        return controller
+    }
+}
