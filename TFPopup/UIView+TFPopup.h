@@ -152,7 +152,7 @@
 @property(nonatomic,strong)TFPopupParam *popupParam;//默认动画参数
 
 
-//手动控制弹框消失
+//手动控制弹框消失,此函数是将弹框正常动画移除,动画完成后内部调用tf_remove
 -(void)tf_hide;
 //手动控制弹框移除
 -(void)tf_remove;

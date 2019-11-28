@@ -96,6 +96,31 @@ ___
 
 ## 使用示例（具体请参照demo和代码）
 
+### 普通用法(TFPopupParam为nil)
+___
+
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupOperatingInstruction.png" width="100%" height="100%">
+</div>
+
+### 高级用法(通过设置TFPopupParam修改弹出方式和动画等)
+
+___
+
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupParam.png" width="100%" height="100%">
+</div>
+
+### 自定义用法(通过在view上重写方法实现定制弹出方式、动画、背景等完全自定义弹框)
+
+___
+
+
+
+
+### 普通用法
+
+
 **固定位置-无动画**
 
 ```
