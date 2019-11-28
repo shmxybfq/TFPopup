@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'TFPopupSwiftDemo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for TFPopupSwiftDemo
+    pod 'TFPopup' # 通用弹出框架
+    pod 'SnapKit' # layout
+
+end

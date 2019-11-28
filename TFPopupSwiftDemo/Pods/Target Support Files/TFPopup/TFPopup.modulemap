@@ -1,0 +1,6 @@
+framework module TFPopup {
+  umbrella header "TFPopup-umbrella.h"
+
+  export *
+  module * { export * }
+}
