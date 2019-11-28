@@ -98,33 +98,6 @@
     [self topClick:self.topButton5];
     [self botClick:self.botButton4];
     
-    
-    UIView *oneView = nil;//你有一个view
-    UIView *fatherView = nil;//将你的view弹到这个fatherView上
-    TFPopupParam *popupParam = nil;//弹出动画的更多参数设置
-    
-    //【普通】方式弹框：默认 popupParam = nil; 设置更多动画需要传入 TFPopupParam 对象
-    [oneView tf_showNormal:fatherView popupParam:popupParam];
-    
-    //【缩放】方式弹框：更多设置同上
-    [oneView tf_showScale:fatherView offset:CGPointMake(0, 0) popupParam:popupParam];
-    
-    //【滑动】方式弹框：更多设置同上
-    [oneView tf_showSlide:fatherView direction:PopupDirectionBottom popupParam:popupParam];
-    
-    //【泡泡】方式弹框：更多设置同上
-    [oneView tf_showBubble:fatherView basePoint:CGPointMake(200, 200) bubbleDirection:PopupDirectionBottomLeft popupParam:popupParam];
-    
-    //【展开/折叠】方式弹框：更多设置同上
-    [oneView tf_showFold:fatherView targetFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 300) direction:PopupDirectionBottom popupParam:popupParam];
-    
-    //【位移和形变】方式弹框：更多设置同上
-    [oneView tf_showFrame:fatherView from:CGRectMake(-200, 0, 200, 200) to:CGRectMake(0, 0, 200, 200) popupParam:popupParam];
-    
-    //【遮罩】方式弹框：更多设置同上
-    [oneView tf_showMask:fatherView popupParam:popupParam];
-    
-    
 }
 
 -(void)showClick:(UIButton *)ins{

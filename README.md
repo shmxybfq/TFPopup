@@ -94,7 +94,7 @@ ___
 </div>
 
 
-## 使用示例（具体请参照demo和代码）
+## 使用（图片加载较慢请耐心等待或在项目目录中查找使用截图资源）
 
 ### 普通用法(TFPopupParam为nil)
 ___
@@ -104,225 +104,22 @@ ___
 </div>
 
 ### 高级用法(通过设置TFPopupParam修改弹出方式和动画等)
-
 ___
 
 <div>
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupParam.png" width="100%" height="100%">
 </div>
 
-### 自定义用法(通过在view上重写方法实现定制弹出方式、动画、背景等完全自定义弹框)
-
+### 自定义用法(通过在view上重写TFPopupDataSource 和 TFPopupBackgroundDelegate 的一个或多个方法来实现你想要的效果)
 ___
 
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/delegateAndDatasource.png" width="100%" height="100%">
+</div>
 
-
-
-### 普通用法
-
-
-**固定位置-无动画**
-
-```
-//效果参考：【默认动画效果1-1】
-UIView *view = nil;
-[view tf_showNormal:self.view animated:NO];
-//[view tf_showNormal:self.view offset:CGPointMake(0, -100) animated:NO];//offset弹框相对于原来位置的偏移
-//TFPopupParam *param = [TFPopupParam new];//更多参数设置
-//[view tf_showNormal:self.view popupParam:param];
-```
-
-**固定位置-渐隐动画**
-
-```
-//效果参考：【默认动画效果1-1,此基础上背景和弹框具有渐隐效果】
-UIView *view = nil;
-[view tf_showNormal:self.view animated:YES];
-//[view tf_showNormal:self.view offset:CGPointMake(0, -100) animated:YES];//offset弹框相对于原来位置的偏移
-//TFPopupParam *param = [TFPopupParam new];//更多参数设置
-//[view tf_showNormal:self.view popupParam:param];
-```
-
-**固定位置-缩放动画**
-
-```
-//效果参考：【默认动画效果2-1】
-UIView *view = nil;
-TFPopupParam *param = [TFPopupParam new];
-[view tf_showScale:self.view offset:CGPointMake(0, 50) popupParam:param];
-//[view tf_showScale:self.view offset:CGPointMake(0, 50)];
-//[view tf_showScale:self.view];
-```
-
-**滑动弹出**
-
-```
-//效果参考：【默认动画效果1-2,1-3,3-2】
-UIView *view = nil;
-TFPopupParam *param = [TFPopupParam new];
-param.popupSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 300);//设置弹框的尺寸
-param.offset = CGPointZero;//在计算好的位置上偏移
-[view tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
-//[view tf_showSlide:self.view direction:PopupDirectionLeft];
-```
-
-**泡泡弹出**
-
-```
-//效果参考：【默认动画效果3-1】
-UIView *view = nil;
-TFPopupParam *param = [TFPopupParam new];
-param.popupSize = CGSizeMake(200, 300);//设置弹框的尺寸
-param.offset = CGPointMake(-30, 50);//左移30右移50
-[view tf_showBubble:self.view basePoint:CGPointMake(100, 100) bubbleDirection:PopupDirectionBottomLeft popupParam:param];
-```
-
-**形变&位移【frame】弹出**
-
-```
-//效果参考：【默认动画效果1-2,1-3,2-2,2-3,3-2】
-UIView *view = nil;
-TFPopupParam *param = [TFPopupParam new];
-param.backgroundColorClear = YES;//设置背景色透明
-CGRect from = CGRectMake(-200, 0, 200, [UIScreen mainScreen].bounds.size.height);
-CGRect to = CGRectMake(0, 0, 200, [UIScreen mainScreen].bounds.size.height);
-[view tf_showFrame:self.view from:from to:to popupParam:param];
-```
-
-**遮罩弹出**
-
-```
-//效果参考：【基于默认动画效果的参数自由组合1-2】【自定义动画效果2-1】
-//小五角形在左
-UIBezierPath *p0 = [UIBezierPath bezierPath];
-[p0 moveToPoint:CGPointMake(-200, 0)];
-[p0 addLineToPoint:CGPointMake(-100, 0)];
-[p0 addLineToPoint:CGPointMake(0, 170 * 0.5)];
-[p0 addLineToPoint:CGPointMake(-100, 170)];
-[p0 addLineToPoint:CGPointMake(-200, 170)];
-[p0 closePath];
-//小五角形从左到右
-UIBezierPath *p1 = [UIBezierPath bezierPath];
-[p1 moveToPoint:CGPointMake(-200, 0)];
-[p1 addLineToPoint:CGPointMake(314, 0)];
-[p1 addLineToPoint:CGPointMake(314 + 100, 170 * 0.5)];
-[p1 addLineToPoint:CGPointMake(314, 170)];
-[p1 addLineToPoint:CGPointMake(-200, 170)];
-[p1 closePath];
-
-UIView *view = nil;
-TFPopupParam *param = [TFPopupParam new];
-param.maskShowFromPath = p0;
-param.maskShowToPath = p1;
-[view tf_showMask:self.view popupParam:param];
-```
-
-**默认动画基础上修改属性动画弹出**
-
-```
-//效果参考：【自定义动画效果2-3】
-
-TFPopupParam *param = [TFPopupParam new];
-param.showKeyPath = @"transform.rotation.y";//弹出时的属性动画
-param.showFromValue = @(-M_PI * 2);//起始动画值
-param.showToValue = @(0);//结束动画值
-param.hideKeyPath = @"transform.rotation.x";//消失时的属性动画
-param.hideFromValue = @(0);
-param.hideToValue = @(M_PI * 2);
-param.autoDissmissDuration = 1;//弹出后1s后自动消失
-param.duration = 0.5;//动画时间0.5
-
-UIView *view = nil;
-[view tf_showCustem:self.view popupParam:param delegate:nil];
-```
-
-**自定义动画（示例）**
-
-```
-//【自定义动画效果1-3代码】
-UIView *view = nil;
-view.popupDelegate = self;
-[view tf_showNormal:self.view popupParam:param];
-//代理方法
-//代理方法
-- (BOOL)tf_popupViewWillShow:(UIView *)popup{
-    if (@available(iOS 9.0, *)) {
-        CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
-        spring.damping = 15;
-        spring.stiffness = 100;
-        spring.mass = 1.5;
-        spring.initialVelocity = 0;
-        spring.duration = spring.settlingDuration;
-        spring.fromValue = @(-200);
-        spring.toValue = @(self.view.center.y);
-        spring.fillMode = kCAFillModeForwards;
-        [popup.layer addAnimation:spring forKey:nil];
-        __weak typeof(popup) weakPopup = popup;
-        [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-            if (finished) {
-                weakPopup.center = CGPointMake(kSize.width * 0.5, kSize.height * 0.5);
-            }
-        }];
-    }
-    return NO;
-}
-
-- (BOOL)tf_popupViewWillHide:(UIView *)popup{
-    if (@available(iOS 9.0, *)) {
-        popup.center = CGPointMake(kSize.width * 0.5, -500);
-        CASpringAnimation *spring = [CASpringAnimation animationWithKeyPath:@"position.y"];
-        spring.damping = 15;
-        spring.stiffness = 100;
-        spring.mass = 1.5;
-        spring.initialVelocity = 0;
-        spring.duration = spring.settlingDuration;
-        spring.fromValue = @(self.view.center.y);
-        spring.toValue = @(-200);
-        spring.fillMode = kCAFillModeForwards;
-        [popup.layer addAnimation:spring forKey:nil];
-        __weak typeof(popup) weakPopup = popup;
-        [spring observerAnimationDidStop:^(CAAnimation *anima, BOOL finished) {
-            if (finished) {
-                weakPopup.center = CGPointMake(kSize.width * 0.5, -200);
-            }
-        }];
-    }
-    return NO;
-}
-
-```
-
-**自定义背景（示例）**
-需要自己实现代理TFPopupBackgroundDelegate,具体请看demo
-
-```
-//【自定义动画效果2-3代码】
-- (NSInteger)tf_popupBackgroundViewCount:(UIView *)popup;//默认1
-//默认UIButton背景色为black-0.3透明度
-- (UIView *)tf_popupView:(UIView *)popup backgroundViewAtIndex:(NSInteger)index;
-- (CGRect)tf_popupView:(UIView *)popup backgroundViewFrameAtIndex:(NSInteger)index;//默认弹框区域大小
-```
-
-## 监听弹出过程:block&delegate
-监听弹出过程有两种方式,一种是代理方式如上所述，另外一种是block如下代码
-```
-//弹出前调用此函数以监听弹出过程
--(void)tf_observerDelegateProcess:(TFDelegateProcessBlock)delegateProcessBlock;
-
-//弹出过程阶段枚举如下：
-typedef NS_ENUM(NSInteger,DelegateProcess) {
-    DelegateProcessWillGetConfiguration = 0,//将要获取弹出配置
-    DelegateProcessDidGetConfiguration,//已经获取弹出配置
-    DelegateProcessWillShow,//将要弹出
-    DelegateProcessDidShow,//已经调用完弹出,正在执行动画
-    DelegateProcessShowAnimationDidFinish,//弹出动画执行完成
-    DelegateProcessWillHide,//将要消失
-    DelegateProcessDidHide,//已经调用完消失,正在执行动画
-    DelegateProcessHideAnimationDidFinish,//消失动画执行完成
-    DelegateProcessBackgroundDidTouch,//默认背景点击
-};
-
-```
+## 使用补充
+##### 以上方式简单描述了使用方法,具体效果和使用请参照demo !
+##### 此框架会一直更新维护【转行除外】请放心使用。
 
 ## 安装
 ```
@@ -330,10 +127,11 @@ pod 'TFPopup'
 ```
 
 ## 如果
-使用过程中有bug，请随时issues我或者联系我；
-现有功能满足不了你的需求，请随时issues我或者联系我；
-有更好的建议或者优化，请随时issues我或者联系我；
-QQ:927141965,邮箱shmxybfq@163.com
+使用过程中有bug或不足，请随时issues我或者联系我；<br>
+现有功能满足不了你的需求，请随时issues我或者联系我；<br>
+有更好的建议或者优化，请随时issues我或者联系我；<br>
+QQ:927141965;<br>
+邮箱shmxybfq@163.com;<br>
 
 
 
