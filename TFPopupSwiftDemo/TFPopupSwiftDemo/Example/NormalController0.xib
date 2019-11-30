@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NormalController0" customModule="TFPopupSwiftDemo" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DAl-27-2HY">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9U-27-TYp">
+                            <rect key="frame" x="20" y="150" width="100" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="YFC-Jz-xmV"/>
+                                <constraint firstAttribute="width" constant="100" id="iM4-rr-goQ"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <state key="normal" title="无动画弹出"/>
+                            <connections>
+                                <action selector="noAnimaitonPopup:" destination="-1" eventType="touchUpInside" id="15m-rO-QIj"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXF-zK-Mf5">
+                            <rect key="frame" x="294" y="150" width="100" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="FVK-eJ-mSR"/>
+                                <constraint firstAttribute="width" constant="100" id="Hxi-kV-Usv"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <state key="normal" title="渐隐动画弹出"/>
+                            <connections>
+                                <action selector="animaitonPopup:" destination="-1" eventType="touchUpInside" id="qOp-P2-Eak"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="mXF-zK-Mf5" secondAttribute="bottom" id="ION-cU-x31"/>
+                        <constraint firstAttribute="height" constant="200" id="NAt-Mr-a3b"/>
+                        <constraint firstAttribute="trailing" secondItem="mXF-zK-Mf5" secondAttribute="trailing" constant="20" id="oek-ut-aM7"/>
+                        <constraint firstItem="K9U-27-TYp" firstAttribute="leading" secondItem="DAl-27-2HY" secondAttribute="leading" constant="20" id="qgp-fO-Qoj"/>
+                        <constraint firstAttribute="bottom" secondItem="K9U-27-TYp" secondAttribute="bottom" id="swQ-J2-4HL"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="DAl-27-2HY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OaV-u2-GFf"/>
+                <constraint firstItem="DAl-27-2HY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="POj-2K-jBJ"/>
+                <constraint firstAttribute="trailing" secondItem="DAl-27-2HY" secondAttribute="trailing" id="WBF-Yi-x1d"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="142"/>
+        </view>
+    </objects>
+</document>

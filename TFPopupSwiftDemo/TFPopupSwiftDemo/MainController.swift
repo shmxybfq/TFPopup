@@ -68,6 +68,7 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @objc func itDataSource(){
         
         self.dataSource.add(MainModel.init(title: "普通弹框", name: "NormalController0"))
+        self.dataSource.add(MainModel.init(title: "滑动弹框", name: "NormalController1"))
         
     }
     

@@ -1,5 +1,5 @@
 //
-//  UniversalView.swift
+//  BottomView.swift
 //  TFPopupSwiftDemo
 //
 //  Created by zhutaofeng on 2019/11/30.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-class UniversalView: UIView {
-
+class BottomView: UIView {
+    
     @IBOutlet weak var mainButton: UIButton!
     
     override func awakeFromNib() {
         self.mainButton.addTarget(self, action: #selector(hide), for: .touchUpInside)
     }
     
-   
+    
     @objc func hide(){
         self.tf_hide()
     }
-
+    
 }

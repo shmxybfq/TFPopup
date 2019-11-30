@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		70EF079C3DB90F9825244AF7 /* Pods_TFPopupSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 425D3932BBF92DFD4678F16C /* Pods_TFPopupSwiftDemo.framework */; };
+		902159ED2392423B0013E77E /* NormalController0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902159EB2392423B0013E77E /* NormalController0.swift */; };
+		902159EE2392423B0013E77E /* NormalController0.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902159EC2392423B0013E77E /* NormalController0.xib */; };
+		902159F12392449A0013E77E /* NormalController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902159EF2392449A0013E77E /* NormalController1.swift */; };
+		902159F22392449A0013E77E /* NormalController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902159F02392449A0013E77E /* NormalController1.xib */; };
+		902159F42392A5280013E77E /* LeftRightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902159F32392A5280013E77E /* LeftRightView.swift */; };
+		902159F62392A5300013E77E /* LeftRightView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902159F52392A5300013E77E /* LeftRightView.xib */; };
+		902159F82392A55D0013E77E /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902159F72392A55D0013E77E /* TopView.swift */; };
+		902159FA2392A5650013E77E /* TopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902159F92392A5650013E77E /* TopView.xib */; };
+		902159FC2392A58D0013E77E /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902159FB2392A58D0013E77E /* BottomView.swift */; };
+		902159FE2392A5940013E77E /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902159FD2392A5940013E77E /* BottomView.xib */; };
 		903164C1238FAEEE00FD1EE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164C0238FAEEE00FD1EE1 /* AppDelegate.swift */; };
 		903164C5238FAEEE00FD1EE1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164C4238FAEEE00FD1EE1 /* ViewController.swift */; };
 		903164CA238FAEF000FD1EE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 903164C9238FAEF000FD1EE1 /* Assets.xcassets */; };
@@ -16,13 +26,24 @@
 		903164D9238FB76600FD1EE1 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164D8238FB76600FD1EE1 /* MainController.swift */; };
 		903164DB238FBB2900FD1EE1 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164DA238FBB2900FD1EE1 /* MainNavigationController.swift */; };
 		903164E0238FC01200FD1EE1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164DF238FC01200FD1EE1 /* BaseViewController.swift */; };
-		903164E2238FC03600FD1EE1 /* UniversalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164E1238FC03600FD1EE1 /* UniversalView.swift */; };
-		903164E4238FC06100FD1EE1 /* NormalController0.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903164E3238FC06100FD1EE1 /* NormalController0.swift */; };
+		9035805923923963005EC8AE /* UniversalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035805823923963005EC8AE /* UniversalView.swift */; };
+		9035805B23923988005EC8AE /* UniversalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9035805A23923988005EC8AE /* UniversalView.xib */; };
+		9035806623923F80005EC8AE /* UIView_ExtensionSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035806523923F80005EC8AE /* UIView_ExtensionSystem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		425D3932BBF92DFD4678F16C /* Pods_TFPopupSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFPopupSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78942AE213B40DDEBC99A342 /* Pods-TFPopupSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupSwiftDemo.debug.xcconfig"; path = "Target Support Files/Pods-TFPopupSwiftDemo/Pods-TFPopupSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		902159EB2392423B0013E77E /* NormalController0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalController0.swift; sourceTree = "<group>"; };
+		902159EC2392423B0013E77E /* NormalController0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NormalController0.xib; sourceTree = "<group>"; };
+		902159EF2392449A0013E77E /* NormalController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalController1.swift; sourceTree = "<group>"; };
+		902159F02392449A0013E77E /* NormalController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NormalController1.xib; sourceTree = "<group>"; };
+		902159F32392A5280013E77E /* LeftRightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftRightView.swift; sourceTree = "<group>"; };
+		902159F52392A5300013E77E /* LeftRightView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftRightView.xib; sourceTree = "<group>"; };
+		902159F72392A55D0013E77E /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		902159F92392A5650013E77E /* TopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopView.xib; sourceTree = "<group>"; };
+		902159FB2392A58D0013E77E /* BottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomView.swift; sourceTree = "<group>"; };
+		902159FD2392A5940013E77E /* BottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
 		903164BD238FAEEE00FD1EE1 /* TFPopupSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFPopupSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		903164C0238FAEEE00FD1EE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		903164C4238FAEEE00FD1EE1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,8 +56,9 @@
 		903164D8238FB76600FD1EE1 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		903164DA238FBB2900FD1EE1 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		903164DF238FC01200FD1EE1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		903164E1238FC03600FD1EE1 /* UniversalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalView.swift; sourceTree = "<group>"; };
-		903164E3238FC06100FD1EE1 /* NormalController0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalController0.swift; sourceTree = "<group>"; };
+		9035805823923963005EC8AE /* UniversalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalView.swift; sourceTree = "<group>"; };
+		9035805A23923988005EC8AE /* UniversalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UniversalView.xib; sourceTree = "<group>"; };
+		9035806523923F80005EC8AE /* UIView_ExtensionSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_ExtensionSystem.swift; sourceTree = "<group>"; };
 		96A489657EFD50858E095359 /* Pods-TFPopupSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-TFPopupSwiftDemo/Pods-TFPopupSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +110,7 @@
 				903164DA238FBB2900FD1EE1 /* MainNavigationController.swift */,
 				903164D5238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.h */,
 				903164D6238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m */,
+				9035806523923F80005EC8AE /* UIView_ExtensionSystem.swift */,
 				903164DC238FBE4500FD1EE1 /* Example */,
 				903164C9238FAEF000FD1EE1 /* Assets.xcassets */,
 				903164CB238FAEF000FD1EE1 /* LaunchScreen.storyboard */,
@@ -100,9 +123,19 @@
 		903164DC238FBE4500FD1EE1 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				903164E1238FC03600FD1EE1 /* UniversalView.swift */,
 				903164DF238FC01200FD1EE1 /* BaseViewController.swift */,
-				903164E3238FC06100FD1EE1 /* NormalController0.swift */,
+				902159EB2392423B0013E77E /* NormalController0.swift */,
+				902159EC2392423B0013E77E /* NormalController0.xib */,
+				902159EF2392449A0013E77E /* NormalController1.swift */,
+				902159F02392449A0013E77E /* NormalController1.xib */,
+				9035805823923963005EC8AE /* UniversalView.swift */,
+				9035805A23923988005EC8AE /* UniversalView.xib */,
+				902159F32392A5280013E77E /* LeftRightView.swift */,
+				902159F52392A5300013E77E /* LeftRightView.xib */,
+				902159F72392A55D0013E77E /* TopView.swift */,
+				902159F92392A5650013E77E /* TopView.xib */,
+				902159FB2392A58D0013E77E /* BottomView.swift */,
+				902159FD2392A5940013E77E /* BottomView.xib */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -176,8 +209,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				902159FA2392A5650013E77E /* TopView.xib in Resources */,
 				903164CD238FAEF000FD1EE1 /* LaunchScreen.storyboard in Resources */,
+				9035805B23923988005EC8AE /* UniversalView.xib in Resources */,
+				902159F22392449A0013E77E /* NormalController1.xib in Resources */,
 				903164CA238FAEF000FD1EE1 /* Assets.xcassets in Resources */,
+				902159F62392A5300013E77E /* LeftRightView.xib in Resources */,
+				902159EE2392423B0013E77E /* NormalController0.xib in Resources */,
+				902159FE2392A5940013E77E /* BottomView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,14 +269,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				902159F12392449A0013E77E /* NormalController1.swift in Sources */,
 				903164DB238FBB2900FD1EE1 /* MainNavigationController.swift in Sources */,
 				903164C5238FAEEE00FD1EE1 /* ViewController.swift in Sources */,
+				9035805923923963005EC8AE /* UniversalView.swift in Sources */,
 				903164D7238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m in Sources */,
+				902159FC2392A58D0013E77E /* BottomView.swift in Sources */,
+				902159F42392A5280013E77E /* LeftRightView.swift in Sources */,
 				903164C1238FAEEE00FD1EE1 /* AppDelegate.swift in Sources */,
 				903164D9238FB76600FD1EE1 /* MainController.swift in Sources */,
+				902159ED2392423B0013E77E /* NormalController0.swift in Sources */,
+				9035806623923F80005EC8AE /* UIView_ExtensionSystem.swift in Sources */,
+				902159F82392A55D0013E77E /* TopView.swift in Sources */,
 				903164E0238FC01200FD1EE1 /* BaseViewController.swift in Sources */,
-				903164E2238FC03600FD1EE1 /* UniversalView.swift in Sources */,
-				903164E4238FC06100FD1EE1 /* NormalController0.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
