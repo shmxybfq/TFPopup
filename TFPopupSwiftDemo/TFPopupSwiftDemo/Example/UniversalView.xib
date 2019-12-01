@@ -22,7 +22,7 @@
                     <state key="normal" image="popup-1"/>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="cid-tK-aJS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8Yh-cB-Pjp"/>
                 <constraint firstItem="cid-tK-aJS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SBe-Vi-O05"/>

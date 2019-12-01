@@ -39,6 +39,8 @@
 		9061A228239380D300AAFE80 /* BubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9061A227239380D300AAFE80 /* BubbleView.xib */; };
 		9061A22B2393F59B00AAFE80 /* NormalController4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9061A2292393F59B00AAFE80 /* NormalController4.swift */; };
 		9061A22C2393F59B00AAFE80 /* NormalController4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9061A22A2393F59B00AAFE80 /* NormalController4.xib */; };
+		9061A22F2393FDE200AAFE80 /* NormalController5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9061A22D2393FDE200AAFE80 /* NormalController5.swift */; };
+		9061A2302393FDE200AAFE80 /* NormalController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9061A22E2393FDE200AAFE80 /* NormalController5.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +81,8 @@
 		9061A227239380D300AAFE80 /* BubbleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BubbleView.xib; sourceTree = "<group>"; };
 		9061A2292393F59B00AAFE80 /* NormalController4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalController4.swift; sourceTree = "<group>"; };
 		9061A22A2393F59B00AAFE80 /* NormalController4.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NormalController4.xib; sourceTree = "<group>"; };
+		9061A22D2393FDE200AAFE80 /* NormalController5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalController5.swift; sourceTree = "<group>"; };
+		9061A22E2393FDE200AAFE80 /* NormalController5.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NormalController5.xib; sourceTree = "<group>"; };
 		96A489657EFD50858E095359 /* Pods-TFPopupSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-TFPopupSwiftDemo/Pods-TFPopupSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +158,8 @@
 				9061A22223937DF800AAFE80 /* NormalController3.xib */,
 				9061A2292393F59B00AAFE80 /* NormalController4.swift */,
 				9061A22A2393F59B00AAFE80 /* NormalController4.xib */,
+				9061A22D2393FDE200AAFE80 /* NormalController5.swift */,
+				9061A22E2393FDE200AAFE80 /* NormalController5.xib */,
 				9035805823923963005EC8AE /* UniversalView.swift */,
 				9035805A23923988005EC8AE /* UniversalView.xib */,
 				902159F32392A5280013E77E /* LeftRightView.swift */,
@@ -243,6 +249,7 @@
 				9061A22423937DF800AAFE80 /* NormalController3.xib in Resources */,
 				902159FA2392A5650013E77E /* TopView.xib in Resources */,
 				903164CD238FAEF000FD1EE1 /* LaunchScreen.storyboard in Resources */,
+				9061A2302393FDE200AAFE80 /* NormalController5.xib in Resources */,
 				9035805B23923988005EC8AE /* UniversalView.xib in Resources */,
 				9061A2202393798500AAFE80 /* TopBottomFoldView.xib in Resources */,
 				902159F22392449A0013E77E /* NormalController1.xib in Resources */,
@@ -311,6 +318,7 @@
 				903164C5238FAEEE00FD1EE1 /* ViewController.swift in Sources */,
 				9061A21B2393787900AAFE80 /* NormalController2.swift in Sources */,
 				9035805923923963005EC8AE /* UniversalView.swift in Sources */,
+				9061A22F2393FDE200AAFE80 /* NormalController5.swift in Sources */,
 				9061A22B2393F59B00AAFE80 /* NormalController4.swift in Sources */,
 				903164D7238FAFF700FD1EE1 /* SwiftProjectUseOCPodHelper.m in Sources */,
 				902159FC2392A58D0013E77E /* BottomView.swift in Sources */,

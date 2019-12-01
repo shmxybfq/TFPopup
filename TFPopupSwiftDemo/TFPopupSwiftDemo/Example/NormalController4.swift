@@ -51,5 +51,4 @@ class NormalController4: UIViewController {
         view.backgroundColor = UIColor.brown
         view.tf_showFrame(self.view, from: from, to: to, popupParam: param)
     }
-    
 }
