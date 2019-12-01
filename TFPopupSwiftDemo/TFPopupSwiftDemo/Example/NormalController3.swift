@@ -16,7 +16,7 @@ class NormalController3: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "折叠"
+        self.title = "泡泡"
         self.param.popupSize = CGSize.init(width: 247 * 0.5, height: 243 * 0.5)
         self.param.disuseShowPopupAlphaAnimation = true;
         self.param.disuseHidePopupAlphaAnimation = true;
