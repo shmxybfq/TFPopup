@@ -12,7 +12,7 @@ class NormalController0: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "普通"
         // Do any additional setup after loading the view.
     }
 

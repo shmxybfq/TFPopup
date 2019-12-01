@@ -69,6 +69,8 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         self.dataSource.add(MainModel.init(title: "普通弹框", name: "NormalController0"))
         self.dataSource.add(MainModel.init(title: "滑动弹框", name: "NormalController1"))
+        self.dataSource.add(MainModel.init(title: "折叠弹框", name: "NormalController2"))
+        self.dataSource.add(MainModel.init(title: "泡泡弹框", name: "NormalController3"))
         
     }
     

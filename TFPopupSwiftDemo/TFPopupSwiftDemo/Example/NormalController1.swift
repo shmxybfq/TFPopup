@@ -9,11 +9,11 @@
 import UIKit
 import TFPopup
 
-class NormalController1: UIViewController {
+class NormalController1: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "滑动"
     }
     
     let window = UIApplication.shared.windows.last
