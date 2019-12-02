@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NormalController0: BaseViewController {
+class NormalController0: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

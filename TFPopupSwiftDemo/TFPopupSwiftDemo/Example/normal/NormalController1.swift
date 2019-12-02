@@ -9,7 +9,7 @@
 import UIKit
 import TFPopup
 
-class NormalController1: BaseViewController {
+class NormalController1: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

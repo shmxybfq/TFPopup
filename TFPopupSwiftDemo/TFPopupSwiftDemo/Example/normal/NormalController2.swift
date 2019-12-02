@@ -9,7 +9,7 @@
 import UIKit
 import TFPopup
 
-class NormalController2: BaseViewController {
+class NormalController2: UIViewController {
     
     @IBOutlet weak var menuView: UIView!
     
@@ -52,4 +52,5 @@ class NormalController2: BaseViewController {
         let view:TopBottomFoldView = TopBottomFoldView.loadFromXib() as! TopBottomFoldView
         view.tf_showFold(self.view, targetFrame: targetFrame, direction: .right, popupParam: param)
     }
+    
 }
