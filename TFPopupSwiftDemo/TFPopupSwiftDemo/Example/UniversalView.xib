@@ -20,6 +20,7 @@
                         <constraint firstAttribute="height" constant="310" id="l3J-Jy-guD"/>
                     </constraints>
                     <state key="normal" image="popup-1"/>
+                    <state key="highlighted" image="popup-1"/>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -73,7 +73,8 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.dataSource.add(MainModel.init(title: "泡泡弹框", name: "NormalController3"))
         self.dataSource.add(MainModel.init(title: "Frame变化弹框", name: "NormalController4"))
         self.dataSource.add(MainModel.init(title: "遮罩", name: "NormalController5"))
-
+        self.dataSource.add(MainModel.init(title: "拖动", name: "NormalController6"))
+        self.dataSource.add(MainModel.init(title: "设置参数自定义高级动画效果", name: "NormalController7"))
         
     }
     
