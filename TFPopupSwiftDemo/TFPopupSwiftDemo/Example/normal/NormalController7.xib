@@ -347,7 +347,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmW-NQ-bV2">
-                    <rect key="frame" x="157" y="310" width="100" height="50"/>
+                    <rect key="frame" x="157" y="826" width="100" height="50"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="NBT-nk-iQG"/>
@@ -365,9 +365,9 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="tmW-NQ-bV2" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BRv-Rc-nm2"/>
-                <constraint firstItem="tmW-NQ-bV2" firstAttribute="top" secondItem="syT-7X-79j" secondAttribute="bottom" constant="10" id="BtU-Ko-JCU"/>
                 <constraint firstAttribute="trailing" secondItem="syT-7X-79j" secondAttribute="trailing" id="DPR-DE-Y0G"/>
                 <constraint firstItem="syT-7X-79j" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="G7v-yi-KJb"/>
+                <constraint firstAttribute="bottom" secondItem="tmW-NQ-bV2" secondAttribute="bottom" constant="20" id="XLt-oo-V5u"/>
                 <constraint firstItem="syT-7X-79j" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dxz-fC-MKZ"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>

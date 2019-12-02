@@ -76,6 +76,8 @@ class MainController: UIViewController,UITableViewDelegate,UITableViewDataSource
         self.dataSource.add(MainModel.init(title: "拖动", name: "NormalController6"))
         self.dataSource.add(MainModel.init(title: "设置参数自定义高级动画效果", name: "NormalController7"))
         
+        self.dataSource.add(MainModel.init(title: "自定义-背景0", name: "CustomController0"))
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
