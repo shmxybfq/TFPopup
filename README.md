@@ -2,6 +2,10 @@
 
 [![License MIT](https://img.shields.io/badge/License-MIT-orange)]()&nbsp;
 [![Platform iOS](https://img.shields.io/badge/platform-iOS-grayblue)]()&nbsp;
+[![Pod 1.2.0](https://img.shields.io/badge/pod-1.2.0-blue)]()&nbsp;
+
+<br/>
+文档包含大量gif图片,可能加载较慢
 <br/>
 <br/>
 
