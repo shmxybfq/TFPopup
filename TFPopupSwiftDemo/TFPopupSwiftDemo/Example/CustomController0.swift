@@ -32,9 +32,14 @@ class CustomController0: UIViewController {
             CustomWithBackgroundView1.init().tf_showScale(self.view, offset: CGPoint.zero, popupParam: self.param)
         }
         
-        if title == "背景view自定义"{
+        if title == "背景自定义"{
             CustomWithBackgroundView2.init().tf_showScale(self.view, offset: CGPoint.zero, popupParam: self.param)
         }
+        
+        if title == "多背景+动画"{
+            CustomWithBackgroundView3.init().tf_showScale(self.view, offset: CGPoint.zero, popupParam: self.param)
+        }
+        
         
         
     }

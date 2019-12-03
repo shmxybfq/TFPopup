@@ -23,7 +23,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xB1-es-0cU">
                             <rect key="frame" x="0.0" y="176" width="103.5" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <state key="normal" title="右上"/>
+                            <state key="normal" title=" "/>
                             <connections>
                                 <action selector="allButtonActions:" destination="-1" eventType="touchUpInside" id="NTx-Dv-PXp"/>
                             </connections>
@@ -31,7 +31,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxC-cS-iSs">
                             <rect key="frame" x="103.5" y="176" width="103.5" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <state key="normal" title="右"/>
+                            <state key="normal" title=" "/>
                             <connections>
                                 <action selector="allButtonActions:" destination="-1" eventType="touchUpInside" id="9iK-X4-5HQ"/>
                             </connections>
@@ -39,7 +39,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMr-Lo-DgW">
                             <rect key="frame" x="207" y="176" width="103.5" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <state key="normal" title="右下"/>
+                            <state key="normal" title=" "/>
                             <connections>
                                 <action selector="allButtonActions:" destination="-1" eventType="touchUpInside" id="eAW-df-sOa"/>
                             </connections>
@@ -47,7 +47,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBV-Xi-rlf">
                             <rect key="frame" x="310.5" y="176" width="103.5" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <state key="normal" title="下"/>
+                            <state key="normal" title=" "/>
                             <connections>
                                 <action selector="allButtonActions:" destination="-1" eventType="touchUpInside" id="5X0-gP-ill"/>
                             </connections>
@@ -71,7 +71,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLu-Ep-LYP">
                             <rect key="frame" x="207" y="152" width="103.5" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <state key="normal" title="背景view自定义"/>
+                            <state key="normal" title="背景自定义"/>
                             <connections>
                                 <action selector="allButtonActions:" destination="-1" eventType="touchUpInside" id="ry7-SA-zNB"/>
                             </connections>
@@ -79,7 +79,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbM-1N-jod">
                             <rect key="frame" x="310.5" y="152" width="103.5" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <state key="normal" title="上"/>
+                            <state key="normal" title="多背景+动画"/>
                             <connections>
                                 <action selector="allButtonActions:" destination="-1" eventType="touchUpInside" id="i6i-Fd-qvx"/>
                             </connections>

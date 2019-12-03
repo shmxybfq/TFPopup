@@ -22,6 +22,7 @@
 		9061A23A23954C2500AAFE80 /* CustomBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9061A23923954C2500AAFE80 /* CustomBaseView.swift */; };
 		9061A23C23954E3F00AAFE80 /* CustomWithBackgroundView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9061A23B23954E3F00AAFE80 /* CustomWithBackgroundView1.swift */; };
 		9061A23E23954E4700AAFE80 /* CustomWithBackgroundView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9061A23D23954E4700AAFE80 /* CustomWithBackgroundView2.swift */; };
+		9061A4482396854400AAFE80 /* CustomWithBackgroundView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9061A4472396854400AAFE80 /* CustomWithBackgroundView3.swift */; };
 		90CD39EE239505D900CABA34 /* BubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CD39D1239505D900CABA34 /* BubbleView.xib */; };
 		90CD39EF239505D900CABA34 /* TopBottomFoldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CD39D2239505D900CABA34 /* TopBottomFoldView.xib */; };
 		90CD39F0239505D900CABA34 /* TopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CD39D3239505D900CABA34 /* TopView.xib */; };
@@ -73,6 +74,7 @@
 		9061A23923954C2500AAFE80 /* CustomBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomBaseView.swift; path = TFPopupSwiftDemo/Example/CustomBaseView.swift; sourceTree = SOURCE_ROOT; };
 		9061A23B23954E3F00AAFE80 /* CustomWithBackgroundView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomWithBackgroundView1.swift; path = TFPopupSwiftDemo/Example/CustomWithBackgroundView1.swift; sourceTree = SOURCE_ROOT; };
 		9061A23D23954E4700AAFE80 /* CustomWithBackgroundView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomWithBackgroundView2.swift; path = TFPopupSwiftDemo/Example/CustomWithBackgroundView2.swift; sourceTree = SOURCE_ROOT; };
+		9061A4472396854400AAFE80 /* CustomWithBackgroundView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomWithBackgroundView3.swift; path = TFPopupSwiftDemo/Example/CustomWithBackgroundView3.swift; sourceTree = SOURCE_ROOT; };
 		90CD39D1239505D900CABA34 /* BubbleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BubbleView.xib; sourceTree = "<group>"; };
 		90CD39D2239505D900CABA34 /* TopBottomFoldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopBottomFoldView.xib; sourceTree = "<group>"; };
 		90CD39D3239505D900CABA34 /* TopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopView.xib; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				9061A235239547B900AAFE80 /* CustomWithBackgroundView0.swift */,
 				9061A23B23954E3F00AAFE80 /* CustomWithBackgroundView1.swift */,
 				9061A23D23954E4700AAFE80 /* CustomWithBackgroundView2.swift */,
+				9061A4472396854400AAFE80 /* CustomWithBackgroundView3.swift */,
 				9061A23923954C2500AAFE80 /* CustomBaseView.swift */,
 			);
 			path = custum;
@@ -358,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9061A23A23954C2500AAFE80 /* CustomBaseView.swift in Sources */,
+				9061A4482396854400AAFE80 /* CustomWithBackgroundView3.swift in Sources */,
 				90CD3A03239505D900CABA34 /* NormalController0.swift in Sources */,
 				90CD3A04239505D900CABA34 /* NormalController2.swift in Sources */,
 				90CD39F8239505D900CABA34 /* NormalController1.swift in Sources */,
