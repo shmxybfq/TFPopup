@@ -5,18 +5,18 @@
 [![Pod 1.2.0](https://img.shields.io/badge/pod-1.2.0-blue)]()&nbsp;
 
 <br/>
-**🚀🚀🚀不耦合view代码,可以为已创建过 / 未创建过的view添加弹出方式;
-<br>🚀🚀🚀TFPopup不是弹框,它只是一种弹出方式;**
-<br>使用TFPopup做弹框会让你的弹框变的异常简单:
-<br>1.已经有一个view。
-<br>2.用喜欢的方式将它弹出来。<br>
+**🚀🚀🚀Uncoupled view code, you can add popup methods for created / uncreated views;
+<br>🚀🚀🚀TFPopup not a view, it is only a pop-up manner;**
+<br>Using TFPopup as a pop-up box will make your pop-up box extremely easy:
+<br>1.You already have a view;
+<br>2.Pop it up the way you like;<br>
 
-## 注意
-文档包含大量gif图片,可能加载较慢<br>
-项目分别包含Swift 和 OC Demo
+## Warning
+The document contains a lot of gif images and may load slowly<br>
+Project contains Swift and OC Demo respectively
 
 ## 特点
-- 和view代码不耦合<br>
+- Decouple view code<br>
 &nbsp;&nbsp;&nbsp;&nbsp;你可以将一个新的/已存在的view调用弹出方法将他弹出来
 - 默认支持多种弹出方式<br>
 &nbsp;&nbsp;&nbsp;&nbsp;无动画覆盖  /  缩放弹出  /  滑动弹出  /  基于某点的泡泡方式弹出  /  基于frame变化的弹出  /  基于于遮罩的遮罩弹出  /  折叠弹出
