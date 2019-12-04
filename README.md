@@ -5,8 +5,6 @@
 [![Pod 1.2.0](https://img.shields.io/badge/pod-1.2.0-blue)]()&nbsp;
 
 <br/>
-<br/>
-
 **🚀🚀🚀不耦合view代码,可以为已创建过 / 未创建过的view添加弹出方式;
 <br>🚀🚀🚀TFPopup不是弹框,它只是一种弹出方式;**
 <br>使用TFPopup做弹框会让你的弹框变的异常简单:
@@ -100,7 +98,8 @@ ___
 </div>
 
 
-## 使用（图片加载较慢请耐心等待或在项目目录中查找使用截图资源）
+## 使用
+图片加载较慢请耐心等待或在项目目录中查找使用截图资源
 <br/>
 
 ### 普通用法
@@ -126,9 +125,10 @@ ___
 
 ## 自定义用法请注意！！！
 下图此属性TFPopupExtension是弹框view整个弹框过程中保存内部属性的一个model,所有和弹框过程相关的属性都在这里
+有高级用法的可以通过代码查看详情
 <br/>
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupExtension.png" width="100%" height="100%">
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/UIView+TFPopup.png" width="100%" height="100%">
 </div>
 
 ## 使用补充
