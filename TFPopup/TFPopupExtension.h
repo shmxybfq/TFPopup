@@ -53,7 +53,6 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 @property(nonatomic,assign)CGRect hideFromFrame;
 @property(nonatomic,assign)CGRect hideToFrame;
 
-
 /* TFPopupDelegate */
 @property(nonatomic,assign)NSTimeInterval showAnimationDuration;
 @property(nonatomic,assign)NSTimeInterval showAnimationDelay;
@@ -72,7 +71,6 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 
 //监听弹框隐藏完毕回调,需要再显示弹框前调用此方法
 @property(nonatomic,  copy)TFDelegateProcessBlock delegateProcessBlock;
-
 
 //拖住手势
 @property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
@@ -94,5 +92,6 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 @property(nonatomic,assign)CGRect  dragDissmissFrame;
 
 @end
+
 
 

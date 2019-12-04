@@ -1,5 +1,4 @@
 # TFPopup
-##### 文档包含大量gif图片,可能加载较慢
 
 [![License MIT](https://img.shields.io/badge/License-MIT-orange)]()&nbsp;
 [![Platform iOS](https://img.shields.io/badge/platform-iOS-grayblue)]()&nbsp;
@@ -14,6 +13,9 @@
 <br>1.已经有一个view。
 <br>2.用喜欢的方式将它弹出来。<br>
 
+## 注意
+文档包含大量gif图片,可能加载较慢<br>
+项目分别包含Swift 和 OC Demo
 
 ## 特点
 - 和view代码不耦合<br>
@@ -99,26 +101,34 @@ ___
 
 
 ## 使用（图片加载较慢请耐心等待或在项目目录中查找使用截图资源）
+<br/>
 
-### 普通用法(TFPopupParam为nil)
-___
-
+### 普通用法
+不设置TFPopupParam
+<br/>
 <div>
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupOperatingInstruction.png" width="100%" height="100%">
 </div>
 
-### 高级用法(通过设置TFPopupParam修改弹出方式和动画等)
-___
-
+### 高级用法
+通过设置TFPopupParam修改弹出方式和动画等
+<br/>
 <div>
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupParam.png" width="100%" height="100%">
 </div>
 
-### 自定义用法(通过在view上重写TFPopupDataSource 和 TFPopupBackgroundDelegate 的一个或多个方法来实现你想要的效果)
-___
-
+### 自定义用法
+通过在view上重写TFPopupDataSource 和 TFPopupBackgroundDelegate 的一个或多个方法来实现你想要的效果
+<br/>
 <div>
 <img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/delegateAndDatasource.png" width="100%" height="100%">
+</div>
+
+## 自定义用法请注意！！！
+下图此属性TFPopupExtension是弹框view整个弹框过程中保存内部属性的一个model,所有和弹框过程相关的属性都在这里
+<br/>
+<div>
+<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/TFPopupExtension.png" width="100%" height="100%">
 </div>
 
 ## 使用补充
