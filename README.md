@@ -1,11 +1,10 @@
 # TFPopup
+##### 文档包含大量gif图片,可能加载较慢
 
 [![License MIT](https://img.shields.io/badge/License-MIT-orange)]()&nbsp;
 [![Platform iOS](https://img.shields.io/badge/platform-iOS-grayblue)]()&nbsp;
 [![Pod 1.2.0](https://img.shields.io/badge/pod-1.2.0-blue)]()&nbsp;
 
-<br/>
-文档包含大量gif图片,可能加载较慢
 <br/>
 <br/>
 
@@ -33,9 +32,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;**泡泡：** 泡泡基准点  /  泡泡八个弹出方向<br>
 &nbsp;&nbsp;&nbsp;&nbsp;**mask：** 可分别设置显示、消失时的mask,只需要设置属性:mask初始path、mask结束path即可<br>
 - 保留弹出全过程接口，支持完全自定义弹出方式、动画、和背景<br>
-&nbsp;&nbsp;&nbsp;&nbsp;**TFPopupDataSource**代理包含整个弹出过程事件，TFPopup使view本身实现此代理来封装以上动画效果的组合和弹出，你可以在弹框类中
-&nbsp;&nbsp;&nbsp;&nbsp;重写一个或多个方法来截断和修改弹出过程以实现完全自定义动画效果
+&nbsp;&nbsp;&nbsp;&nbsp;**TFPopupDataSource**此代理包含弹出动画需要的各种参数配置，在动画开始后会依次被调用
 &nbsp;&nbsp;&nbsp;&nbsp;**TFPopupBackgroundDelegate**同TFPopupDataSource一样，可通过实现一个或多个方法来截断和修改弹出过程以实现完全自定义背景和背景动画
+&nbsp;&nbsp;&nbsp;&nbsp;**TFPopupDelegate**代理包含整个弹出过程事件，TFPopup使view本身实现此代理来封装以上动画效果的组合和弹出，你可以在弹框类中
+&nbsp;&nbsp;&nbsp;&nbsp;重写一个或多个方法来截断和修改弹出过程以实现完全自定义动画效果
 
 
 ## 弹出效果图示例
