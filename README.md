@@ -5,6 +5,9 @@
 [![Pod 1.2.0](https://img.shields.io/badge/pod-1.2.0-blue)]()&nbsp;
 
 <br/>
+[中文版](https://github.com/shmxybfq/TFPopup/blob/master/README.md) | [English](https://github.com/shmxybfq/TFPopup/blob/master/README_EN.md)  
+<br/>
+
 **🚀🚀🚀不耦合view代码,可以为已创建过 / 未创建过的view添加弹出方式;
 <br>🚀🚀🚀TFPopup不是弹框,它只是一种弹出方式;**
 <br>使用TFPopup做弹框会让你的弹框变的异常简单:
