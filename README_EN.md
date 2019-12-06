@@ -5,7 +5,7 @@
 [![Pod 1.2.0](https://img.shields.io/badge/pod-1.2.0-blue)]()&nbsp;
 
 
-### English | [中文版](https://github.com/shmxybfq/TFPopup/blob/master/README_EN.md)  
+### English | [中文版](https://github.com/shmxybfq/TFPopup/blob/master/README.md)  
 
 
 **🚀🚀🚀Uncoupled view code, you can add popup methods for created / uncreated views;
