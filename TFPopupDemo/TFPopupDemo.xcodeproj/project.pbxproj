@@ -49,6 +49,8 @@
 		90CC2BAD22C4C7B500103439 /* ExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC2B9922C4C7B400103439 /* ExampleViewController.xib */; };
 		90CC7B4B231F933400DD5E70 /* DragExampleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CC7B49231F933400DD5E70 /* DragExampleController.m */; };
 		90CC7B4C231F933400DD5E70 /* DragExampleController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90CC7B4A231F933400DD5E70 /* DragExampleController.xib */; };
+		90CFBCBE23B0AD6C00EBB07F /* DragPercentView0.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CFBCBD23B0AD6C00EBB07F /* DragPercentView0.m */; };
+		90CFBCC123B0BA9400EBB07F /* DragPercentView1.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CFBCC023B0BA9400EBB07F /* DragPercentView1.m */; };
 		9616B610F835B20255614A5C /* libPods-TFPopupDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CCC0C4E9A28EB15DB5F6EA /* libPods-TFPopupDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +127,10 @@
 		90CC7B48231F933400DD5E70 /* DragExampleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragExampleController.h; sourceTree = "<group>"; };
 		90CC7B49231F933400DD5E70 /* DragExampleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragExampleController.m; sourceTree = "<group>"; };
 		90CC7B4A231F933400DD5E70 /* DragExampleController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DragExampleController.xib; sourceTree = "<group>"; };
+		90CFBCBC23B0AD6C00EBB07F /* DragPercentView0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragPercentView0.h; sourceTree = "<group>"; };
+		90CFBCBD23B0AD6C00EBB07F /* DragPercentView0.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragPercentView0.m; sourceTree = "<group>"; };
+		90CFBCBF23B0BA9400EBB07F /* DragPercentView1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragPercentView1.h; sourceTree = "<group>"; };
+		90CFBCC023B0BA9400EBB07F /* DragPercentView1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragPercentView1.m; sourceTree = "<group>"; };
 		D775C99FD65E0D958E4C91FE /* Pods-TFPopupDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFPopupDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFPopupDemo/Pods-TFPopupDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,6 +225,10 @@
 				2024EEEF21F892A700DEC84A /* ListView.xib */,
 				90BCD7D5233C4C95001FF34F /* CustomTableView.h */,
 				90BCD7D6233C4C95001FF34F /* CustomTableView.m */,
+				90CFBCBC23B0AD6C00EBB07F /* DragPercentView0.h */,
+				90CFBCBD23B0AD6C00EBB07F /* DragPercentView0.m */,
+				90CFBCBF23B0BA9400EBB07F /* DragPercentView1.h */,
+				90CFBCC023B0BA9400EBB07F /* DragPercentView1.m */,
 			);
 			path = DemoView;
 			sourceTree = "<group>";
@@ -413,11 +423,13 @@
 				90BCD7D7233C4C95001FF34F /* CustomTableView.m in Sources */,
 				203DD46F21EC6B22004ACC42 /* ViewController.m in Sources */,
 				203DD48E21EC846B004ACC42 /* AlertNormal.m in Sources */,
+				90CFBCC123B0BA9400EBB07F /* DragPercentView1.m in Sources */,
 				203DD47A21EC6B23004ACC42 /* main.m in Sources */,
 				2024EEEE21F8929C00DEC84A /* ListView.m in Sources */,
 				90CC2BA122C4C7B500103439 /* ExampleAction.m in Sources */,
 				902C94FF228972B0002A60EA /* TFPopupLoading.m in Sources */,
 				90CC2BA022C4C7B500103439 /* ExampleNotification.m in Sources */,
+				90CFBCBE23B0AD6C00EBB07F /* DragPercentView0.m in Sources */,
 				2024EEC221F71B9900DEC84A /* BlankView.m in Sources */,
 				20EC88BE222CFC3F006C4302 /* TFPopupExtension.m in Sources */,
 				90CC2BA522C4C7B500103439 /* ExampleSign.m in Sources */,

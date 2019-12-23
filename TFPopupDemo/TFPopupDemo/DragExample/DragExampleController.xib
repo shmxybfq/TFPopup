@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -32,23 +32,47 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83G-OV-nWE">
-                    <rect key="frame" x="187.5" y="690" width="187.5" height="60"/>
+                    <rect key="frame" x="187.5" y="700" width="187.5" height="50"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="BZi-57-hfF"/>
+                        <constraint firstAttribute="height" constant="50" id="BZi-57-hfF"/>
                     </constraints>
-                    <state key="normal" title="上面弹出"/>
+                    <state key="normal" title="向上拖动"/>
                     <connections>
                         <action selector="showTop:" destination="-1" eventType="touchUpInside" id="5Ro-Jm-SJL"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iaZ-yd-JX2">
-                    <rect key="frame" x="0.0" y="690" width="187.5" height="60"/>
+                    <rect key="frame" x="0.0" y="700" width="187.5" height="50"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="U7M-rP-Sgr"/>
+                        <constraint firstAttribute="height" constant="50" id="U7M-rP-Sgr"/>
                     </constraints>
-                    <state key="normal" title="下面弹出"/>
+                    <state key="normal" title="多方向拖动"/>
                     <connections>
                         <action selector="showBottom:" destination="-1" eventType="touchUpInside" id="X2E-IM-ehI"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5MR-EK-Ma4">
+                    <rect key="frame" x="0.0" y="650" width="187.5" height="50"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Rn3-0K-LCw"/>
+                    </constraints>
+                    <state key="normal" title="监听拖动百分比"/>
+                    <connections>
+                        <action selector="percentDrag:" destination="-1" eventType="touchUpInside" id="7PP-Hs-5CS"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vKR-uy-RMa">
+                    <rect key="frame" x="187.5" y="650" width="187.5" height="50"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="nrl-88-xJH"/>
+                    </constraints>
+                    <state key="normal" title="自由拖动"/>
+                    <connections>
+                        <action selector="freeDrag:" destination="-1" eventType="touchUpInside" id="nvs-F3-eX1"/>
                     </connections>
                 </button>
             </subviews>
@@ -57,15 +81,21 @@
                 <constraint firstItem="aWH-it-TQW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Ma-W7-80Y"/>
                 <constraint firstItem="CXj-AO-smW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="56I-Nx-flp"/>
                 <constraint firstAttribute="bottom" secondItem="83G-OV-nWE" secondAttribute="bottom" id="8El-7r-COR"/>
+                <constraint firstItem="5MR-EK-Ma4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8ct-uM-fY2"/>
                 <constraint firstAttribute="bottom" secondItem="iaZ-yd-JX2" secondAttribute="bottom" id="FDt-fz-GVt"/>
                 <constraint firstAttribute="trailing" secondItem="83G-OV-nWE" secondAttribute="trailing" id="Tlx-hx-j7o"/>
+                <constraint firstItem="vKR-uy-RMa" firstAttribute="leading" secondItem="5MR-EK-Ma4" secondAttribute="trailing" id="cTI-9Y-Nyf"/>
                 <constraint firstItem="aWH-it-TQW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="frd-j5-uJD"/>
                 <constraint firstItem="iaZ-yd-JX2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gzz-ce-UST"/>
                 <constraint firstItem="83G-OV-nWE" firstAttribute="leading" secondItem="iaZ-yd-JX2" secondAttribute="trailing" id="hFb-OD-ecy"/>
+                <constraint firstItem="vKR-uy-RMa" firstAttribute="width" secondItem="5MR-EK-Ma4" secondAttribute="width" id="lvS-6F-Lh7"/>
                 <constraint firstItem="CXj-AO-smW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nsb-C0-7tH"/>
+                <constraint firstAttribute="trailing" secondItem="vKR-uy-RMa" secondAttribute="trailing" id="pfQ-wq-svV"/>
+                <constraint firstItem="83G-OV-nWE" firstAttribute="top" secondItem="vKR-uy-RMa" secondAttribute="bottom" id="q00-Pr-AcB"/>
                 <constraint firstItem="83G-OV-nWE" firstAttribute="width" secondItem="iaZ-yd-JX2" secondAttribute="width" id="sbH-3j-oag"/>
                 <constraint firstAttribute="bottom" secondItem="CXj-AO-smW" secondAttribute="bottom" id="vEK-Pf-8Ch"/>
                 <constraint firstAttribute="trailing" secondItem="CXj-AO-smW" secondAttribute="trailing" id="yNN-Zw-iRc"/>
+                <constraint firstItem="iaZ-yd-JX2" firstAttribute="top" secondItem="5MR-EK-Ma4" secondAttribute="bottom" id="zm0-XY-zlN"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="136.95652173913044" y="152.67857142857142"/>

@@ -8,6 +8,8 @@
 
 #import "DragExampleController.h"
 #import "TFPopup.h"
+#import "DragPercentView0.h"
+#import "DragPercentView1.h"
 @interface DragExampleController ()
 
 @end
@@ -20,6 +22,29 @@
 }
 - (IBAction)navBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)percentDrag:(id)sender {
+    
+    UIImageView *imageView = [[DragPercentView1 alloc]initWithFrame:CGRectMake(0, 0, 350, 210)];
+    
+    TFPopupParam *param = [TFPopupParam new];
+    param.dragEnable = YES;
+    param.dragStyle = DragStyleToBottom;
+    param.dragAutoDissmissMinDistance = 150;
+    param.offset = CGPointMake(0, -200);
+    [imageView tf_showSlide:self.view direction:PopupDirectionBottom popupParam:param];
+}
+
+- (IBAction)freeDrag:(id)sender {
+
+    UIImageView *imageView = [[DragPercentView0 alloc]initWithFrame:CGRectMake(0, 0, 250, 260)];
+    
+    TFPopupParam *param = [TFPopupParam new];
+    param.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.6];
+    param.dragEnable = YES;
+    param.dragStyle = DragStyleFree;
+    [imageView tf_showScale:self.view offset:CGPointZero popupParam:param];
 }
 
 - (IBAction)showTop:(id)sender {
@@ -38,8 +63,6 @@
     param.dragBouncesEnable = YES;
     param.dragAutoDissmissMinDistance = 60;
     [imageView tf_showSlide:self.view direction:PopupDirectionTop popupParam:param];
-   
-    
 }
 
 

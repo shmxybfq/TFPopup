@@ -129,12 +129,18 @@
  */
 - (BOOL)tf_popupViewBackgroundDidTouch:(UIView *)popup;//默认YES
 
-/* 拖动非scrollview的view时调用
+/* 拖动非scrollview的view时调用,处理了view的拖动
  * popup:弹框本类
  * dragGes:拖拽手势
  */
 - (void)tf_popupViewDidDrag:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes;
 
+/* 拖动过程中调用,对外释放拖动距离百分比
+* popup:弹框本类
+* percent:拖动距离原始位置的直线百分比
+* state:拖拽手势状态
+*/
+- (BOOL)tf_popupViewDidDragSlide:(UIView *)popup distancePercent:(CGFloat)percent distance:(CGFloat)distance state:(UIGestureRecognizerState)state;
 
 @end
 

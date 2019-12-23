@@ -896,7 +896,8 @@
     return caseSuccess;
 }
 
-/* 滑动弹出后的拖拽
+/*
+ * 滑动弹出后的拖拽
  * popup:弹框本类
  * dragGes:拖拽手势
  */
@@ -910,9 +911,8 @@
     
     if (state == UIGestureRecognizerStateChanged) {
         switch (self.extension.runtimeDragStyle) {
-            case DragStyleNone:{
-                return;
-            }break;
+            case DragStyleNone:{return;}break;
+            case DragStyleFree:{}break;//自由模式不控制xy拖动自由
             case DragStyleToTop:{
                 x = originX;
                 CGFloat distanceY = y - originY;
@@ -933,17 +933,6 @@
                     }else{
                         y = originY;
                     }
-                    //                    for (UIScrollView *scroll in self.subviews) {
-                    //                        if ([scroll isKindOfClass:[UIScrollView class]]) {
-                    //                            scroll.scrollEnabled = YES;
-                    //                        }
-                    //                    }
-                }else{
-                    //                    for (UIScrollView *scroll in self.subviews) {
-                    //                        if ([scroll isKindOfClass:[UIScrollView class]]) {
-                    //                            scroll.scrollEnabled = NO;
-                    //                        }
-                    //                    }
                 }
             }break;
             case DragStyleToLeft:{
@@ -968,24 +957,15 @@
                     }
                 }
             }break;
-            case DragStyleFree:{
-                //自由模式不控制xy拖动自由
-            }break;
             default:break;
         }
         
-        //更新拖动
-        CGRect nowFrame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);
-        self.frame = nowFrame;
+        self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);//更新拖动位置
         //根据位置计算背景透明度
-        if (self.superview && self.extension.defaultBackgroundView) {
-            
+        if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDragSlide:distancePercent:distance:state:)]) {
+            CGFloat percent = [self percentOfDragAndOrigin];
             CGFloat distance = [self distanceOfShowToFrameAndNow];
-            CGFloat max = [self radiusOfMaxDragArea];
-            
-            CGFloat surplusPer = 1 - distance / max;
-            surplusPer = surplusPer > kDefaultMinDragBackgroundAlpha ? surplusPer : kDefaultMinDragBackgroundAlpha;
-            self.extension.defaultBackgroundView.alpha = surplusPer;
+            [self.popupDelegate tf_popupViewDidDragSlide:self distancePercent:percent distance:distance state:state];
         }
         
     }else if (state == UIGestureRecognizerStateEnded ||
@@ -993,43 +973,66 @@
               state == UIGestureRecognizerStateFailed ||
               state == UIGestureRecognizerStateRecognized) {
         
-        CGFloat distance = [self distanceOfShowToFrameAndNow];
-        CGFloat max = [self radiusOfMaxDragArea];
-        CGFloat surplusPer = surplusPer = MAX(kDefaultMinDragBackgroundAlpha, (1 - distance / max));;
-        CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
-        
-        if (distance >= minDragDis) {
-            //拖动距离大于最小拖动消失距离自动滑动消失
-            CGFloat duration = MAX(0.1, (kDefaultAnimationDuration * surplusPer));
-            [UIView animateKeyframesWithDuration:duration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
-                weakself.frame = weakself.extension.dragDissmissFrame;
-                if (weakself.extension.runtimeDragStyle == DragStyleFree) {
-                    if (weakself.extension.defaultBackgroundView) {
-                        weakself.extension.defaultBackgroundView.alpha = 1;
-                    }
+        if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDragSlide:distancePercent:distance:state:)]) {
+            
+            CGFloat percent = [self percentOfDragAndOrigin];
+            CGFloat distance = [self distanceOfShowToFrameAndNow];
+            CGFloat surplusPer = MAX(kDefaultMinDragBackgroundAlpha, percent);;
+            CGFloat minDragDis = ABS(self.popupParam.dragAutoDissmissMinDistance);
+            
+            BOOL continueFlow = [self.popupDelegate tf_popupViewDidDragSlide:self distancePercent:percent distance:distance state:state];
+            
+            if (continueFlow) {
+                if (distance >= minDragDis) {
+                    //拖动距离大于最小拖动消失距离自动滑动消失
+                    CGFloat duration = MAX(0.1, (kDefaultAnimationDuration * surplusPer));
+                    [UIView animateKeyframesWithDuration:duration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+                        weakself.frame = weakself.extension.dragDissmissFrame;
+                        if (weakself.extension.runtimeDragStyle == DragStyleFree) {
+                            if (weakself.extension.defaultBackgroundView) {
+                                weakself.extension.defaultBackgroundView.alpha = 1;
+                            }
+                        }else{
+                            if (weakself.extension.defaultBackgroundView) {
+                                weakself.extension.defaultBackgroundView.alpha = 0;
+                            }
+                        }
+                    } completion:^(BOOL finished) {
+                        if (weakself.extension.runtimeDragStyle != DragStyleFree) {
+                            [weakself tf_remove];
+                        }
+                    }];
                 }else{
-                    if (weakself.extension.defaultBackgroundView) {
-                        weakself.extension.defaultBackgroundView.alpha = 0;
-                    }
+                    //拖动距离小于最小拖动消失距离自动回到原位
+                    [UIView animateKeyframesWithDuration:kDefaultAnimationDuration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+                        weakself.frame = weakself.extension.showToFrame;
+                        if (weakself.extension.defaultBackgroundView) {
+                            weakself.extension.defaultBackgroundView.alpha = 1;
+                        }
+                    } completion:nil];
                 }
-            } completion:^(BOOL finished) {
-                if (weakself.extension.runtimeDragStyle != DragStyleFree) {
-                    [weakself tf_remove];
-                }
-            }];
-        }else{
-            //拖动距离小于最小拖动消失距离自动回到原位
-            [UIView animateKeyframesWithDuration:kDefaultAnimationDuration delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
-                weakself.frame = weakself.extension.showToFrame;
-                if (weakself.extension.defaultBackgroundView) {
-                    weakself.extension.defaultBackgroundView.alpha = 1;
-                }
-            } completion:nil];
+            }
         }
     }
 }
 
 
+//拖动距离百分比代理,默认改变背景视图的透明度
+- (BOOL)tf_popupViewDidDragSlide:(UIView *)popup distancePercent:(CGFloat)percent distance:(CGFloat)distance state:(UIGestureRecognizerState)state{
+    if (self.superview && self.extension.defaultBackgroundView) {
+        percent = percent > kDefaultMinDragBackgroundAlpha ? percent : kDefaultMinDragBackgroundAlpha;
+        self.extension.defaultBackgroundView.alpha = percent;
+    }
+    return YES;
+}
+
+
+-(CGFloat)percentOfDragAndOrigin{
+    CGFloat distance = [self distanceOfShowToFrameAndNow];
+    CGFloat max = [self radiusOfMaxDragArea];
+    CGFloat percnet = 1 - distance / max;
+    return percnet;
+}
 
 //拖动-根据拖拽方向得出拖动最大半径,以用于计算拖动于屏幕的百分比
 -(CGFloat)radiusOfMaxDragArea{
@@ -1054,7 +1057,6 @@
                                     self.frame.origin.y + self.frame.size.height * 0.5);
     CGPoint showedCenter = CGPointMake(self.extension.showToFrame.origin.x + self.extension.showToFrame.size.width * 0.5,
                                        self.extension.showToFrame.origin.y + self.extension.showToFrame.size.height * 0.5);
-    
     CGFloat distance = tf_pointDistance(nowCenter, showedCenter);
     return distance;
 }
