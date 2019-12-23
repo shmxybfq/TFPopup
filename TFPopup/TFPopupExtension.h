@@ -72,6 +72,8 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 //监听弹框隐藏完毕回调,需要再显示弹框前调用此方法
 @property(nonatomic,  copy)TFDelegateProcessBlock delegateProcessBlock;
 
+
+#pragma mark - 拖动相关
 //拖住手势
 @property(nonatomic,strong)UIPanGestureRecognizer *dragGes;
 //当前拖动的滚动视图

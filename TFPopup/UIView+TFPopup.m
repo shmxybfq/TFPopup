@@ -20,7 +20,7 @@
 #define kDefaultBackgroundColorAlpha 0.3
 #define kDefaultMinDragBackgroundAlpha 0.1
 #define kDefaultMinDragDissmissDistance 60.0
-#define kDefaultMinDragDirectionDiscernDistance 10.0
+#define kDefaultMinDragDirectionDiscernDistance 10.0//需要在用户拖动10个像素内确定用户想要的拖动方向
 
 @interface TFPopupPrivateExtension : NSObject
 @property(nonatomic,assign)BOOL currentIsShowState;
@@ -608,10 +608,10 @@
                               delay:self.extension.showAnimationDelay
                             options:self.extension.showAnimationOptions
                          animations:^{
-                             weakself.alpha = weakself.extension.showToAlpha;
-                         } completion:^(BOOL finished) {
-                             [weakself showAnimationCompletion];
-                         }];
+            weakself.alpha = weakself.extension.showToAlpha;
+        } completion:^(BOOL finished) {
+            [weakself showAnimationCompletion];
+        }];
     }else{
         self.alpha = weakself.extension.showToAlpha;
     }
@@ -622,10 +622,10 @@
                               delay:self.extension.showAnimationDelay
                             options:self.extension.showAnimationOptions
                          animations:^{
-                             weakself.frame = weakself.extension.showToFrame;
-                         } completion:^(BOOL finished) {
-                             [weakself showAnimationCompletion];
-                         }];
+            weakself.frame = weakself.extension.showToFrame;
+        } completion:^(BOOL finished) {
+            [weakself showAnimationCompletion];
+        }];
     }else{
         self.frame = weakself.extension.showToFrame;
     }
@@ -699,77 +699,56 @@
  * dragGes:拖拽手势
  */
 -(void)dragGestureRecognizer:(UIPanGestureRecognizer *)dragGes{
-    NSLog(@"弹框拖动手势事件=======:%@",[dragGes.view class]);
+    //NSLog(@"弹框拖动手势事件=======:%@",[dragGes.view class]);
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidDrag:dragGes:)]) {
         
-        [self dragGestureRecognizerConfiguration:dragGes];
-        
-        if (self.extension.currentDragScrollView == nil) {
-            [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+        //拖动开始时,左右拖动操作前的配置
+        UIGestureRecognizerState state = dragGes.state;
+        if (state == UIGestureRecognizerStateBegan) {
+            self.extension.needDiscernDragStyle = NO;
+            self.extension.runtimeDragStyle = DragStyleNone;
+            self.extension.discernDragStyleBeginSelfPoint = CGPointZero;
+            self.extension.discernDragStyleBeginSuperPoint = CGPointZero;
+            self.extension.dragBeginSelfPoint = CGPointZero;
+            self.extension.dragBeginSuperPoint = CGPointZero;
+            self.extension.dragDissmissFrame = self.extension.showToFrame;
+        }else if (state == UIGestureRecognizerStateChanged) {
+            
         }else{
-            [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+            //拖动结束后将当前正在滚动的view置空
+            self.extension.currentDragScrollView = nil;
+            self.extension.currentDragScrollViewAllowScroll = YES;
         }
         
+        
+        //        if (self.extension.currentDragScrollView == nil) {
+        [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+        //        }else{
+        //            [self.popupDelegate tf_popupViewDidDrag:self dragGes:dragGes];
+        //        }
     }
 }
 
-//拖动普通view
--(void)normalDrag:(UIPanGestureRecognizer *)dragGes{
-    
-}
-//拖动滚动view
--(void)scrollDrag:(UIPanGestureRecognizer *)dragGes{
-    
-}
-
-/*
- * 拖动开始时,左右拖动操作前的配置
- */
--(void)dragGestureRecognizerConfiguration:(UIPanGestureRecognizer *)dragGes{
-    UIGestureRecognizerState state = dragGes.state;
-    if (state == UIGestureRecognizerStateBegan) {
-        
-        self.extension.needDiscernDragStyle = NO;
-        self.extension.runtimeDragStyle = DragStyleNone;
-        self.extension.discernDragStyleBeginSelfPoint = CGPointZero;
-        self.extension.discernDragStyleBeginSuperPoint = CGPointZero;
-        self.extension.dragBeginSelfPoint = CGPointZero;
-        self.extension.dragBeginSuperPoint = CGPointZero;
-        self.extension.dragDissmissFrame = self.extension.showToFrame;
-        
-    }else if (state == UIGestureRecognizerStateChanged) {
-        
-    }else{
-        //拖动结束后将当前正在滚动的view置空
-        self.extension.currentDragScrollView = nil;
-        self.extension.currentDragScrollViewAllowScroll = YES;
-    }
-}
-
-//-(void)drag
 
 //1.判断点到哪了，是scrollview还是其他地方
 //2.如果scrollview不允许
 //3.如果是空白区域，就不管了，如果是scrollview，先确定方向(tableview肯定是竖向，cell肯定是横向)，然后再确定拖滚动还是弹框
-
 - (void)tf_popupViewDidDrag:(UIView *)popup dragGes:(UIPanGestureRecognizer *)dragGes{
     
     CGPoint selfPoint = [dragGes locationInView:self];
     CGPoint superPoint = [dragGes locationInView:self.superview];
-
+    
     if (dragGes.state == UIGestureRecognizerStateBegan) {
         
         if (self.extension.defaultBackgroundView) {
-            //拖动期间不允许点击背景
-            self.extension.defaultBackgroundView.userInteractionEnabled = NO;
+            self.extension.defaultBackgroundView.userInteractionEnabled = NO;//拖动期间不允许点击背景
         }
-        //最小拖动距离
-        if (self.popupParam.dragAutoDissmissMinDistance <= 0) {
-            self.popupParam.dragAutoDissmissMinDistance = kDefaultMinDragDissmissDistance;
-        }
-        //计算是否需要推测拖拽方式
         
-        self.extension.needDiscernDragStyle = [self tf_popupSetOrEstimateDragStyleAndDismissFrame:popup];
+        if (self.popupParam.dragAutoDissmissMinDistance <= 0) {
+            self.popupParam.dragAutoDissmissMinDistance = kDefaultMinDragDissmissDistance;//最小拖动距离
+        }
+        
+        self.extension.needDiscernDragStyle = [self tf_popupSetOrEstimateDragStyleAndDismissFrame:popup];//计算是否需要推测拖拽方式
         
         if (self.extension.needDiscernDragStyle) {
             self.extension.discernDragStyleBeginSelfPoint = selfPoint;
@@ -778,16 +757,16 @@
             self.extension.dragBeginSelfPoint = selfPoint;
             self.extension.dragBeginSuperPoint = superPoint;
         }
+        
     }else if(dragGes.state == UIGestureRecognizerStateChanged){
         
-        CGFloat discernDistance = kDefaultMinDragDirectionDiscernDistance;
-        if (self.extension.needDiscernDragStyle) {
+        if (self.extension.needDiscernDragStyle) {//需要推测拖拽方向
+            
             CGFloat x = selfPoint.x - self.extension.discernDragStyleBeginSelfPoint.x;
             CGFloat y = selfPoint.y - self.extension.discernDragStyleBeginSelfPoint.y;
             
             DragStyle discernDragStyle = DragStyleNone;
-            if (ABS(x) >= discernDistance || ABS(y) >= discernDistance) {
-                //到达拖动识别长度
+            if (ABS(x) >= kDefaultMinDragDirectionDiscernDistance || ABS(y) >= kDefaultMinDragDirectionDiscernDistance) {//到达拖动识别长度
                 if (ABS(x) > ABS(y)) {
                     if (x > 0) discernDragStyle = DragStyleToRight;//右
                     else discernDragStyle = DragStyleToLeft;//左
@@ -797,16 +776,14 @@
                 }
             }
             
-            //识别完毕
-            if (discernDragStyle != DragStyleNone) {
-                if (dragStyleInclude(self.popupParam.dragStyle, discernDragStyle) == NO) {
-                    //识别方式不是用户设置的方向,认为此方向拖动失败
+            if (discernDragStyle != DragStyleNone) {//用户拖动方向已识别
+                if (dragStyleInclude(self.popupParam.dragStyle, discernDragStyle) == NO) {//识别的方向不在用户设置的方向范围内,则认为此方向拖动失败
                     self.extension.runtimeDragStyle = DragStyleNone;
-                }else{
-                    //识别拖拽方向成功
+                }else{//识别的方向在用户设置的方向范围内
                     BOOL caseSuccess = [self setDragStyleAndDissmissFrame:discernDragStyle dissmissFrame:CGRectZero];
                     if (caseSuccess) {
                         self.extension.needDiscernDragStyle = NO;
+                        self.extension.runtimeDragStyle = discernDragStyle;
                         self.extension.dragBeginSelfPoint = selfPoint;
                         self.extension.dragBeginSuperPoint = superPoint;
                     }
@@ -814,24 +791,16 @@
             }
         }
         
-        if (self.extension.runtimeDragStyle == DragStyleNone) {
-            //没有确定方向前直接return不处理拖动
-            return;
-        }
-        
-        //执行拖动
-        if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) == NO &&
-            CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
-            [self tf_popupViewDidDragSlide:self superPoint:superPoint state:dragGes.state];
+        if (self.extension.runtimeDragStyle != DragStyleNone){//有拖动方式才处理拖动
+            if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) == NO &&
+                CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
+                [self tf_popupViewDidDragSlide:self superPoint:superPoint state:dragGes.state];
+            }
         }
         
     }else{
         
-        if (self.extension.defaultBackgroundView) {
-            //拖动期间不允许点击背景
-            self.extension.defaultBackgroundView.userInteractionEnabled = YES;
-        }
-        
+        self.extension.defaultBackgroundView.userInteractionEnabled = YES;//拖动结束允许点击背景
         //拖拽结束/取消/打断等
         if (CGPointEqualToPoint(self.extension.dragBeginSelfPoint, CGPointZero) == NO &&
             CGPointEqualToPoint(self.extension.dragBeginSuperPoint, CGPointZero) == NO) {
@@ -841,14 +810,13 @@
 }
 
 
-//开始拖动前确定拖动方向和将要消失的目标方向
+//开始拖动前计算拖动方向和将要消失的目标方向
 - (BOOL)tf_popupSetOrEstimateDragStyleAndDismissFrame:(UIView *)popup{
-    //如果未手动设置方向,判断是否是滑动动画,滑动动画默认同方向拖动手势
-    BOOL needDiscernDragStyle = YES;
-    if (self.popupParam.dragStyle == DragStyleNone) {
-        //打开拖动,且未设置拖动方向,识别滑动方向为拖动方向
+    
+    BOOL needDiscernDragStyle = YES;//是否需要根据拖动实时计算拖动方式
+    if (self.popupParam.dragStyle == DragStyleNone) {//打开拖动,且未设置拖动方向
         DragStyle dragStyle = DragStyleNone;
-        switch (self.extension.slideDirection) {
+        switch (self.extension.slideDirection) {//如果未手动设置方向,判断是否是滑动动画,滑动动画默认同方向拖动手势
             case PopupDirectionTop:dragStyle = DragStyleToTop;break;
             case PopupDirectionLeft:dragStyle = DragStyleToLeft;break;
             case PopupDirectionBottom:dragStyle = DragStyleToBottom;break;
@@ -858,6 +826,7 @@
         BOOL caseSuccess = [self setDragStyleAndDissmissFrame:dragStyle dissmissFrame:self.extension.hideToFrame];
         if (caseSuccess) {
             needDiscernDragStyle = NO;
+            self.extension.runtimeDragStyle = dragStyle;
         }
     }else if(self.popupParam.dragStyle == DragStyleFree){
         //手动设置为自由拖动方式
@@ -865,21 +834,19 @@
         self.extension.runtimeDragStyle = DragStyleFree;
         self.extension.dragDissmissFrame = self.extension.showToFrame;
     }else{
-        //已手动设置方向,判断手动设置的方向是否为单方向,如果不是单方向则需要根据拖动动态识别用户意向的拖动方向
-        NSInteger count = 0;
+        NSInteger count = 0;//已手动设置方向,判断手动设置的方向是否为单方向,如果不是单方向则需要根据拖动动态识别用户意向的拖动方向
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToTop);
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToLeft);
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToBottom);
         count += dragStyleInclude(self.popupParam.dragStyle, DragStyleToRight);
-        //设置单方向,需要根据方向计算消失的位置
-        if (count == 1) {
+        if (count == 1) {//设置单方向,需要根据方向计算消失的位置
             BOOL caseSuccess = [self setDragStyleAndDissmissFrame:self.popupParam.dragStyle dissmissFrame:CGRectZero];
             if (caseSuccess) {
                 needDiscernDragStyle = NO;
+                self.extension.runtimeDragStyle = self.popupParam.dragStyle;
             }
         }else{
-            //设置了多方向,需要自动识别方向
-            needDiscernDragStyle = YES;
+            needDiscernDragStyle = YES;//设置了多方向,需要自动识别方向
         }
     }
     return needDiscernDragStyle;
@@ -893,7 +860,6 @@
     CGRect st = self.extension.showToFrame;
     switch (style) {
         case DragStyleToTop:{
-            self.extension.runtimeDragStyle = DragStyleToTop;
             if (CGRectEqualToRect(CGRectZero, dissmissFrame)) {
                 self.extension.dragDissmissFrame = CGRectMake(st.origin.x, -st.size.height, st.size.width, st.size.height);
             }else{
@@ -902,7 +868,6 @@
             caseSuccess = YES;
         }break;
         case DragStyleToLeft:{
-            self.extension.runtimeDragStyle = DragStyleToLeft;
             if (CGRectEqualToRect(CGRectZero, dissmissFrame)) {
                 self.extension.dragDissmissFrame = CGRectMake(-st.size.width, st.origin.y, st.size.width, st.size.height);
             }else{
@@ -911,7 +876,6 @@
             caseSuccess = YES;
         }break;
         case DragStyleToBottom:{
-            self.extension.runtimeDragStyle = DragStyleToBottom;
             if (CGRectEqualToRect(CGRectZero, dissmissFrame)) {
                 self.extension.dragDissmissFrame = CGRectMake(st.origin.x, self.extension.popupArea.height, st.size.width, st.size.height);
             }else{
@@ -920,7 +884,6 @@
             caseSuccess = YES;
         }break;
         case DragStyleToRight:{
-            self.extension.runtimeDragStyle = DragStyleToRight;
             if (CGRectEqualToRect(CGRectZero, dissmissFrame)) {
                 self.extension.dragDissmissFrame = CGRectMake(self.extension.popupArea.width, st.origin.y, st.size.width, st.size.height);
             }else{
@@ -970,17 +933,17 @@
                     }else{
                         y = originY;
                     }
-//                    for (UIScrollView *scroll in self.subviews) {
-//                        if ([scroll isKindOfClass:[UIScrollView class]]) {
-//                            scroll.scrollEnabled = YES;
-//                        }
-//                    }
+                    //                    for (UIScrollView *scroll in self.subviews) {
+                    //                        if ([scroll isKindOfClass:[UIScrollView class]]) {
+                    //                            scroll.scrollEnabled = YES;
+                    //                        }
+                    //                    }
                 }else{
-//                    for (UIScrollView *scroll in self.subviews) {
-//                        if ([scroll isKindOfClass:[UIScrollView class]]) {
-//                            scroll.scrollEnabled = NO;
-//                        }
-//                    }
+                    //                    for (UIScrollView *scroll in self.subviews) {
+                    //                        if ([scroll isKindOfClass:[UIScrollView class]]) {
+                    //                            scroll.scrollEnabled = NO;
+                    //                        }
+                    //                    }
                 }
             }break;
             case DragStyleToLeft:{
@@ -1140,10 +1103,10 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
                               delay:self.extension.hideAnimationDelay
                             options:self.extension.hideAnimationOptions
                          animations:^{
-                             weakself.alpha = weakself.extension.hideToAlpha;
-                         } completion:^(BOOL finished) {
-                             [weakself hideAnimationCompletion];
-                         }];
+            weakself.alpha = weakself.extension.hideToAlpha;
+        } completion:^(BOOL finished) {
+            [weakself hideAnimationCompletion];
+        }];
     }
     
     if (self.extension.disuseHideFrameAnimation == NO &&
@@ -1155,10 +1118,10 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
                               delay:self.extension.hideAnimationDelay
                             options:self.extension.hideAnimationOptions
                          animations:^{
-                             weakself.frame = weakself.extension.hideToFrame;
-                         } completion:^(BOOL finished) {
-                             [weakself hideAnimationCompletion];
-                         }];
+            weakself.frame = weakself.extension.hideToFrame;
+        } completion:^(BOOL finished) {
+            [weakself hideAnimationCompletion];
+        }];
     }
     
     //动画
@@ -1437,8 +1400,8 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
                                       delay:self.extension.showAnimationDelay
                                     options:self.extension.showAnimationOptions
                                  animations:^{
-                                     weakself.extension.defaultBackgroundView.alpha = 1;
-                                 } completion:nil];
+                    weakself.extension.defaultBackgroundView.alpha = 1;
+                } completion:nil];
             }
         }
     }
@@ -1459,10 +1422,10 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
                                       delay:self.extension.hideAnimationDelay
                                     options:self.extension.hideAnimationOptions
                                  animations:^{
-                                     weakself.extension.defaultBackgroundView.alpha = 0;
-                                 } completion:^(BOOL finished) {
-                                     [weakself.extension.defaultBackgroundView removeFromSuperview];
-                                 }];
+                    weakself.extension.defaultBackgroundView.alpha = 0;
+                } completion:^(BOOL finished) {
+                    [weakself.extension.defaultBackgroundView removeFromSuperview];
+                }];
             }
         }
     }
