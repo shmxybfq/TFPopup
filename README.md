@@ -73,14 +73,14 @@ ___
 ___
 
 <div>
-<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/TFPopup-Example/exa1.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/TFPopup-Example/exa2.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/TFPopup-Example/exa3.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa3.gif" width="30%" height="30%">
 </div>
 <div>
-<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/TFPopup-Example/exa4.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/TFPopup-Example/exa5.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/TFPopup-Example/exa6.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa5.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa6.gif" width="30%" height="30%">
 </div>
 <div>
 <img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa7.gif" width="30%" height="30%">
