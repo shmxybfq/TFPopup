@@ -46,27 +46,27 @@ Project contains Swift and OC Demo respectively
 **Drag**
 ___
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag1.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag2.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag3.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/drag1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/drag2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/drag3.gif" width="30%" height="30%">
 </div>
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag0.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/drag4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/drag0.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/drag4.gif" width="30%" height="30%">
 </div>
 <br>
 
 **Custom animation effects**
 ___
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/cus-6.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/cus-2.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/cus-3.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/cus-6.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/cus-2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/cus-3.gif" width="30%" height="30%">
 </div>
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/cus-4.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/cus-5.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/cus-1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/cus-4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/cus-5.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/cus-1.gif" width="30%" height="30%">
 </div>
 <br>
 
@@ -75,19 +75,19 @@ ___
 ___
 
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa1.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa2.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa3.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa1.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/Example/exa2.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/Example/exa3.gif" width="30%" height="30%">
 </div>
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa4.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa5.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa6.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa4.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa5.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa6.gif" width="30%" height="30%">
 </div>
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa7.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa8.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/exa9.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa7.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa8.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/exa9.gif" width="30%" height="30%">
 </div>
 <br>
 
@@ -96,9 +96,9 @@ ___
 ___
 
 <div>
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/nor-bubble.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/nor-mask.gif" width="30%" height="30%">
-<img src="https://github.com/shmxybfq/TFPopup/blob/master/Example/nor-slide.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/nor-bubble.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/nor-mask.gif" width="30%" height="30%">
+<img src="https://github.com/shmxybfq/TFProductResource/blob/master/TFPopup-Example/nor-slide.gif" width="30%" height="30%">
 </div>
 
 
