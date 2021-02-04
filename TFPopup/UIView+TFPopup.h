@@ -146,7 +146,7 @@
 
 
 
-@interface UIView (TFPopup)<TFPopupDataSource,TFPopupDelegate,TFPopupBackgroundDelegate,CAAnimationDelegate>
+@interface UIView (TFPopup)<TFPopupDataSource,TFPopupDelegate,TFPopupBackgroundDelegate>
 
 @property(nonatomic,  weak)UIView *inView;//弹框的容器视图
 
