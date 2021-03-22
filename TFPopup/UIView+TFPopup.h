@@ -150,6 +150,8 @@
 
 @property(nonatomic,  weak)UIView *inView;//弹框的容器视图
 
+@property(nonatomic,  copy)NSString *identifier;//标示符，用于在弹出池里查找弹出的view
+
 @property(nonatomic,strong)TFPopupExtension *extension;
 
 @property(nonatomic,assign)id<TFPopupDelegate>popupDelegate;//动画调用过程代理
@@ -158,6 +160,10 @@
 
 @property(nonatomic,strong)TFPopupParam *popupParam;//默认动画参数
 
+//通过id查找弹窗，如果多个弹窗id一样，则返回最先弹出的弹窗
++(UIView *)tf_findPopup:(NSString *)identifier;
+//获取所有已弹出的弹窗
++(NSArray <UIView *>*)tf_getAllPopup;
 
 //手动控制弹框消失,此函数是将弹框正常动画移除,动画完成后内部调用tf_remove
 -(void)tf_hide;
@@ -174,7 +180,7 @@
 /* 基本动画，位置固定，可设置无任何动画弹出和渐隐方式
  * inView 容器视图
  * animated YES为渐隐动画NO为无任何动画
- * offset 弹框基于默认的便宜y正数为向下便宜，y负数为向上便宜，x值同理
+ * offset 弹框基于默认的偏移y正数为向下偏移，y负数为向上偏移，x值同理
  * popupParam 弹出的更多参数设置，具体参照TFPopupParam类 */
 -(void)tf_showNormal:(UIView *)inView animated:(BOOL)animated;
 -(void)tf_showNormal:(UIView *)inView offset:(CGPoint)offset animated:(BOOL)animated;
@@ -257,6 +263,7 @@
 
 typedef void(^AnimationStartBlock)(CAAnimation *anima);
 typedef void(^AnimationStopBlock)(CAAnimation *anima,BOOL finished);
+
 @interface CAAnimation (TFPopup)<CAAnimationDelegate>
 
 @property(nonatomic,assign)BOOL openOberserBlock;

@@ -28,7 +28,7 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 @interface TFPopupExtension : NSObject
 
 /* TFPopupDataSource */
-@property(nonatomic,strong)UIView *inView;
+@property(nonatomic,  weak)UIView *inView;
 
 @property(nonatomic,assign)CGSize popupArea;
 
@@ -95,5 +95,25 @@ typedef void(^TFDelegateProcessBlock)(UIView *pop,DelegateProcess pro);
 
 @end
 
+
+@class TFPopupPoolBridge;
+@interface TFPopupPool : NSObject
+//已经弹出的弹窗，弱引用记录
+@property(nonatomic,strong)NSMutableArray <TFPopupPoolBridge *>*pool;
+
++(void)refreshPool;
++(void)addToPool:(UIView *)popupView;
++(UIView *)findPopup:(NSString *)identifier;
++(NSArray <UIView *>*)allPopup;
+
+@end
+
+
+@interface TFPopupPoolBridge : NSObject
+
+//已经弹出的弹窗，弱引用记录
+@property(nonatomic,  weak)UIView *popupView;
+
+@end
 
 

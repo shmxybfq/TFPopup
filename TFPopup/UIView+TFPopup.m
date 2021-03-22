@@ -259,6 +259,7 @@
     self.backgroundDelegate = self.backgroundDelegate==nil?self:self.backgroundDelegate;
     [self performSelectorOnMainThread:@selector(tf_reload) withObject:nil waitUntilDone:YES];
     [self performSelectorOnMainThread:@selector(tf_show) withObject:nil waitUntilDone:YES];
+    
 }
 
 #pragma mark -- 动画默认设置和动画类型判断
@@ -669,6 +670,10 @@
             });
         }
     }
+    
+    //将弹窗放进弹窗池
+    [TFPopupPool addToPool:self];
+    
     if ([self.popupDelegate respondsToSelector:@selector(tf_popupViewDidShow:)]) {
         [self.popupDelegate tf_popupViewDidShow:self];
     }
@@ -1077,6 +1082,15 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((interval) * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
     }
 }
+//通过id查找弹窗，如果多个弹窗id一样，则返回最先弹出的弹窗
++(UIView *)tf_findPopup:(NSString *)identifier{
+    return [TFPopupPool findPopup:identifier];
+}
+
+//获取所有已弹出的弹窗
++(NSArray <UIView *>*)tf_getAllPopup{
+    return [TFPopupPool allPopup];
+}
 
 //消失
 -(void)tf_hide{
@@ -1484,6 +1498,7 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
     self.extension.backgroundViewCount = 0;
     [self.extension.backgroundViewArray removeAllObjects];
     [self.extension.backgroundViewFrameArray removeAllObjects];
+    [TFPopupPool refreshPool];
 }
 
 
@@ -1783,6 +1798,7 @@ static inline NSMutableArray<UIView*>*allSubViews(UIView *target,BOOL containTar
 
 #pragma mark -- 属性绑定
 tf_synthesize_category_property_retain(inView, setInView);
+tf_synthesize_category_property_copy(identifier, setIdentifier);
 tf_synthesize_category_property_assign(popupDelegate, setPopupDelegate);
 tf_synthesize_category_property_assign(popupDataSource, setPopupDataSource);
 tf_synthesize_category_property_assign(backgroundDelegate, setBackgroundDelegate);
