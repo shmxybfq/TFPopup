@@ -125,6 +125,7 @@
     }if ([self.animationType isEqualToString:@"渐隐"]) {
 
         UIView *popup = [self getAlertView];
+        popup.identifier = @"666";
         //[popup tf_showNormal:self.view animated:YES];
         //[popup tf_showNormal:self.view offset:CGPointMake(0, -100) animated:YES];
         self.param.dragEnable = YES;
@@ -205,6 +206,13 @@
                 popupParam:self.param];
 
     }
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIView *view = [UIView tf_findPopup:@"666"];
+        NSArray *aa = [UIView tf_getAllPopup];
+        NSArray *bbb = [UIView tf_getAllPopup];
+    });
+    
 }
 
 

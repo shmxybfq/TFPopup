@@ -80,7 +80,7 @@ static TFPopupPool *_popupPool = nil;
     NSMutableArray *newPool = [[NSMutableArray alloc]init];
     for (TFPopupPoolBridge *bridge in self.pool) {
         if (bridge.popupView.superview != nil) {
-            [newPool addObject:bridge];
+            [newPool addObject:bridge.popupView];
         }
     }
     return newPool;
