@@ -1357,6 +1357,26 @@ static inline void tf_popupDelay(NSTimeInterval interval,dispatch_block_t block)
     }
     return YES;
 }
+
+- (void)tf_popupViewDidAddedToSuperview:(UIView *)popup{
+    if(self.popupParam.zIndex != 0){
+        UIView *forground = nil;
+        UIView *superView = popup.superview;
+        NSArray *subs = superView.subviews;
+        for (NSInteger i = subs.count - 1; i >= 0; i--) {
+            UIView *subView = [subs objectAtIndex:i];
+            if (subView != self && subView.popupParam && subView.popupParam.zIndex != 0) {
+                if (subView.popupParam.zIndex > self.popupParam.zIndex) {
+                    forground = subView;
+                }
+            }
+        }
+        if (forground) {
+            [superView insertSubview:self belowSubview:forground];
+        }
+    }
+}
+
 - (void)tf_popupViewDidShow:(UIView *)popup{
     x_weakSelf;
     if (self.extension.delegateProcessBlock) {

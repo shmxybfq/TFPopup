@@ -119,6 +119,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
  popOriginFrame,弹框初始frame
  popTargetFrame,弹框动画后的frame
  keepPopupOriginFrame,是否保持原有frame不变,值为YES时,不对frame进行计算和操作
+ zIndex,多个弹窗同时出现时的层次，默认为0
  */
 @property(nonatomic,assign)CGRect popupAreaRect;
 @property(nonatomic,assign)CGSize popupSize;
@@ -126,7 +127,7 @@ typedef NS_ENUM(NSInteger,TFPopupState) {
 @property(nonatomic,assign)CGRect popOriginFrame;
 @property(nonatomic,assign)CGRect popTargetFrame;
 @property(nonatomic,assign)BOOL keepPopupOriginFrame;
-
+@property(nonatomic,assign)NSInteger zIndex;
 
 /* 【全局属性】属性动画 和 默认缩放动画冲突
  showKeyPath,显示时的属性动画keyPath
